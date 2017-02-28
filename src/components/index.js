@@ -2,7 +2,6 @@ import React, { Component } from 'react'
 import 'bootstrap/dist/css/bootstrap.css'
 import { Route, BrowserRouter, Link, Redirect, Switch } from 'react-router-dom'
 import Login from './Login'
-import Register from './Register'
 import Home from './Home'
 import Dashboard from './protected/Dashboard'
 import { logout } from '../helpers/auth'
@@ -79,7 +78,6 @@ export default class App extends Component {
                         className="navbar-brand">Logout</button>
                     : <span>
                         <Link to="/login" className="navbar-brand">Login</Link>
-                        <Link to="/register" className="navbar-brand">Register</Link>
                       </span>}
                 </li>
               </ul>
@@ -90,7 +88,6 @@ export default class App extends Component {
               <Switch>
                 <Route path='/' exact component={Home} />
                 <PublicRoute authed={this.state.authed} path='/login' component={Login} />
-                <PublicRoute authed={this.state.authed} path='/register' component={Register} />
                 <PrivateRoute authed={this.state.authed} path='/dashboard' component={Dashboard} />
                 <Route render={() => <h3>No Match</h3>} />
               </Switch>
