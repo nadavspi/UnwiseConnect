@@ -12,3 +12,5 @@ firebase.initializeApp(config);
 
 export const ref = firebase.database().ref();
 export const firebaseAuth = firebase.auth;
+window.ref = ref;
+window.firebaseAuth = firebaseAuth;

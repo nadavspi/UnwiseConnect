@@ -1,11 +1,11 @@
 import 'bootstrap/dist/css/bootstrap.css';
 import Dashboard from './protected/Dashboard';
 import Home from './Home';
-import Login from './Login';
 import React, { Component } from 'react';
 import Tickets from './protected/Tickets';
 import { Route, BrowserRouter, Link, Redirect, Switch } from 'react-router-dom';
 import { firebaseAuth } from '../config/constants';
+import { login } from '../helpers/auth'
 import { logout } from '../helpers/auth';
 
 function PrivateRoute ({component: Component, authed, ...rest}) {
@@ -44,7 +44,7 @@ export default class App extends Component {
         })
       } else {
         this.setState({
-          loading: false
+          loading: false,
         })
       }
     })
@@ -69,17 +69,25 @@ export default class App extends Component {
                   <Link to="/tickets" className="navbar-brand">Tickets</Link>
                 </li>
                 <li>
-                  {this.state.authed
-                    ? <button
-                        style={{border: 'none', background: 'transparent'}}
-                        onClick={() => {
-                          logout()
-                          this.setState({authed: false})
-                        }}
-                        className="navbar-brand">Logout</button>
-                    : <span>
-                        <Link to="/login" className="navbar-brand">Login</Link>
-                      </span>}
+                  {this.state.authed ? (
+                    <button
+                      onClick={() => {
+                        logout();
+                        this.setState({ authed: false });
+                      }}
+                      className="navbar-brand btn btn-link"
+                    >
+                      Logout
+                    </button>
+                  ) : (
+                    <button 
+                      type="button"
+                      onClick={() => login()}
+                      className="navbar-brand btn btn-link"
+                    >
+                      Login
+                    </button>
+                  )}
                 </li>
               </ul>
             </div>
@@ -88,7 +96,6 @@ export default class App extends Component {
             <div className="row">
               <Switch>
                 <Route path='/' exact component={Home} />
-                <PublicRoute authed={this.state.authed} path='/login' component={Login} />
                 <PrivateRoute authed={this.state.authed} path='/dashboard' component={Dashboard} />
                 <PrivateRoute authed={this.state.authed} path='/tickets' component={Tickets} />
                 <Route render={() => <h3>No Match</h3>} />
