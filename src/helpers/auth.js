@@ -1,17 +1,14 @@
 import { ref, firebaseAuth } from '../config/constants'
 
-export function auth (email, pw) {
-  return firebaseAuth().createUserWithEmailAndPassword(email, pw)
-    .then(saveUser)
-    .catch((error) => console.log('Oops', error))
-}
+const provider = new firebaseAuth.GithubAuthProvider();
+provider.addScope('read:org');
 
 export function logout () {
   return firebaseAuth().signOut()
 }
 
-export function login (email, pw) {
-  return firebaseAuth().signInWithEmailAndPassword(email, pw)
+export function login() {
+  return firebaseAuth().signInWithPopup(provider);
 }
 
 export function saveUser (user) {
