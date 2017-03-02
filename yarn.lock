@@ -1226,6 +1226,10 @@ clap@^1.0.9:
   dependencies:
     chalk "^1.1.3"
 
+classnames@^2.2.5:
+  version "2.2.5"
+  resolved "https://registry.yarnpkg.com/classnames/-/classnames-2.2.5.tgz#fb3801d453467649ef3603c7d61a02bd129bde6d"
+
 clean-css@4.0.x:
   version "4.0.8"
   resolved "https://registry.yarnpkg.com/clean-css/-/clean-css-4.0.8.tgz#063dfd593404d3a3d1db494d4b6d0f378b0781b6"
@@ -4565,6 +4569,16 @@ react@^15.4.0:
     loose-envify "^1.1.0"
     object-assign "^4.1.0"
 
+reactabular-search-field:
+  version "6.0.0-readme-xZPNI"
+  resolved "https://registry.yarnpkg.com/reactabular-search-field/-/reactabular-search-field-6.0.0-readme-xZPNI.tgz#b3e1b030f2217da539c3d0b8df5f03292f5248f8"
+
+reactabular-table:
+  version "8.6.0"
+  resolved "https://registry.yarnpkg.com/reactabular-table/-/reactabular-table-8.6.0.tgz#4b88edff98b378bdc12a4aa06579ca53e192db43"
+  dependencies:
+    classnames "^2.2.5"
+
 read-pkg-up@^1.0.1:
   version "1.0.1"
   resolved "https://registry.yarnpkg.com/read-pkg-up/-/read-pkg-up-1.0.1.tgz#9d63c13276c065918d57f002a57f40a1b643fb02"
@@ -4874,6 +4888,10 @@ sax@^1.2.1, sax@~1.2.1:
   version "1.2.2"
   resolved "https://registry.yarnpkg.com/sax/-/sax-1.2.2.tgz#fd8631a23bc7826bef5d871bdb87378c95647828"
 
+searchtabular:
+  version "1.4.0"
+  resolved "https://registry.yarnpkg.com/searchtabular/-/searchtabular-1.4.0.tgz#f9d17ccd934b2f5e5b047be9e693e5da7f41735b"
+
 semver@^5.1.0, semver@^5.3.0, semver@~5.3.0, "semver@2 || 3 || 4 || 5":
   version "5.3.0"
   resolved "https://registry.yarnpkg.com/semver/-/semver-5.3.0.tgz#9b2ce5d3de02d17c6012ad326aa6b4d0cf54f94f"
@@ -5162,6 +5180,10 @@ svgo@^0.7.0:
 symbol-tree@^3.2.1:
   version "3.2.2"
   resolved "https://registry.yarnpkg.com/symbol-tree/-/symbol-tree-3.2.2.tgz#ae27db38f660a7ae2e1c3b7d1bc290819b8519e6"
+
+table-resolver:
+  version "3.1.0"
+  resolved "https://registry.yarnpkg.com/table-resolver/-/table-resolver-3.1.0.tgz#e5329f49a352dbd120e7b23d756143ec5149bf95"
 
 table@^3.7.8:
   version "3.8.3"

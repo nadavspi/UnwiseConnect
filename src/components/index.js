@@ -59,7 +59,7 @@ export default class App extends Component {
           <nav className="navbar navbar-default navbar-static-top">
             <div className="container">
               <div className="navbar-header">
-                <Link to="/" className="navbar-brand">React Router + Firebase Auth</Link>
+                <Link to="/" className="navbar-brand">UnwiseConnect</Link>
               </div>
               <ul className="nav navbar-nav pull-right">
                 <li>
