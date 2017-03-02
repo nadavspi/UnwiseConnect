@@ -1,11 +1,12 @@
-import React, { Component } from 'react'
-import 'bootstrap/dist/css/bootstrap.css'
-import { Route, BrowserRouter, Link, Redirect, Switch } from 'react-router-dom'
-import Login from './Login'
-import Home from './Home'
-import Dashboard from './protected/Dashboard'
-import { logout } from '../helpers/auth'
-import { firebaseAuth } from '../config/constants'
+import 'bootstrap/dist/css/bootstrap.css';
+import Dashboard from './protected/Dashboard';
+import Home from './Home';
+import Login from './Login';
+import React, { Component } from 'react';
+import Tickets from './protected/Tickets';
+import { Route, BrowserRouter, Link, Redirect, Switch } from 'react-router-dom';
+import { firebaseAuth } from '../config/constants';
+import { logout } from '../helpers/auth';
 
 function PrivateRoute ({component: Component, authed, ...rest}) {
   return (
@@ -62,10 +63,10 @@ export default class App extends Component {
               </div>
               <ul className="nav navbar-nav pull-right">
                 <li>
-                  <Link to="/" className="navbar-brand">Home</Link>
+                  <Link to="/dashboard" className="navbar-brand">Dashboard</Link>
                 </li>
                 <li>
-                  <Link to="/dashboard" className="navbar-brand">Dashboard</Link>
+                  <Link to="/tickets" className="navbar-brand">Tickets</Link>
                 </li>
                 <li>
                   {this.state.authed
@@ -89,6 +90,7 @@ export default class App extends Component {
                 <Route path='/' exact component={Home} />
                 <PublicRoute authed={this.state.authed} path='/login' component={Login} />
                 <PrivateRoute authed={this.state.authed} path='/dashboard' component={Dashboard} />
+                <PrivateRoute authed={this.state.authed} path='/tickets' component={Tickets} />
                 <Route render={() => <h3>No Match</h3>} />
               </Switch>
             </div>

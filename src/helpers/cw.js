@@ -1,12 +1,20 @@
-import ConnectWiseRest from 'connectwise-rest';
+require('es6-promise').polyfill();
+import fetch from 'isomorphic-fetch';
 
-export const cw = new ConnectWiseRest({
-  companyId: process.env.REACT_APP_CW_COMPANY_ID,
-  companyUrl: process.env.REACT_APP_CW_COMPANY_URL,
-  publicKey: process.env.REACT_APP_CW_PUBLIC_KEY,
-  privateKey: process.env.REACT_APP_CW_PRIVATE_KEY,
-});
+function checkStatus(response) {
+  if (response.status >= 200 && response.status < 300) {
+    return response
+  } else {
+    var error = new Error(response.statusText)
+    error.response = response
+    throw error
+  }
+}
 
-export const fetchProject = projectId => cw.ServiceDeskAPI.Tickets.getTickets({
-  conditions: `project/id = ${projectId}`,
-});
+function parseJSON(response) {
+  return response.json();
+}
+
+export const fetchTickets = projectId => {
+  return fetch(`http://127.0.0.1:3434/v1/tickets/${projectId}`).then(checkStatus).then(parseJSON);
+}
