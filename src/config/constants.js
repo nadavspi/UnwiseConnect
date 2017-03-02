@@ -1,12 +1,14 @@
-import firebase from 'firebase'
+import firebase from 'firebase';
 
 const config = {
-  apiKey: "AIzaSyDHL6JFTyBcaV60WpE4yXfeO0aZbzA9Xbk",
-  authDomain: "practice-auth.firebaseapp.com",
-  databaseURL: "https://practice-auth.firebaseio.com",
-}
+  apiKey: process.env.REACT_APP_FIREBASE_API,
+  authDomain: process.env.REACT_APP_FIREBASE_DOMAIN,
+  databaseURL: process.env.REACT_APP_FIREBASE_DATABASE,
+  storageBucket: process.env.REACT_APP_FIREBASE_BUCKET,
+  messagingSenderId: process.env.REACT_APP_FIREBASE_SENDER,
+};
 
-firebase.initializeApp(config)
+firebase.initializeApp(config);
 
-export const ref = firebase.database().ref()
-export const firebaseAuth = firebase.auth
+export const ref = firebase.database().ref();
+export const firebaseAuth = firebase.auth;
