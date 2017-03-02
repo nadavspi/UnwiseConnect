@@ -1,11 +1,26 @@
 import React, { Component } from 'react'
+import { connect } from 'react-redux';
 
-export default class Home extends Component {
+class Home extends Component {
   render () {
     return (
       <div>
-        Home. Not Protected. Anyone can see this.
+        {this.props.error && (
+          <div className="alert alert-danger" role="alert">
+            {this.props.error.message}
+          </div>
+        )}
+        <h1>UnwiseConnect</h1>
+        <p>Hi.</p>
       </div>
     )
   }
 }
+
+const mapStateToProps = state => {
+  return {
+    error: state.error,
+  };
+};
+
+export default connect(mapStateToProps)(Home);

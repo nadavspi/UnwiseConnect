@@ -14,3 +14,10 @@ export const ref = firebase.database().ref();
 export const firebaseAuth = firebase.auth;
 window.ref = ref;
 window.firebaseAuth = firebaseAuth;
+
+export const actions = {
+  ERROR: 'ERROR',
+  LOADED: 'LOADED',
+  SIGN_IN: 'SIGN_IN',
+  SIGN_OUT: 'SIGN_OUT',
+};

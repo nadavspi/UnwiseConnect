@@ -7,7 +7,6 @@ export const isOrgMember = (token, name = 'sdinteractive') => {
     .then(checkStatus)
     .then(({ data: orgs }) => {
       const result = orgs.find(org => org.login === name) != null;
-      console.log({ result, name });
       return result;
     });
 };

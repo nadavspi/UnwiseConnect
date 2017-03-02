@@ -1,9 +1,10 @@
 import 'bootstrap/dist/css/bootstrap.css';
-import Dashboard from './protected/Dashboard';
 import Home from './Home';
 import React, { Component } from 'react';
 import Tickets from './protected/Tickets';
 import { Route, BrowserRouter, Link, Redirect, Switch } from 'react-router-dom';
+import { actions } from '../config/constants';
+import { connect } from 'react-redux';
 import { firebaseAuth } from '../config/constants';
 import { login } from '../helpers/auth'
 import { logout } from '../helpers/auth';
@@ -14,7 +15,7 @@ function PrivateRoute ({component: Component, authed, ...rest}) {
       {...rest}
       render={(props) => authed === true
         ? <Component {...props} />
-        : <Redirect to={{pathname: '/login', state: {from: props.location}}} />}
+        : <Redirect to={{pathname: '/', state: {from: props.location}}} />}
     />
   )
 }
@@ -25,27 +26,18 @@ function PublicRoute ({component: Component, authed, ...rest}) {
       {...rest}
       render={(props) => authed === false
         ? <Component {...props} />
-        : <Redirect to='/dashboard' />}
+        : <Redirect to='/tickets' />}
     />
   )
 }
 
-export default class App extends Component {
-  state = {
-    authed: false,
-    loading: true,
-  }
+class App extends Component {
   componentDidMount () {
     this.removeListener = firebaseAuth().onAuthStateChanged((user) => {
       if (user) {
-        this.setState({
-          authed: true,
-          loading: false,
-        })
+        this.props.dispatch({ type: actions.SIGN_IN });
       } else {
-        this.setState({
-          loading: false,
-        })
+        this.props.dispatch({ type: actions.LOADED });
       }
     })
   }
@@ -53,7 +45,7 @@ export default class App extends Component {
     this.removeListener()
   }
   render() {
-    return this.state.loading === true ? <h1>Loading</h1> : (
+    return this.props.loading === true ? <h1>Loading</h1> : (
       <BrowserRouter>
         <div>
           <nav className="navbar navbar-default navbar-static-top">
@@ -63,18 +55,12 @@ export default class App extends Component {
               </div>
               <ul className="nav navbar-nav pull-right">
                 <li>
-                  <Link to="/dashboard" className="navbar-brand">Dashboard</Link>
-                </li>
-                <li>
                   <Link to="/tickets" className="navbar-brand">Tickets</Link>
                 </li>
                 <li>
-                  {this.state.authed ? (
+                  {this.props.authed ? (
                     <button
-                      onClick={() => {
-                        logout();
-                        this.setState({ authed: false });
-                      }}
+                      onClick={() => this.props.dispatch(logout())}
                       className="navbar-brand btn btn-link"
                     >
                       Logout
@@ -82,7 +68,7 @@ export default class App extends Component {
                   ) : (
                     <button 
                       type="button"
-                      onClick={() => login()}
+                      onClick={() => this.props.dispatch(login())}
                       className="navbar-brand btn btn-link"
                     >
                       Login
@@ -95,9 +81,8 @@ export default class App extends Component {
           <div className="container">
             <div className="row">
               <Switch>
-                <Route path='/' exact component={Home} />
-                <PrivateRoute authed={this.state.authed} path='/dashboard' component={Dashboard} />
-                <PrivateRoute authed={this.state.authed} path='/tickets' component={Tickets} />
+                <PublicRoute path='/' authed={this.props.authed} exact component={Home} />
+                <PrivateRoute authed={this.props.authed} path='/tickets' component={Tickets} />
                 <Route render={() => <h3>No Match</h3>} />
               </Switch>
             </div>
@@ -107,3 +92,5 @@ export default class App extends Component {
     );
   }
 }
+
+export default connect(state => state)(App);
