@@ -6,8 +6,7 @@ import { Route, BrowserRouter, Link, Redirect, Switch } from 'react-router-dom';
 import { actions } from '../config/constants';
 import { connect } from 'react-redux';
 import { firebaseAuth } from '../config/constants';
-import { login } from '../helpers/auth'
-import { logout } from '../helpers/auth';
+import { login, logout } from '../actions/auth'
 
 function PrivateRoute ({component: Component, authed, ...rest}) {
   return (

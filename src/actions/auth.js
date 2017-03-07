@@ -1,6 +1,6 @@
 import { actions } from '../config/constants';
 import { dispatch } from '..';
-import { isOrgMember } from './github';
+import { isOrgMember } from '../helpers/github';
 import { ref, firebaseAuth } from '../config/constants'
 
 export function logout() {
