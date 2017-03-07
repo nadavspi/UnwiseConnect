@@ -117,6 +117,12 @@ export default class TicketsTable extends React.Component {
 TicketsTable.defaultProps = {
   columns: [
     {
+      property: 'company.name',
+      header: {
+        label: 'Company',
+      },
+    },
+    {
       property: 'project.name',
       header: {
         label: 'Project',
