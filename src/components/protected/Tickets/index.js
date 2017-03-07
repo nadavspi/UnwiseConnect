@@ -35,7 +35,11 @@ class Tickets extends Component {
         />
 
         <h2>Tickets</h2>
-        <p>{this.props.tickets.flattened.length} tickets from {Object.keys(this.props.tickets.nested).length} projects.</p>
+        {this.props.tickets.loading ? (
+          <p>Loading tickets&hellip;</p>
+        ) : (
+          <p>{this.props.tickets.flattened.length} tickets from {Object.keys(this.props.tickets.nested).length} projects.</p>
+        )}
         {this.props.tickets.flattened.length > 0 && (
           <Table tickets={this.props.tickets.flattened} />
         )}
