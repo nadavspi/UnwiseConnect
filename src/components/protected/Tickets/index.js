@@ -1,40 +1,20 @@
 import AddProject from './AddProject';
-import Table from './Table';
 import React, { Component } from 'react';
+import Table from './Table';
+import { connect } from 'react-redux';
 import { fetchTickets } from '../../../helpers/cw';
 import { ref } from '../../../config/constants';
+import { subscribe } from '../../../actions/tickets';
 
-export default class Tickets extends Component {
+class Tickets extends Component {
   constructor() {
     super();
 
-    this.state = {
-      tickets: {
-        nested: {},
-        flattened: [],
-      },
-    };
-
     this.addProject = this.addProject.bind(this);
-    this.subscribe = this.subscribe.bind(this);
   }
 
   componentDidMount() {
-    this.subscribe();
-  }
-
-  subscribe() {
-    const tickets = ref.child('tickets');
-    tickets.on('value', snapshot => {
-      const nested = snapshot.val();
-      const flattened = Object.keys(nested).map(project => nested[project]).reduce((prev, next) => prev.concat(next), []);
-      this.setState({
-        tickets: {
-          flattened,
-          nested,
-        },
-      });
-    });
+    this.props.dispatch(subscribe());
   }
 
   addProject(projectId) {
@@ -55,11 +35,17 @@ export default class Tickets extends Component {
         />
 
         <h2>Tickets</h2>
-        <p>{this.state.tickets.flattened.length} tickets from {Object.keys(this.state.tickets.nested).length} projects.</p>
-        {this.state.tickets.flattened.length > 0 && (
-          <Table tickets={this.state.tickets.flattened} />
+        <p>{this.props.tickets.flattened.length} tickets from {Object.keys(this.props.tickets.nested).length} projects.</p>
+        {this.props.tickets.flattened.length > 0 && (
+          <Table tickets={this.props.tickets.flattened} />
         )}
     </div>
     );
   }
 }
+
+const mapStateToProps = state => ({
+  tickets: state.tickets,
+});
+
+export default connect(mapStateToProps)(Tickets);

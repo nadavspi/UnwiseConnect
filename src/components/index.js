@@ -92,4 +92,10 @@ class App extends Component {
   }
 }
 
-export default connect(state => state)(App);
+const mapStateToProps = state => ({
+  authed: state.authed,
+  error: state.error,
+  loading: state.loading,
+});
+
+export default connect(mapStateToProps)(App);
