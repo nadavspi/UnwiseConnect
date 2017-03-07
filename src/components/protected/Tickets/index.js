@@ -1,4 +1,5 @@
 import AddProject from './AddProject';
+import Projects from './Projects';
 import React, { Component } from 'react';
 import Table from './Table';
 import { connect } from 'react-redux';
@@ -32,6 +33,12 @@ class Tickets extends Component {
         <h2>Add Project</h2>
         <AddProject 
           onAdd={this.addProject}
+        />
+
+        <h2>Loaded Projects</h2>
+        <Projects 
+          loadProject={this.addProject}
+          projects={this.props.tickets.nested} 
         />
 
         <h2>Tickets</h2>
