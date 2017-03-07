@@ -1,17 +1,28 @@
 import './index.css';
+import * as storage from 'redux-storage'
 import App from './components';
 import React from 'react';
 import ReactDOM from 'react-dom';
+import createEngine from 'redux-storage-engine-indexed-db';
 import reducers from './reducers/';
 import thunk from 'redux-thunk';
 import { Provider } from 'react-redux';
 import { applyMiddleware, createStore } from 'redux';
 
+const reducer = storage.reducer(reducers);
+const engine = createEngine('tickets');
+
 const store = createStore(
-  reducers,
+  reducer,
   window.__REDUX_DEVTOOLS_EXTENSION__ && window.__REDUX_DEVTOOLS_EXTENSION__(),
-  applyMiddleware(thunk),
+  applyMiddleware(
+    thunk,
+    storage.createMiddleware(engine),
+  ),
 );
+
+const load = storage.createLoader(engine);
+load(store);
 
  ReactDOM.render(
    <Provider store={store}>
