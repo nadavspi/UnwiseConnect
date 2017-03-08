@@ -17,7 +17,7 @@ export function login() {
 
     return firebaseAuth().signInWithPopup(provider).then(payload => {
       const { user } = payload;
-      ref.child(`users/${user.uid}`).set({
+      ref.child(`users/${user.uid}/creds`).set({
         accessToken: payload.credential.accessToken,
         displayName: user.displayName,
         email: user.email,
