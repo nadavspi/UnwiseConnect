@@ -4,7 +4,7 @@ import Pagination from './Pagination';
 import React from 'react';
 import Search from 'reactabular-search-field';
 import { compose } from 'redux';
-import { multipleColumns as searchMultipleColumns } from 'searchtabular';
+import * as search from 'searchtabular';
 
 
 function paginate({ page, perPage }) {
@@ -38,6 +38,7 @@ export default class TicketsTable extends React.Component {
     };
 
     this.changePage = this.changePage.bind(this);
+    this.search = this.search.bind(this);
   }
 
   componentDidMount() {
@@ -67,12 +68,16 @@ export default class TicketsTable extends React.Component {
     });
   }
 
+  search(query) {
+    this.setState({ query });
+  }
+
   render() {
     const { columns } = this.props;
     const { query, pagination, rows } = this.state;
     const paginated = compose(
       paginate(pagination),
-      searchMultipleColumns({ columns, query })
+      search.multipleColumns({ columns, query })
     )(rows);
 
     return (
@@ -80,7 +85,7 @@ export default class TicketsTable extends React.Component {
         <Search
           column={this.state.searchColumn}
           columns={columns}
-          onChange={query => this.setState({ query })}
+          onChange={this.search}
           onColumnChange={searchColumn => this.setState({ searchColumn })}
           query={this.state.query}
           rows={rows}
@@ -89,7 +94,13 @@ export default class TicketsTable extends React.Component {
           className="table table-striped table-bordered"
           columns={columns}
         >
-          <Table.Header />
+          <Table.Header>
+            <search.Columns
+              query={query}
+              columns={columns}
+              onChange={this.search}
+            />
+          </Table.Header>
           <Table.Body rowKey="id" rows={paginated.rows} />
         </Table.Provider>
         <Pagination 
