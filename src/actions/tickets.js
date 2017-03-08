@@ -1,11 +1,11 @@
-import { actions } from '../config/constants';
+import { ActionTypes } from '../config/constants';
 import { ref } from '../config/constants';
 
 export const subscribe = () => {
   return (dispatch) => {
 
     dispatch({
-      type: actions.TICKETS_SUBSCRIBE,
+      type: ActionTypes.TICKETS_SUBSCRIBE,
     });
 
     const tickets = ref.child('tickets');
@@ -14,7 +14,7 @@ export const subscribe = () => {
       const flattened = Object.keys(nested).map(project => nested[project]).reduce((prev, next) => prev.concat(next), []);
 
       dispatch({
-        type: actions.TICKETS_UPDATE,
+        type: ActionTypes.TICKETS_UPDATE,
         payload: {
           flattened,
           nested,
@@ -26,7 +26,7 @@ export const subscribe = () => {
 
 export const search = (payload) => {
   return {
-    type: actions.TICKETS_SEARCH,
+    type: ActionTypes.TICKETS_SEARCH,
     payload,
   }
 }

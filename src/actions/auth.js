@@ -1,11 +1,11 @@
-import { actions } from '../config/constants';
+import { ActionTypes } from '../config/constants';
 import { isOrgMember } from '../helpers/github';
 import { ref, firebaseAuth } from '../config/constants'
 
 export function logout() {
   return dispatch => {
     return firebaseAuth().signOut().then(() => {
-      dispatch({ type: actions.SIGN_OUT });
+      dispatch({ type: ActionTypes.SIGN_OUT });
     });
   }
 }
@@ -35,7 +35,7 @@ function verifyOrg(token, org) {
       if (!isMember) {
         dispatch(logout());
         dispatch({
-          type: actions.ERROR,
+          type: ActionTypes.ERROR,
           payload: {
             type: 'auth',
             message: `Login failed. Make sure you are a member of the GitHub organization and have granted this app access to it.`,

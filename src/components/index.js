@@ -3,7 +3,7 @@ import Home from './Home';
 import React, { Component } from 'react';
 import Tickets from './protected/Tickets';
 import { Route, BrowserRouter, Link, Redirect, Switch } from 'react-router-dom';
-import { actions } from '../config/constants';
+import { ActionTypes } from '../config/constants';
 import { connect } from 'react-redux';
 import { firebaseAuth } from '../config/constants';
 import { login, logout } from '../actions/auth'
@@ -34,9 +34,9 @@ class App extends Component {
   componentDidMount () {
     this.removeListener = firebaseAuth().onAuthStateChanged((user) => {
       if (user) {
-        this.props.dispatch({ type: actions.SIGN_IN });
+        this.props.dispatch({ type: ActionTypes.SIGN_IN });
       } else {
-        this.props.dispatch({ type: actions.LOADED });
+        this.props.dispatch({ type: ActionTypes.LOADED });
       }
     })
   }

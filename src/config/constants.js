@@ -15,7 +15,7 @@ export const firebaseAuth = firebase.auth;
 window.ref = ref;
 window.firebaseAuth = firebaseAuth;
 
-export const actions = {
+export const ActionTypes = {
   ERROR: 'ERROR',
   LOADED: 'LOADED',
   SIGN_IN: 'SIGN_IN',

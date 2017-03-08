@@ -1,4 +1,4 @@
-import { actions } from '../config/constants';
+import { ActionTypes } from '../config/constants';
 
 const initialState = {
   authed: false,
@@ -14,7 +14,7 @@ const initialState = {
 
 export default (state = initialState, action) => {
   switch (action.type) {
-    case actions.SIGN_IN:
+    case ActionTypes.SIGN_IN:
       return {
         ...state,
         authed: true,
@@ -22,25 +22,25 @@ export default (state = initialState, action) => {
         loading: false,
       };
 
-    case actions.SIGN_OUT: 
+    case ActionTypes.SIGN_OUT: 
       return {
         ...state,
         authed: false,
       };
 
-    case actions.LOADED: 
+    case ActionTypes.LOADED: 
       return {
         ...state,
         loading: false,
       };
 
-    case actions.ERROR:
+    case ActionTypes.ERROR:
       return {
         ...state,
         error: action.payload,
       };
 
-    case actions.TICKETS_SUBSCRIBE: 
+    case ActionTypes.TICKETS_SUBSCRIBE: 
       return {
         ...state,
         tickets: {
@@ -49,7 +49,7 @@ export default (state = initialState, action) => {
         },
       };
 
-    case actions.TICKETS_UPDATE: 
+    case ActionTypes.TICKETS_UPDATE: 
       return {
         ...state,
         tickets: {
@@ -59,7 +59,7 @@ export default (state = initialState, action) => {
         },
       };
 
-    case actions.TICKETS_SEARCH: 
+    case ActionTypes.TICKETS_SEARCH: 
       return {
         ...state,
         tickets: {

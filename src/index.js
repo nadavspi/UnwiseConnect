@@ -3,7 +3,7 @@ import * as storage from 'redux-storage'
 import App from './components';
 import React from 'react';
 import ReactDOM from 'react-dom';
-import { actions as ActionTypes } from './config/constants';
+import { ActionTypes } from './config/constants';
 import createEngine from 'redux-storage-engine-indexed-db';
 import reducers from './reducers/';
 import thunk from 'redux-thunk';
