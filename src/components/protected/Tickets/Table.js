@@ -1,10 +1,8 @@
 import * as Table from 'reactabular-table';
 import * as resolve from 'table-resolver';
-import Pagify from 'react-pagify';
+import Pagination from './Pagination';
 import React from 'react';
 import Search from 'reactabular-search-field';
-import pagifyBootstrapPreset from 'react-pagify-preset-bootstrap';
-import segmentize from 'segmentize';
 import { compose } from 'redux';
 import { multipleColumns as searchMultipleColumns } from 'searchtabular';
 
@@ -70,7 +68,7 @@ export default class TicketsTable extends React.Component {
   }
 
   render() {
-    const { tickets, columns } = this.props;
+    const { columns } = this.props;
     const { query, pagination, rows } = this.state;
     const paginated = compose(
       paginate(pagination),
@@ -94,21 +92,11 @@ export default class TicketsTable extends React.Component {
           <Table.Header />
           <Table.Body rowKey="id" rows={paginated.rows} />
         </Table.Provider>
-        <Pagify.Context
-          {...pagifyBootstrapPreset}
-          onSelect={this.changePage}
-          segments={segmentize({
-            page: pagination.page,
-            pages: paginated.amount,
-            sidePages: 2,
-          })}
-        >
-          <Pagify.Button page={pagination.page - 1}>Previous</Pagify.Button>
-          <Pagify.Segment field="previousPages" />
-          <Pagify.Segment field="centerPage" className="active" />
-          <Pagify.Segment field="nextPages" />
-          <Pagify.Button page={pagination.page + 1}>Next</Pagify.Button>
-        </Pagify.Context>
+        <Pagination 
+          changePage={this.changePage}
+          paginated={paginated}
+          pagination={pagination}
+        />
       </div>
     );
   }
