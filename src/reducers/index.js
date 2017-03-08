@@ -5,9 +5,10 @@ const initialState = {
   loading: true,
   error: undefined,
   tickets: {
-    nested: {},
     flattened: [],
     loading: false,
+    nested: {},
+    query: {},
   },
 };
 
@@ -52,8 +53,18 @@ export default (state = initialState, action) => {
       return {
         ...state,
         tickets: {
+          ...state.tickets,
           ...action.payload,
           loading: false,
+        },
+      };
+
+    case actions.TICKETS_SEARCH: 
+      return {
+        ...state,
+        tickets: {
+          ...state.tickets,
+          query: action.payload,
         },
       };
 

@@ -7,7 +7,14 @@ const Projects = props => {
         const ticket = props.projects[projectId][0];
         return (
           <li key={projectId}>
-            {projectId} - {ticket.project.name} ({ticket.company.name}) 
+            <button
+              type="button"
+              className="btn-link"
+              onClick={props.searchProject.bind(this, ticket.project.name)}
+            >
+              {ticket.project.name}
+            </button>
+            ({ticket.company.name}) 
             <button 
               className="btn-link"
               onClick={props.loadProject.bind(this, projectId)}

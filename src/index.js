@@ -3,6 +3,7 @@ import * as storage from 'redux-storage'
 import App from './components';
 import React from 'react';
 import ReactDOM from 'react-dom';
+import { actions as ActionTypes } from './config/constants';
 import createEngine from 'redux-storage-engine-indexed-db';
 import reducers from './reducers/';
 import thunk from 'redux-thunk';
@@ -17,7 +18,7 @@ const store = createStore(
   window.__REDUX_DEVTOOLS_EXTENSION__ && window.__REDUX_DEVTOOLS_EXTENSION__(),
   applyMiddleware(
     thunk,
-    storage.createMiddleware(engine),
+    storage.createMiddleware(engine, [], [ActionTypes.TICKETS_UPDATE]),
   ),
 );
 

@@ -6,7 +6,6 @@ import Search from 'reactabular-search-field';
 import { compose } from 'redux';
 import * as search from 'searchtabular';
 
-
 function paginate({ page, perPage }) {
   return (rows = []) => {
     // adapt to zero indexed logic
@@ -29,7 +28,6 @@ export default class TicketsTable extends React.Component {
 
     this.state = {
       searchColumn: 'all',
-      query: {},
       pagination: {
         page: 1,
         perPage: 20,
@@ -69,12 +67,12 @@ export default class TicketsTable extends React.Component {
   }
 
   search(query) {
-    this.setState({ query });
+    this.props.search(query);
   }
 
   render() {
-    const { columns } = this.props;
-    const { query, pagination, rows } = this.state;
+    const { columns, query } = this.props;
+    const { pagination, rows } = this.state;
     const paginated = compose(
       paginate(pagination),
       search.multipleColumns({ columns, query })
@@ -87,9 +85,16 @@ export default class TicketsTable extends React.Component {
           columns={columns}
           onChange={this.search}
           onColumnChange={searchColumn => this.setState({ searchColumn })}
-          query={this.state.query}
+          query={query}
           rows={rows}
         />
+        <button 
+          className="btn-link"
+          onClick={this.search.bind(this, {})}
+          type="button"
+        >
+          Clear Search
+        </button>
         <Table.Provider
           className="table table-striped table-bordered"
           columns={columns}

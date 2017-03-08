@@ -23,3 +23,10 @@ export const subscribe = () => {
     });
   };
 }
+
+export const search = (payload) => {
+  return {
+    type: actions.TICKETS_SEARCH,
+    payload,
+  }
+}
