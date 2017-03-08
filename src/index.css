@@ -7,3 +7,20 @@ body {
 .open > .dropdown-menu {
   padding: 10px;
 }
+
+.visibility-container {
+  padding: 10px;
+}
+
+.visibility-container label {
+  margin-bottom: 0;
+}
+
+.visibility-container label:not(:first-child) {
+  margin-left: 25px;
+}
+
+.visibility-container .visibility-value {
+  margin-right: 5px;
+}
+
