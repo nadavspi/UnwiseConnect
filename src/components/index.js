@@ -1,6 +1,7 @@
 import 'bootstrap/dist/css/bootstrap.css';
 import Home from './Home';
 import React, { Component } from 'react';
+import Settings from './protected/Settings';
 import Tickets from './protected/Tickets';
 import { Route, BrowserRouter, Link, Redirect, Switch } from 'react-router-dom';
 import { ActionTypes } from '../config/constants';
@@ -57,6 +58,9 @@ class App extends Component {
                   <Link to="/tickets" className="navbar-brand">Tickets</Link>
                 </li>
                 <li>
+                  <Link to="/settings" className="navbar-brand">Settings</Link>
+                </li>
+                <li>
                   {this.props.authed ? (
                     <button
                       onClick={() => this.props.dispatch(logout())}
@@ -82,6 +86,7 @@ class App extends Component {
               <Switch>
                 <PublicRoute path='/' authed={this.props.authed} exact component={Home} />
                 <PrivateRoute authed={this.props.authed} path='/tickets' component={Tickets} />
+                <PrivateRoute authed={this.props.authed} path='/settings' component={Settings} />
                 <Route render={() => <h3>No Match</h3>} />
               </Switch>
             </div>
