@@ -93,9 +93,9 @@ class App extends Component {
 }
 
 const mapStateToProps = state => ({
-  authed: state.authed,
-  error: state.error,
-  loading: state.loading,
+  authed: state.user.authed,
+  error: state.app.error,
+  loading: state.app.loading,
 });
 
 export default connect(mapStateToProps)(App);

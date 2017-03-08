@@ -5,12 +5,12 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import { ActionTypes } from './config/constants';
 import createEngine from 'redux-storage-engine-indexed-db';
-import reducers from './reducers/';
+import rootReducer from './reducers/';
 import thunk from 'redux-thunk';
 import { Provider } from 'react-redux';
 import { applyMiddleware, createStore } from 'redux';
 
-const reducer = storage.reducer(reducers);
+const reducer = storage.reducer(rootReducer);
 const engine = createEngine('tickets');
 
 const store = createStore(
