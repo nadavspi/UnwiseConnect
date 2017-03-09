@@ -1,8 +1,8 @@
 import 'bootstrap/dist/css/bootstrap.css';
 import Home from './Home';
 import React, { Component } from 'react';
-import Settings from './protected/Settings';
-import Tickets from './protected/Tickets';
+import Settings from './Settings';
+import Tickets from './Tickets';
 import { Route, BrowserRouter, Link, Redirect, Switch } from 'react-router-dom';
 import { ActionTypes } from '../config/constants';
 import { connect } from 'react-redux';

@@ -4,9 +4,9 @@ import React, { Component } from 'react';
 import Table from './Table';
 import classnames from 'classnames';
 import { connect } from 'react-redux';
-import { fetchTickets } from '../../../helpers/cw';
-import { ref } from '../../../config/constants';
-import { search, subscribe } from '../../../actions/tickets';
+import { fetchTickets } from '../../helpers/cw';
+import { ref } from '../../config/constants';
+import { search, subscribe } from '../../actions/tickets';
 
 class Tickets extends Component {
   constructor() {
