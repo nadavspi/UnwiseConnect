@@ -24,3 +24,15 @@ body {
   margin-right: 5px;
 }
 
+.column-filter-input {
+  width: 100%;
+}
+
+.column-filter-input[name="id"] {
+  max-width: 7em;
+}
+
+.column-filter-input[name="actualHours"],
+.column-filter-input[name="budgetHours"] {
+  max-width: 8em;
+}
