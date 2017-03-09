@@ -200,11 +200,13 @@ export default class TicketsTable extends React.Component {
           </Table.Header>
           <Table.Body rowKey="id" rows={paginated.rows} />
         </Table.Provider>
-        <Pagination 
-          changePage={this.changePage}
-          paginated={paginated}
-          pagination={pagination}
-        />
+        {paginated.amount > 1 && (
+          <Pagination 
+            changePage={this.changePage}
+            paginated={paginated}
+            pagination={pagination}
+          />
+        )}
       </div>
     );
   }
