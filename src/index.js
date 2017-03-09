@@ -12,7 +12,10 @@ import { Provider } from 'react-redux';
 import { applyMiddleware, createStore } from 'redux';
 
 const reducer = storage.reducer(rootReducer);
-const engine = filter(createEngine('tickets'), ['tickets']);
+const engine = filter(createEngine('tickets'), [
+  ['tickets', 'nested'],
+  ['tickets', 'flattened'],
+]);
 
 const store = createStore(
   reducer,
