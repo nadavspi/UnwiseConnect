@@ -68,7 +68,7 @@ class Tickets extends Component {
             type="button"
             onClick={this.expand.bind(this, 'addProject')}
           >
-            Add Project
+            {'Add Project '}
             <span className="caret"></span>
           </button>
           <div className="dropdown-menu">
