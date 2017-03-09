@@ -2,6 +2,8 @@ import { ActionTypes } from '../config/constants';
 
 const initialState = {
   authed: false,
+  creds: {},
+  toggl: {},
 };
 
 export default (state = initialState, action) => {
@@ -10,12 +12,11 @@ export default (state = initialState, action) => {
       return {
         ...state,
         authed: true,
+        creds: action.payload,
       };
 
     case ActionTypes.SIGN_OUT: 
-      return {
-        authed: false,
-      };
+      return initialState;
 
     default: 
       return state;

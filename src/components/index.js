@@ -35,7 +35,7 @@ class App extends Component {
   componentDidMount () {
     this.removeListener = firebaseAuth().onAuthStateChanged((user) => {
       if (user) {
-        this.props.dispatch({ type: ActionTypes.SIGN_IN });
+        this.props.dispatch({ type: ActionTypes.SIGN_IN, payload: user });
       } else {
         this.props.dispatch({ type: ActionTypes.LOADED });
       }
