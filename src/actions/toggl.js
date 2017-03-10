@@ -50,7 +50,6 @@ export const startTimer = payload => {
     if (!payload.description) {
       throw new Error('Missing description.');
     }
-    console.log('hey', payload, apiKey);
 
     const headers = {
       Authorization: `Basic ${process.env.REACT_APP_API_KEY}`,

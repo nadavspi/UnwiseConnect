@@ -93,9 +93,9 @@ class Tickets extends Component {
       )}
       {this.props.tickets.flattened.length > 0 && (
         <Table 
-          tickets={this.props.tickets.flattened} 
           query={this.props.tickets.query}
           search={this.search}
+          tickets={this.props.tickets.flattened} 
         />
       )}
     </div>

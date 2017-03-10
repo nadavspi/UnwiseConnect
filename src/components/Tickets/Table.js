@@ -4,6 +4,7 @@ import * as search from 'searchtabular';
 import Pagination from './Pagination';
 import React from 'react';
 import Search from 'reactabular-search-field';
+import StartTimer from './StartTimer';
 import VisibilityToggles from 'react-visibility-toggles';
 import cloneDeep from 'lodash.clonedeep';
 import { compose } from 'redux';
@@ -56,6 +57,25 @@ export default class TicketsTable extends React.Component {
             label: 'ID',
           },
           visible: true,
+        },
+        {
+          // Using a random property because it's easier than adding a new one
+          // to all the rows
+          property: 'mobileGuid',
+          header: {
+            label: 'Toggl',
+          },
+          visible: true,
+          cell: {
+            resolve: value => `(${value})`,
+            formatters: [
+              (value, { rowData }) => {
+                return (
+                  <StartTimer ticket={rowData} />
+                );
+              }
+            ]
+          },
         },
         {
           property: 'phase.name',
@@ -129,7 +149,13 @@ export default class TicketsTable extends React.Component {
     const { columns } = this.state;
 
     this.setState({
-      rows: resolve.resolve({ columns, method: resolve.nested })(tickets),
+      rows: resolve.resolve({ 
+        columns,
+        method: extra => compose(
+          resolve.byFunction('cell.resolve')(extra),
+          resolve.nested(extra),
+        )
+      })(tickets),
     });
   }
 
