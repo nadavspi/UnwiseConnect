@@ -1,11 +1,11 @@
+import * as TicketsActions from '../../actions/tickets';
 import AddProject from './AddProject';
 import Projects from './Projects';
 import React, { Component } from 'react';
 import Table from './Table';
+import ToggleProjects from './ToggleProjects';
 import classnames from 'classnames';
 import { connect } from 'react-redux';
-import { fetchTickets } from '../../helpers/cw';
-import { ref } from '../../config/constants';
 import { search, subscribe } from '../../actions/tickets';
 
 class Tickets extends Component {
@@ -26,10 +26,7 @@ class Tickets extends Component {
   }
 
   addProject(projectId) {
-    fetchTickets(projectId).then(tickets => {
-      ref.child(`tickets/${projectId}`)
-        .set(tickets);
-    });
+    this.props.dispatch(TicketsActions.updateTickets({ projectId }));
   }
 
   search(query, incremental) {
@@ -62,7 +59,7 @@ class Tickets extends Component {
     return (
       <div>
         <h1>Ticket Center</h1>
-        <div className={addClassnames}>
+        <span className={addClassnames}>
           <button 
             className="btn btn-default dropdown-toggle"
             type="button"
@@ -76,7 +73,8 @@ class Tickets extends Component {
               onAdd={this.addProject}
             />
           </div>
-        </div>
+        </span>
+        <ToggleProjects />
 
         <h2>Loaded Projects</h2>
         <Projects 

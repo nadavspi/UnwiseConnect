@@ -1,4 +1,5 @@
 import * as TogglActions from './toggl';
+import * as ProjectsActions from './projects';
 import { ActionTypes } from '../config/constants';
 import { isOrgMember } from '../helpers/github';
 import { ref, firebaseAuth } from '../config/constants'
@@ -54,6 +55,7 @@ export const subscribe = () => {
       if (user) {
         dispatch({ type: ActionTypes.SIGN_IN, payload: user });
         dispatch(TogglActions.subscribe(user.uid));
+        dispatch(ProjectsActions.subscribe());
       } else {
         dispatch({ type: ActionTypes.LOADED });
       }
