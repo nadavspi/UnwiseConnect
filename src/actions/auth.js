@@ -45,3 +45,22 @@ function verifyOrg(token, org) {
     });
   };
 }
+
+let removeListener = () => {};
+export const subscribe = () => {
+  return dispatch => {
+    removeListener = firebaseAuth().onAuthStateChanged((user) => {
+      if (user) {
+        dispatch({ type: ActionTypes.SIGN_IN, payload: user });
+      } else {
+        dispatch({ type: ActionTypes.LOADED });
+      }
+    })
+  }
+};
+
+export const unsubscribe = () => {
+  return dispatch => {
+    removeListener();
+  }
+};

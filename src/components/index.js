@@ -4,10 +4,8 @@ import React, { Component } from 'react';
 import Settings from './Settings';
 import Tickets from './Tickets';
 import { Route, BrowserRouter, Link, Redirect, Switch } from 'react-router-dom';
-import { ActionTypes } from '../config/constants';
 import { connect } from 'react-redux';
-import { firebaseAuth } from '../config/constants';
-import { login, logout } from '../actions/auth'
+import { login, logout, subscribe, unsubscribe } from '../actions/auth'
 
 function PrivateRoute ({component: Component, authed, ...rest}) {
   return (
@@ -33,16 +31,10 @@ function PublicRoute ({component: Component, authed, ...rest}) {
 
 class App extends Component {
   componentDidMount () {
-    this.removeListener = firebaseAuth().onAuthStateChanged((user) => {
-      if (user) {
-        this.props.dispatch({ type: ActionTypes.SIGN_IN, payload: user });
-      } else {
-        this.props.dispatch({ type: ActionTypes.LOADED });
-      }
-    })
+    this.props.dispatch(subscribe());
   }
   componentWillUnmount () {
-    this.removeListener()
+    this.props.dispatch(unsubscribe());
   }
   render() {
     return this.props.loading === true ? <h1>Loading</h1> : (
