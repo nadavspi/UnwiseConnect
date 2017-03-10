@@ -18,6 +18,12 @@ export default (state = initialState, action) => {
     case ActionTypes.SIGN_OUT: 
       return initialState;
 
+    case ActionTypes.USER_UPDATE: 
+      return {
+        ...state,
+        ...action.payload,
+      };
+
     default: 
       return state;
   }

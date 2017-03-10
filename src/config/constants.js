@@ -12,15 +12,18 @@ firebase.initializeApp(config);
 
 export const ref = firebase.database().ref();
 export const firebaseAuth = firebase.auth;
-window.ref = ref;
-window.firebaseAuth = firebaseAuth;
 
 export const ActionTypes = {
   ERROR: 'ERROR',
+  FIREBASE_SET_ERROR: 'FIREBASE_SET_ERROR',
+  FIREBASE_SET_REQUEST: 'FIREBASE_SET_REQUEST',
+  FIREBASE_SET_SUCCESS: 'FIREBASE_SET_SUCCESS',
   LOADED: 'LOADED',
   SIGN_IN: 'SIGN_IN',
   SIGN_OUT: 'SIGN_OUT',
   TICKETS_SEARCH: 'TICKETS_SEARCH',
   TICKETS_SUBSCRIBE: 'TICKETS_SUBSCRIBE',
   TICKETS_UPDATE: 'TICKETS_UPDATE',
+  TOGGL_START: 'TOGGL_START',
+  USER_UPDATE: 'USER_UPDATE',
 };

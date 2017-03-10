@@ -1,3 +1,4 @@
+import * as TogglActions from './toggl';
 import { ActionTypes } from '../config/constants';
 import { isOrgMember } from '../helpers/github';
 import { ref, firebaseAuth } from '../config/constants'
@@ -52,6 +53,7 @@ export const subscribe = () => {
     removeListener = firebaseAuth().onAuthStateChanged((user) => {
       if (user) {
         dispatch({ type: ActionTypes.SIGN_IN, payload: user });
+        dispatch(TogglActions.subscribe(user.uid));
       } else {
         dispatch({ type: ActionTypes.LOADED });
       }
