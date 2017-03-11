@@ -3,6 +3,7 @@ import { ActionTypes } from '../config/constants';
 const initialState = {
   authed: false,
   creds: {},
+  projects: [],
   toggl: {},
 };
 

@@ -1,3 +1,4 @@
+import * as UserActions from '../../../actions/user';
 import Projects from './Projects';
 import React, { Component } from 'react';
 import classnames from 'classnames';
@@ -10,9 +11,26 @@ class ToggleProjects extends Component {
     this.state = {
       expanded: '',
     }
+
+    this.toggle = this.toggle.bind(this);
+  }
+
+  toggle(projectId, e) {
+    const { checked } = e.target;
+    this.props.dispatch(UserActions.toggleProject({
+      add: checked,
+      projectId,
+    }));
   }
 
   render() {
+    const userProjects = this.props.userProjects || [];
+    const projects = this.props.projects.map(project => {
+      return {
+        ...project,
+        selected: userProjects.indexOf(project.id) > -1,
+      };
+    });
     const className = classnames('dropdown', { 
       'open': this.state.expanded,
     });
@@ -31,7 +49,10 @@ class ToggleProjects extends Component {
           className="dropdown-menu"
           style={{ width: '700px' }}
         >
-          <Projects projects={this.props.projects} />
+          <Projects 
+            projects={projects} 
+            toggle={this.toggle}
+          />
         </div>
       </span>
     );
@@ -40,5 +61,6 @@ class ToggleProjects extends Component {
 
 const mapStateToProps = state => ({
   projects: state.projects,
+  userProjects: state.user.projects,
 });
 export default connect(mapStateToProps)(ToggleProjects);

@@ -1,4 +1,5 @@
 import * as TogglActions from './toggl';
+import * as UserActions from './user';
 import * as ProjectsActions from './projects';
 import { ActionTypes } from '../config/constants';
 import { isOrgMember } from '../helpers/github';
@@ -56,6 +57,7 @@ export const subscribe = () => {
         dispatch({ type: ActionTypes.SIGN_IN, payload: user });
         dispatch(TogglActions.subscribe(user.uid));
         dispatch(ProjectsActions.subscribe());
+        dispatch(UserActions.subscribe(user.uid));
       } else {
         dispatch({ type: ActionTypes.LOADED });
       }
