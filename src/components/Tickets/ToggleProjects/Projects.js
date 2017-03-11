@@ -1,6 +1,6 @@
 import React from 'react';
 
-const Projects = ({ projects, toggle }) => {
+const Projects = ({ projects, toggle, update }) => {
   return (
     <ul 
       className="list-unstyled"
@@ -19,6 +19,14 @@ const Projects = ({ projects, toggle }) => {
               onChange={toggle.bind(this, project.id)}
             />
             {project.company} &mdash; {project.name} ({project.id})
+
+            <button 
+              className="btn-link"
+              onClick={update.bind(this, project.id)}
+              type="button"
+            >
+              Update Tickets
+            </button>
           </label>
         </li>
       ))}

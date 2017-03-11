@@ -1,4 +1,5 @@
 import * as UserActions from '../../../actions/user';
+import * as TicketsActions from '../../../actions/tickets';
 import Projects from './Projects';
 import React, { Component } from 'react';
 import classnames from 'classnames';
@@ -13,6 +14,7 @@ class ToggleProjects extends Component {
     }
 
     this.toggle = this.toggle.bind(this);
+    this.updateTickets = this.updateTickets.bind(this);
   }
 
   toggle(projectId, e) {
@@ -21,6 +23,10 @@ class ToggleProjects extends Component {
       add: checked,
       projectId,
     }));
+  }
+
+  updateTickets(projectId) {
+    this.props.dispatch(TicketsActions.updateTickets({ projectId }));
   }
 
   render() {
@@ -52,6 +58,7 @@ class ToggleProjects extends Component {
           <Projects 
             projects={projects} 
             toggle={this.toggle}
+            update={this.updateTickets}
           />
         </div>
       </span>
