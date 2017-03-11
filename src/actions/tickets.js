@@ -2,14 +2,14 @@ import { ActionTypes } from '../config/constants';
 import { fetchTickets } from '../helpers/cw';
 import { ref } from '../config/constants';
 
-export const subscribe = () => {
+export const subscribe = ({ projectId }) => {
   return (dispatch) => {
 
     dispatch({
       type: ActionTypes.TICKETS_SUBSCRIBE,
     });
 
-    const tickets = ref.child('tickets');
+    const tickets = ref.child(`tickets/${projectId}`);
     tickets.on('value', snapshot => {
       const nested = snapshot.val();
       const flattened = Object.keys(nested).map(project => nested[project]).reduce((prev, next) => prev.concat(next), []);
@@ -17,6 +17,7 @@ export const subscribe = () => {
       dispatch({
         type: ActionTypes.TICKETS_UPDATE,
         payload: {
+          projectId,
           flattened,
           nested,
         },
@@ -24,6 +25,20 @@ export const subscribe = () => {
     });
   };
 }
+
+export const unsubscribe = ({ projectId }) => {
+  return dispatch => {
+    const tickets = ref.child(`tickets/${projectId}`);
+    tickets.off();
+
+    dispatch({
+      type: ActionTypes.TICKETS_REMOVE,
+      payload: {
+        projectId,
+      },
+    });
+  };
+};
 
 export const search = (payload) => {
   return {

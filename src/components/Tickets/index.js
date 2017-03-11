@@ -6,7 +6,7 @@ import Table from './Table';
 import ToggleProjects from './ToggleProjects';
 import classnames from 'classnames';
 import { connect } from 'react-redux';
-import { search, subscribe } from '../../actions/tickets';
+import { search } from '../../actions/tickets';
 
 class Tickets extends Component {
   constructor() {
@@ -19,10 +19,6 @@ class Tickets extends Component {
     this.addProject = this.addProject.bind(this);
     this.search = this.search.bind(this);
     this.expand = this.expand.bind(this);
-  }
-
-  componentDidMount() {
-    this.props.dispatch(subscribe());
   }
 
   addProject(projectId) {
@@ -84,11 +80,10 @@ class Tickets extends Component {
         />
 
       <h2>Tickets</h2>
-      {this.props.tickets.loading ? (
+      {this.props.tickets.loading && (
         <p>Loading tickets&hellip;</p>
-      ) : (
-        <p>{this.props.tickets.flattened.length} tickets from {Object.keys(this.props.tickets.nested).length} projects.</p>
       )}
+      <p>{this.props.tickets.flattened.length} tickets from {Object.keys(this.props.tickets.nested).length} projects.</p>
       {this.props.tickets.flattened.length > 0 && (
         <Table 
           query={this.props.tickets.query}

@@ -1,11 +1,18 @@
+import * as TicketsActions from './tickets';
 import { ActionTypes } from '../config/constants';
 import { ref } from '../config/constants';
 
 const subscribeProjects = uid => {
-  return (dispatch) => {
+  return (dispatch, getState) => {
     const projectsRef = ref.child(`users/${uid}/projects`);
     projectsRef.on('value', snapshot => {
       const projects = snapshot.val();
+      // First load
+      if (getState().user.projects.length === 0 && projects.length > 0) {
+        projects.forEach(projectId => {
+          dispatch(TicketsActions.subscribe({ projectId }));
+        });
+      }
 
       dispatch({
         type: ActionTypes.USER_UPDATE,
@@ -36,8 +43,10 @@ export const toggleProject = payload => {
 
     if (payload.add) {
       nextProjects = [...projects, payload.projectId];
+      dispatch(TicketsActions.subscribe({ projectId: payload.projectId }));
     } else {
       nextProjects = projects.filter(id => id !== payload.projectId);
+      dispatch(TicketsActions.unsubscribe({ projectId: payload.projectId }));
     }
 
     const projectsRef = ref.child(`users/${uid}/projects`);
