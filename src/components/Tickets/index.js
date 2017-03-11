@@ -1,6 +1,5 @@
 import * as TicketsActions from '../../actions/tickets';
 import AddProject from './AddProject';
-import Projects from './Projects';
 import React, { Component } from 'react';
 import Table from './Table';
 import ToggleProjects from './ToggleProjects';
@@ -55,6 +54,7 @@ class Tickets extends Component {
     return (
       <div>
         <h1>Ticket Center</h1>
+        <ToggleProjects />
         <span className={addClassnames}>
           <button 
             className="btn btn-default dropdown-toggle"
@@ -70,28 +70,20 @@ class Tickets extends Component {
             />
           </div>
         </span>
-        <ToggleProjects />
 
-        <h2>Loaded Projects</h2>
-        <Projects 
-          loadProject={this.addProject}
-          projects={this.props.tickets.nested} 
-          searchProject={project => this.search({ 'project.name': project }, true)}
-        />
-
-      <h2>Tickets</h2>
-      {this.props.tickets.loading && (
-        <p>Loading tickets&hellip;</p>
-      )}
-      <p>{this.props.tickets.flattened.length} tickets from {Object.keys(this.props.tickets.nested).length} projects.</p>
-      {this.props.tickets.flattened.length > 0 && (
-        <Table 
-          query={this.props.tickets.query}
-          search={this.search}
-          tickets={this.props.tickets.flattened} 
-        />
-      )}
-    </div>
+        <h2>Tickets</h2>
+        {this.props.tickets.loading && (
+          <p>Loading tickets&hellip;</p>
+        )}
+        <p>{this.props.tickets.flattened.length} tickets from {Object.keys(this.props.tickets.nested).length} projects.</p>
+        {this.props.tickets.flattened.length > 0 && (
+          <Table 
+            query={this.props.tickets.query}
+            search={this.search}
+            tickets={this.props.tickets.flattened} 
+          />
+        )}
+      </div>
     );
   }
 }

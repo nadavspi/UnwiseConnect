@@ -7,6 +7,12 @@ const subscribeProjects = uid => {
     const projectsRef = ref.child(`users/${uid}/projects`);
     projectsRef.on('value', snapshot => {
       const projects = snapshot.val();
+
+      // They haven't selected any projects
+      if (!projects) {
+        return;
+      }
+
       // First load
       if (getState().user.projects.length === 0 && projects.length > 0) {
         projects.forEach(projectId => {
