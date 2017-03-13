@@ -1,5 +1,6 @@
 import * as TicketsActions from '../../actions/tickets';
 import AddProject from './AddProject';
+import Projects from './Projects';
 import React, { Component } from 'react';
 import Table from './Table';
 import ToggleProjects from './ToggleProjects';
@@ -70,6 +71,11 @@ class Tickets extends Component {
             />
           </div>
         </span>
+
+        <Projects 		
+          projects={this.props.tickets.nested} 		
+          searchProject={project => this.search({ 'project.name': project }, true)}		
+        />
 
         <h2>Tickets</h2>
         {this.props.tickets.loading ? (
