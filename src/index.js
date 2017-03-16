@@ -17,12 +17,18 @@ const engine = filter(createEngine('tickets'), [
   ['tickets', 'flattened'],
 ]);
 
+// Actions that trigger an IndexedDB update
+const engineActions = [
+  ActionTypes.TICKETS_REMOVE,
+  ActionTypes.TICKETS_UPDATE,
+];
+
 const store = createStore(
   reducer,
   window.__REDUX_DEVTOOLS_EXTENSION__ && window.__REDUX_DEVTOOLS_EXTENSION__(),
   applyMiddleware(
     thunk,
-    storage.createMiddleware(engine, [], [ActionTypes.TICKETS_UPDATE]),
+    storage.createMiddleware(engine, [], engineActions),
   ),
 );
 
