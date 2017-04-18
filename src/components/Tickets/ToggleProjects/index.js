@@ -53,7 +53,7 @@ class ToggleProjects extends Component {
         </button>
         <div 
           className="dropdown-menu"
-          style={{ width: '700px' }}
+          style={{ width: '700px', height: 'auto', maxHeight: '60vh', overflowY: 'auto' }}
         >
           <Projects 
             projects={projects} 
