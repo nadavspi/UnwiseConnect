@@ -25,7 +25,7 @@ class Settings extends Component {
       <div>
         <h1>Settings</h1>
         <Toggl 
-          apiKey={this.props.toggl.apiKey}
+          apiKey={this.props.toggl ? this.props.toggl.apiKey : undefined}
           onSubmit={this.saveToggl}
         />
 
