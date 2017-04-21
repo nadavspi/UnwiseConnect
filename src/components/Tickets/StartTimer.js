@@ -25,6 +25,7 @@ class StartTimer extends Component {
   startCustomTimer(e) {
     e.preventDefault();
     this.startTimer(this.state.description);
+    this.setState({ expanded: false });
   }
 
   toggle() {

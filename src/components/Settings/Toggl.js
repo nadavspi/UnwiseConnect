@@ -12,7 +12,7 @@ export default class Toggl extends Component {
   }
 
   componentDidMount() {
-    this.setState({ apiKey: this.props.apiKey });
+    this.setState({ apiKey: this.props.apiKey || '' });
   }
 
   componentWillReceiveProps(nextProps) {
