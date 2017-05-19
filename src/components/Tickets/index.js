@@ -74,7 +74,10 @@ class Tickets extends Component {
 
         <Projects 		
           projects={this.props.tickets.nested} 		
-          searchProject={project => this.search({ 'project.name': project }, true)}		
+          searchProject={({ company, project }) => this.search({ 
+            'company.name': company,
+            'project.name': project,
+          }, true)}		
         />
 
         <h2>Tickets</h2>

@@ -11,7 +11,10 @@ const Projects = props => {
             <button
               type="button"
               className="btn-link"
-              onClick={props.searchProject.bind(this, ticket.project.name)}
+              onClick={props.searchProject.bind(this, { 
+                company: ticket.company.name,
+                project: ticket.project.name,
+              })}
             >
               {ticket.project.name}
             </button>
