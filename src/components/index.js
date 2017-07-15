@@ -40,17 +40,17 @@ class App extends Component {
     return this.props.loading === true ? <h1>Loading</h1> : (
       <BrowserRouter>
         <div>
-          <nav className="navbar navbar-default navbar-static-top">
+          <nav className="navbar navbar-uc navbar-static-top">
             <div className="container">
               <div className="navbar-header">
                 <Link to="/" className="navbar-brand">UnwiseConnect</Link>
               </div>
               <ul className="nav navbar-nav pull-right">
                 <li>
-                  <Link to="/tickets" className="navbar-brand">Tickets</Link>
+                  <Link to="/tickets">Tickets</Link>
                 </li>
                 <li>
-                  <Link to="/settings" className="navbar-brand">Settings</Link>
+                  <Link to="/settings">Settings</Link>
                 </li>
               </ul>
             </div>
