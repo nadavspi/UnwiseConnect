@@ -52,24 +52,6 @@ class App extends Component {
                 <li>
                   <Link to="/settings" className="navbar-brand">Settings</Link>
                 </li>
-                <li>
-                  {this.props.authed ? (
-                    <button
-                      onClick={() => this.props.dispatch(logout())}
-                      className="navbar-brand btn btn-link"
-                    >
-                      Logout
-                    </button>
-                  ) : (
-                    <button 
-                      type="button"
-                      onClick={() => this.props.dispatch(login())}
-                      className="navbar-brand btn btn-link"
-                    >
-                      Login
-                    </button>
-                  )}
-                </li>
               </ul>
             </div>
           </nav>

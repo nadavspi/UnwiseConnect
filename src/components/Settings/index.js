@@ -2,6 +2,7 @@ import * as togglActions from '../../actions/toggl';
 import React, { Component } from 'react';
 import Toggl from './Toggl';
 import { connect } from 'react-redux';
+import { logout } from '../../actions/auth'
 
 class Settings extends Component {
   constructor() {
