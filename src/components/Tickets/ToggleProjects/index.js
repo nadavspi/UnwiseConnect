@@ -51,12 +51,12 @@ class ToggleProjects extends Component {
           Select Projects {' '}
           <span className="caret"></span>
         </button>
-        <div 
-          className="dropdown-menu"
+        <div
+          className="dropdown-menu dropdown-menu-right"
           style={{ width: '700px', height: 'auto', maxHeight: '60vh', overflowY: 'auto' }}
         >
-          <Projects 
-            projects={projects} 
+          <Projects
+            projects={projects}
             toggle={this.toggle}
             update={this.updateTickets}
           />

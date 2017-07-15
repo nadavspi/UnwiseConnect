@@ -24,6 +24,15 @@ body {
   margin-right: 5px;
 }
 
+.project-list__heading {
+  display: flex;
+  align-items: center;
+}
+
+.project-list__manage {
+  margin-left: auto;
+}
+
 .column-filter-input {
   width: 100%;
 }

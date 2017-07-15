@@ -49,36 +49,46 @@ class Tickets extends Component {
 
   render() {
     const { expanded } = this.state;
-    const addClassnames = classnames('dropdown', { 
+    const addClassnames = classnames('dropdown', {
       'open': expanded === 'addProject',
     });
     return (
       <div>
-        <h1>Ticket Center</h1>
-        <ToggleProjects />
-        <span className={addClassnames}>
-          <button 
-            className="btn btn-default dropdown-toggle"
-            type="button"
-            onClick={this.expand.bind(this, 'addProject')}
-          >
-            {'Add Project '}
-            <span className="caret"></span>
-          </button>
-          <div className="dropdown-menu">
-            <AddProject 
-              onAdd={this.addProject}
+        <div className="page-header">
+          <h1>Ticket Center</h1>
+        </div>
+        <div className="project-list panel panel-default">
+          <div className="project-list__heading panel-heading clearfix">
+            <strong>Active ConnectWise Projects</strong>
+            <div className="project-list__manage">
+              <ToggleProjects />
+              <span className={addClassnames}>
+                <button
+                  className="btn btn-link dropdown-toggle"
+                  type="button"
+                  onClick={this.expand.bind(this, 'addProject')}
+                >
+                  {'Add Project by ID '}
+                  <span className="caret"></span>
+                </button>
+                <div className="dropdown-menu dropdown-menu-right">
+                  <AddProject
+                    onAdd={this.addProject}
+                  />
+                </div>
+              </span>
+            </div>
+          </div>
+          <div className="panel-body">
+            <Projects
+              projects={this.props.tickets.nested}
+              searchProject={({ company, project }) => this.search({
+                'company.name': company,
+                'project.name': project,
+              }, true)}
             />
           </div>
-        </span>
-
-        <Projects 		
-          projects={this.props.tickets.nested} 		
-          searchProject={({ company, project }) => this.search({ 
-            'company.name': company,
-            'project.name': project,
-          }, true)}		
-        />
+        </div>
 
         <h2>Tickets</h2>
         {this.props.tickets.loading ? (
@@ -87,10 +97,10 @@ class Tickets extends Component {
           <p>{this.props.tickets.flattened.length} tickets from {Object.keys(this.props.tickets.nested).length} projects.</p>
         )}
         {this.props.tickets.flattened.length > 0 && (
-          <Table 
+          <Table
             query={this.props.tickets.query}
             search={this.search}
-            tickets={this.props.tickets.flattened} 
+            tickets={this.props.tickets.flattened}
           />
         )}
       </div>
