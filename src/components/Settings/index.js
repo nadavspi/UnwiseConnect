@@ -25,18 +25,30 @@ class Settings extends Component {
     return (
       <div>
         <h1>Settings</h1>
-        <Toggl 
-          apiKey={this.props.toggl ? this.props.toggl.apiKey : undefined}
-          onSubmit={this.saveToggl}
-        />
-
-        <p style={{ marginTop: '2em' }}>Use the button below to test the toggl integration. It will start a time entry called "Test by UnwiseConnect".</p>
-        <button 
-          type="button"
-          className="btn btn-primary"
-          onClick={e => this.startTimer()}
+        <div className="row">
+          <div className="col-md-8">
+            <Toggl
+              apiKey={this.props.toggl ? this.props.toggl.apiKey : undefined}
+              onSubmit={this.saveToggl}
+            />
+          </div>
+          <div className="col-md-4">
+            <p style={{ marginTop: '2em' }}>Use the button below to test the toggl integration. It will start a time entry called "Test by UnwiseConnect".</p>
+            <button
+              type="button"
+              className="btn btn-primary"
+              onClick={e => this.startTimer()}
+            >
+              Start timer
+            </button>
+          </div>
+        </div>
+        <hr/>
+        <button
+          onClick={() => this.props.dispatch(logout())}
+          className="btn btn-danger"
         >
-          Start timer
+          Logout
         </button>
       </div>
     );
