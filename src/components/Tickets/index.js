@@ -54,12 +54,15 @@ class Tickets extends Component {
     });
     return (
       <div>
-        <div className="page-header">
-          <h1>Ticket Center</h1>
-        </div>
         <div className="project-list panel panel-default">
           <div className="project-list__heading panel-heading clearfix">
-            <strong>Active ConnectWise Projects</strong>
+            <h4>Ticket Center
+              {this.props.tickets.loading ? (
+                <small> Loading tickets&hellip;</small>
+              ) : (
+                <small> {this.props.tickets.flattened.length} tickets from {Object.keys(this.props.tickets.nested).length} projects</small>
+              )}
+            </h4>
             <div className="project-list__manage">
               <ToggleProjects />
               <span className={addClassnames}>
@@ -88,21 +91,14 @@ class Tickets extends Component {
               }, true)}
             />
           </div>
+          {this.props.tickets.flattened.length > 0 && (
+            <Table
+              query={this.props.tickets.query}
+              search={this.search}
+              tickets={this.props.tickets.flattened}
+            />
+          )}
         </div>
-
-        <h2>Tickets</h2>
-        {this.props.tickets.loading ? (
-          <p>Loading tickets&hellip;</p>
-        ) : (
-          <p>{this.props.tickets.flattened.length} tickets from {Object.keys(this.props.tickets.nested).length} projects.</p>
-        )}
-        {this.props.tickets.flattened.length > 0 && (
-          <Table
-            query={this.props.tickets.query}
-            search={this.search}
-            tickets={this.props.tickets.flattened}
-          />
-        )}
       </div>
     );
   }

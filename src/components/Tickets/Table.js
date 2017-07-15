@@ -148,7 +148,7 @@ export default class TicketsTable extends React.Component {
     const { columns } = this.state;
 
     this.setState({
-      rows: resolve.resolve({ 
+      rows: resolve.resolve({
         columns,
         method: extra => compose(
           resolve.byFunction('cell.resolve')(extra),
@@ -188,30 +188,32 @@ export default class TicketsTable extends React.Component {
 
     return (
       <div>
-        <Search
-          column={this.state.searchColumn}
-          columns={columns}
-          onChange={this.search}
-          onColumnChange={searchColumn => this.setState({ searchColumn })}
-          query={query}
-          rows={rows}
-        />
-        <button 
-          className="btn-link"
-          onClick={this.search.bind(this, {})}
-          type="button"
-          style={{ marginBottom: '20px' }}
-        >
-          Clear Search
-        </button>
-
-        <div className="panel panel-default">
-          <VisibilityToggles
-            className="panel-body"
+        <div className="panel-body">
+          <h3>Search</h3>
+          <Search
+            column={this.state.searchColumn}
             columns={columns}
-            onToggleColumn={this.toggleColumn}
+            onChange={this.search}
+            onColumnChange={searchColumn => this.setState({ searchColumn })}
+            query={query}
+            rows={rows}
           />
+          <button
+            className="btn-link"
+            onClick={this.search.bind(this, {})}
+            type="button"
+            style={{ marginBottom: '20px' }}
+          >
+            Clear Search
+          </button>
         </div>
+
+        <VisibilityToggles
+          className="panel-body"
+          columns={columns}
+          onToggleColumn={this.toggleColumn}
+        />
+
         <Table.Provider
           className="table table-striped table-bordered"
           columns={visibleColumns}
@@ -226,7 +228,7 @@ export default class TicketsTable extends React.Component {
           <Table.Body rowKey="id" rows={paginated.rows} />
         </Table.Provider>
         {paginated.amount > 1 && (
-          <Pagination 
+          <Pagination
             changePage={this.changePage}
             paginated={paginated}
             pagination={pagination}
