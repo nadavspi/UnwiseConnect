@@ -31,6 +31,13 @@ class Settings extends Component {
               className="btn btn-danger"
             >
               Logout
+
+              <span
+                className="glyphicon glyphicon-log-out"
+                aria-hidden="true"
+              >
+              </span>
+
             </button>
           </div>
           <h1>Settings</h1>
