@@ -25,33 +25,35 @@ class Settings extends Component {
     return (
       <div>
         <div className="page-header">
+          <div className="pull-right">
+            <button
+              onClick={() => this.props.dispatch(logout())}
+              className="btn btn-danger"
+            >
+              Logout
+            </button>
+          </div>
           <h1>Settings</h1>
         </div>
+        <h2>Toggl Integration</h2>
         <div className="row">
-          <div className="col-md-8">
+          <div className="col-md-4">
             <Toggl
               apiKey={this.props.toggl ? this.props.toggl.apiKey : undefined}
               onSubmit={this.saveToggl}
             />
           </div>
-          <div className="col-md-4">
-            <p style={{ marginTop: '2em' }}>Use the button below to test the toggl integration. It will start a time entry called "Test by UnwiseConnect".</p>
+          <div className="col-md-8">
+            <p>Having issues with your Toggl API key? Use the button below to test the integration.<br/>It should start a time entry called "Test by UnwiseConnect".</p>
             <button
               type="button"
-              className="btn btn-primary"
+              className="btn btn-default"
               onClick={e => this.startTimer()}
             >
-              Start timer
+              Start test timer
             </button>
           </div>
         </div>
-        <hr/>
-        <button
-          onClick={() => this.props.dispatch(logout())}
-          className="btn btn-danger"
-        >
-          Logout
-        </button>
       </div>
     );
   }
