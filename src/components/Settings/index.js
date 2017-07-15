@@ -24,41 +24,45 @@ class Settings extends Component {
   render() {
     return (
       <div>
-        <div className="page-header">
-          <div className="pull-right">
-            <button
-              onClick={() => this.props.dispatch(logout())}
-              className="btn btn-danger"
-            >
-              Logout
-
-              <span
-                className="glyphicon glyphicon-log-out"
-                aria-hidden="true"
+        <div className="panel-uc panel panel-default">
+          <div className="panel-uc__heading panel-heading clearfix">
+            <h4>Settings</h4>
+            <div className="panel-uc__manage">
+              <button
+                onClick={() => this.props.dispatch(logout())}
+                className="btn btn-danger"
               >
-              </span>
+                Logout
 
-            </button>
+                <span
+                  className="glyphicon glyphicon-log-out"
+                  aria-hidden="true"
+                >
+                </span>
+
+              </button>
+            </div>
           </div>
-          <h1>Settings</h1>
-        </div>
-        <h2>Toggl Integration</h2>
-        <div className="row">
-          <div className="col-md-4">
-            <Toggl
-              apiKey={this.props.toggl ? this.props.toggl.apiKey : undefined}
-              onSubmit={this.saveToggl}
-            />
-          </div>
-          <div className="col-md-8">
-            <p>Having issues with your Toggl API key? Use the button below to test the integration.<br/>It should start a time entry called "Test by UnwiseConnect".</p>
-            <button
-              type="button"
-              className="btn btn-default"
-              onClick={e => this.startTimer()}
-            >
-              Start test timer
-            </button>
+          <div className="panel-body">
+            <h2>Toggl Integration</h2>
+            <div className="row">
+              <div className="col-md-4">
+                <Toggl
+                  apiKey={this.props.toggl ? this.props.toggl.apiKey : undefined}
+                  onSubmit={this.saveToggl}
+                />
+              </div>
+              <div className="col-md-8">
+                <p>Having issues with your Toggl API key? Use the button below to test the integration.<br/>It should start a time entry called "Test by UnwiseConnect".</p>
+                <button
+                  type="button"
+                  className="btn btn-default"
+                  onClick={e => this.startTimer()}
+                >
+                  Start test timer
+                </button>
+              </div>
+            </div>
           </div>
         </div>
       </div>

@@ -40,12 +40,12 @@ body {
   margin-right: 5px;
 }
 
-.project-list__heading {
+.panel-uc__heading {
   display: flex;
   align-items: center;
 }
 
-.project-list__manage {
+.panel-uc__manage {
   margin-left: auto;
 }
 

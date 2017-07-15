@@ -54,8 +54,8 @@ class Tickets extends Component {
     });
     return (
       <div>
-        <div className="project-list panel panel-default">
-          <div className="project-list__heading panel-heading clearfix">
+        <div className="panel-uc panel panel-default">
+          <div className="panel-uc__heading panel-heading clearfix">
             <h4>Ticket Center
               {this.props.tickets.loading ? (
                 <small> Loading tickets&hellip;</small>
@@ -63,8 +63,7 @@ class Tickets extends Component {
                 <small> {this.props.tickets.flattened.length} tickets from {Object.keys(this.props.tickets.nested).length} projects</small>
               )}
             </h4>
-            <div className="project-list__manage">
-              <ToggleProjects />
+            <div className="panel-uc__manage">
               <span className={addClassnames}>
                 <button
                   className="btn btn-link dropdown-toggle"
@@ -80,6 +79,7 @@ class Tickets extends Component {
                   />
                 </div>
               </span>
+              <ToggleProjects />
             </div>
           </div>
           <div className="panel-body">
