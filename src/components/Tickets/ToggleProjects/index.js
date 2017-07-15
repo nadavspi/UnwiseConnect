@@ -37,13 +37,13 @@ class ToggleProjects extends Component {
         selected: userProjects.indexOf(project.id) > -1,
       };
     });
-    const className = classnames('dropdown', { 
+    const className = classnames('dropdown', {
       'open': this.state.expanded,
     });
 
     return (
       <span className={className}>
-        <button 
+        <button
           className="btn btn-default dropdown-toggle"
           type="button"
           onClick={e => this.setState({ expanded: !this.state.expanded})}

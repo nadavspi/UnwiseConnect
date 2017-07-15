@@ -24,7 +24,9 @@ class Settings extends Component {
   render() {
     return (
       <div>
-        <h1>Settings</h1>
+        <div className="page-header">
+          <h1>Settings</h1>
+        </div>
         <div className="row">
           <div className="col-md-8">
             <Toggl
