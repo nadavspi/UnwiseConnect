@@ -11,7 +11,7 @@ class Home extends Component {
             {this.props.error.message}
           </div>
         )}
-        <div className="jumbotron">
+        <div className="jumbotron jumbotron-uc">
           <h1>UnwiseConnect</h1>
           <hr/>
           <p>Welcome to UnwiseConnect. To get started with time tracking, please authenticate.</p>

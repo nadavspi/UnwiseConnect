@@ -12,6 +12,11 @@ body {
   box-shadow: 0 1px 3px rgba(0,0,0,.2);
 }
 
+.jumbotron.jumbotron-uc {
+  background-color: transparent;
+  text-align: center;
+}
+
 .open > .dropdown-menu {
   padding: 15px;
 }
