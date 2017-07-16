@@ -40,7 +40,7 @@ class App extends Component {
     const isAuthed = this.props.authed;
     return this.props.loading === true ? <span className="loading"></span> : (
       <BrowserRouter>
-        <div>
+        <div className="page">
           {isAuthed &&
             <nav className="navbar navbar-uc navbar-static-top">
               <div className="container">

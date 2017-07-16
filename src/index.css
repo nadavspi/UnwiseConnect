@@ -1,6 +1,21 @@
 @keyframes spin {
-  0% { transform: rotate(0deg); }
-  100% { transform: rotate(360deg); }
+  from { transform: rotate(0deg); }
+  to { transform: rotate(360deg); }
+}
+
+@keyframes fadein-slide {
+  0% {
+    opacity: 0;
+    transform: translateY(-3px);
+  }
+  50% {
+    opacity: .5;
+    transform: translateY(-.5px);
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0);
+  }
 }
 
 body {
@@ -9,6 +24,10 @@ body {
   font-family: 'Roboto', sans-serif !important;
   background-color: #f5f8fa !important;
   color: #292b2c !important;
+}
+
+.page {
+  animation: fadein-slide .16s ease-out;
 }
 
 .navbar.navbar-uc {
