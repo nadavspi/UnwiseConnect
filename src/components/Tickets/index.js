@@ -83,6 +83,7 @@ class Tickets extends Component {
             </div>
           </div>
           <div className="panel-body">
+            <h3>Active Projects</h3>
             <Projects
               projects={this.props.tickets.nested}
               searchProject={({ company, project }) => this.search({

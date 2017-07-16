@@ -189,7 +189,7 @@ export default class TicketsTable extends React.Component {
     return (
       <div>
         <div className="panel-body">
-          <h3>Search</h3>
+          <h3>Search Tickets</h3>
           <Search
             column={this.state.searchColumn}
             columns={columns}
