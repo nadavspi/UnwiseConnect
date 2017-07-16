@@ -37,7 +37,7 @@ class App extends Component {
     this.props.dispatch(unsubscribe());
   }
   render() {
-    return this.props.loading === true ? <h1>Loading</h1> : (
+    return this.props.loading === true ? <span className="loading"></span> : (
       <BrowserRouter>
         <div>
           <nav className="navbar navbar-uc navbar-static-top">
