@@ -4,7 +4,7 @@
   "private": true,
   "devDependencies": {
     "jest-cli": "^20.0.4",
-    "react-scripts": "1.0.0"
+    "react-scripts": "1.0.10"
   },
   "dependencies": {
     "babel-eslint": "^7.0.0",
