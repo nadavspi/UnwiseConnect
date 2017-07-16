@@ -3,7 +3,8 @@
   "version": "0.1.0",
   "private": true,
   "devDependencies": {
-    "react-scripts": "0.9.5"
+    "jest-cli": "^20.0.4",
+    "react-scripts": "1.0.0"
   },
   "dependencies": {
     "babel-eslint": "^7.0.0",
