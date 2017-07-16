@@ -44,7 +44,7 @@ class ToggleProjects extends Component {
     return (
       <span className={className}>
         <button
-          className="btn btn-default dropdown-toggle"
+          className="btn btn-default btn-lg dropdown-toggle"
           type="button"
           onClick={e => this.setState({ expanded: !this.state.expanded})}
         >
