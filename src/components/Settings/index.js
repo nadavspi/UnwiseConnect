@@ -1,6 +1,7 @@
 import * as togglActions from '../../actions/toggl';
 import React, { Component } from 'react';
 import Toggl from './Toggl';
+import { Route, BrowserRouter, Link, Redirect, Switch } from 'react-router-dom';
 import { connect } from 'react-redux';
 import { logout } from '../../actions/auth'
 
@@ -26,7 +27,7 @@ class Settings extends Component {
       <div>
         <div className="panel-uc panel panel-default">
           <div className="panel-uc__heading panel-heading clearfix">
-            <h4>Settings</h4>
+            <h4>Settings <small><Link to="/">Go back</Link></small></h4>
             <div className="panel-uc__manage">
               <button
                 onClick={() => this.props.dispatch(logout())}
