@@ -30,15 +30,10 @@ class Settings extends Component {
             <div className="panel-uc__manage">
               <button
                 onClick={() => this.props.dispatch(logout())}
-                className="btn btn-danger"
+                className="btn btn-danger btn-lg"
               >
-                Logout
-
-                <span
-                  className="glyphicon glyphicon-log-out"
-                  aria-hidden="true"
-                >
-                </span>
+                Logout <span className="glyphicon glyphicon-log-out" aria-hidden="true"
+                ></span>
 
               </button>
             </div>
