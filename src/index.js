@@ -3,6 +3,7 @@ import * as storage from 'redux-storage'
 import App from './components';
 import React from 'react';
 import ReactDOM from 'react-dom';
+import registerServiceWorker from './registerServiceWorker';
 import createEngine from 'redux-storage-engine-indexed-db';
 import filter from 'redux-storage-decorator-filter';
 import rootReducer from './reducers/';
@@ -41,3 +42,5 @@ load(store);
    </Provider>,
   document.getElementById('root')
 );
+
+registerServiceWorker();
