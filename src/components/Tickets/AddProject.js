@@ -20,13 +20,18 @@ export default class AddProject extends Component {
     return (
       <form onSubmit={this.submit}>
         <div><label htmlFor="projectId">Project ID</label></div>
-        <input
-          id="projectId"
-          onChange={e => this.setState({ projectId: e.target.value })}
-          type="number"
-          value={this.state.projectId}
-        />
-        <button type="submit">Add</button>
+        <div className="input-group input-group-sm">
+          <input
+            id="projectId"
+            onChange={e => this.setState({ projectId: e.target.value })}
+            type="number"
+            value={this.state.projectId}
+            className="form-control"
+          />
+          <div className="input-group-btn">
+            <button type="submit" className="btn btn-primary">Add</button>
+          </div>
+        </div>
       </form>
     );
   }
