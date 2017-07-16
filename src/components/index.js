@@ -63,6 +63,7 @@ class App extends Component {
               </div>
             </nav>
           }
+          <div className="main-content container">
             <div className="row">
               <Switch>
                 <PublicRoute path='/' authed={this.props.authed} exact component={Home} />
