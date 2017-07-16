@@ -188,8 +188,8 @@ export default class TicketsTable extends React.Component {
 
     return (
       <div>
-        <div className="panel-body">
-          <h3>Search Tickets</h3>
+        <div className="panel-body col-md-6">
+          <h2>Search Tickets</h2>
           <Search
             column={this.state.searchColumn}
             columns={columns}
@@ -209,7 +209,7 @@ export default class TicketsTable extends React.Component {
         </div>
 
         <VisibilityToggles
-          className="panel-body"
+          className="panel-body visibility-toggles"
           columns={columns}
           onToggleColumn={this.toggleColumn}
         />

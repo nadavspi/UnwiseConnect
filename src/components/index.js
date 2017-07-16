@@ -69,7 +69,7 @@ class App extends Component {
                 <PublicRoute path='/' authed={this.props.authed} exact component={Home} />
                 <PrivateRoute authed={this.props.authed} path='/tickets' component={Tickets} />
                 <PrivateRoute authed={this.props.authed} path='/settings' component={Settings} />
-                <Route render={() => <h3>No Match</h3>} />
+                <Route render={() => <h2>No Match</h2>} />
               </Switch>
             </div>
           </div>

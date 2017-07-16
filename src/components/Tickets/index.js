@@ -82,23 +82,25 @@ class Tickets extends Component {
               <ToggleProjects />
             </div>
           </div>
-          <div className="panel-body">
-            <h3>Active Projects</h3>
-            <Projects
-              projects={this.props.tickets.nested}
-              searchProject={({ company, project }) => this.search({
-                'company.name': company,
-                'project.name': project,
-              }, true)}
-            />
+          <div className="row panel-body">
+            <div className="panel-body col-md-6">
+              <h2>Active Projects</h2>
+              <Projects
+                projects={this.props.tickets.nested}
+                searchProject={({ company, project }) => this.search({
+                  'company.name': company,
+                  'project.name': project,
+                }, true)}
+              />
+            </div>
+            {this.props.tickets.flattened.length > 0 && (
+              <Table
+                query={this.props.tickets.query}
+                search={this.search}
+                tickets={this.props.tickets.flattened}
+              />
+            )}
           </div>
-          {this.props.tickets.flattened.length > 0 && (
-            <Table
-              query={this.props.tickets.query}
-              search={this.search}
-              tickets={this.props.tickets.flattened}
-            />
-          )}
         </div>
       </div>
     );

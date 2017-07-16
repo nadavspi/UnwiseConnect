@@ -2,7 +2,7 @@ import React from 'react';
 
 const Projects = props => {
   return (
-    <ul style={{ marginBottom: '0px' }}>
+    <ul className="projects">
       {Object.keys(props.projects).map(projectId => {
         const ticket = props.projects[projectId][0];
         return (
