@@ -3,9 +3,11 @@
   "version": "0.1.0",
   "private": true,
   "devDependencies": {
-    "react-scripts": "0.7.0"
+    "jest-cli": "^20.0.4",
+    "react-scripts": "1.0.10"
   },
   "dependencies": {
+    "babel-eslint": "^7.0.0",
     "bootstrap": "^3.3.7",
     "classnames": "^2.2.5",
     "es6-promise": "^4.0.5",
