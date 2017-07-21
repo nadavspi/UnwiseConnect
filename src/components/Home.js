@@ -20,7 +20,7 @@ class Home extends Component {
             onClick={() => this.props.dispatch(login())}
             className="btn btn-lg btn-primary"
           >
-            Login with Github
+            Login with GitHub
           </button>
         </div>
       </div>
