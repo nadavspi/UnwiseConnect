@@ -77,21 +77,47 @@ body {
 }
 
 .projects {
-  max-height: 70px;
-  overflow: hidden;
-  box-shadow: inset 0 -5px 3px -2px rgba(0,0,0,.2);
   display: block;
-  position: absolute;
+  position: relative;
   background: white;
   margin: 1px;
+  z-index: 2;
+  border-bottom: solid 1px #ccc;
 }
 
 .projects:hover {
-  max-height: 500px;
-  box-shadow: none;
-  border: solid 1px #bbbbbb;
-  margin: 0;
-  transition: max-height .95s ease-out .1s;
+  border-bottom: 0;
+}
+
+@media screen and (min-width: 992px) {
+  .projects {
+    max-height: 70px;
+    overflow: hidden;
+    position: absolute;
+    min-width: 400px;
+  }
+
+  .projects:hover {
+    max-height: none;
+    box-shadow: none;
+    border: solid 1px #bbbbbb;
+    margin: 0;
+  }
+
+  .projects::after {
+    content: '';
+    display: block;
+    background: radial-gradient(ellipse at center, rgba(0,0,0,0.2) 0%,rgba(0,0,0,0) 80%);
+    position: absolute;
+    bottom: -20px;
+    left: 0;
+    right: 0;
+    height: 30px;
+  }
+
+  .projects:hover::after {
+    content: none;
+  }
 }
 
 .visibility-container {
