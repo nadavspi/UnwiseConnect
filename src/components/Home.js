@@ -13,7 +13,6 @@ class Home extends Component {
         )}
         <div className="jumbotron jumbotron-uc">
           <h1>UnwiseConnect</h1>
-          <hr/>
           <p>Welcome to UnwiseConnect. To get started with time tracking, please authenticate.</p>
           <button
             type="button"

@@ -72,6 +72,12 @@ body {
   text-align: center;
 }
 
+.jumbotron-uc h1 {
+  border-bottom: solid 1px #ccc;
+  padding-bottom: 20px;
+  margin-bottom: 20px;
+}
+
 .open > .dropdown-menu {
   padding: 15px;
 }
