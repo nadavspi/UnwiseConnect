@@ -29,25 +29,33 @@ export default class Toggl extends Component {
   render() {
     return (
       <div>
-        <h2>Toggl Integration</h2>
         <form onSubmit={this.submit}>
-          <div className="form-group">
-            <label htmlFor="toggl-api">API Key</label>
+          <label htmlFor="toggl-api">API Key</label>
+          <div className="input-group">
             <input
-              className="form-control" 
-              id="toggl-api" 
+              className="form-control"
+              id="toggl-api"
               onChange={e => this.setState({ apiKey: e.target.value })}
-              type="text" 
+              type="text"
               value={this.state.apiKey}
             />
+            <span className="input-group-btn">
+              <button
+                className="btn btn-primary"
+                type="submit"
+              >
+                Save
+              </button>
+            </span>
           </div>
-          <button 
-            className="btn btn-default"
-            type="submit"
-          >
-            Save
-          </button>
         </form>
+        <p>
+          <a
+            href="https://toggl.com/app/profile"
+            target="_blank">
+              Find your API key
+          </a>
+        </p>
       </div>
     );
   }
