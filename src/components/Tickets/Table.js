@@ -52,6 +52,12 @@ export default class TicketsTable extends React.Component {
     if (this.props.tickets.length !== nextProps.tickets.length) {
       this.prepareRows(nextProps.tickets);
     }
+
+    if (this.props.columns != nextProps.columns) {
+      console.log('new columns');
+      const columns = cloneDeep(nextProps.columns);
+      this.setState({ columns });
+    }
   }
 
   prepareRows(tickets = this.props.tickets) {
