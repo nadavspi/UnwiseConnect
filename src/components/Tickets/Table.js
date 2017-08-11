@@ -26,8 +26,8 @@ function paginate({ page, perPage }) {
 }
 
 export default class TicketsTable extends React.Component {
-  constructor() {
-    super();
+  constructor(props) {
+    super(props);
 
     this.state = {
       searchColumn: 'all',
@@ -36,97 +36,7 @@ export default class TicketsTable extends React.Component {
         perPage: 20,
       },
       rows: [],
-      columns: [
-        {
-          property: 'company.name',
-          header: {
-            label: 'Company',
-          },
-          visible: true,
-        },
-        {
-          property: 'project.name',
-          header: {
-            label: 'Project',
-          },
-          visible: true,
-        },
-        {
-          property: 'id',
-          header: {
-            label: 'ID',
-          },
-          visible: true,
-        },
-        {
-          // Using a random property because it's easier than adding a new one
-          // to all the rows
-          property: 'mobileGuid',
-          header: {
-            label: 'Toggl',
-          },
-          visible: true,
-          cell: {
-            resolve: value => `(${value})`,
-            formatters: [
-              (value, { rowData }) => {
-                return (
-                  <StartTimer ticket={rowData} />
-                );
-              }
-            ]
-          },
-        },
-        {
-          property: 'phase.name',
-          header: {
-            label: 'Phase',
-          },
-          visible: false,
-        },
-        {
-          property: 'summary',
-          header: {
-            label: 'Name',
-          },
-          visible: true,
-        },
-        {
-          property: 'budgetHours',
-          header: {
-            label: 'Budget Hours',
-          },
-          visible: true,
-        },
-        {
-          property: 'actualHours',
-          header: {
-            label: 'Actual Hours',
-          },
-          visible: true,
-        },
-        {
-          property: 'status.name',
-          header: {
-            label: 'Status',
-          },
-          visible: true,
-        },
-        {
-          property: 'billTime',
-          header: {
-            label: 'Billable',
-          },
-          visible: false,
-        },
-        {
-          property: 'resources',
-          header: {
-            label: 'Resources',
-          },
-          visible: false,
-        },
-      ],
+      columns: props.columns,
     };
 
     this.changePage = this.changePage.bind(this);
@@ -240,4 +150,95 @@ export default class TicketsTable extends React.Component {
 }
 
 TicketsTable.defaultProps = {
+  columns: [
+    {
+      property: 'company.name',
+      header: {
+        label: 'Company',
+      },
+      visible: true,
+    },
+    {
+      property: 'project.name',
+      header: {
+        label: 'Project',
+      },
+      visible: true,
+    },
+    {
+      property: 'id',
+      header: {
+        label: 'ID',
+      },
+      visible: true,
+    },
+    {
+      // Using a random property because it's easier than adding a new one
+      // to all the rows
+      property: 'mobileGuid',
+      header: {
+        label: 'Toggl',
+      },
+      visible: true,
+      cell: {
+        resolve: value => `(${value})`,
+        formatters: [
+          (value, { rowData }) => {
+            return (
+              <StartTimer ticket={rowData} />
+            );
+          }
+        ]
+      },
+    },
+    {
+      property: 'phase.name',
+      header: {
+        label: 'Phase',
+      },
+      visible: false,
+    },
+    {
+      property: 'summary',
+      header: {
+        label: 'Name',
+      },
+      visible: true,
+    },
+    {
+      property: 'budgetHours',
+      header: {
+        label: 'Budget Hours',
+      },
+      visible: true,
+    },
+    {
+      property: 'actualHours',
+      header: {
+        label: 'Actual Hours',
+      },
+      visible: true,
+    },
+    {
+      property: 'status.name',
+      header: {
+        label: 'Status',
+      },
+      visible: true,
+    },
+    {
+      property: 'billTime',
+      header: {
+        label: 'Billable',
+      },
+      visible: false,
+    },
+    {
+      property: 'resources',
+      header: {
+        label: 'Resources',
+      },
+      visible: false,
+    },
+  ],
 };
