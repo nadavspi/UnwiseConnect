@@ -50,6 +50,7 @@ body {
   position: absolute;
   right: 20px;
   bottom: -1px;
+  display: flex;
 }
 
 .navbar-uc .btn-settings {
