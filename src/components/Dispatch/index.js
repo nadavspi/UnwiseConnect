@@ -1,6 +1,9 @@
 import Fields from './Fields';
 import React, { Component } from 'react';
+import Table from '../Tickets/Table';
 import classnames from 'classnames';
+import { connect } from 'react-redux';
+import { search } from '../../actions/tickets';
 
 class Dispatch extends Component {
   constructor() {
@@ -46,13 +49,13 @@ class Dispatch extends Component {
           id: 'daily',
           value: 9,
           type: 'number',
-          require: true,
+          required: true,
         },
         {
           id: 'capTotalHours',
-          value: null,
+          value: undefined,
           type: 'number',
-          require: false,
+          required: false,
         },
         {
           id: 'skipByStatus',
@@ -66,7 +69,7 @@ class Dispatch extends Component {
             'subtract',
             'skip',
           ],
-          type: 'text',
+          type: 'select',
           required: false,
         },
         {
@@ -90,6 +93,20 @@ class Dispatch extends Component {
         }
       ]
     };
+
+    this.search = this.search.bind(this);
+  }
+
+  search(query, incremental) {
+    let nextQuery = query;
+    if (incremental) {
+      nextQuery = {
+        ...this.props.tickets.query,
+        ...query,
+      };
+    }
+
+    this.props.dispatch(search(nextQuery));
   }
 
   render() {
@@ -102,8 +119,52 @@ class Dispatch extends Component {
           <div className="panel-body">
             <Fields 
               fields={this.state.fields} 
-              onChange={(e) => console.log(e)}
+              onChange={(e) => console.log(e.target.value)}
             />
+            {this.props.tickets.flattened.length > 0 && (
+              <Table
+                query={this.props.tickets.query}
+                search={this.search}
+                tickets={this.props.tickets.flattened}
+                columns={[
+                  {
+                    property: 'company.name',
+                    header: {
+                      label: 'Company',
+                    },
+                    visible: true,
+                  },
+                  {
+                    property: 'project.name',
+                    header: {
+                      label: 'Project',
+                    },
+                    visible: true,
+                  },
+                  {
+                    property: 'id',
+                    header: {
+                      label: 'ID',
+                    },
+                    visible: true,
+                  },
+                  {
+                    property: 'phase.name',
+                      header: {
+                        label: 'Phase',
+                      },
+                      visible: false,
+                  },
+                  {
+                    property: 'summary',
+                    header: {
+                      label: 'Name',
+                    },
+                    visible: true,
+                  },
+                ]}
+              />
+            )}
           </div>
         </div>
       </div>
@@ -111,4 +172,9 @@ class Dispatch extends Component {
   }
 }
 
-export default Dispatch;
+const mapStateToProps = state => ({
+  tickets: state.tickets,
+});
+
+
+export default connect(mapStateToProps)(Dispatch);
