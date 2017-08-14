@@ -81,11 +81,7 @@ const fields = [
   {
     id: 'tickets',
     type: 'tickets',
-    value: [
-      { id: '343893' },
-      { id: '343899' },
-      { id: 338406 },
-    ],
+    value: [],
     required: true,
   }
 ];
@@ -118,14 +114,13 @@ class Dispatch extends Component {
           resolve: value => value,
           formatters: [
             (value, { rowData }) => {
-              console.log({ checked });
-              const checked = selectedTickets.indexOf(rowData.id) > -1;
               return (
-                <input 
-                  checked={checked} 
-                  onChange={e => onChange(rowData.id, e.target.checked)}
-                  type="checkbox"
-                />
+                <button
+                  type="button"
+                  onClick={e => onChange(rowData.id)}
+                >
+                  Add/remove
+                </button>
               );
             }
           ]
@@ -198,8 +193,8 @@ class Dispatch extends Component {
     return tickets.value.map(ticket => ticket.id);
   }
 
-  onSelect(id, checked) {
-    if (checked) {
+  onSelect(id) {
+    if (this.selectedTickets().indexOf(id) === -1) {
       this.setState({
         fields: this.state.fields.map(field => {
           if (field.id === 'tickets') {
@@ -244,13 +239,17 @@ class Dispatch extends Component {
               onChange={(e) => console.log(e.target.value)}
             />
             <p>{this.selectedTickets().length} tickets selected.</p>
+            <ul>
+              {this.selectedTickets().map(id => (
+                <li key={id}>{id}</li>
+              ))}
+            </ul>
             {this.props.tickets.flattened.length > 0 && (
               <Table
                 columns={this.columns(this.selectedTickets(), this.onSelect)}
                 query={this.props.tickets.query}
                 search={this.search}
                 tickets={this.props.tickets.flattened}
-                key={this.selectedTickets().length}
               />
             )}
           </div>
