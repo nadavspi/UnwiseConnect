@@ -76,7 +76,7 @@ const Fields = props => {
   return (
     <form className="dispatch-form">
       {props.fields.map(field => (
-        <p key={field.id}>
+        <p>
           {renderField(field, props.onChange)}
         </p>
       ))}
