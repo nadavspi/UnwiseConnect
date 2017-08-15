@@ -4,7 +4,7 @@ import React, { Component } from 'react';
 import Table from '../Tickets/Table';
 import classnames from 'classnames';
 import { connect } from 'react-redux';
-import { search } from '../../actions/tickets';
+import { search, dispatch as dispatchTickets } from '../../actions/tickets';
 
 const fields = [
   {
@@ -95,6 +95,7 @@ class Dispatch extends Component {
     };
 
     this.columns = this.columns.bind(this);
+    this.dispatch = this.dispatch.bind(this);
     this.onFieldChange = this.onFieldChange.bind(this);
     this.onTicketSelect = this.onTicketSelect.bind(this);
     this.search = this.search.bind(this);
@@ -247,10 +248,12 @@ class Dispatch extends Component {
     });
   }
 
-  params(fields = this.state.fields) {
-    return Object.assign(...fields.map(field => (
+  dispatch() {
+    const params = Object.assign(...this.state.fields.map(field => (
       { [field.id]: field.value }
     )));
+
+    this.props.dispatch(dispatchTickets({ params }));
   }
 
   render() {
@@ -265,6 +268,12 @@ class Dispatch extends Component {
               fields={this.state.fields} 
               onChange={this.onFieldChange}
             />
+            <button 
+              type="button"
+              onClick={this.dispatch}
+            >
+              Submit
+            </button>
             <Queue 
               selectedTickets={this.selectedTickets()} 
             />
@@ -276,12 +285,6 @@ class Dispatch extends Component {
                 tickets={this.props.tickets.flattened}
               />
             )}
-            <button 
-              type="button"
-              onClick={e => console.log(this.params())}
-            >
-              Submit
-            </button>
           </div>
         </div>
       </div>

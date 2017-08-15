@@ -9,3 +9,16 @@ export const fetchTickets = projectId => {
 
   return fetch(`${process.env.REACT_APP_API_URL}/v1/tickets/${projectId}`, { headers }).then(checkStatus).then(parseJSON);
 }
+
+export const dispatchTickets = params => {
+  const headers = {
+    Authorization: `Basic ${process.env.REACT_APP_API_KEY}`,
+    'Content-Type': 'application/json'
+  };
+
+  return fetch(`${process.env.REACT_APP_API_URL}/v1/dispatch`, {
+    headers,
+    method: 'POST',
+    body: JSON.stringify(params),
+  }).then(checkStatus).then(parseJSON);
+}
