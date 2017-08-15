@@ -94,8 +94,9 @@ class Dispatch extends Component {
       fields, 
     };
 
-    this.onSelect = this.onSelect.bind(this);
     this.columns = this.columns.bind(this);
+    this.onFieldChange = this.onFieldChange.bind(this);
+    this.onTicketSelect = this.onTicketSelect.bind(this);
     this.search = this.search.bind(this);
     this.selectedTickets = this.selectedTickets.bind(this);
   }
@@ -193,7 +194,7 @@ class Dispatch extends Component {
     return tickets.value.map(ticket => ticket.id);
   }
 
-  onSelect(id) {
+  onTicketSelect(id) {
     if (this.selectedTickets().indexOf(id) === -1) {
       this.setState({
         fields: this.state.fields.map(field => {
@@ -226,6 +227,26 @@ class Dispatch extends Component {
     }
   }
 
+  onFieldChange(id, type, e) {
+    let { value } = e.target;
+    if (type === 'boolean') {
+      value = e.target.checked;
+    }
+
+    this.setState({
+      fields: this.state.fields.map(field => {
+        if (field.id === id) {
+          return {
+            ...field,
+            value,
+          };
+        }
+
+        return field;
+      }),
+    });
+  }
+
   params(fields = this.state.fields) {
     return Object.assign(...fields.map(field => (
       { [field.id]: field.value }
@@ -242,14 +263,14 @@ class Dispatch extends Component {
           <div className="panel-body">
             <Fields 
               fields={this.state.fields} 
-              onChange={(e) => console.log(e.target.value)}
+              onChange={this.onFieldChange}
             />
             <Queue 
               selectedTickets={this.selectedTickets()} 
             />
             {this.props.tickets.flattened.length > 0 && (
               <Table
-                columns={this.columns(this.selectedTickets(), this.onSelect)}
+                columns={this.columns(this.selectedTickets(), this.onTicketSelect)}
                 query={this.props.tickets.query}
                 search={this.search}
                 tickets={this.props.tickets.flattened}

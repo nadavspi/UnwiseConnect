@@ -1,6 +1,6 @@
 import React from 'react'; 
 
-const renderField = (field, onChange) => {
+const Field = ({ field, onChange }) => {
   switch (field.type) {
     case 'text': 
     case 'number':
@@ -68,7 +68,7 @@ const renderField = (field, onChange) => {
       );
 
     default:
-      return;
+      return null;
   }
 };
 
@@ -76,8 +76,11 @@ const Fields = props => {
   return (
     <form className="dispatch-form">
       {props.fields.map(field => (
-        <p>
-          {renderField(field, props.onChange)}
+        <p key={field.id}>
+          <Field 
+            field={field}
+            onChange={props.onChange.bind(null, field.id, field.type)}
+          />
         </p>
       ))}
     </form>
