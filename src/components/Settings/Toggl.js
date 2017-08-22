@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import PropTypes from 'prop-types';
 
 export default class Toggl extends Component {
   constructor() {
@@ -62,6 +63,6 @@ export default class Toggl extends Component {
 }
 
 Toggl.propTypes = {
-  apiKey: React.PropTypes.string,
-  onSubmit: React.PropTypes.func.isRequired,
+  apiKey: PropTypes.string,
+  onSubmit: PropTypes.func.isRequired,
 }
