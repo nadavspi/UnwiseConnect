@@ -5,6 +5,7 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import createEngine from 'redux-storage-engine-indexed-db';
 import filter from 'redux-storage-decorator-filter';
+import registerServiceWorker from './registerServiceWorker';
 import rootReducer from './reducers/';
 import thunk from 'redux-thunk';
 import { ActionTypes } from './config/constants';
@@ -41,3 +42,4 @@ load(store);
    </Provider>,
   document.getElementById('root')
 );
+registerServiceWorker();
