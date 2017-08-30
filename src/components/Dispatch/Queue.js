@@ -2,7 +2,6 @@ import React, { Component } from 'react';
 
 // TODO:
 // - remove button
-// - ticket budget
 // - dispatch hours override
 // - total hours for selected tickets
 
@@ -18,7 +17,10 @@ export default class Queue extends Component {
         <p>{this.props.selectedTickets.length} tickets selected.</p>
         <ul>
           {this.props.selectedTickets.map(ticket => (
-            <li key={ticket.id}>{ticket.id}</li>
+            <li key={ticket.id}>
+              {ticket.id} — {ticket.company.name} — {ticket.summary} {' '}
+              ({ticket.actualHours} / {ticket.budgetHours})
+            </li>
           ))}
         </ul>
       </div>
