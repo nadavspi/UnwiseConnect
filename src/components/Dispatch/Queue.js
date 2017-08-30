@@ -17,8 +17,8 @@ export default class Queue extends Component {
         <h2>Queue</h2>
         <p>{this.props.selectedTickets.length} tickets selected.</p>
         <ul>
-          {this.props.selectedTickets.map(id => (
-            <li key={id}>{id}</li>
+          {this.props.selectedTickets.map(ticket => (
+            <li key={ticket.id}>{ticket.id}</li>
           ))}
         </ul>
       </div>

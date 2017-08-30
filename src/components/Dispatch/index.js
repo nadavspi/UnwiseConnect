@@ -192,11 +192,14 @@ class Dispatch extends Component {
       return [];
     }
 
-    return tickets.value.map(ticket => ticket.id);
+    return tickets.value.map(ticket => ticket.id).map(id => {
+      return this.props.tickets.flattened.find(ticket => ticket.id == id);
+    });
   }
 
   onTicketSelect(id) {
-    if (this.selectedTickets().indexOf(id) === -1) {
+    const selectedIds = this.selectedTickets().map(ticket => ticket.id);
+    if (selectedIds.indexOf(id) === -1) {
       this.setState({
         fields: this.state.fields.map(field => {
           if (field.id === 'tickets') {
