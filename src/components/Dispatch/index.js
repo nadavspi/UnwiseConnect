@@ -278,6 +278,7 @@ class Dispatch extends Component {
               Submit
             </button>
             <Queue 
+              onRemove={this.onTicketSelect}
               selectedTickets={this.selectedTickets()} 
             />
             {this.props.tickets.flattened.length > 0 && (
