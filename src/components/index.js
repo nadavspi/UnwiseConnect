@@ -89,6 +89,7 @@ class App extends Component {
 
 const mapStateToProps = state => ({
   authed: state.user.authed,
+  capabilities: state.user.capabilities,
   error: state.app.error,
   loading: state.app.loading,
 });
