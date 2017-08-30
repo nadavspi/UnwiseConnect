@@ -52,9 +52,11 @@ class App extends Component {
                   <li>
                     <Link to="/tickets">Tickets</Link>
                   </li>
-                  <li>
-                    <Link to="/dispatch">Dispatch</Link>
-                  </li>
+                  {this.props.capabilities.dispatch && (
+                    <li>
+                      <Link to="/dispatch">Dispatch</Link>
+                    </li>
+                  )}
                   <li>
                     <Link
                       to="/settings"
