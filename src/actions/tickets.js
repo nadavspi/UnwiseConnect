@@ -90,7 +90,6 @@ export const dispatch = payload => {
     });
 
     dispatchTickets(payload.params).then(response => {
-      console.log({ response });
       dispatch({
         type: ActionTypes.TICKETS_DISPATCH_SUCCESS,
         response: payload,
