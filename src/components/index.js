@@ -1,4 +1,5 @@
 import 'bootstrap/dist/css/bootstrap.css';
+import Dispatch from './Dispatch';
 import Home from './Home';
 import React, { Component } from 'react';
 import Settings from './Settings';
@@ -49,6 +50,14 @@ class App extends Component {
                 </div>
                 <ul className="nav nav-settings">
                   <li>
+                    <Link to="/tickets">Tickets</Link>
+                  </li>
+                  {this.props.capabilities.dispatch && (
+                    <li>
+                      <Link to="/dispatch">Dispatch</Link>
+                    </li>
+                  )}
+                  <li>
                     <Link
                       to="/settings"
                       className="btn btn-default btn-sm btn-settings"
@@ -68,6 +77,7 @@ class App extends Component {
               <Switch>
                 <PublicRoute path='/' authed={this.props.authed} exact component={Home} />
                 <PrivateRoute authed={this.props.authed} path='/tickets' component={Tickets} />
+                <PrivateRoute authed={this.props.authed} path='/dispatch' component={Dispatch} />
                 <PrivateRoute authed={this.props.authed} path='/settings' component={Settings} />
                 <Route render={() => <h2>No Match</h2>} />
               </Switch>
@@ -81,6 +91,7 @@ class App extends Component {
 
 const mapStateToProps = state => ({
   authed: state.user.authed,
+  capabilities: state.user.capabilities,
   error: state.app.error,
   loading: state.app.loading,
 });
