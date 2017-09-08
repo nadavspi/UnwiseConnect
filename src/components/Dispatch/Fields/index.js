@@ -27,6 +27,7 @@ const Field = ({ field, onChange }) => {
         <span>
           <input 
             checked={field.value}
+            id={field.id}
             onChange={onChange}
             type="checkbox"
           />
