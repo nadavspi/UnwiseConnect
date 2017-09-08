@@ -200,6 +200,21 @@ class Dispatch extends Component {
     });
   }
 
+  resetTickets() {
+    this.setState({
+      fields: this.state.fields.map(field => {
+        if (field.id === 'tickets') {
+          return {
+            ...field,
+            value: [],
+          };
+        }
+
+        return field;
+      }),
+    });
+  }
+
   onTicketSelect(id) {
     const selectedIds = this.selectedTickets().map(ticket => ticket.id);
     if (selectedIds.indexOf(id) === -1) {
@@ -282,6 +297,7 @@ class Dispatch extends Component {
             </button>
             <Queue 
               onRemove={this.onTicketSelect}
+              resetTickets={this.resetTickets}
               selectedTickets={this.selectedTickets()} 
             />
             {this.props.tickets.flattened.length > 0 && (

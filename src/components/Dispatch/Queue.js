@@ -31,6 +31,14 @@ export default class Queue extends Component {
       <div>
         <h2>Queue ({this.totalBudget()} hours)</h2>
         <p>{this.props.selectedTickets.length} tickets selected.</p>
+        {this.props.selectedTickets.length > 0 && (
+          <button
+            onClick={this.props.resetTickets}
+            type="button"
+          >
+            Reset
+          </button>
+        )}
         <ul>
           {this.props.selectedTickets.map(ticket => (
             <li 
