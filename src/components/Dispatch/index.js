@@ -4,6 +4,7 @@ import React, { Component } from 'react';
 import Table from '../Tickets/Table';
 import classnames from 'classnames';
 import { connect } from 'react-redux';
+import { format as formatDate } from 'date-fns';
 import { search, dispatch as dispatchTickets } from '../../actions/tickets';
 
 const fields = [
@@ -15,13 +16,13 @@ const fields = [
   },
   {
     id: 'startDate',
-    value: '2017-08-09',
+    value: formatDate(new Date(), 'YYYY-MM-DD'),
     type: 'text',
     required: true,
   },
   {
     id: 'endDate',
-    value: '2017-08-10',
+    value: formatDate(new Date(), 'YYYY-MM-DD'),
     type: 'text',
     required: false,
   },
@@ -33,17 +34,17 @@ const fields = [
     ],
     value: 'America/New_York',
     type: 'select',
-    require: true,
+    required: true,
   },
   {
     id: 'startHour',
     value: 9,
     type: 'number',
-    require: true,
+    required: true,
   },
   {
     id: 'daily',
-    value: 9,
+    value: 8,
     type: 'number',
     required: true,
   },
@@ -62,8 +63,9 @@ const fields = [
     id: 'skipDuplicateMode',
     value: 'subtract',
     values: [
-      'subtract',
+      'ignore',
       'skip',
+      'subtract',
     ],
     type: 'select',
     required: false,
@@ -98,6 +100,7 @@ class Dispatch extends Component {
     this.dispatch = this.dispatch.bind(this);
     this.onFieldChange = this.onFieldChange.bind(this);
     this.onTicketSelect = this.onTicketSelect.bind(this);
+    this.resetTickets = this.resetTickets.bind(this);
     this.search = this.search.bind(this);
     this.selectedTickets = this.selectedTickets.bind(this);
   }

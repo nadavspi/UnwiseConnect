@@ -8,6 +8,7 @@
   "dependencies": {
     "bootstrap": "^3.3.7",
     "classnames": "^2.2.5",
+    "date-fns": "^1.28.5",
     "es6-promise": "^4.0.5",
     "firebase": "^3.6.1",
     "github-api": "^3.0.0",
