@@ -77,7 +77,7 @@ const fields = [
   },
   {
     id: 'dry',
-    value: true,
+    value: false,
     type: 'boolean',
   },
   {
