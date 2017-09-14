@@ -1,11 +1,5 @@
 import React, { Component } from 'react';
-import classnames from 'classnames';
-
 export default class Queue extends Component {
-  constructor() {
-    super()
-  }
-
   isOverBudget(ticket) {
     return ticket.actualHours > ticket.budgetHours;
   }

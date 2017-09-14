@@ -2,7 +2,6 @@ import Fields from './Fields';
 import Queue from './Queue';
 import React, { Component } from 'react';
 import Table from '../Tickets/Table';
-import classnames from 'classnames';
 import { connect } from 'react-redux';
 import { format as formatDate } from 'date-fns';
 import { search, dispatch as dispatchTickets } from '../../actions/tickets';
