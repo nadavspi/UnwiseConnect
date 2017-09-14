@@ -1,9 +1,6 @@
 import React, { Component } from 'react';
 import classnames from 'classnames';
 
-// TODO:
-// - dispatch hours override
-
 export default class Queue extends Component {
   constructor() {
     super()
@@ -21,7 +18,6 @@ export default class Queue extends Component {
       if (remaining < 0) {
         return 0;
       }
-      console.log({ remaining });
       return remaining;
     }).reduce((a, b) => { return a + b }, 0);
   }
@@ -47,6 +43,12 @@ export default class Queue extends Component {
             >
               {ticket.id} — {ticket.company.name} — {ticket.summary} {' '}
               ({ticket.actualHours || 0} / {ticket.budgetHours || 0}) {' '}
+              <input
+                style={{ width: '45px', marginLeft: '10px' }}
+                type="number"
+                value={ticket.hours} 
+                onChange={(e) => this.props.setTicketHours(ticket.id, e.target.value)}
+              />
               <button 
                 className="btn btn-link"
                 onClick={() => this.props.onRemove(ticket.id)}

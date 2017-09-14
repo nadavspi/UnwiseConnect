@@ -103,6 +103,7 @@ class Dispatch extends Component {
     this.resetTickets = this.resetTickets.bind(this);
     this.search = this.search.bind(this);
     this.selectedTickets = this.selectedTickets.bind(this);
+    this.setTicketHours = this.setTicketHours.bind(this);
   }
 
   columns(selectedTickets, onChange) {
@@ -218,6 +219,7 @@ class Dispatch extends Component {
   onTicketSelect(id) {
     const selectedIds = this.selectedTickets().map(ticket => ticket.id);
     if (selectedIds.indexOf(id) === -1) {
+      // Adding a ticket
       this.setState({
         fields: this.state.fields.map(field => {
           if (field.id === 'tickets') {
@@ -234,6 +236,7 @@ class Dispatch extends Component {
         }),
       });
     } else {
+      // Removing a ticket
       this.setState({
         fields: this.state.fields.map(field => {
           if (field.id === 'tickets') {
@@ -261,6 +264,30 @@ class Dispatch extends Component {
           return {
             ...field,
             value,
+          };
+        }
+
+        return field;
+      }),
+    });
+  }
+
+  setTicketHours(id, hours) {
+    this.setState({
+      fields: this.state.fields.map(field => {
+        if (field.id === 'tickets') {
+          return {
+            ...field,
+            value: field.value.map(ticket => {
+              if (ticket.id === id) {
+                return {
+                  ...ticket,
+                  hours,
+                };
+              }
+
+              return ticket;
+            }),
           };
         }
 
@@ -299,6 +326,7 @@ class Dispatch extends Component {
               onRemove={this.onTicketSelect}
               resetTickets={this.resetTickets}
               selectedTickets={this.selectedTickets()} 
+              setTicketHours={this.setTicketHours}
             />
             {this.props.tickets.flattened.length > 0 && (
               <Table
