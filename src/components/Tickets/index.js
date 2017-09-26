@@ -5,6 +5,7 @@ import React, { Component } from 'react';
 import Table from './Table';
 import ToggleProjects from './ToggleProjects';
 import classnames from 'classnames';
+import sortOn from 'sort-on';
 import { connect } from 'react-redux';
 import { search } from '../../actions/tickets';
 
@@ -17,8 +18,18 @@ class Tickets extends Component {
     }
 
     this.addProject = this.addProject.bind(this);
-    this.search = this.search.bind(this);
     this.expand = this.expand.bind(this);
+    this.projects = this.projects.bind(this);
+    this.search = this.search.bind(this);
+  }
+
+  projects() {
+    // We can use the first ticket from each project to get the project's metadata
+    const projects = Object.keys(this.props.tickets.nested).map(projectId => {
+      return this.props.tickets.nested[projectId][0];
+    });
+
+    return sortOn(projects, ['company.name', 'project.name']);
   }
 
   addProject(projectId) {
@@ -86,7 +97,7 @@ class Tickets extends Component {
             <div className="panel-body col-md-6">
               <h2>Active Projects</h2>
               <Projects
-                projects={this.props.tickets.nested}
+                projects={this.projects()}
                 searchProject={({ company, project }) => this.search({
                   'company.name': company,
                   'project.name': project,
