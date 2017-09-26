@@ -5,7 +5,7 @@ import React, { Component } from 'react';
 import Table from './Table';
 import ToggleProjects from './ToggleProjects';
 import classnames from 'classnames';
-import sortOn from 'sort-on';
+import sortBy from 'sort-by';
 import { connect } from 'react-redux';
 import { search } from '../../actions/tickets';
 
@@ -29,7 +29,7 @@ class Tickets extends Component {
       return this.props.tickets.nested[projectId][0];
     });
 
-    return sortOn(projects, ['company.name', 'project.name']);
+    return projects.sort(sortBy('company.name', 'project.name'));
   }
 
   addProject(projectId) {

@@ -3,7 +3,7 @@ import * as TicketsActions from '../../../actions/tickets';
 import Projects from './Projects';
 import React, { Component } from 'react';
 import classnames from 'classnames';
-import sortOn from 'sort-on';
+import sortBy from 'sort-by';
 import { connect } from 'react-redux';
 
 class ToggleProjects extends Component {
@@ -68,7 +68,7 @@ class ToggleProjects extends Component {
 }
 
 const mapStateToProps = state => ({
-  projects: sortOn(state.projects, ['company', 'name']),
+  projects: state.projects.sort(sortBy('company', 'name')),
   userProjects: state.user.projects,
 });
 export default connect(mapStateToProps)(ToggleProjects);
