@@ -3,11 +3,10 @@ import React from 'react';
 const Projects = props => {
   return (
     <div className="projects list-group">
-      {Object.keys(props.projects).map(projectId => {
-        const ticket = props.projects[projectId][0];
+      {props.projects.map(ticket => {
         return (
           <button
-            key={projectId}
+            key={ticket.project.id}
             type="button"
             className="list-group-item"
             onClick={props.searchProject.bind(this, {
