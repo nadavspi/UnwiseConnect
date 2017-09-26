@@ -92,7 +92,7 @@ export const dispatch = payload => {
     dispatchTickets(payload.params).then(response => {
       dispatch({
         type: ActionTypes.TICKETS_DISPATCH_SUCCESS,
-        response: payload,
+        payload: response,
       });
     });
   };

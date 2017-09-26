@@ -75,7 +75,7 @@ const Field = ({ field, onChange }) => {
 
 const Fields = props => {
   return (
-    <form className="dispatch-form">
+    <div className="dispatch-fields">
       {props.fields.map(field => (
         <p key={field.id}>
           <Field 
@@ -84,7 +84,7 @@ const Fields = props => {
           />
         </p>
       ))}
-    </form>
+    </div>
   );
 };
 

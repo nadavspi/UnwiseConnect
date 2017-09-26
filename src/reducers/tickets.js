@@ -6,6 +6,10 @@ const initialState = {
   loading: false,
   nested: {},
   query: {},
+  dispatching: {
+    inProgress: false,
+    response: null,
+  },
 };
 
 export default (state = initialState, action) => {
@@ -51,6 +55,24 @@ export default (state = initialState, action) => {
       return {
         ...state,
         query: action.payload,
+      };
+
+    case ActionTypes.TICKETS_DISPATCH:
+      return {
+        ...state,
+        dispatching: {
+          inProgress: true,
+          response: null,
+        },
+      };
+
+    case ActionTypes.TICKETS_DISPATCH_SUCCESS:
+      return {
+        ...state,
+        dispatching: {
+          inProgress: false,
+          response: action.payload,
+        },
       };
 
     default:

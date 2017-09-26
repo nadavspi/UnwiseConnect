@@ -1,5 +1,13 @@
 import React, { Component } from 'react';
 export default class Queue extends Component {
+  constructor() {
+    super();
+
+    this.state = {
+      expanded: false,
+    }
+  }
+
   isOverBudget(ticket) {
     return ticket.actualHours > ticket.budgetHours;
   }
@@ -19,40 +27,51 @@ export default class Queue extends Component {
   render() {
     return (
       <div>
-        <h2>Queue ({this.totalBudget()} hours)</h2>
-        <p>{this.props.selectedTickets.length} tickets selected.</p>
-        {this.props.selectedTickets.length > 0 && (
-          <button
-            onClick={this.props.resetTickets}
-            type="button"
-          >
-            Reset
-          </button>
-        )}
-        <ul>
-          {this.props.selectedTickets.map(ticket => (
-            <li 
-              key={ticket.id}
-              style={ this.isOverBudget(ticket) ? { color: 'darkred' } : {} }
-            >
-              {ticket.id} — {ticket.company.name} — {ticket.summary} {' '}
-              ({ticket.actualHours || 0} / {ticket.budgetHours || 0}) {' '}
-              <input
-                style={{ width: '45px', marginLeft: '10px' }}
-                type="number"
-                value={ticket.hours} 
-                onChange={(e) => this.props.setTicketHours(ticket.id, e.target.value)}
-              />
-              <button 
-                className="btn btn-link"
-                onClick={() => this.props.onRemove(ticket.id)}
+        <button 
+          className="btn btn-default"
+          onClick={() => this.setState({ expanded: !this.state.expanded })}
+          style={{ marginTop: '20px', marginBottom: '20px' }}
+          type="button"
+        >
+          <h2 style={{ margin: 0 }}>Queue ({this.props.selectedTickets.length} tickets, {this.totalBudget()} hours)</h2>
+        </button>
+        {this.state.expanded && (
+          <div>
+            <p>{this.props.selectedTickets.length} tickets selected.</p>
+            {this.props.selectedTickets.length > 0 && (
+              <button
+                onClick={this.props.resetTickets}
                 type="button"
               >
-                Remove
+                Reset
               </button>
-            </li>
-          ))}
-        </ul>
+            )}
+            <ul>
+              {this.props.selectedTickets.map(ticket => (
+                <li 
+                  key={ticket.id}
+                  style={ this.isOverBudget(ticket) ? { color: 'darkred' } : {} }
+                >
+                  {ticket.id} — {ticket.company.name} — {ticket.summary} {' '}
+                  ({ticket.actualHours || 0} / {ticket.budgetHours || 0}) {' '}
+                  <input
+                    style={{ width: '45px', marginLeft: '10px' }}
+                    type="number"
+                    value={ticket.hours} 
+                    onChange={(e) => this.props.setTicketHours(ticket.id, e.target.value)}
+                  />
+                  <button 
+                    className="btn btn-link"
+                    onClick={() => this.props.onRemove(ticket.id)}
+                    type="button"
+                  >
+                    Remove
+                  </button>
+                </li>
+              ))}
+            </ul>
+          </div>
+        )}
       </div>
     );
   }

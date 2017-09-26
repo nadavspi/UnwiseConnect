@@ -1,4 +1,6 @@
+import './dispatch.css';
 import Fields from './Fields';
+import JSONPretty from 'react-json-pretty';
 import Queue from './Queue';
 import React, { Component } from 'react';
 import Table from '../Tickets/Table';
@@ -304,6 +306,8 @@ class Dispatch extends Component {
   }
 
   render() {
+    const { inProgress, response } = this.props.tickets.dispatching;
+
     return (
       <div>
         <div className="panel-uc panel panel-default">
@@ -311,16 +315,30 @@ class Dispatch extends Component {
             <h4>Dispatch Center</h4>
           </div>
           <div className="panel-body">
-            <Fields 
-              fields={this.state.fields} 
-              onChange={this.onFieldChange}
-            />
-            <button 
-              type="button"
-              onClick={this.dispatch}
-            >
-              Submit
-            </button>
+            <header className="dispatch-header">
+              <form>
+                <Fields 
+                  fields={this.state.fields} 
+                  onChange={this.onFieldChange}
+                />
+                <button 
+                  className="btn btn-primary"
+                  disabled={inProgress}
+                  onClick={this.dispatch}
+                  type="button"
+                >
+                  {inProgress ? 'Submitting…' : 'Submit'}
+                </button>
+              </form>
+              {response != null && (
+                <JSONPretty 
+                  className="dispatch-response"
+                  id="dispatch-response" 
+                  json={response} 
+                  style={{ marginTop: '20px' }}
+                />
+              )}
+            </header>
             <Queue 
               onRemove={this.onTicketSelect}
               resetTickets={this.resetTickets}
