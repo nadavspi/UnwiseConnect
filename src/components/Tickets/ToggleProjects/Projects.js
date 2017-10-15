@@ -18,10 +18,10 @@ const Projects = ({ projects, toggle, update }) => {
               type="checkbox"
               onChange={toggle.bind(this, project.id)}
             />
-            {project.company} &mdash; {project.name} ({project.id})
+            {project.company} &mdash; {project.name} <small>(ID: {project.id})</small>
 
-            <button 
-              className="btn-link"
+            <button
+              className="btn-link btn-sm"
               onClick={update.bind(this, project.id)}
               type="button"
             >
