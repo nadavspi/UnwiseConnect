@@ -53,7 +53,7 @@ class StartTimer extends Component {
           onClick={this.toggle}
           type="button"
         >
-          Start
+          <span className="glyphicon glyphicon-time"></span>
           <span className="sr-only">Toggle Dropdown</span>
         </button>
         <div className="dropdown-menu toggl-description">
