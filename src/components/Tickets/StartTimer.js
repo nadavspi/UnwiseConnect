@@ -72,7 +72,14 @@ class StartTimer extends Component {
               className="btn btn-success"
               type="submit"
             >
-              Start
+              Start Timer
+            </button>
+            <button
+              className="btn btn-link"
+              onClick={this.toggle}
+              type="button"
+            >
+              Cancel
             </button>
           </form>
         </div>
