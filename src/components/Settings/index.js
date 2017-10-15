@@ -39,6 +39,8 @@ class Settings extends Component {
               </button>
             </div>
           </div>
+        </div>
+        <div className="panel-uc panel panel-default">
           <div className="panel-body">
             <h2>Toggl Integration</h2>
             <div className="row">

@@ -314,6 +314,8 @@ class Dispatch extends Component {
           <div className="panel-uc__heading panel-heading clearfix">
             <h4>Dispatch Center</h4>
           </div>
+        </div>
+        <div className="panel-uc panel panel-default">
           <div className="panel-body">
             <header className="dispatch-header">
               <form>

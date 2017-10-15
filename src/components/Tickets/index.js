@@ -93,6 +93,8 @@ class Tickets extends Component {
               <ToggleProjects />
             </div>
           </div>
+        </div>
+        <div className="panel-uc panel panel-default">
           <div className="row panel-body">
             <div className="panel-body col-md-6">
               <h2>Active Projects</h2>
