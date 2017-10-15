@@ -48,18 +48,11 @@ class StartTimer extends Component {
     return (
       <div className={className}>
         <button
-          className="btn btn-default"
-          onClick={e => this.startTimer()} 
-          type="button"
-        >
-          Start
-        </button>
-        <button 
           className="btn btn-default dropdown-toggle"
           onClick={this.toggle}
           type="button"
         >
-          <span className="caret"></span>
+          Start
           <span className="sr-only">Toggle Dropdown</span>
         </button>
         <div className="dropdown-menu">
