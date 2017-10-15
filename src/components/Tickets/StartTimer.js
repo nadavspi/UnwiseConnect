@@ -33,6 +33,7 @@ class StartTimer extends Component {
 
     this.setState({
       expanded: willExpand,
+      description: this.props.ticket.summary,
     }, () => {
       if (willExpand) {
         this.input.focus();
@@ -55,18 +56,20 @@ class StartTimer extends Component {
           Start
           <span className="sr-only">Toggle Dropdown</span>
         </button>
-        <div className="dropdown-menu">
+        <div className="dropdown-menu toggl-description">
           <form onSubmit={this.startCustomTimer}>
-            <label htmlFor="description">Description</label>
-            <input 
-              id="description"
-              onChange={e => this.setState({ description: e.target.value })}
-              ref={ref => { this.input = ref }}
-              type="text"
-              value={this.state.description}
-            />
-            <button 
-              className="btn btn-default"
+            <div className="form-group">
+              <label htmlFor="description">Timer Description</label>
+              <textarea
+                id="description"
+                onChange={e => this.setState({ description: e.target.value })}
+                className="form-control"
+                ref={ref => { this.input = ref }}
+                value={this.state.description}
+              />
+            </div>
+            <button
+              className="btn btn-success"
               type="submit"
             >
               Start
