@@ -31,7 +31,7 @@ class StartTimer extends Component {
   toggle() {
     const willExpand = !this.state.expanded;
 
-    this.setState({ 
+    this.setState({
       expanded: willExpand,
     }, () => {
       if (willExpand) {
@@ -41,7 +41,7 @@ class StartTimer extends Component {
   }
 
   render() {
-    const className = classnames('btn-group', { 
+    const className = classnames('btn-group', {
       'open': this.state.expanded,
     });
 
