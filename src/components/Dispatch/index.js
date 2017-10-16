@@ -94,7 +94,7 @@ class Dispatch extends Component {
     super();
 
     this.state = {
-      fields, 
+      fields,
     };
 
     this.columns = this.columns.bind(this);
@@ -175,7 +175,7 @@ class Dispatch extends Component {
         },
         visible: true,
       },
-    ] 
+    ]
   }
 
   search(query, incremental) {
@@ -319,11 +319,11 @@ class Dispatch extends Component {
           <div className="panel-body">
             <header className="dispatch-header">
               <form>
-                <Fields 
-                  fields={this.state.fields} 
+                <Fields
+                  fields={this.state.fields}
                   onChange={this.onFieldChange}
                 />
-                <button 
+                <button
                   className="btn btn-primary"
                   disabled={inProgress}
                   onClick={this.dispatch}
@@ -333,18 +333,18 @@ class Dispatch extends Component {
                 </button>
               </form>
               {response != null && (
-                <JSONPretty 
+                <JSONPretty
                   className="dispatch-response"
-                  id="dispatch-response" 
-                  json={response} 
+                  id="dispatch-response"
+                  json={response}
                   style={{ marginTop: '20px' }}
                 />
               )}
             </header>
-            <Queue 
+            <Queue
               onRemove={this.onTicketSelect}
               resetTickets={this.resetTickets}
-              selectedTickets={this.selectedTickets()} 
+              selectedTickets={this.selectedTickets()}
               setTicketHours={this.setTicketHours}
             />
             {this.props.tickets.flattened.length > 0 && (
