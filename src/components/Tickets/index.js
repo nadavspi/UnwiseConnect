@@ -65,38 +65,40 @@ class Tickets extends Component {
     });
     return (
       <div>
-        <div className="panel-uc panel panel-default">
-          <div className="panel-uc__heading panel-heading clearfix">
-            <h4>Ticket Center
-              {this.props.tickets.loading ? (
-                <small> Loading tickets&hellip;</small>
-              ) : (
-                <small> {this.props.tickets.flattened.length} tickets from {Object.keys(this.props.tickets.nested).length} projects</small>
-              )}
-            </h4>
-            <div className="panel-uc__manage">
-              <span className={addClassnames}>
-                <button
-                  className="btn btn-link dropdown-toggle"
-                  type="button"
-                  onClick={this.expand.bind(this, 'addProject')}
-                >
-                  {'Add Project by ID '}
-                  <span className="caret"></span>
-                </button>
-                <div className="dropdown-menu dropdown-menu-right">
-                  <AddProject
-                    onAdd={this.addProject}
-                  />
-                </div>
-              </span>
-              <ToggleProjects />
+        <div className="col-sm-12">
+          <div className="panel-uc panel panel-default">
+            <div className="panel-uc__heading panel-heading clearfix">
+              <h4>Ticket Center
+                {this.props.tickets.loading ? (
+                  <small> Loading tickets&hellip;</small>
+                ) : (
+                  <small> {this.props.tickets.flattened.length} tickets from {Object.keys(this.props.tickets.nested).length} projects</small>
+                )}
+              </h4>
+              <div className="panel-uc__manage">
+                <span className={addClassnames}>
+                  <button
+                    className="btn btn-link dropdown-toggle"
+                    type="button"
+                    onClick={this.expand.bind(this, 'addProject')}
+                  >
+                    {'Add Project by ID '}
+                    <span className="caret"></span>
+                  </button>
+                  <div className="dropdown-menu dropdown-menu-right">
+                    <AddProject
+                      onAdd={this.addProject}
+                    />
+                  </div>
+                </span>
+                <ToggleProjects />
+              </div>
             </div>
           </div>
         </div>
-        <div className="panel-uc panel panel-default">
-          <div className="row panel-body">
-            <div className="panel-body col-md-6">
+        <div className="col-md-6">
+          <div className="panel-uc panel-projects panel panel-default">
+            <div className="panel-body">
               <h2>Active Projects</h2>
               <Projects
                 projects={this.projects()}
@@ -106,15 +108,15 @@ class Tickets extends Component {
                 }, true)}
               />
             </div>
-            {this.props.tickets.flattened.length > 0 && (
-              <Table
-                query={this.props.tickets.query}
-                search={this.search}
-                tickets={this.props.tickets.flattened}
-              />
-            )}
           </div>
         </div>
+        {this.props.tickets.flattened.length > 0 && (
+          <Table
+            query={this.props.tickets.query}
+            search={this.search}
+            tickets={this.props.tickets.flattened}
+          />
+        )}
       </div>
     );
   }

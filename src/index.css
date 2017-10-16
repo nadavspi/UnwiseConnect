@@ -175,6 +175,11 @@ body {
   margin-left: auto;
 }
 
+.panel-projects {
+  min-height: 140px;
+  clear: left;
+}
+
 .panel-body h2 {
   margin-top: 0;
 }
