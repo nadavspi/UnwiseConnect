@@ -175,7 +175,7 @@ TicketsTable.defaultProps = {
         formatters: [
           (value) => {
             return (
-              <a href={process.env.CONNECTWISE_SERVER_URL + "/services/system_io/Service/fv_sr100_request.rails?service_recid=" + value} target="_blank" rel="noopener">#{value}</a>
+              <a href={process.env.REACT_APP_CONNECTWISE_SERVER_URL + "/services/system_io/Service/fv_sr100_request.rails?service_recid=" + value} target="_blank" rel="noopener">#{value}</a>
             );
           }
         ]
