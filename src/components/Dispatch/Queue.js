@@ -30,7 +30,6 @@ export default class Queue extends Component {
         <button
           className="btn btn-lg btn-primary"
           onClick={() => this.setState({ expanded: !this.state.expanded })}
-          style={{ marginTop: '20px', marginBottom: '20px' }}
           type="button"
         >
           Queue ({this.props.selectedTickets.length} tickets, {this.totalBudget()} hours)
