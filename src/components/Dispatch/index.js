@@ -310,9 +310,11 @@ class Dispatch extends Component {
 
     return (
       <div>
-        <div className="panel-uc panel panel-default">
-          <div className="panel-uc__heading panel-heading clearfix">
-            <h4>Dispatch Center</h4>
+        <div className="col-sm-12">
+          <div className="panel-uc panel panel-default">
+            <div className="panel-uc__heading panel-heading clearfix">
+              <h4>Dispatch Center</h4>
+            </div>
           </div>
         </div>
         <div className="col-sm-12">
@@ -342,9 +344,23 @@ class Dispatch extends Component {
                   />
                 )}
               </header>
+              <Queue
+                onRemove={this.onTicketSelect}
+                resetTickets={this.resetTickets}
+                selectedTickets={this.selectedTickets()}
+                setTicketHours={this.setTicketHours}
+              />
             </div>
           </div>
         </div>
+        {this.props.tickets.flattened.length > 0 && (
+          <Table
+            columns={this.columns(this.selectedTickets(), this.onTicketSelect)}
+            query={this.props.tickets.query}
+            search={this.search}
+            tickets={this.props.tickets.flattened}
+          />
+        )}
       </div>
     );
   }
