@@ -315,46 +315,34 @@ class Dispatch extends Component {
             <h4>Dispatch Center</h4>
           </div>
         </div>
-        <div className="panel-uc panel panel-default">
-          <div className="panel-body">
-            <header className="dispatch-header">
-              <form>
-                <Fields
-                  fields={this.state.fields}
-                  onChange={this.onFieldChange}
-                />
-                <button
-                  className="btn btn-primary"
-                  disabled={inProgress}
-                  onClick={this.dispatch}
-                  type="button"
-                >
-                  {inProgress ? 'Submitting…' : 'Submit'}
-                </button>
-              </form>
-              {response != null && (
-                <JSONPretty
-                  className="dispatch-response"
-                  id="dispatch-response"
-                  json={response}
-                  style={{ marginTop: '20px' }}
-                />
-              )}
-            </header>
-            <Queue
-              onRemove={this.onTicketSelect}
-              resetTickets={this.resetTickets}
-              selectedTickets={this.selectedTickets()}
-              setTicketHours={this.setTicketHours}
-            />
-            {this.props.tickets.flattened.length > 0 && (
-              <Table
-                columns={this.columns(this.selectedTickets(), this.onTicketSelect)}
-                query={this.props.tickets.query}
-                search={this.search}
-                tickets={this.props.tickets.flattened}
-              />
-            )}
+        <div className="col-sm-12">
+          <div className="panel-uc panel panel-default">
+            <div className="panel-body">
+              <header className="dispatch-header">
+                <form>
+                  <Fields
+                    fields={this.state.fields}
+                    onChange={this.onFieldChange}
+                  />
+                  <button
+                    className="btn btn-primary"
+                    disabled={inProgress}
+                    onClick={this.dispatch}
+                    type="button"
+                  >
+                    {inProgress ? 'Submitting…' : 'Submit'}
+                  </button>
+                </form>
+                {response != null && (
+                  <JSONPretty
+                    className="dispatch-response"
+                    id="dispatch-response"
+                    json={response}
+                    style={{ marginTop: '20px' }}
+                  />
+                )}
+              </header>
+            </div>
           </div>
         </div>
       </div>

@@ -48,7 +48,7 @@ export default class Queue extends Component {
             )}
             <ul>
               {this.props.selectedTickets.map(ticket => (
-                <li 
+                <li
                   key={ticket.id}
                   style={ this.isOverBudget(ticket) ? { color: 'darkred' } : {} }
                 >
@@ -57,10 +57,10 @@ export default class Queue extends Component {
                   <input
                     style={{ width: '45px', marginLeft: '10px' }}
                     type="number"
-                    value={ticket.hours} 
+                    value={ticket.hours}
                     onChange={(e) => this.props.setTicketHours(ticket.id, e.target.value)}
                   />
-                  <button 
+                  <button
                     className="btn btn-link"
                     onClick={() => this.props.onRemove(ticket.id)}
                     type="button"
