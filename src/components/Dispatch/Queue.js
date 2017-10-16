@@ -27,13 +27,13 @@ export default class Queue extends Component {
   render() {
     return (
       <div>
-        <button 
-          className="btn btn-default"
+        <button
+          className="btn btn-lg btn-primary"
           onClick={() => this.setState({ expanded: !this.state.expanded })}
           style={{ marginTop: '20px', marginBottom: '20px' }}
           type="button"
         >
-          <h2 style={{ margin: 0 }}>Queue ({this.props.selectedTickets.length} tickets, {this.totalBudget()} hours)</h2>
+          Queue ({this.props.selectedTickets.length} tickets, {this.totalBudget()} hours)
         </button>
         {this.state.expanded && (
           <div>
