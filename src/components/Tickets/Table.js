@@ -236,7 +236,7 @@ TicketsTable.defaultProps = {
     {
       property: 'resources',
       header: {
-        label: 'Resources',
+        label: 'Assigned',
       },
       visible: false,
     },

@@ -27,6 +27,7 @@ export default class AddProject extends Component {
             type="number"
             value={this.state.projectId}
             className="form-control"
+            placeholder="123"
           />
           <div className="input-group-btn">
             <button type="submit" className="btn btn-primary">Add</button>

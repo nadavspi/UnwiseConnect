@@ -31,8 +31,9 @@ class StartTimer extends Component {
   toggle() {
     const willExpand = !this.state.expanded;
 
-    this.setState({ 
+    this.setState({
       expanded: willExpand,
+      description: this.props.ticket.summary,
     }, () => {
       if (willExpand) {
         this.input.focus();
@@ -41,42 +42,44 @@ class StartTimer extends Component {
   }
 
   render() {
-    const className = classnames('btn-group', { 
+    const className = classnames('btn-group', {
       'open': this.state.expanded,
     });
 
     return (
       <div className={className}>
         <button
-          className="btn btn-default"
-          onClick={e => this.startTimer()} 
-          type="button"
-        >
-          Start
-        </button>
-        <button 
           className="btn btn-default dropdown-toggle"
           onClick={this.toggle}
           type="button"
         >
-          <span className="caret"></span>
+          <span className="glyphicon glyphicon-time"></span>
           <span className="sr-only">Toggle Dropdown</span>
         </button>
-        <div className="dropdown-menu">
+        <div className="dropdown-menu toggl-description">
           <form onSubmit={this.startCustomTimer}>
-            <label htmlFor="description">Description</label>
-            <input 
-              id="description"
-              onChange={e => this.setState({ description: e.target.value })}
-              ref={ref => { this.input = ref }}
-              type="text"
-              value={this.state.description}
-            />
-            <button 
-              className="btn btn-default"
+            <div className="form-group">
+              <label htmlFor="description">Timer Description</label>
+              <textarea
+                id="description"
+                onChange={e => this.setState({ description: e.target.value })}
+                className="form-control"
+                ref={ref => { this.input = ref }}
+                value={this.state.description}
+              />
+            </div>
+            <button
+              className="btn btn-success"
               type="submit"
             >
-              Start
+              Start Timer
+            </button>
+            <button
+              className="btn btn-link"
+              onClick={this.toggle}
+              type="button"
+            >
+              Cancel
             </button>
           </form>
         </div>
