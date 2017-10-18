@@ -180,6 +180,15 @@ TicketsTable.defaultProps = {
         label: 'ID',
       },
       visible: true,
+      cell: {
+        formatters: [
+          (value) => {
+            return (
+              <a href={process.env.REACT_APP_CONNECTWISE_SERVER_URL + "/services/system_io/Service/fv_sr100_request.rails?service_recid=" + value} target="_blank" rel="noopener">#{value}</a>
+            );
+          }
+        ]
+      },
     },
     {
       // Using a random property because it's easier than adding a new one
@@ -245,7 +254,7 @@ TicketsTable.defaultProps = {
     {
       property: 'resources',
       header: {
-        label: 'Resources',
+        label: 'Assigned',
       },
       visible: false,
     },

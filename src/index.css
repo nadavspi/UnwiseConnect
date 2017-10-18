@@ -101,6 +101,11 @@ body {
   padding: 15px;
 }
 
+.open > .toggl-description {
+  padding: 20px;
+  min-width: 400px;
+}
+
 .projects {
   display: block;
   position: relative;
