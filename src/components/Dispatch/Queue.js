@@ -42,6 +42,7 @@ export default class Queue extends Component {
               <button
                 onClick={this.props.resetTickets}
                 type="button"
+                className="btn btn-danger"
               >
                 Reset
               </button>

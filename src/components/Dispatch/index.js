@@ -125,6 +125,7 @@ class Dispatch extends Component {
                 <button
                   type="button"
                   onClick={e => onChange(rowData.id)}
+                  className="btn btn-default"
                 >
                   Add/remove
                 </button>
@@ -344,6 +345,12 @@ class Dispatch extends Component {
                   />
                 )}
               </header>
+            </div>
+          </div>
+        </div>
+        <div className="col-sm-6">
+          <div className="panel-uc panel panel-default">
+            <div className="panel-body">
               <Queue
                 onRemove={this.onTicketSelect}
                 resetTickets={this.resetTickets}
