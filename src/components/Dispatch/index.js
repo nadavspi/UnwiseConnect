@@ -314,14 +314,6 @@ class Dispatch extends Component {
           <div className="panel-uc panel panel-default">
             <div className="panel-uc__heading panel-heading clearfix">
               <h4>Dispatch Center</h4>
-              <div className="panel-uc__manage">
-                <Queue
-                  onRemove={this.onTicketSelect}
-                  resetTickets={this.resetTickets}
-                  selectedTickets={this.selectedTickets()}
-                  setTicketHours={this.setTicketHours}
-                />
-              </div>
             </div>
           </div>
         </div>
@@ -352,6 +344,12 @@ class Dispatch extends Component {
                   />
                 )}
               </header>
+              <Queue
+                onRemove={this.onTicketSelect}
+                resetTickets={this.resetTickets}
+                selectedTickets={this.selectedTickets()}
+                setTicketHours={this.setTicketHours}
+              />
             </div>
           </div>
         </div>
