@@ -31,6 +31,15 @@ body {
   font-weight: 300;
 }
 
+.btn {
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.4);
+}
+
+.btn.btn-default {
+  background-color: rgba(255, 255, 255, 0.4);
+  border: 0;
+}
+
 .page {
   animation: fadein-slide .5s ease-in;
 }
@@ -170,6 +179,11 @@ body {
 
 .visibility-container .visibility-value {
   margin-right: 5px;
+}
+
+.panel-uc.panel {
+  border: 0;
+  box-shadow: 0 3px 10px rgba(0, 0, 0, 0.1);
 }
 
 .panel-uc__heading {
