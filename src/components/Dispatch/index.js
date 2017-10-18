@@ -94,7 +94,7 @@ class Dispatch extends Component {
     super();
 
     this.state = {
-      fields, 
+      fields,
     };
 
     this.columns = this.columns.bind(this);
@@ -125,6 +125,7 @@ class Dispatch extends Component {
                 <button
                   type="button"
                   onClick={e => onChange(rowData.id)}
+                  className="btn btn-default"
                 >
                   Add/remove
                 </button>
@@ -175,7 +176,7 @@ class Dispatch extends Component {
         },
         visible: true,
       },
-    ] 
+    ]
   }
 
   search(query, incremental) {
@@ -310,51 +311,63 @@ class Dispatch extends Component {
 
     return (
       <div>
-        <div className="panel-uc panel panel-default">
-          <div className="panel-uc__heading panel-heading clearfix">
-            <h4>Dispatch Center</h4>
-          </div>
-          <div className="panel-body">
-            <header className="dispatch-header">
-              <form>
-                <Fields 
-                  fields={this.state.fields} 
-                  onChange={this.onFieldChange}
-                />
-                <button 
-                  className="btn btn-primary"
-                  disabled={inProgress}
-                  onClick={this.dispatch}
-                  type="button"
-                >
-                  {inProgress ? 'Submitting…' : 'Submit'}
-                </button>
-              </form>
-              {response != null && (
-                <JSONPretty 
-                  className="dispatch-response"
-                  id="dispatch-response" 
-                  json={response} 
-                  style={{ marginTop: '20px' }}
-                />
-              )}
-            </header>
-            <Queue 
-              onRemove={this.onTicketSelect}
-              resetTickets={this.resetTickets}
-              selectedTickets={this.selectedTickets()} 
-              setTicketHours={this.setTicketHours}
-            />
-            {this.props.tickets.flattened.length > 0 && (
-              <Table
-                columns={this.columns(this.selectedTickets(), this.onTicketSelect)}
-                query={this.props.tickets.query}
-                search={this.search}
-                tickets={this.props.tickets.flattened}
-              />
-            )}
+        <div className="col-sm-12">
+          <div className="panel-uc panel panel-default">
+            <div className="panel-uc__heading panel-heading clearfix">
+              <h4>Dispatch Center</h4>
+            </div>
           </div>
         </div>
+        <div className="col-sm-12">
+          <div className="panel-uc panel panel-default">
+            <div className="panel-body">
+              <header className="dispatch-header">
+                <form>
+                  <Fields
+                    fields={this.state.fields}
+                    onChange={this.onFieldChange}
+                  />
+                  <button
+                    className="btn btn-primary"
+                    disabled={inProgress}
+                    onClick={this.dispatch}
+                    type="button"
+                  >
+                    {inProgress ? 'Submitting…' : 'Submit'}
+                  </button>
+                </form>
+                {response != null && (
+                  <JSONPretty
+                    className="dispatch-response"
+                    id="dispatch-response"
+                    json={response}
+                    style={{ marginTop: '20px' }}
+                  />
+                )}
+              </header>
+            </div>
+          </div>
+        </div>
+        <div className="col-md-8">
+          <div className="panel-uc panel panel-default">
+            <div className="panel-body">
+              <Queue
+                onRemove={this.onTicketSelect}
+                resetTickets={this.resetTickets}
+                selectedTickets={this.selectedTickets()}
+                setTicketHours={this.setTicketHours}
+              />
+            </div>
+          </div>
+        </div>
+        {this.props.tickets.flattened.length > 0 && (
+          <Table
+            columns={this.columns(this.selectedTickets(), this.onTicketSelect)}
+            query={this.props.tickets.query}
+            search={this.search}
+            tickets={this.props.tickets.flattened}
+          />
+        )}
       </div>
     );
   }

@@ -25,38 +25,44 @@ class Settings extends Component {
   render() {
     return (
       <div>
-        <div className="panel-uc panel panel-default">
-          <div className="panel-uc__heading panel-heading clearfix">
-            <h4>Settings <small><Link to="/">Go back</Link></small></h4>
-            <div className="panel-uc__manage">
-              <button
-                onClick={() => this.props.dispatch(logout())}
-                className="btn btn-danger btn-lg"
-              >
-                Logout <span className="glyphicon glyphicon-log-out" aria-hidden="true"
-                ></span>
+        <div className="col-sm-12" style={{ clear: 'both' }}>
+          <div className="panel-uc panel panel-default">
+            <div className="panel-uc__heading panel-heading clearfix">
+              <h4>Settings <small><Link to="/">Go back</Link></small></h4>
+              <div className="panel-uc__manage">
+                <button
+                  onClick={() => this.props.dispatch(logout())}
+                  className="btn btn-danger btn-lg"
+                >
+                  Logout <span className="glyphicon glyphicon-log-out" aria-hidden="true"
+                  ></span>
 
-              </button>
+                </button>
+              </div>
             </div>
           </div>
-          <div className="panel-body">
-            <h2>Toggl Integration</h2>
-            <div className="row">
-              <div className="col-md-4">
-                <Toggl
-                  apiKey={this.props.toggl ? this.props.toggl.apiKey : undefined}
-                  onSubmit={this.saveToggl}
-                />
-              </div>
-              <div className="col-md-8">
-                <p>Having issues with your Toggl API key? Use the button below to test the integration.<br/>It should start a time entry called "Test by UnwiseConnect".</p>
-                <button
-                  type="button"
-                  className="btn btn-default"
-                  onClick={e => this.startTimer()}
-                >
-                  Start test timer
-                </button>
+        </div>
+        <div className="col-sm-12">
+          <div className="panel-uc panel panel-default">
+            <div className="panel-body">
+              <h2>Toggl Integration</h2>
+              <div className="row">
+                <div className="col-md-4">
+                  <Toggl
+                    apiKey={this.props.toggl ? this.props.toggl.apiKey : undefined}
+                    onSubmit={this.saveToggl}
+                  />
+                </div>
+                <div className="col-md-8">
+                  <p>Having issues with your Toggl API key? Use the button below to test the integration.<br/>It should start a time entry called "Test by UnwiseConnect".</p>
+                  <button
+                    type="button"
+                    className="btn btn-default"
+                    onClick={e => this.startTimer()}
+                  >
+                    Start test timer
+                  </button>
+                </div>
               </div>
             </div>
           </div>
