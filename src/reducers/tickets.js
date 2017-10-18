@@ -30,7 +30,7 @@ export default (state = initialState, action) => {
         },
         flattened: [
           ...state.flattened.filter(
-            ticket => ticket.project.id != action.payload.projectId
+            ticket => ticket.project.id !== action.payload.projectId
           ),
           ...action.payload.flattened,
         ],
@@ -40,14 +40,14 @@ export default (state = initialState, action) => {
       const nested = cloneDeep(state.nested);
       delete nested[action.payload.projectId];
       const nextFlattened = state.flattened.filter(
-        ticket => ticket.project.id != action.payload.projectId
+        ticket => ticket.project.id !== action.payload.projectId
       );
       console.log({ nextFlattened });
       return {
         ...state,
         nested,
         flattened: state.flattened.filter(
-          ticket => ticket.project.id != action.payload.projectId
+          ticket => ticket.project.id !== action.payload.projectId
         ),
       };
 
