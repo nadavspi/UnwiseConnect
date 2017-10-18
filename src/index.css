@@ -39,14 +39,16 @@ body {
   margin-bottom: 0;
   border: 0;
   z-index: 0;
+  padding-top: 15px;
 }
 
 .navbar.navbar-uc::before {
-  background-color: #2b4669;
+  background-color: #111c27;
   position: absolute;
   width: 100%;
   content: '';
-  height: 200px;
+  height: 250px;
+  top: 0;
 }
 
 .navbar-uc a {
