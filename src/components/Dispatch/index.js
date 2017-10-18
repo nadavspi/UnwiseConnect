@@ -348,7 +348,7 @@ class Dispatch extends Component {
             </div>
           </div>
         </div>
-        <div className="col-sm-6">
+        <div className="col-md-8">
           <div className="panel-uc panel panel-default">
             <div className="panel-body">
               <Queue

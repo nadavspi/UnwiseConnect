@@ -28,13 +28,14 @@ export default class Queue extends Component {
     return (
       <div>
         <button
-          className="btn btn-lg btn-primary"
+          className="btn btn-primary"
           onClick={() => this.setState({ expanded: !this.state.expanded })}
-          style={{ marginTop: '20px', marginBottom: '20px' }}
+          style={{ marginTop: '20px', marginBottom: '20px', marginRight: '5px' }}
           type="button"
         >
-          Queue ({this.props.selectedTickets.length} tickets, {this.totalBudget()} hours)
+          Show queue
         </button>
+        <small>({this.props.selectedTickets.length} tickets, {this.totalBudget()} hours)</small>
         {this.state.expanded && (
           <div>
             <p>{this.props.selectedTickets.length} tickets selected.</p>
@@ -42,32 +43,46 @@ export default class Queue extends Component {
               <button
                 onClick={this.props.resetTickets}
                 type="button"
-                className="btn btn-danger"
+                className="btn btn-danger btn-sm"
+                style={{marginBottom: '10px', float: 'right'}}
               >
-                Reset
+                Clear queue
               </button>
             )}
-            <ul>
+            <ul className="dispatch-list">
               {this.props.selectedTickets.map(ticket => (
                 <li
                   key={ticket.id}
-                  style={ this.isOverBudget(ticket) ? { color: 'darkred' } : {} }
+                  style={ this.isOverBudget(ticket) ? { color: 'darkred' } : {}, { marginBottom: '10px' } }
                 >
                   {ticket.id} — {ticket.company.name} — {ticket.summary} {' '}
-                  ({ticket.actualHours || 0} / {ticket.budgetHours || 0}) {' '}
-                  <input
-                    style={{ width: '45px', marginLeft: '10px' }}
-                    type="number"
-                    value={ticket.hours}
-                    onChange={(e) => this.props.setTicketHours(ticket.id, e.target.value)}
-                  />
-                  <button
-                    className="btn btn-link"
-                    onClick={() => this.props.onRemove(ticket.id)}
-                    type="button"
-                  >
-                    Remove
-                  </button>
+                  ({ticket.actualHours || 0}hrs / {ticket.budgetHours || 0}hrs) {' '}
+                  <div className="form-inline">
+                    <div className="form-group">
+                      <div
+                        className="input-group"
+                        style={{ width: '100px', marginLeft: '10px' }}
+                      >
+                        <input
+                          type="number"
+                          value={ticket.hours}
+                          className="form-control"
+                          placeholder="0"
+                          min="0"
+                          onChange={(e) => this.props.setTicketHours(ticket.id, e.target.value)}
+                        />
+                        <div className="input-group-addon">hrs</div>
+                      </div>
+                    </div>
+                    <button
+                      className="btn btn-danger btn-xs"
+                      onClick={() => this.props.onRemove(ticket.id)}
+                      type="button"
+                      style={{marginLeft: '5px'}}
+                    >
+                      <span className="glyphicon glyphicon-remove"></span>
+                    </button>
+                  </div>
                 </li>
               ))}
             </ul>

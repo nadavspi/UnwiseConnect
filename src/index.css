@@ -24,6 +24,7 @@ body {
   font-family: 'Roboto', sans-serif !important;
   background-color: #f5f8fa !important;
   color: #292b2c !important;
+  -webkit-font-smoothing: antialiased;
 }
 
 :root h2 {
@@ -33,6 +34,7 @@ body {
 
 .btn {
   box-shadow: 0 1px 3px rgba(0, 0, 0, 0.4);
+  font-weight: 500 !important;
 }
 
 .btn.btn-default {

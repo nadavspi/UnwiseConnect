@@ -96,7 +96,7 @@ class Tickets extends Component {
             </div>
           </div>
         </div>
-        <div className="col-md-6">
+        <div className="col-md-8">
           <div className="panel-uc panel-projects panel panel-default">
             <div className="panel-body">
               <h2>Active Projects</h2>

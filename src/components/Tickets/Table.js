@@ -98,7 +98,7 @@ export default class TicketsTable extends React.Component {
 
     return (
       <div>
-        <div className="col-md-6">
+        <div className="col-md-4">
           <div className="panel-uc panel panel-default">
             <div className="panel-body">
               <h2>Search Tickets</h2>
