@@ -1,4 +1,5 @@
 import 'bootstrap/dist/css/bootstrap.css';
+import Dispatch from './Dispatch';
 import Home from './Home';
 import React, { Component } from 'react';
 import Settings from './Settings';
@@ -37,49 +38,48 @@ class App extends Component {
     this.props.dispatch(unsubscribe());
   }
   render() {
-    return this.props.loading === true ? <h1>Loading</h1> : (
+    const isAuthed = this.props.authed;
+    return this.props.loading === true ? <span className="loading"></span> : (
       <BrowserRouter>
-        <div>
-          <nav className="navbar navbar-default navbar-static-top">
-            <div className="container">
-              <div className="navbar-header">
-                <Link to="/" className="navbar-brand">UnwiseConnect</Link>
-              </div>
-              <ul className="nav navbar-nav pull-right">
-                <li>
-                  <Link to="/tickets" className="navbar-brand">Tickets</Link>
-                </li>
-                <li>
-                  <Link to="/settings" className="navbar-brand">Settings</Link>
-                </li>
-                <li>
-                  {this.props.authed ? (
-                    <button
-                      onClick={() => this.props.dispatch(logout())}
-                      className="navbar-brand btn btn-link"
-                    >
-                      Logout
-                    </button>
-                  ) : (
-                    <button 
-                      type="button"
-                      onClick={() => this.props.dispatch(login())}
-                      className="navbar-brand btn btn-link"
-                    >
-                      Login
-                    </button>
+        <div className="page">
+          {isAuthed &&
+            <nav className="navbar navbar-uc navbar-static-top">
+              <div className="container">
+                <div className="navbar-header">
+                  <Link to="/" className="navbar-brand">UnwiseConnect</Link>
+                </div>
+                <ul className="nav nav-settings">
+                  <li>
+                    <Link to="/tickets">Tickets</Link>
+                  </li>
+                  {this.props.capabilities.dispatch && (
+                    <li>
+                      <Link to="/dispatch">Dispatch</Link>
+                    </li>
                   )}
-                </li>
-              </ul>
-            </div>
-          </nav>
-          <div className="container">
+                  <li>
+                    <Link
+                      to="/settings"
+                      className="btn btn-default btn-sm btn-settings"
+                    >
+                      <span
+                        className="glyphicon glyphicon-cog"
+                        aria-hidden="true"></span>
+                      <span className="sr-only">Settings</span>
+                    </Link>
+                  </li>
+                </ul>
+              </div>
+            </nav>
+          }
+          <div className="main-content container">
             <div className="row">
               <Switch>
                 <PublicRoute path='/' authed={this.props.authed} exact component={Home} />
                 <PrivateRoute authed={this.props.authed} path='/tickets' component={Tickets} />
+                <PrivateRoute authed={this.props.authed} path='/dispatch' component={Dispatch} />
                 <PrivateRoute authed={this.props.authed} path='/settings' component={Settings} />
-                <Route render={() => <h3>No Match</h3>} />
+                <Route render={() => <h2>No Match</h2>} />
               </Switch>
             </div>
           </div>
@@ -91,6 +91,7 @@ class App extends Component {
 
 const mapStateToProps = state => ({
   authed: state.user.authed,
+  capabilities: state.user.capabilities,
   error: state.app.error,
   loading: state.app.loading,
 });

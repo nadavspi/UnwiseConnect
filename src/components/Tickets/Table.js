@@ -26,8 +26,8 @@ function paginate({ page, perPage }) {
 }
 
 export default class TicketsTable extends React.Component {
-  constructor() {
-    super();
+  constructor(props) {
+    super(props);
 
     this.state = {
       searchColumn: 'all',
@@ -36,97 +36,7 @@ export default class TicketsTable extends React.Component {
         perPage: 20,
       },
       rows: [],
-      columns: [
-        {
-          property: 'company.name',
-          header: {
-            label: 'Company',
-          },
-          visible: true,
-        },
-        {
-          property: 'project.name',
-          header: {
-            label: 'Project',
-          },
-          visible: true,
-        },
-        {
-          property: 'id',
-          header: {
-            label: 'ID',
-          },
-          visible: true,
-        },
-        {
-          // Using a random property because it's easier than adding a new one
-          // to all the rows
-          property: 'mobileGuid',
-          header: {
-            label: 'Toggl',
-          },
-          visible: true,
-          cell: {
-            resolve: value => `(${value})`,
-            formatters: [
-              (value, { rowData }) => {
-                return (
-                  <StartTimer ticket={rowData} />
-                );
-              }
-            ]
-          },
-        },
-        {
-          property: 'phase.name',
-          header: {
-            label: 'Phase',
-          },
-          visible: false,
-        },
-        {
-          property: 'summary',
-          header: {
-            label: 'Name',
-          },
-          visible: true,
-        },
-        {
-          property: 'budgetHours',
-          header: {
-            label: 'Budget Hours',
-          },
-          visible: true,
-        },
-        {
-          property: 'actualHours',
-          header: {
-            label: 'Actual Hours',
-          },
-          visible: true,
-        },
-        {
-          property: 'status.name',
-          header: {
-            label: 'Status',
-          },
-          visible: true,
-        },
-        {
-          property: 'billTime',
-          header: {
-            label: 'Billable',
-          },
-          visible: false,
-        },
-        {
-          property: 'resources',
-          header: {
-            label: 'Resources',
-          },
-          visible: false,
-        },
-      ],
+      columns: props.columns,
     };
 
     this.changePage = this.changePage.bind(this);
@@ -148,7 +58,7 @@ export default class TicketsTable extends React.Component {
     const { columns } = this.state;
 
     this.setState({
-      rows: resolve.resolve({ 
+      rows: resolve.resolve({
         columns,
         method: extra => compose(
           resolve.byFunction('cell.resolve')(extra),
@@ -188,30 +98,32 @@ export default class TicketsTable extends React.Component {
 
     return (
       <div>
-        <Search
-          column={this.state.searchColumn}
-          columns={columns}
-          onChange={this.search}
-          onColumnChange={searchColumn => this.setState({ searchColumn })}
-          query={query}
-          rows={rows}
-        />
-        <button 
-          className="btn-link"
-          onClick={this.search.bind(this, {})}
-          type="button"
-          style={{ marginBottom: '20px' }}
-        >
-          Clear Search
-        </button>
-
-        <div className="panel panel-default">
-          <VisibilityToggles
-            className="panel-body"
+        <div className="panel-body col-md-6">
+          <h2>Search Tickets</h2>
+          <Search
+            column={this.state.searchColumn}
             columns={columns}
-            onToggleColumn={this.toggleColumn}
+            onChange={this.search}
+            onColumnChange={searchColumn => this.setState({ searchColumn })}
+            query={query}
+            rows={rows}
           />
+          <button
+            className="btn-link"
+            onClick={this.search.bind(this, {})}
+            type="button"
+            style={{ marginBottom: '20px' }}
+          >
+            Clear Search
+          </button>
         </div>
+
+        <VisibilityToggles
+          className="panel-body visibility-toggles"
+          columns={columns}
+          onToggleColumn={this.toggleColumn}
+        />
+
         <Table.Provider
           className="table table-striped table-bordered"
           columns={visibleColumns}
@@ -226,7 +138,7 @@ export default class TicketsTable extends React.Component {
           <Table.Body rowKey="id" rows={paginated.rows} />
         </Table.Provider>
         {paginated.amount > 1 && (
-          <Pagination 
+          <Pagination
             changePage={this.changePage}
             paginated={paginated}
             pagination={pagination}
@@ -238,4 +150,104 @@ export default class TicketsTable extends React.Component {
 }
 
 TicketsTable.defaultProps = {
+  columns: [
+    {
+      property: 'company.name',
+      header: {
+        label: 'Company',
+      },
+      visible: true,
+    },
+    {
+      property: 'project.name',
+      header: {
+        label: 'Project',
+      },
+      visible: true,
+    },
+    {
+      property: 'id',
+      header: {
+        label: 'ID',
+      },
+      visible: true,
+      cell: {
+        formatters: [
+          (value) => {
+            return (
+              <a href={process.env.REACT_APP_CONNECTWISE_SERVER_URL + "/services/system_io/Service/fv_sr100_request.rails?service_recid=" + value} target="_blank" rel="noopener">#{value}</a>
+            );
+          }
+        ]
+      },
+    },
+    {
+      // Using a random property because it's easier than adding a new one
+      // to all the rows
+      property: 'mobileGuid',
+      header: {
+        label: 'Toggl',
+      },
+      visible: true,
+      cell: {
+        resolve: value => `(${value})`,
+        formatters: [
+          (value, { rowData }) => {
+            return (
+              <StartTimer ticket={rowData} />
+            );
+          }
+        ]
+      },
+    },
+    {
+      property: 'phase.name',
+      header: {
+        label: 'Phase',
+      },
+      visible: false,
+    },
+    {
+      property: 'summary',
+      header: {
+        label: 'Name',
+      },
+      visible: true,
+    },
+    {
+      property: 'budgetHours',
+      header: {
+        label: 'Budget Hours',
+      },
+      visible: true,
+    },
+    {
+      property: 'actualHours',
+      header: {
+        label: 'Actual Hours',
+      },
+      visible: true,
+    },
+    {
+      property: 'status.name',
+      header: {
+        label: 'Status',
+      },
+      visible: true,
+    },
+    {
+      property: 'billTime',
+      header: {
+        label: 'Billable',
+      },
+      visible: false,
+    },
+    {
+      property: 'resources',
+      header: {
+        label: 'Assigned',
+      },
+      visible: false,
+    },
+  ],
 };

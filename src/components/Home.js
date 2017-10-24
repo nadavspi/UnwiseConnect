@@ -1,5 +1,6 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux';
+import { login } from '../actions/auth'
 
 class Home extends Component {
   render () {
@@ -10,8 +11,17 @@ class Home extends Component {
             {this.props.error.message}
           </div>
         )}
-        <h1>UnwiseConnect</h1>
-        <p>Hi.</p>
+        <div className="jumbotron jumbotron-uc">
+          <h1>UnwiseConnect</h1>
+          <p>Welcome to UnwiseConnect. To get started with time tracking, please authenticate.</p>
+          <button
+            type="button"
+            onClick={() => this.props.dispatch(login())}
+            className="btn btn-lg btn-primary"
+          >
+            Login with GitHub
+          </button>
+        </div>
       </div>
     )
   }

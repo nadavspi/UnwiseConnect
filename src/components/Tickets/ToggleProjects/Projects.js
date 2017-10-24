@@ -2,26 +2,26 @@ import React from 'react';
 
 const Projects = ({ projects, toggle, update }) => {
   return (
-    <ul 
+    <ul
       className="list-unstyled"
       style={{ marginBottom: '0' }}
     >
       {projects.map(project => (
-        <li 
+        <li
           key={project.id}
           style={{ display: 'block' }}
         >
           <label style={{ fontWeight: 'normal' }}>
             <input
               checked={project.selected}
-              style={{ marginRight: '10px' }} 
+              style={{ marginRight: '10px' }}
               type="checkbox"
               onChange={toggle.bind(this, project.id)}
             />
-            {project.company} &mdash; {project.name} ({project.id})
+            {project.company} &mdash; {project.name} <small>(ID: {project.id})</small>
 
-            <button 
-              className="btn-link"
+            <button
+              className="btn-link btn-sm"
               onClick={update.bind(this, project.id)}
               type="button"
             >

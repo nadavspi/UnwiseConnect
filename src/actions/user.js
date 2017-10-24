@@ -30,6 +30,27 @@ const subscribeProjects = uid => {
   }
 }
 
+export const subscribeCapabilities = uid => {
+  return (dispatch, getState) => {
+    const capabilitiesRef = ref.child(`users/${uid}/capabilities`);
+    capabilitiesRef.on('value', snapshot => {
+      const capabilities = snapshot.val();
+
+      // They don't have any capabilities
+      if (!capabilities) {
+        return;
+      }
+
+      dispatch({
+        type: ActionTypes.USER_UPDATE,
+        payload: {
+          capabilities,
+        },
+      });
+    });
+  }
+}
+
 export const subscribe = (maybeUid) => {
   return (dispatch, getState) => {
     let uid = maybeUid || getState().user.creds;
@@ -38,6 +59,7 @@ export const subscribe = (maybeUid) => {
     }
 
     dispatch(subscribeProjects(uid));
+    dispatch(subscribeCapabilities(uid));
   }
 };
 

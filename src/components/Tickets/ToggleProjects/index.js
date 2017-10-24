@@ -3,6 +3,7 @@ import * as TicketsActions from '../../../actions/tickets';
 import Projects from './Projects';
 import React, { Component } from 'react';
 import classnames from 'classnames';
+import sortBy from 'sort-by';
 import { connect } from 'react-redux';
 
 class ToggleProjects extends Component {
@@ -37,26 +38,26 @@ class ToggleProjects extends Component {
         selected: userProjects.indexOf(project.id) > -1,
       };
     });
-    const className = classnames('dropdown', { 
+    const className = classnames('dropdown', {
       'open': this.state.expanded,
     });
 
     return (
       <span className={className}>
-        <button 
-          className="btn btn-default dropdown-toggle"
+        <button
+          className="btn btn-default btn-lg dropdown-toggle"
           type="button"
           onClick={e => this.setState({ expanded: !this.state.expanded})}
         >
           Select Projects {' '}
           <span className="caret"></span>
         </button>
-        <div 
-          className="dropdown-menu"
+        <div
+          className="dropdown-menu dropdown-menu-right"
           style={{ width: '700px', height: 'auto', maxHeight: '60vh', overflowY: 'auto' }}
         >
-          <Projects 
-            projects={projects} 
+          <Projects
+            projects={projects}
             toggle={this.toggle}
             update={this.updateTickets}
           />
@@ -67,7 +68,7 @@ class ToggleProjects extends Component {
 }
 
 const mapStateToProps = state => ({
-  projects: state.projects,
+  projects: state.projects.sort(sortBy('company', 'name')),
   userProjects: state.user.projects,
 });
 export default connect(mapStateToProps)(ToggleProjects);
