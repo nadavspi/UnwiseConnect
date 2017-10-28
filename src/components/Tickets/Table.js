@@ -111,14 +111,21 @@ export default class TicketsTable extends React.Component {
   }
 
   footerSum(rows, property) {
-    return rows.reduce(function (a, b) {
-      return (typeof b[property] != 'undefined')? a + b[property] : a;
-    }, 0);
+    let sum = 0;
+
+    if (typeof rows != 'undefined') {
+      sum = rows.reduce(function (a, b) {
+        return (typeof b[property] != 'undefined')? a + b[property] : a;
+      }, 0);
+    }
+
+    return Math.round(sum * 100) / 100;
   }
 
   render() {
     const { query } = this.props;
     const { columns, pagination, rows } = this.state;
+    const paginatedAll = compose(search.multipleColumns({ columns, query }))(rows);
     const paginated = compose(
       paginate(pagination),
       search.multipleColumns({ columns, query })
@@ -129,7 +136,7 @@ export default class TicketsTable extends React.Component {
         <tfoot className="table-bordered__foot">
           <tr>
             {columns.map((column, i) =>
-              <td key={`footer-${i}`}>{column.showTotals ? this.footerSum(rows, column.property) : null}</td>
+              <td key={`footer-${i}`}>{column.showTotals ? this.footerSum(paginatedAll, column.property) : null}</td>
             )}
           </tr>
         </tfoot>
