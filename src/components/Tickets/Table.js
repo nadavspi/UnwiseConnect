@@ -290,7 +290,6 @@ TicketsTable.defaultProps = {
         label: 'Billable',
       },
       visible: false,
-      showTotals: true,
     },
     {
       property: 'resources',
