@@ -126,7 +126,7 @@ export default class TicketsTable extends React.Component {
     const visibleColumns = columns.filter(column => column.visible);
     const TableFooter = ({ columns, rows }) => {
       return (
-        <tfoot>
+        <tfoot className="table-bordered__foot">
           <tr>
             {columns.map((column, i) =>
               <td key={`footer-${i}`}>{column.showTotals ? this.footerSum(rows, column.property) : null}</td>

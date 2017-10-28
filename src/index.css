@@ -224,3 +224,9 @@ body {
 .ticket-copy .glyphicon-ok {
   color: #5cb85c;
 }
+
+/* Table Styling Adjustments */
+.table-bordered > tfoot.table-bordered__foot td {
+  font-weight: bold;
+  border-top-width: 2px;
+}
