@@ -98,10 +98,10 @@ export default class TicketsTable extends React.Component {
 
     if (actualHours > budgetHours) {
       // over 100% of the budget is already used
-      rowClass = 'danger';
+      rowClass = 'ticket--overbudget';
     } else if (actualHours / budgetHours >= .9) {
       // over 90% of the budget is already used
-      rowClass = 'warning';
+      rowClass = 'ticket--nearbudget';
     }
 
     return {
@@ -242,6 +242,9 @@ TicketsTable.defaultProps = {
         label: 'Budget Hours',
       },
       visible: true,
+      props: {
+        className: 'col--budget',
+      },
     },
     {
       property: 'actualHours',
@@ -249,6 +252,9 @@ TicketsTable.defaultProps = {
         label: 'Actual Hours',
       },
       visible: true,
+      props: {
+        className: 'col--budget',
+      },
     },
     {
       property: 'status.name',
