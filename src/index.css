@@ -194,3 +194,13 @@ body {
   transform: translateZ(0);
   animation: spin 0.6s infinite ease-in;
 }
+
+.ticket-link .ticket-copy {
+  background: transparent;
+  border: none;
+  visibility: hidden;
+}
+
+.ticket-link:hover .ticket-copy {
+  visibility: visible;
+}
