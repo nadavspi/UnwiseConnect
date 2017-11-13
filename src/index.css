@@ -195,12 +195,20 @@ body {
   animation: spin 0.6s infinite ease-in;
 }
 
-.ticket-link .ticket-copy {
+.ticket-copy {
   background: transparent;
   border: none;
+}
+
+.ticket-copy .glyphicon-copy {
   visibility: hidden;
 }
 
-.ticket-link:hover .ticket-copy {
-  visibility: visible;
+.ticket-copy:hover .glyphicon-copy,
+.ticket-copy:focus .glyphicon-copy {
+  visibility: visible
+}
+
+.ticket-copy .glyphicon-ok {
+  color: #5cb85c;
 }
