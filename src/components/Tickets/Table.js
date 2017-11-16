@@ -5,6 +5,7 @@ import Pagination from './Pagination';
 import React from 'react';
 import Search from 'reactabular-search-field';
 import StartTimer from './StartTimer';
+import TicketLink from './TicketLink';
 import VisibilityToggles from 'react-visibility-toggles';
 import cloneDeep from 'lodash.clonedeep';
 import { compose } from 'redux';
@@ -197,7 +198,7 @@ TicketsTable.defaultProps = {
         formatters: [
           (value) => {
             return (
-              <a href={process.env.REACT_APP_CONNECTWISE_SERVER_URL + "/services/system_io/Service/fv_sr100_request.rails?service_recid=" + value} target="_blank" rel="noopener">#{value}</a>
+              <TicketLink ticketNumber={value} />
             );
           }
         ]
