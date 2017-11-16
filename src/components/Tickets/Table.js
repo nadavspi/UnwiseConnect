@@ -88,6 +88,28 @@ export default class TicketsTable extends React.Component {
     this.setState({ columns });
   }
 
+  onBodyRow(row) {
+    const actualHours = row.actualHours;
+    const budgetHours = row.budgetHours;
+    let rowClass = null;
+
+    if (typeof budgetHours == 'undefined' || typeof actualHours == 'undefined') {
+      return;
+    }
+
+    if (actualHours > budgetHours) {
+      // over 100% of the budget is already used
+      rowClass = 'ticket--overbudget';
+    } else if (actualHours / budgetHours >= .9) {
+      // over 90% of the budget is already used
+      rowClass = 'ticket--nearbudget';
+    }
+
+    return {
+      className: rowClass
+    };
+  }
+
   render() {
     const { query } = this.props;
     const { columns, pagination, rows } = this.state;
@@ -136,7 +158,7 @@ export default class TicketsTable extends React.Component {
               onChange={this.search}
             />
           </Table.Header>
-          <Table.Body rowKey="id" rows={paginated.rows} />
+          <Table.Body rowKey="id" rows={paginated.rows} onRow={this.onBodyRow} />
         </Table.Provider>
         {paginated.amount > 1 && (
           <Pagination
@@ -221,6 +243,9 @@ TicketsTable.defaultProps = {
         label: 'Budget Hours',
       },
       visible: true,
+      props: {
+        className: 'col--budget',
+      },
     },
     {
       property: 'actualHours',
@@ -228,6 +253,9 @@ TicketsTable.defaultProps = {
         label: 'Actual Hours',
       },
       visible: true,
+      props: {
+        className: 'col--budget',
+      },
     },
     {
       property: 'status.name',

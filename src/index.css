@@ -195,6 +195,14 @@ body {
   animation: spin 0.6s infinite ease-in;
 }
 
+.ticket--overbudget .col--budget {
+  background-color: #f2dede;
+}
+
+.ticket--nearbudget .col--budget {
+  background-color: #fcf8e3;
+}
+
 .ticket-copy {
   background: transparent;
   border: none;
