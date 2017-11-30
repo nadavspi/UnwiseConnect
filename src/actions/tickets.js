@@ -14,6 +14,22 @@ export const subscribe = ({ projectId }) => {
       const nested = snapshot.val();
       const flattened = Object.keys(nested).map(project => nested[project]).reduce((prev, next) => prev.concat(next), []);
 
+      // Sort project ticket by wbsCode
+      // ie ['1.1', '1.1.14', '4.2.1.4.6', '4.2.3']
+      flattened.sort((a, b) => {
+        const aParts = a.wbsCode.split('.');
+        const bParts = b.wbsCode.split('.');
+        for (let i = 0; i < aParts.length; ++i) {
+          if (bParts.length == i || parseInt(aParts[i], 10) > parseInt(bParts[i], 10)) {
+            return 1;
+          } else if (parseInt(aParts[i], 10) === parseInt(bParts[i], 10)) {
+            continue;
+          } else {
+            return -1;
+          }
+        }
+      });
+
       dispatch({
         type: ActionTypes.TICKETS_UPDATE,
         payload: {
