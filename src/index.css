@@ -195,6 +195,10 @@ body {
   animation: spin 0.6s infinite ease-in;
 }
 
+.col--budget {
+  text-align: right;
+}
+
 .ticket--overbudget .col--budget {
   background-color: #f2dede;
 }
