@@ -21,7 +21,7 @@
 body {
   margin: 0;
   padding: 0;
-  font-family: 'Roboto', sans-serif !important;
+  font-family: -apple-system, system-ui, BlinkMacSystemFont, "Segoe UI", "Roboto", "Helvetica Neue", Arial, sans-serif !important;
   background-color: #f5f8fa !important;
   color: #292b2c !important;
 }
@@ -193,4 +193,30 @@ body {
   border-left-color: #b0c5cf;
   transform: translateZ(0);
   animation: spin 0.6s infinite ease-in;
+}
+
+.ticket--overbudget .col--budget {
+  background-color: #f2dede;
+}
+
+.ticket--nearbudget .col--budget {
+  background-color: #fcf8e3;
+}
+
+.ticket-copy {
+  background: transparent;
+  border: none;
+}
+
+.ticket-copy .glyphicon-copy {
+  visibility: hidden;
+}
+
+.ticket-copy:hover .glyphicon-copy,
+.ticket-copy:focus .glyphicon-copy {
+  visibility: visible
+}
+
+.ticket-copy .glyphicon-ok {
+  color: #5cb85c;
 }
