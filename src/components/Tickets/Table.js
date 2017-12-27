@@ -110,14 +110,40 @@ export default class TicketsTable extends React.Component {
     };
   }
 
+  footerSum(rows, property) {
+    let sum = 0;
+
+    sum = rows.map(row => row[property]).reduce((a, b) => {
+      if (!b) {
+        return a;
+      }
+
+      return a + b;
+    }, 0);
+
+    return Math.round(sum * 100) / 100;
+  }
+
   render() {
     const { query } = this.props;
     const { columns, pagination, rows } = this.state;
+    const paginatedAll = compose(search.multipleColumns({ columns, query }))(rows);
     const paginated = compose(
       paginate(pagination),
       search.multipleColumns({ columns, query })
     )(rows);
     const visibleColumns = columns.filter(column => column.visible);
+    const TableFooter = ({ columns, rows }) => {
+      return (
+        <tfoot className="table-bordered__foot">
+          <tr>
+            {columns.map((column, i) =>
+              <td key={`footer-${i}`}>{column.showTotals ? this.footerSum(paginatedAll, column.property) : null}</td>
+            )}
+          </tr>
+        </tfoot>
+      );
+    };
 
     return (
       <div>
@@ -159,6 +185,7 @@ export default class TicketsTable extends React.Component {
             />
           </Table.Header>
           <Table.Body rowKey="id" rows={paginated.rows} onRow={this.onBodyRow} />
+          <TableFooter columns={visibleColumns} rows={paginated.rows} />
         </Table.Provider>
         {paginated.amount > 1 && (
           <Pagination
@@ -246,6 +273,7 @@ TicketsTable.defaultProps = {
       props: {
         className: 'col--budget',
       },
+      showTotals: true,
     },
     {
       property: 'actualHours',
@@ -256,6 +284,7 @@ TicketsTable.defaultProps = {
       props: {
         className: 'col--budget',
       },
+      showTotals: true,
     },
     {
       property: 'status.name',
