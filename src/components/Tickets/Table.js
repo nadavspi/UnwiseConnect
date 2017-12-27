@@ -138,7 +138,7 @@ export default class TicketsTable extends React.Component {
         <tfoot className="table-bordered__foot">
           <tr>
             {columns.map((column, i) =>
-              <td key={`footer-${i}`}>{column.showTotals ? this.footerSum(paginatedAll, column.property) : null}</td>
+              <td key={`footer-${i}`} className="col--budget">{column.showTotals ? this.footerSum(paginatedAll, column.property) : null}</td>
             )}
           </tr>
         </tfoot>
