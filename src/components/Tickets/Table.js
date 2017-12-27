@@ -113,8 +113,12 @@ export default class TicketsTable extends React.Component {
   footerSum(rows, property) {
     let sum = 0;
 
-    sum = rows.reduce(function (a, b) {
-      return (typeof b[property] != 'undefined')? a + b[property] : a;
+    sum = rows.map(row => row[property]).reduce((a, b) => {
+      if (!b) {
+        return a;
+      }
+
+      return a + b;
     }, 0);
 
     return Math.round(sum * 100) / 100;
