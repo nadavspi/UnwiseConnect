@@ -4,6 +4,7 @@ import Home from './Home';
 import React, { Component } from 'react';
 import Settings from './Settings';
 import Tickets from './Tickets';
+import Insights from './Insights';
 import { Route, BrowserRouter, Link, Redirect, Switch } from 'react-router-dom';
 import { connect } from 'react-redux';
 import { login, logout, subscribe, unsubscribe } from '../actions/auth'
@@ -52,6 +53,9 @@ class App extends Component {
                   <li>
                     <Link to="/tickets">Tickets</Link>
                   </li>
+                  <li>
+                    <Link to="/insights">Insights</Link>
+                  </li>
                   {this.props.capabilities.dispatch && (
                     <li>
                       <Link to="/dispatch">Dispatch</Link>
@@ -77,6 +81,7 @@ class App extends Component {
               <Switch>
                 <PublicRoute path='/' authed={this.props.authed} exact component={Home} />
                 <PrivateRoute authed={this.props.authed} path='/tickets' component={Tickets} />
+                <PrivateRoute authed={this.props.authed} path='/insights' component={Insights} />
                 <PrivateRoute authed={this.props.authed} path='/dispatch' component={Dispatch} />
                 <PrivateRoute authed={this.props.authed} path='/settings' component={Settings} />
                 <Route render={() => <h2>No Match</h2>} />
