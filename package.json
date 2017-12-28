@@ -7,6 +7,7 @@
   },
   "dependencies": {
     "bootstrap": "^3.3.7",
+    "chart.js": "^2.7.1",
     "classnames": "^2.2.5",
     "date-fns": "^1.28.5",
     "es6-promise": "^4.0.5",
@@ -16,6 +17,7 @@
     "lodash.clonedeep": "^4.5.0",
     "prettier": "^0.20.0",
     "react": "^15.4.0",
+    "react-chartjs-2": "^2.6.4",
     "react-dom": "^15.4.0",
     "react-json-pretty": "^1.7.4",
     "react-pagify": "^2.1.1",
