@@ -18,6 +18,10 @@
   }
 }
 
+:root {
+  --projects__height: 70px;
+}
+
 body {
   margin: 0;
   padding: 0;
@@ -103,7 +107,7 @@ body {
 
 @media screen and (min-width: 992px) {
   .projects {
-    max-height: 70px;
+    max-height: var(--projects__height);
     overflow: hidden;
     position: absolute;
     min-width: 400px;
@@ -193,4 +197,9 @@ body {
   border-left-color: #b0c5cf;
   transform: translateZ(0);
   animation: spin 0.6s infinite ease-in;
+}
+
+/* Graphs */
+.graphs__wrapper {
+  margin-top: var(--projects__height);
 }
