@@ -33,7 +33,6 @@ class StartTimer extends Component {
 
     this.setState({
       expanded: willExpand,
-      description: this.props.ticket.summary,
     }, () => {
       if (willExpand) {
         this.input.focus();
