@@ -1,4 +1,5 @@
 import * as TicketsActions from '../../actions/tickets';
+import * as UserActions from '../../actions/user';
 import AddProject from './AddProject';
 import Projects from './Projects';
 import React, { Component } from 'react';
@@ -18,6 +19,7 @@ class Tickets extends Component {
     }
 
     this.addProject = this.addProject.bind(this);
+    this.toggleProject = this.toggleProject.bind(this);
     this.expand = this.expand.bind(this);
     this.projects = this.projects.bind(this);
     this.search = this.search.bind(this);
@@ -34,6 +36,14 @@ class Tickets extends Component {
 
   addProject(projectId) {
     this.props.dispatch(TicketsActions.updateTickets({ projectId }));
+    this.toggleProject(projectId, true);
+  }
+
+  toggleProject(projectId, checked) {
+    this.props.dispatch(UserActions.toggleProject({
+      add: checked,
+      projectId,
+    }));
   }
 
   search(query, incremental) {
