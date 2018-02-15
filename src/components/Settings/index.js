@@ -1,7 +1,7 @@
 import * as togglActions from '../../actions/toggl';
 import React, { Component } from 'react';
 import Toggl from './Toggl';
-import { Route, BrowserRouter, Link, Redirect, Switch } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 import { connect } from 'react-redux';
 import { logout } from '../../actions/auth'
 

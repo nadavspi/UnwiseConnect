@@ -198,7 +198,7 @@ class Dispatch extends Component {
     }
 
     return tickets.value.map(ticket => ticket.id).map(id => {
-      return this.props.tickets.flattened.find(ticket => ticket.id == id);
+      return this.props.tickets.flattened.find(ticket => ticket.id === id);
     });
   }
 
