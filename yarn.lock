@@ -5287,9 +5287,9 @@ symbol-tree@^3.2.1:
   version "3.2.2"
   resolved "https://registry.yarnpkg.com/symbol-tree/-/symbol-tree-3.2.2.tgz#ae27db38f660a7ae2e1c3b7d1bc290819b8519e6"
 
-table-resolver:
-  version "3.1.0"
-  resolved "https://registry.yarnpkg.com/table-resolver/-/table-resolver-3.1.0.tgz#e5329f49a352dbd120e7b23d756143ec5149bf95"
+table-resolver@3.2.0:
+  version "3.2.0"
+  resolved "https://registry.yarnpkg.com/table-resolver/-/table-resolver-3.2.0.tgz#1be8d6f1a71896cf599853af76dd8d35c1dce3e2"
 
 table@^3.7.8:
   version "3.8.3"

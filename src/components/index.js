@@ -6,7 +6,7 @@ import Settings from './Settings';
 import Tickets from './Tickets';
 import { Route, BrowserRouter, Link, Redirect, Switch } from 'react-router-dom';
 import { connect } from 'react-redux';
-import { login, logout, subscribe, unsubscribe } from '../actions/auth'
+import { subscribe, unsubscribe } from '../actions/auth'
 
 function PrivateRoute ({component: Component, authed, ...rest}) {
   return (
