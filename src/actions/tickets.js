@@ -20,7 +20,7 @@ export const subscribe = ({ projectId }) => {
         const aParts = a.wbsCode.split('.');
         const bParts = b.wbsCode.split('.');
         for (let i = 0; i < aParts.length; ++i) {
-          if (bParts.length == i || parseInt(aParts[i], 10) > parseInt(bParts[i], 10)) {
+          if (bParts.length === i || parseInt(aParts[i], 10) > parseInt(bParts[i], 10)) {
             return 1;
           } else if (parseInt(aParts[i], 10) === parseInt(bParts[i], 10)) {
             continue;
@@ -28,6 +28,7 @@ export const subscribe = ({ projectId }) => {
             return -1;
           }
         }
+        return 0;
       });
 
       dispatch({

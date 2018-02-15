@@ -93,7 +93,7 @@ export default class TicketsTable extends React.Component {
     const budgetHours = row.budgetHours;
     let rowClass = null;
 
-    if (typeof budgetHours == 'undefined' || typeof actualHours == 'undefined') {
+    if (typeof budgetHours === 'undefined' || typeof actualHours === 'undefined') {
       return;
     }
 
