@@ -47,7 +47,7 @@ class SearchColumns extends React.Component {
     const onQueryChange = (values) => {
       this.props.onChange({
         ...this.props.query,
-        [column.property]: values.map(option => option.value),
+        [column.property]: values.length ? values.map(option => option.value) : '',
       });
     };
 
