@@ -273,6 +273,7 @@ TicketsTable.defaultProps = {
           }
         ]
       },
+      filterType: 'none',
     },
     {
       property: 'phase.name',

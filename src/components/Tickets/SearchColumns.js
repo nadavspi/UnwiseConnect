@@ -20,6 +20,8 @@ class SearchColumns extends React.Component {
   renderFilter(column) {
     if (column.filterType === 'dropdown') {
       return this.renderDropdownFilter(column);
+    } else if (column.filterType === 'none') {
+      return '';
     }
     return this.renderTextFilter(column);
   }
