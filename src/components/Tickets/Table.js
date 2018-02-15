@@ -4,6 +4,7 @@ import * as search from 'searchtabular';
 import Pagination from './Pagination';
 import React from 'react';
 import Search from 'reactabular-search-field';
+import SearchColumns from './SearchColumns';
 import StartTimer from './StartTimer';
 import TicketLink from './TicketLink';
 import VisibilityToggles from 'react-visibility-toggles';
@@ -25,6 +26,27 @@ function paginate({ page, perPage }) {
     };
   };
 }
+
+const multiInfix = term => ({
+  evaluate(value = '') {
+    if (!value) {
+      return false;
+    }
+
+    if (Array.isArray(value)) {
+      return value.some(v => this.doMatch(term, v));
+    }
+    if (Array.isArray(term)) {
+      return term.some(v => this.doMatch(v, value));
+    }
+
+    return this.doMatch(term, value);
+  },
+
+  doMatch(query, value) {
+    return value.indexOf(query) !== -1;
+  }
+});
 
 export default class TicketsTable extends React.Component {
   constructor(props) {
@@ -127,10 +149,11 @@ export default class TicketsTable extends React.Component {
   render() {
     const { query } = this.props;
     const { columns, pagination, rows } = this.state;
-    const paginatedAll = compose(search.multipleColumns({ columns, query }))(rows);
+    const searchExecutor = search.multipleColumns({ columns, query, strategy: multiInfix });
+    const paginatedAll = compose(searchExecutor)(rows);
     const paginated = compose(
       paginate(pagination),
-      search.multipleColumns({ columns, query })
+      searchExecutor
     )(rows);
     const visibleColumns = columns.filter(column => column.visible);
     const TableFooter = ({ columns, rows }) => {
@@ -178,10 +201,11 @@ export default class TicketsTable extends React.Component {
           columns={visibleColumns}
         >
           <Table.Header>
-            <search.Columns
+            <SearchColumns
               query={query}
               columns={visibleColumns}
               onChange={this.search}
+              rows={rows}
             />
           </Table.Header>
           <Table.Body rowKey="id" rows={paginated.rows} onRow={this.onBodyRow} />
@@ -249,6 +273,7 @@ TicketsTable.defaultProps = {
           }
         ]
       },
+      filterType: 'none',
     },
     {
       property: 'phase.name',
@@ -292,6 +317,7 @@ TicketsTable.defaultProps = {
         label: 'Status',
       },
       visible: true,
+      filterType: 'dropdown',
     },
     {
       property: 'billTime',
