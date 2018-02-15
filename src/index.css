@@ -88,6 +88,11 @@ body {
   min-width: 400px;
 }
 
+.panel-body.projects__wrapper {
+  /* to accomodate the absolutely-positioned list */
+  min-height: 200px;
+}
+
 .projects {
   display: block;
   position: relative;
