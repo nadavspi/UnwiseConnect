@@ -27,6 +27,27 @@ function paginate({ page, perPage }) {
   };
 }
 
+const multiInfix = term => ({
+  evaluate(value = '') {
+    if (!value) {
+      return false;
+    }
+
+    if (Array.isArray(value)) {
+      return value.some(v => this.doMatch(term, v));
+    }
+    if (Array.isArray(term)) {
+      return term.some(v => this.doMatch(v, value));
+    }
+
+    return this.doMatch(term, value);
+  },
+
+  doMatch(query, value) {
+    return value.indexOf(query) !== -1;
+  }
+});
+
 export default class TicketsTable extends React.Component {
   constructor(props) {
     super(props);
@@ -128,10 +149,11 @@ export default class TicketsTable extends React.Component {
   render() {
     const { query } = this.props;
     const { columns, pagination, rows } = this.state;
-    const paginatedAll = compose(search.multipleColumns({ columns, query }))(rows);
+    const searchExecutor = search.multipleColumns({ columns, query, strategy: multiInfix });
+    const paginatedAll = compose(searchExecutor)(rows);
     const paginated = compose(
       paginate(pagination),
-      search.multipleColumns({ columns, query })
+      searchExecutor
     )(rows);
     const visibleColumns = columns.filter(column => column.visible);
     const TableFooter = ({ columns, rows }) => {

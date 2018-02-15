@@ -181,7 +181,7 @@ body {
   max-width: 14em;
 }
 
-.column-filter-dropdown .Select--multi {
+.column-filter-dropdown .Select--multi .Select-value {
   display: flex;
 }
 
