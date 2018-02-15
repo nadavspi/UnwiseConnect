@@ -183,6 +183,7 @@ export default class TicketsTable extends React.Component {
               query={query}
               columns={visibleColumns}
               onChange={this.search}
+              rows={rows}
             />
           </Table.Header>
           <Table.Body rowKey="id" rows={paginated.rows} onRow={this.onBodyRow} />
@@ -293,6 +294,7 @@ TicketsTable.defaultProps = {
         label: 'Status',
       },
       visible: true,
+      filterType: 'dropdown',
     },
     {
       property: 'billTime',

@@ -175,6 +175,16 @@ body {
   max-width: 8em;
 }
 
+.column-filter-dropdown {
+  width: 100%;
+  min-width: 8em;
+  max-width: 14em;
+}
+
+.column-filter-dropdown .Select--multi {
+  display: flex;
+}
+
 /* Loading spinner */
 .loading,
 .loading::after {
