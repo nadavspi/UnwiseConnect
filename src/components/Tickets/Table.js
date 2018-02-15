@@ -98,26 +98,6 @@ export default class TicketsTable extends React.Component {
 
     return (
       <div>
-        <div className="panel-body col-md-6">
-          <h2>Search Tickets</h2>
-          <Search
-            column={this.state.searchColumn}
-            columns={columns}
-            onChange={this.search}
-            onColumnChange={searchColumn => this.setState({ searchColumn })}
-            query={query}
-            rows={rows}
-          />
-          <button
-            className="btn-link"
-            onClick={this.search.bind(this, {})}
-            type="button"
-            style={{ marginBottom: '20px' }}
-          >
-            Clear Search
-          </button>
-        </div>
-
         <VisibilityToggles
           className="panel-body visibility-toggles"
           columns={columns}
