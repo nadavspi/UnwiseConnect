@@ -4,6 +4,7 @@ import * as search from 'searchtabular';
 import Pagination from './Pagination';
 import React from 'react';
 import Search from 'reactabular-search-field';
+import SearchColumns from './SearchColumns';
 import StartTimer from './StartTimer';
 import TicketLink from './TicketLink';
 import VisibilityToggles from 'react-visibility-toggles';
@@ -178,7 +179,7 @@ export default class TicketsTable extends React.Component {
           columns={visibleColumns}
         >
           <Table.Header>
-            <search.Columns
+            <SearchColumns
               query={query}
               columns={visibleColumns}
               onChange={this.search}
