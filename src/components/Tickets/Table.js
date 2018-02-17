@@ -65,6 +65,7 @@ export default class TicketsTable extends React.Component {
     this.changePage = this.changePage.bind(this);
     this.search = this.search.bind(this);
     this.toggleColumn = this.toggleColumn.bind(this);
+    this.getHtmlId = this.getHtmlId.bind(this);
   }
 
   componentDidMount() {
@@ -160,6 +161,15 @@ export default class TicketsTable extends React.Component {
     return Math.round(sum * 100) / 100;
   }
 
+  getHtmlId() {
+    let htmlId = this.props.id || this.state.htmlId;
+    if (!htmlId) {
+      htmlId = 'table-' + Math.random().toString(36).substr(2, 9);
+      this.setState({ htmlId });
+    }
+    return htmlId;
+  }
+
   render() {
     const { query } = this.props;
     const { columns, pagination, rows } = this.state;
@@ -183,7 +193,7 @@ export default class TicketsTable extends React.Component {
     };
 
     return (
-      <div>
+      <div id={this.getHtmlId()}>
         <VisibilityToggles
           className="panel-body visibility-toggles"
           columns={columns}
@@ -210,6 +220,7 @@ export default class TicketsTable extends React.Component {
             changePage={this.changePage}
             paginated={paginated}
             pagination={pagination}
+            topHtmlId={this.getHtmlId()}
           />
         )}
       </div>

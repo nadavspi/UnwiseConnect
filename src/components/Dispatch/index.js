@@ -358,6 +358,7 @@ class Dispatch extends Component {
             />
             {this.props.tickets.flattened.length > 0 && (
               <Table
+                id="table-dispatch-tickets"
                 columns={this.columns(this.onTicketSelect)}
                 query={this.props.tickets.query}
                 search={this.search}
