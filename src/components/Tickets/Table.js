@@ -72,8 +72,22 @@ export default class TicketsTable extends React.Component {
   }
 
   componentWillReceiveProps(nextProps) {
-    if (this.props.tickets.length !== nextProps.tickets.length) {
+    const lengthChanged = this.props.tickets.length !== nextProps.tickets.length;
+    // Using a string compare to reduce re-rendering.
+    let selectedChanged = (this.props.selectedTicketIds || []).join(',') !== (nextProps.selectedTicketIds || []).join(',');
+    if (lengthChanged) {
       this.prepareRows(nextProps.tickets);
+    } else if (selectedChanged) {
+      let rows = this.state.rows.map(row => {
+        return {
+          ...row,
+          selected: nextProps.selectedTicketIds.includes(row.id),
+        };
+      });
+
+      this.setState({
+        rows,
+      });
     }
   }
 

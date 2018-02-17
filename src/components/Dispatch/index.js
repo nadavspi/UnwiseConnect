@@ -104,10 +104,12 @@ class Dispatch extends Component {
     this.resetTickets = this.resetTickets.bind(this);
     this.search = this.search.bind(this);
     this.selectedTickets = this.selectedTickets.bind(this);
+    this.selectedTicketIds = this.selectedTicketIds.bind(this);
+    this.isTicketSelected = this.isTicketSelected.bind(this);
     this.setTicketHours = this.setTicketHours.bind(this);
   }
 
-  columns(selectedTickets, onChange) {
+  columns(onChange) {
     return [
       {
         // Using a random property because it's easier than adding a new one
@@ -126,10 +128,10 @@ class Dispatch extends Component {
                   type="button"
                   onClick={e => onChange(rowData.id)}
                 >
-                  Add/remove
+                  { this.isTicketSelected(rowData.id) ? 'Remove' : 'Add' }
                 </button>
               );
-            }
+            },
           ]
         },
       },
@@ -191,16 +193,24 @@ class Dispatch extends Component {
     this.props.dispatch(search(nextQuery));
   }
 
-  selectedTickets() {
+  selectedTicketIds() {
     const tickets = this.state.fields.find(field => field.id === 'tickets');
     if (!tickets) {
       console.warn('No tickets field found.');
       return [];
     }
 
-    return tickets.value.map(ticket => ticket.id).map(id => {
+    return tickets.value.map(ticket => ticket.id);
+  }
+
+  selectedTickets() {
+    return this.selectedTicketIds().map(id => {
       return this.props.tickets.flattened.find(ticket => ticket.id == id);
     });
+  }
+
+  isTicketSelected(ticketId) {
+    return this.selectedTicketIds().includes(ticketId);
   }
 
   resetTickets() {
@@ -219,7 +229,7 @@ class Dispatch extends Component {
   }
 
   onTicketSelect(id) {
-    const selectedIds = this.selectedTickets().map(ticket => ticket.id);
+    const selectedIds = this.selectedTicketIds();
     if (selectedIds.indexOf(id) === -1) {
       // Adding a ticket
       this.setState({
@@ -319,7 +329,7 @@ class Dispatch extends Component {
             <header className="dispatch-header">
               <form>
                 <Fields 
-                  fields={this.state.fields} 
+                  fields={this.state.fields}
                   onChange={this.onFieldChange}
                 />
                 <button 
@@ -348,10 +358,11 @@ class Dispatch extends Component {
             />
             {this.props.tickets.flattened.length > 0 && (
               <Table
-                columns={this.columns(this.selectedTickets(), this.onTicketSelect)}
+                columns={this.columns(this.onTicketSelect)}
                 query={this.props.tickets.query}
                 search={this.search}
                 tickets={this.props.tickets.flattened}
+                selectedTicketIds={this.selectedTicketIds()}
               />
             )}
           </div>
