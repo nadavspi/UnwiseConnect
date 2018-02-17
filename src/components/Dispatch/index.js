@@ -174,6 +174,7 @@ class Dispatch extends Component {
           label: 'Status',
         },
         visible: true,
+        filterType: 'dropdown',
       },
     ] 
   }
