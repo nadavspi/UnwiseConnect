@@ -114,7 +114,7 @@ class Dispatch extends Component {
         // to all the rows
         property: 'mobileGuid',
         header: {
-          label: '',
+          label: 'Action',
         },
         visible: true,
         cell: {
