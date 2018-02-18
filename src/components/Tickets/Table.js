@@ -3,7 +3,6 @@ import * as resolve from 'table-resolver';
 import * as search from 'searchtabular';
 import Pagination from './Pagination';
 import React from 'react';
-import Search from 'reactabular-search-field';
 import SearchColumns from './SearchColumns';
 import StartTimer from './StartTimer';
 import TicketLink from './TicketLink';
