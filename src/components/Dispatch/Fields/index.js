@@ -1,6 +1,16 @@
-import React from 'react'; 
+import React from 'react';
+import { Creatable } from 'react-select';
+import 'react-select/dist/react-select.css';
 
-const Field = ({ field, onChange }) => {
+function valuesAsArray(values, tickets) {
+  if (Array.isArray(values)) {
+    return values;
+  }
+
+  return values(tickets);
+}
+
+const Field = ({ field, onChange, tickets }) => {
   switch (field.type) {
     case 'text': 
     case 'number':
@@ -56,7 +66,7 @@ const Field = ({ field, onChange }) => {
             required={field.required}
             value={field.value}
           >
-            {field.values.map(option => (
+            {valuesAsArray(field.values, tickets).map(option => (
               <option 
                 value={option}
                 key={option}
@@ -65,6 +75,37 @@ const Field = ({ field, onChange }) => {
               </option>
             ))}
           </select>
+        </span>
+      );
+
+    case 'react-select':
+      return (
+        <span>
+          <label
+            htmlFor={field.id}
+            style={{ display: 'block' }}
+          >
+            {field.id}
+          </label>
+
+          {field.allowCustom ? (
+            <Creatable
+              name={field.id}
+              value={field.value}
+              onChange={selected => onChange({ target: (selected || { value: '' }) })}
+              options={valuesAsArray(field.values, tickets, field.value).map(value => ({ value, label: value }))}
+              promptTextCreator={label => 'Custom: ' + label}
+            />
+            ) : (
+            <Select
+              name={field.id}
+              value={field.value}
+              onChange={selected => onChange({ target: (selected || { value: '' }) })}
+              options={valuesAsArray(field.values, tickets, field.value).map(value => ({ value, label: value }))}
+              promptTextCreator={label => 'Custom: ' + label}
+            />
+            )
+          }
         </span>
       );
 
@@ -78,9 +119,10 @@ const Fields = props => {
     <div className="dispatch-fields">
       {props.fields.map(field => (
         <p key={field.id}>
-          <Field 
+          <Field
             field={field}
             onChange={props.onChange.bind(null, field.id, field.type)}
+            tickets={props.tickets}
           />
         </p>
       ))}

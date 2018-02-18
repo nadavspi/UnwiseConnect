@@ -12,8 +12,39 @@ const fields = [
   {
     id: 'memberIdentifier',
     value: '',
-    type: 'text',
+    values: (tickets, value) => {
+      let resourcePopularity = {};
+      if (value) {
+        // Needed to account for custom values.
+        resourcePopularity[value] = 0;
+      }
+
+      tickets.map(ticket => {
+        const allResources = (ticket.resources || '') + ',' + (ticket.owner ? ticket.owner.identifier : '');
+        const splitResources = allResources.split(/[ ]*,[ ]*/);
+        return splitResources.map(resource => {
+          if (resource !== '') {
+            resourcePopularity[resource] = (resourcePopularity[resource] || 0) + 1;
+          }
+          return resource;
+        });
+      });
+
+      let resourceList = Object.keys(resourcePopularity);
+      resourceList.sort((a, b) => {
+        // Popularity, descending.
+        const popularity = resourcePopularity[b] - resourcePopularity[a];
+        if (popularity === 0) {
+          // Alphabetical, ascending.
+          return a.localeCompare(b);
+        }
+        return popularity;
+      });
+      return resourceList;
+    },
+    type: 'react-select',
     required: true,
+    allowCustom: true,
   },
   {
     id: 'startDate',
@@ -330,6 +361,7 @@ class Dispatch extends Component {
               <form>
                 <Fields 
                   fields={this.state.fields}
+                  tickets={this.props.tickets.flattened}
                   onChange={this.onFieldChange}
                 />
                 <button 
