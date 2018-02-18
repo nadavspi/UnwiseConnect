@@ -1,31 +1,31 @@
 import React from 'react';
-import { Creatable } from 'react-select';
+import { Creatable, Select } from 'react-select';
 import 'react-select/dist/react-select.css';
 
-function valuesAsArray(values, tickets) {
+function valuesAsArray(values, tickets, value) {
   if (Array.isArray(values)) {
     return values;
   }
 
-  return values(tickets);
+  return values(tickets, value);
 }
 
 const Field = ({ field, onChange, tickets }) => {
   switch (field.type) {
-    case 'text': 
+    case 'text':
     case 'number':
       return (
         <span>
-          <label 
+          <label
             htmlFor={field.id}
             style={{ display: 'block' }}
           >
             {field.id}
           </label>
-          <input 
+          <input
             id={field.id}
             onChange={onChange}
-            required={field.required} 
+            required={field.required}
             type={field.type}
             value={field.value}
           />
@@ -35,14 +35,14 @@ const Field = ({ field, onChange, tickets }) => {
     case 'boolean':
       return (
         <span>
-          <input 
+          <input
             checked={field.value}
             id={field.id}
             onChange={onChange}
             type="checkbox"
           />
           {' '}
-          <label 
+          <label
             htmlFor={field.id}
           >
             {field.id}
@@ -53,21 +53,21 @@ const Field = ({ field, onChange, tickets }) => {
     case 'select':
       return (
         <span>
-          <label 
+          <label
             htmlFor={field.id}
             style={{ display: 'block' }}
           >
             {field.id}
           </label>
-        
-          <select 
+
+          <select
             id={field.id}
             onChange={onChange}
             required={field.required}
             value={field.value}
           >
             {valuesAsArray(field.values, tickets).map(option => (
-              <option 
+              <option
                 value={option}
                 key={option}
               >
