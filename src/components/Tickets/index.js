@@ -104,7 +104,7 @@ class Tickets extends Component {
             </div>
           </div>
           <div className="row panel-body">
-            <div className="panel-body col-md-6 projects__wrapper">
+            <div className="panel-body projects__wrapper">
               <h2>Active Projects</h2>
               <Projects
                 projects={this.projects()}
