@@ -1,21 +1,31 @@
-import React from 'react'; 
+import React from 'react';
+import { Creatable, Select } from 'react-select';
+import 'react-select/dist/react-select.css';
 
-const Field = ({ field, onChange }) => {
+function valuesAsArray(values, tickets, value) {
+  if (Array.isArray(values)) {
+    return values;
+  }
+
+  return values(tickets, value);
+}
+
+const Field = ({ field, onChange, tickets }) => {
   switch (field.type) {
-    case 'text': 
+    case 'text':
     case 'number':
       return (
         <span>
-          <label 
+          <label
             htmlFor={field.id}
             style={{ display: 'block' }}
           >
             {field.id}
           </label>
-          <input 
+          <input
             id={field.id}
             onChange={onChange}
-            required={field.required} 
+            required={field.required}
             type={field.type}
             value={field.value}
           />
@@ -25,14 +35,14 @@ const Field = ({ field, onChange }) => {
     case 'boolean':
       return (
         <span>
-          <input 
+          <input
             checked={field.value}
             id={field.id}
             onChange={onChange}
             type="checkbox"
           />
           {' '}
-          <label 
+          <label
             htmlFor={field.id}
           >
             {field.id}
@@ -43,21 +53,21 @@ const Field = ({ field, onChange }) => {
     case 'select':
       return (
         <span>
-          <label 
+          <label
             htmlFor={field.id}
             style={{ display: 'block' }}
           >
             {field.id}
           </label>
-        
-          <select 
+
+          <select
             id={field.id}
             onChange={onChange}
             required={field.required}
             value={field.value}
           >
-            {field.values.map(option => (
-              <option 
+            {valuesAsArray(field.values, tickets).map(option => (
+              <option
                 value={option}
                 key={option}
               >
@@ -65,6 +75,37 @@ const Field = ({ field, onChange }) => {
               </option>
             ))}
           </select>
+        </span>
+      );
+
+    case 'react-select':
+      return (
+        <span>
+          <label
+            htmlFor={field.id}
+            style={{ display: 'block' }}
+          >
+            {field.id}
+          </label>
+
+          {field.allowCustom ? (
+            <Creatable
+              name={field.id}
+              value={field.value}
+              onChange={selected => onChange({ target: (selected || { value: '' }) })}
+              options={valuesAsArray(field.values, tickets, field.value).map(value => ({ value, label: value }))}
+              promptTextCreator={label => 'Custom: ' + label}
+            />
+            ) : (
+            <Select
+              name={field.id}
+              value={field.value}
+              onChange={selected => onChange({ target: (selected || { value: '' }) })}
+              options={valuesAsArray(field.values, tickets, field.value).map(value => ({ value, label: value }))}
+              promptTextCreator={label => 'Custom: ' + label}
+            />
+            )
+          }
         </span>
       );
 
@@ -78,9 +119,10 @@ const Fields = props => {
     <div className="dispatch-fields">
       {props.fields.map(field => (
         <p key={field.id}>
-          <Field 
+          <Field
             field={field}
             onChange={props.onChange.bind(null, field.id, field.type)}
+            tickets={props.tickets}
           />
         </p>
       ))}

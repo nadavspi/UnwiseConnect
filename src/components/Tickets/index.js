@@ -116,6 +116,7 @@ class Tickets extends Component {
             </div>
             {this.props.tickets.flattened.length > 0 && (
               <Table
+                id="table-search-tickets"
                 query={this.props.tickets.query}
                 search={this.search}
                 tickets={this.props.tickets.flattened}

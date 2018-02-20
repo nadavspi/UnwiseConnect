@@ -3,7 +3,6 @@ import * as resolve from 'table-resolver';
 import * as search from 'searchtabular';
 import Pagination from './Pagination';
 import React from 'react';
-import Search from 'reactabular-search-field';
 import SearchColumns from './SearchColumns';
 import StartTimer from './StartTimer';
 import TicketLink from './TicketLink';
@@ -65,6 +64,7 @@ export default class TicketsTable extends React.Component {
     this.changePage = this.changePage.bind(this);
     this.search = this.search.bind(this);
     this.toggleColumn = this.toggleColumn.bind(this);
+    this.getHtmlId = this.getHtmlId.bind(this);
   }
 
   componentDidMount() {
@@ -72,8 +72,22 @@ export default class TicketsTable extends React.Component {
   }
 
   componentWillReceiveProps(nextProps) {
-    if (this.props.tickets.length !== nextProps.tickets.length) {
+    const lengthChanged = this.props.tickets.length !== nextProps.tickets.length;
+    // Using a string compare to reduce re-rendering.
+    let selectedChanged = (this.props.selectedTicketIds || []).join(',') !== (nextProps.selectedTicketIds || []).join(',');
+    if (lengthChanged) {
       this.prepareRows(nextProps.tickets);
+    } else if (selectedChanged) {
+      let rows = this.state.rows.map(row => {
+        return {
+          ...row,
+          selected: nextProps.selectedTicketIds.includes(row.id),
+        };
+      });
+
+      this.setState({
+        rows,
+      });
     }
   }
 
@@ -146,6 +160,15 @@ export default class TicketsTable extends React.Component {
     return Math.round(sum * 100) / 100;
   }
 
+  getHtmlId() {
+    let htmlId = this.props.id || this.state.htmlId;
+    if (!htmlId) {
+      htmlId = 'table-' + Math.random().toString(36).substr(2, 9);
+      this.setState({ htmlId });
+    }
+    return htmlId;
+  }
+
   render() {
     const { query } = this.props;
     const { columns, pagination, rows } = this.state;
@@ -169,7 +192,7 @@ export default class TicketsTable extends React.Component {
     };
 
     return (
-      <div>
+      <div id={this.getHtmlId()}>
         <VisibilityToggles
           className="panel-body visibility-toggles"
           columns={columns}
@@ -196,6 +219,7 @@ export default class TicketsTable extends React.Component {
             changePage={this.changePage}
             paginated={paginated}
             pagination={pagination}
+            topHtmlId={this.getHtmlId()}
           />
         )}
       </div>
