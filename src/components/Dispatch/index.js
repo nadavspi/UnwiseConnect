@@ -1,12 +1,16 @@
 import './dispatch.css';
+import * as resolve from 'table-resolver';
 import Fields from './Fields';
 import JSONPretty from 'react-json-pretty';
 import Queue from './Queue';
 import React, { Component } from 'react';
 import Table from '../Tickets/Table';
+import * as searchtabular from 'searchtabular';
 import { connect } from 'react-redux';
+import { compose } from 'redux';
 import { format as formatDate } from 'date-fns';
 import { search, dispatch as dispatchTickets } from '../../actions/tickets';
+import { multiInfix } from '../../helpers/utils';
 
 const fields = [
   {
@@ -129,6 +133,7 @@ class Dispatch extends Component {
     };
 
     this.columns = this.columns.bind(this);
+    this.addFiltered = this.addFiltered.bind(this);
     this.dispatch = this.dispatch.bind(this);
     this.onFieldChange = this.onFieldChange.bind(this);
     this.onTicketSelect = this.onTicketSelect.bind(this);
@@ -165,6 +170,15 @@ class Dispatch extends Component {
             },
           ]
         },
+        filterType: 'custom',
+        customFilter: (
+          <button
+            type="button"
+            onClick={this.addFiltered}
+          >
+            Add All
+          </button>
+        ),
       },
       {
         property: 'company.name',
@@ -286,6 +300,49 @@ class Dispatch extends Component {
             return {
               ...field,
               value: field.value.filter(ticket => ticket.id !== id),
+            };
+          }
+
+          return field;
+        }),
+      });
+    }
+  }
+
+  addFiltered(e) {
+    const columns = this.columns(this.onTicketSelect);
+    const { query } = this.props.tickets;
+    const tickets = this.props.tickets.flattened;
+
+    const rows = resolve.resolve({
+      columns,
+      method: extra => compose(
+        resolve.byFunction('cell.resolve')(extra),
+        resolve.nested(extra),
+      )
+    })(tickets);
+    const searchExecutor = searchtabular.multipleColumns({ columns, query, strategy: multiInfix });
+    const filteredTickets = searchExecutor(rows);
+
+    const currentSelected = this.selectedTicketIds();
+    let newIdObjects = [];
+    for (let ticket of filteredTickets) {
+      if (!currentSelected.includes(ticket.id)) {
+        newIdObjects.push({ id: ticket.id });
+      }
+    }
+
+    if (newIdObjects.length) {
+      // Adding a ticket
+      this.setState({
+        fields: this.state.fields.map(field => {
+          if (field.id === 'tickets') {
+            return {
+              ...field,
+              value: [
+                ...field.value,
+                ...newIdObjects,
+              ],
             };
           }
 
