@@ -20,11 +20,12 @@ function termToWords(term) {
   let words = [];
 
   let last = 0;
+  let nextSemantic = '+';
   const addWord = (end, quoted) => {
     // Skip blank words, even "".
     if (end !== last) {
       let text = term.substr(last, end - last);
-      let semantic = '+';
+      let semantic = nextSemantic;
 
       // If it's not quoted, check if it has a semantic prefix.
       if (!quoted && text.length > 1) {
@@ -36,6 +37,7 @@ function termToWords(term) {
       }
 
       words.push({ text, semantic });
+      nextSemantic = '+';
     }
 
     // This always has a separator following it, skip that.
@@ -57,7 +59,19 @@ function termToWords(term) {
         // We already skipped the first quote when we set inQuotes.
         addWord(next.index, true);
         inQuotes = false;
+        // In case it was -"", reset nextSemantic.
+        nextSemantic = '+';
       } else {
+        // Might be a semantic before the quoted string.
+        if (next.index === last + 1) {
+          const maybeSemantic = term.substr(last, 1);
+          if (maybeSemantic === '-' || maybeSemantic === '+') {
+            nextSemantic = maybeSemantic;
+            // Skip considering this in addWord().
+            last = next.index;
+          }
+        }
+
         // Everything up to the start quote is a word.
         addWord(next.index, false);
         inQuotes = true;
