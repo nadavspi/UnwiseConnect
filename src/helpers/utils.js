@@ -11,3 +11,26 @@ export function checkStatus(response) {
 export function parseJSON(response) {
   return response.json();
 }
+
+export function multiInfix(term) {
+  return {
+    evaluate(value = '') {
+      if (!value) {
+        return false;
+      }
+
+      if (Array.isArray(value)) {
+        return value.some(v => this.doMatch(term, v));
+      }
+      if (Array.isArray(term)) {
+        return term.some(v => this.doMatch(v, value));
+      }
+
+      return this.doMatch(term, value);
+    },
+
+    doMatch(query, value) {
+      return value.indexOf(query) !== -1;
+    }
+  };
+}
