@@ -57,7 +57,15 @@ class ToggleProjects extends Component {
           style={{ width: '700px', height: 'auto', maxHeight: '60vh', overflowY: 'auto' }}
         >
           <Projects
-            projects={projects}
+            projects={projects.filter(project => project.selected)}
+            toggle={this.toggle}
+            update={this.updateTickets}
+          />
+          {(projects.filter(project => project.selected).length ?
+            <hr />
+          : '')}
+          <Projects
+            projects={projects.filter(project => !project.selected)}
             toggle={this.toggle}
             update={this.updateTickets}
           />
