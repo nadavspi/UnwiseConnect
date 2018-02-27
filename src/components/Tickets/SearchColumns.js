@@ -22,6 +22,8 @@ class SearchColumns extends React.Component {
       return this.renderDropdownFilter(column);
     } else if (column.filterType === 'none') {
       return '';
+    } else if (column.filterType === 'custom') {
+      return typeof column.customFilter === 'function' ? column.customFilter() : column.customFilter;
     }
     return this.renderTextFilter(column);
   }
