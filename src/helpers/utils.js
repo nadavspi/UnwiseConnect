@@ -27,7 +27,7 @@ function termToWords(term) {
       let semantic = '+';
 
       // If it's not quoted, check if it has a semantic prefix.
-      if (!quoted) {
+      if (!quoted && text.length > 1) {
         const prefix = text.substr(0, 1);
         if (prefix === '-' || prefix === '+') {
           semantic = prefix;
