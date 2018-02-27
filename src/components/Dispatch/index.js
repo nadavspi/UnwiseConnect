@@ -188,11 +188,24 @@ class Dispatch extends Component {
         visible: true,
       },
       {
-        property: 'phase.name',
+        property: 'phase.path',
         header: {
           label: 'Phase',
         },
-        visible: true,
+        visible: false,
+        cell: {
+          resolve: value => `(${value})`,
+          formatters: [
+            (value, { rowData }) => {
+              const { name, path } = rowData.phase;
+              return (
+                <span title={path}>
+                  {name}
+                </span>
+              );
+            }
+          ]
+        },
       },
       {
         property: 'summary',

@@ -9,6 +9,7 @@ import TicketLink from './TicketLink';
 import VisibilityToggles from 'react-visibility-toggles';
 import cloneDeep from 'lodash.clonedeep';
 import { compose } from 'redux';
+import { multiInfix } from '../../helpers/utils';
 
 function paginate({ page, perPage }) {
   return (rows = []) => {
@@ -25,27 +26,6 @@ function paginate({ page, perPage }) {
     };
   };
 }
-
-const multiInfix = term => ({
-  evaluate(value = '') {
-    if (!value) {
-      return false;
-    }
-
-    if (Array.isArray(value)) {
-      return value.some(v => this.doMatch(term, v));
-    }
-    if (Array.isArray(term)) {
-      return term.some(v => this.doMatch(v, value));
-    }
-
-    return this.doMatch(term, value);
-  },
-
-  doMatch(query, value) {
-    return value.indexOf(query) !== -1;
-  }
-});
 
 export default class TicketsTable extends React.Component {
   constructor(props) {
@@ -280,11 +260,24 @@ TicketsTable.defaultProps = {
       filterType: 'none',
     },
     {
-      property: 'phase.name',
+      property: 'phase.path',
       header: {
         label: 'Phase',
       },
       visible: false,
+      cell: {
+        resolve: value => `(${value})`,
+        formatters: [
+          (value, { rowData }) => {
+            const { name, path } = rowData.phase;
+            return (
+              <span title={path}>
+                {name}
+              </span>
+            );
+          }
+        ]
+      },
     },
     {
       property: 'summary',
