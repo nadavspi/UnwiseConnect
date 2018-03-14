@@ -264,7 +264,7 @@ TicketsTable.defaultProps = {
       header: {
         label: 'Phase',
       },
-      visible: false,
+      visible: true,
       cell: {
         resolve: value => `(${value})`,
         formatters: [
