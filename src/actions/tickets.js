@@ -17,8 +17,8 @@ export const subscribe = ({ projectId }) => {
       // Sort project ticket by wbsCode
       // ie ['1.1', '1.1.14', '4.2.1.4.6', '4.2.3']
       flattened.sort((a, b) => {
-        const aParts = a.wbsCode.split('.');
-        const bParts = b.wbsCode.split('.');
+        const aParts = String(a.wbsCode).split('.');
+        const bParts = String(b.wbsCode).split('.');
         for (let i = 0; i < aParts.length; ++i) {
           if (bParts.length === i || parseInt(aParts[i], 10) > parseInt(bParts[i], 10)) {
             return 1;
