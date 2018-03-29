@@ -207,6 +207,8 @@ export default class TicketsTable extends React.Component {
   }
 }
 
+TicketsTable.closedTicketStatuses = [ 'Completed', 'Ready for QA', 'Canceled', 'Closed' ];
+
 TicketsTable.defaultProps = {
   columns: [
     {
@@ -315,6 +317,20 @@ TicketsTable.defaultProps = {
       },
       visible: true,
       filterType: 'dropdown',
+      extraOptions: [
+        (column, rowValues) => {
+          const closedValues = TicketsTable.closedTicketStatuses;
+          const openValues = rowValues.filter(item => !closedValues.includes(item));
+          return {
+            label: 'All Open',
+            value: openValues,
+          };
+        },
+        {
+          label: 'All Complete',
+          value: TicketsTable.closedTicketStatuses,
+        },
+      ],
     },
     {
       property: 'billTime',
