@@ -245,3 +245,54 @@ body {
   font-weight: bold;
   border-top-width: 2px;
 }
+
+.schedule .day {
+  float: left;
+  width: 18%;
+  font-size: 60%;
+}
+
+
+.schedule li.day {
+  background-color: #ccc;
+  margin-right: 10px;
+}
+
+.schedule li { 
+  list-style: none;
+  padding-left: 0;
+}
+
+.schedule ul {
+  padding-left: 0;
+}
+
+.schedule li.assignment {
+  margin: 10px 0px 10px 0px;
+  padding:5px;
+  border: solid 1px #000000;
+  border-radius: 5px;
+}
+
+.schedule li.assignment .complete {
+  background-color: #98FB98;
+}
+
+.schedule li .fld-ticket,
+.schedule li .fld-ticketname,
+.schedule li .fld-company,
+.schedule li .fld-project,
+.schedule li .fld-phase,
+.schedule li .fld-ticketname { 
+  display: block;
+}
+
+.completion-label {
+  display: inline-block;
+}
+.completion-chart {
+  display: inline-block;
+}
+
+
+

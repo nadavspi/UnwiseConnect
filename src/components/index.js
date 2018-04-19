@@ -3,6 +3,7 @@ import Dispatch from './Dispatch';
 import Home from './Home';
 import React, { Component } from 'react';
 import Settings from './Settings';
+import Schedules from './Schedules';
 import Tickets from './Tickets';
 import { Route, BrowserRouter, Link, Redirect, Switch } from 'react-router-dom';
 import { connect } from 'react-redux';
@@ -57,6 +58,10 @@ class App extends Component {
                       <Link to="/dispatch">Dispatch</Link>
                     </li>
                   )}
+                   <li>
+                      <Link to="/schedules">Schedules</Link>
+                    </li>
+                  
                   <li>
                     <Link
                       to="/settings"
@@ -78,6 +83,7 @@ class App extends Component {
                 <PublicRoute path='/' authed={this.props.authed} exact component={Home} />
                 <PrivateRoute authed={this.props.authed} path='/tickets' component={Tickets} />
                 <PrivateRoute authed={this.props.authed} path='/dispatch' component={Dispatch} />
+                <PrivateRoute authed={this.props.authed} path='/schedules' component={Schedules} />
                 <PrivateRoute authed={this.props.authed} path='/settings' component={Settings} />
                 <Route render={() => <h2>No Match</h2>} />
               </Switch>

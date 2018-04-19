@@ -2,6 +2,7 @@ import app from './app';
 import projects from './projects';
 import tickets from './tickets';
 import user from './user';
+import schedule from './schedules';
 import { combineReducers } from 'redux';
 
 export default combineReducers({
@@ -9,4 +10,5 @@ export default combineReducers({
   projects,
   tickets,
   user,
+  schedule
 });
