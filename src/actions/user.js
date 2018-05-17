@@ -51,6 +51,27 @@ export const subscribeCapabilities = uid => {
   }
 }
 
+const subscribeColumns = uid => {
+  return (dispatch, getState) => {
+    const columnsRef = ref.child(`users/${uid}/columns`);
+    columnsRef.on('value', snapshot => {
+      const columns = snapshot.val();
+
+      // They haven't selected any columns
+      if (!columns) {
+        return;
+      }
+
+      dispatch({
+        type: ActionTypes.USER_UPDATE,
+        payload: {
+          columns,
+        },
+      });
+    });
+  }
+}
+
 export const subscribe = (maybeUid) => {
   return (dispatch, getState) => {
     let uid = maybeUid || getState().user.creds;
@@ -58,8 +79,9 @@ export const subscribe = (maybeUid) => {
       throw new Error(`No UID. That's not supposed to happen.`);
     }
 
-    dispatch(subscribeProjects(uid));
     dispatch(subscribeCapabilities(uid));
+    dispatch(subscribeColumns(uid));
+    dispatch(subscribeProjects(uid));
   }
 };
 
@@ -81,3 +103,29 @@ export const toggleProject = payload => {
     projectsRef.set(nextProjects);
   };
 };
+
+export const toggleColumn = payload => {
+  return (dispatch, getState) => {
+    const { uid } = getState().user.creds;
+    const columnsRef = ref.child(`users/${uid}/columns`);
+    window.columnsRef = columnsRef;
+    const { columns: userColumns } = getState().user;
+    const { columnName } = payload;
+
+    const willShow = userColumns.indexOf(columnName) === -1;
+    let nextColumns = [...userColumns, columnName];
+    if (!willShow) {
+      nextColumns = userColumns.filter(name => name !== columnName);
+    }
+
+    columnsRef.set(nextColumns);
+
+    // Optimistically update the store for faster UI
+    dispatch({
+      type: ActionTypes.USER_UPDATE,
+      payload: {
+        columns: nextColumns,
+      },
+    });
+  };
+}

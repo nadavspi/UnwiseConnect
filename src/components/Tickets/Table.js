@@ -38,7 +38,6 @@ export default class TicketsTable extends React.Component {
       },
       rows: [],
       columns: props.columns,
-      visibleColumns: [],
     };
 
     this.changePage = this.changePage.bind(this);
@@ -100,17 +99,7 @@ export default class TicketsTable extends React.Component {
 
   toggleColumn({ column }) {
     const columnName = column.property;
-    const willShow = this.state.visibleColumns.indexOf(columnName) === -1;
-
-    if (willShow) {
-      this.setState({
-        visibleColumns: [...this.state.visibleColumns, columnName],
-      });
-    } else {
-      this.setState({
-        visibleColumns: this.state.visibleColumns.filter(name => name !== columnName),
-      });
-    }
+    this.props.toggleColumn({ columnName });
   }
 
   onBodyRow(row) {
@@ -167,7 +156,7 @@ export default class TicketsTable extends React.Component {
       paginate(pagination),
       searchExecutor
     )(rows);
-    const visibleColumns = columns.filter(column => this.state.visibleColumns.indexOf(column.property) > -1);
+    const visibleColumns = columns.filter(column => this.props.userColumns.indexOf(column.property) > -1);
     const TableFooter = ({ columns, rows }) => {
       return (
         <tfoot className="table-bordered__foot">
@@ -184,7 +173,7 @@ export default class TicketsTable extends React.Component {
       <div id={this.getHtmlId()}>
         <VisibilityToggles
           className="panel-body visibility-toggles"
-          isVisible={({ column }) => this.state.visibleColumns.indexOf(column.property) > -1}
+          isVisible={({ column }) => this.props.userColumns.indexOf(column.property) > -1}
           columns={columns}
           onToggleColumn={this.toggleColumn}
         />
