@@ -178,6 +178,10 @@ export default class TicketsTable extends React.Component {
           onToggleColumn={this.toggleColumn}
         />
 
+      {this.props.userColumns.length === 0 && (
+        <div className="alert alert-warning">You haven't selected any columns above. That's why you don't see any tickets.</div>
+      )}
+
         <Table.Provider
           className="table table-striped table-bordered"
           columns={visibleColumns}
