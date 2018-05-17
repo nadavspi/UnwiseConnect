@@ -118,13 +118,13 @@ const Fields = props => {
   return (
     <div className="dispatch-fields">
       {props.fields.map(field => (
-        <p key={field.id}>
+        <div key={field.id}>
           <Field
             field={field}
             onChange={props.onChange.bind(null, field.id, field.type)}
             tickets={props.tickets}
           />
-        </p>
+        </div>
       ))}
     </div>
   );
