@@ -1,5 +1,6 @@
 import './dispatch.css';
 import * as resolve from 'table-resolver';
+import * as UserActions from '../../actions/user';
 import Fields from './Fields';
 import JSONPretty from 'react-json-pretty';
 import Queue from './Queue';
@@ -143,6 +144,11 @@ class Dispatch extends Component {
     this.selectedTicketIds = this.selectedTicketIds.bind(this);
     this.isTicketSelected = this.isTicketSelected.bind(this);
     this.setTicketHours = this.setTicketHours.bind(this);
+    this.toggleColumn = this.toggleColumn.bind(this);
+  }
+
+  toggleColumn(payload) {
+    this.props.dispatch(UserActions.toggleColumn(payload));
   }
 
   columns(onChange) {
@@ -480,6 +486,8 @@ class Dispatch extends Component {
                 search={this.search}
                 tickets={this.props.tickets.flattened}
                 selectedTicketIds={this.selectedTicketIds()}
+                toggleColumn={this.toggleColumn}
+                userColumns={this.props.userColumns}
               />
             )}
           </div>
@@ -491,6 +499,7 @@ class Dispatch extends Component {
 
 const mapStateToProps = state => ({
   tickets: state.tickets,
+  userColumns: state.user.columns,
 });
 
 
