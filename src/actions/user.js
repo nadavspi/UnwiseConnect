@@ -108,7 +108,6 @@ export const toggleColumn = payload => {
   return (dispatch, getState) => {
     const { uid } = getState().user.creds;
     const columnsRef = ref.child(`users/${uid}/columns`);
-    window.columnsRef = columnsRef;
     const { columns: userColumns } = getState().user;
     const { columnName } = payload;
 
