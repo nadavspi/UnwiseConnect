@@ -19,10 +19,11 @@ class Tickets extends Component {
     }
 
     this.addProject = this.addProject.bind(this);
-    this.toggleProject = this.toggleProject.bind(this);
     this.expand = this.expand.bind(this);
     this.projects = this.projects.bind(this);
     this.search = this.search.bind(this);
+    this.toggleColumn = this.toggleColumn.bind(this);
+    this.toggleProject = this.toggleProject.bind(this);
   }
 
   projects() {
@@ -44,6 +45,10 @@ class Tickets extends Component {
       add: checked,
       projectId,
     }));
+  }
+
+  toggleColumn(payload) {
+    this.props.dispatch(UserActions.toggleColumn(payload));
   }
 
   search(query, incremental) {
@@ -120,6 +125,8 @@ class Tickets extends Component {
                 query={this.props.tickets.query}
                 search={this.search}
                 tickets={this.props.tickets.flattened}
+                toggleColumn={this.toggleColumn}
+                userColumns={this.props.userColumns}
               />
             )}
           </div>
@@ -131,6 +138,7 @@ class Tickets extends Component {
 
 const mapStateToProps = state => ({
   tickets: state.tickets,
+  userColumns: state.user.columns,
 });
 
 export default connect(mapStateToProps)(Tickets);
