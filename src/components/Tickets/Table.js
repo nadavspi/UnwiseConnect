@@ -156,7 +156,7 @@ export default class TicketsTable extends React.Component {
       paginate(pagination),
       searchExecutor
     )(rows);
-    const visibleColumns = columns.filter(column => this.props.userColumns.indexOf(column.property) > -1);
+    const visibleColumns = columns.filter(column => this.props.userColumns.includes(column.property));
     const TableFooter = ({ columns, rows }) => {
       return (
         <tfoot className="table-bordered__foot">
@@ -173,7 +173,7 @@ export default class TicketsTable extends React.Component {
       <div id={this.getHtmlId()}>
         <VisibilityToggles
           className="panel-body visibility-toggles"
-          isVisible={({ column }) => this.props.userColumns.indexOf(column.property) > -1}
+          isVisible={({ column }) => this.props.userColumns.includes(column.property)}
           columns={columns}
           onToggleColumn={this.toggleColumn}
         />

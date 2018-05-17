@@ -111,7 +111,7 @@ export const toggleColumn = payload => {
     const { columns: userColumns } = getState().user;
     const { columnName } = payload;
 
-    const willShow = userColumns.indexOf(columnName) === -1;
+    const willShow = !userColumns.includes(columnName);
     let nextColumns = [...userColumns, columnName];
     if (!willShow) {
       nextColumns = userColumns.filter(name => name !== columnName);
