@@ -7,7 +7,6 @@ import SearchColumns from './SearchColumns';
 import StartTimer from './StartTimer';
 import TicketLink from './TicketLink';
 import VisibilityToggles from 'react-visibility-toggles';
-import cloneDeep from 'lodash.clonedeep';
 import { compose } from 'redux';
 import { multiInfix } from '../../helpers/utils';
 
@@ -39,6 +38,7 @@ export default class TicketsTable extends React.Component {
       },
       rows: [],
       columns: props.columns,
+      visibleColumns: [],
     };
 
     this.changePage = this.changePage.bind(this);
@@ -98,10 +98,19 @@ export default class TicketsTable extends React.Component {
     this.props.search(query);
   }
 
-  toggleColumn({ columnIndex }) {
-    const columns = cloneDeep(this.state.columns);
-    columns[columnIndex].visible = !columns[columnIndex].visible;
-    this.setState({ columns });
+  toggleColumn({ column }) {
+    const columnName = column.property;
+    const willShow = this.state.visibleColumns.indexOf(columnName) === -1;
+
+    if (willShow) {
+      this.setState({
+        visibleColumns: [...this.state.visibleColumns, columnName],
+      });
+    } else {
+      this.setState({
+        visibleColumns: this.state.visibleColumns.filter(name => name !== columnName),
+      });
+    }
   }
 
   onBodyRow(row) {
@@ -158,7 +167,7 @@ export default class TicketsTable extends React.Component {
       paginate(pagination),
       searchExecutor
     )(rows);
-    const visibleColumns = columns.filter(column => column.visible);
+    const visibleColumns = columns.filter(column => this.state.visibleColumns.indexOf(column.property) > -1);
     const TableFooter = ({ columns, rows }) => {
       return (
         <tfoot className="table-bordered__foot">
@@ -175,6 +184,7 @@ export default class TicketsTable extends React.Component {
       <div id={this.getHtmlId()}>
         <VisibilityToggles
           className="panel-body visibility-toggles"
+          isVisible={({ column }) => this.state.visibleColumns.indexOf(column.property) > -1}
           columns={columns}
           onToggleColumn={this.toggleColumn}
         />
