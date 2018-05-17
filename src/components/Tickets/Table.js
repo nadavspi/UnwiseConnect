@@ -219,21 +219,18 @@ TicketsTable.defaultProps = {
       header: {
         label: 'Company',
       },
-      visible: true,
     },
     {
       property: 'project.name',
       header: {
         label: 'Project',
       },
-      visible: true,
     },
     {
       property: 'id',
       header: {
         label: 'ID',
       },
-      visible: true,
       cell: {
         formatters: [
           (value) => {
@@ -251,7 +248,6 @@ TicketsTable.defaultProps = {
       header: {
         label: 'Toggl',
       },
-      visible: true,
       cell: {
         resolve: value => `(${value})`,
         formatters: [
@@ -269,7 +265,6 @@ TicketsTable.defaultProps = {
       header: {
         label: 'Phase',
       },
-      visible: true,
       cell: {
         resolve: value => `(${value})`,
         formatters: [
@@ -289,14 +284,12 @@ TicketsTable.defaultProps = {
       header: {
         label: 'Name',
       },
-      visible: true,
     },
     {
       property: 'budgetHours',
       header: {
         label: 'Budget Hours',
       },
-      visible: true,
       props: {
         className: 'col--budget',
       },
@@ -307,7 +300,6 @@ TicketsTable.defaultProps = {
       header: {
         label: 'Actual Hours',
       },
-      visible: true,
       props: {
         className: 'col--budget',
       },
@@ -318,7 +310,6 @@ TicketsTable.defaultProps = {
       header: {
         label: 'Status',
       },
-      visible: true,
       filterType: 'dropdown',
       extraOptions: [
         (column, rowValues) => {
@@ -340,14 +331,12 @@ TicketsTable.defaultProps = {
       header: {
         label: 'Billable',
       },
-      visible: false,
     },
     {
       property: 'resources',
       header: {
         label: 'Assigned',
       },
-      visible: false,
     },
   ],
 };
