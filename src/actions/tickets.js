@@ -1,5 +1,5 @@
 import { ActionTypes } from '../config/constants';
-import { fetchTickets, dispatchTickets } from '../helpers/cw';
+import { fetchTickets, dispatchTickets, updateTicketStatus } from '../helpers/cw';
 import { ref } from '../config/constants';
 
 export const subscribe = ({ projectId }) => {
@@ -109,6 +109,22 @@ export const dispatch = payload => {
     dispatchTickets(payload.params).then(response => {
       dispatch({
         type: ActionTypes.TICKETS_DISPATCH_SUCCESS,
+        payload: response,
+      });
+    });
+  };
+}
+
+export const updateStatus = payload => {
+  return (dispatch, getState) => {
+    dispatch({
+      type: ActionTypes.TICKET_UPDATE,
+      payload,
+    });
+
+    updateTicketStatus(payload.params).then(response => {
+      dispatch({
+        type: ActionTypes.TICKET_UPDATE_SUCCESS,
         payload: response,
       });
     });
