@@ -4,11 +4,17 @@ import React from 'react';
 import { connect } from 'react-redux';
 
 const statuses = [
-  'Completed',
-  'In Progress',
-  'Open',
-  'New',
+  'Assigned',
   'Canceled',
+  'Closed',
+  'Completed',
+  'Failed QA',
+  'In Progress',
+  'Move to Next Sprint',
+  'New',
+  'Pending Code Review',
+  'Ready for QA',
+  'Waiting on parts/repair',
 ];
 
 const Icon = ({ pending }) => {
