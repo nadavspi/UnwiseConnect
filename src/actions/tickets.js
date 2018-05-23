@@ -125,7 +125,10 @@ export const updateStatus = payload => {
     updateTicketStatus(payload.params).then(response => {
       dispatch({
         type: ActionTypes.TICKET_UPDATE_SUCCESS,
-        payload: response,
+        payload: {
+          params: payload.params,
+          response,
+        }
       });
     });
   };

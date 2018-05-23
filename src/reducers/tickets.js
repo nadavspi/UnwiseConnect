@@ -4,6 +4,7 @@ const initialState = {
   flattened: [],
   loading: false,
   nested: {},
+  pending: [],
   query: {},
   dispatching: {
     inProgress: false,
@@ -68,6 +69,30 @@ export default (state = initialState, action) => {
           inProgress: false,
           response: action.payload,
         },
+      };
+
+    case ActionTypes.TICKET_UPDATE:
+      return {
+        ...state,
+        pending: [
+          ...state.pending,
+          {
+            ...action.payload,
+            inProgress: true,
+          }
+        ],
+      };
+
+    case ActionTypes.TICKET_UPDATE_SUCCESS:
+      return {
+        ...state,
+        pending: state.pending.map(item => {
+          if (item.params.ticket === action.payload.params.ticket) {
+            return action.payload;
+          }
+
+          return item;
+        }),
       };
 
     default:
