@@ -6,6 +6,7 @@ import React from 'react';
 import SearchColumns from './SearchColumns';
 import StartTimer from './StartTimer';
 import TicketLink from './TicketLink';
+import UpdateStatus from './UpdateStatus';
 import VisibilityToggles from 'react-visibility-toggles';
 import { compose } from 'redux';
 import { multiInfix } from '../../helpers/utils';
@@ -325,6 +326,15 @@ TicketsTable.defaultProps = {
           value: TicketsTable.closedTicketStatuses,
         },
       ],
+      cell: {
+        formatters: [
+          (value, { rowData }) => {
+            return (
+              <UpdateStatus value={value} ticket={rowData.id} />
+            );
+          }
+        ],
+      },
     },
     {
       property: 'billTime',
