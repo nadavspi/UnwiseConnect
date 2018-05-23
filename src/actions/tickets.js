@@ -70,8 +70,11 @@ export const updateTickets = payload => {
       throw new Error('Missing project id.');
     }
 
-    fetchTickets(payload.projectId).then(tickets => {
-      ref.child(`tickets/${payload.projectId}`)
+    // Make sure it's a string because that's what CW uses
+    const projectId = payload.projectId.toString();
+
+    fetchTickets(projectId).then(tickets => {
+      ref.child(`tickets/${projectId}`)
         .set(tickets);
 
       const { projects } = getState();
@@ -83,10 +86,10 @@ export const updateTickets = payload => {
       // New project
       // We're assuming the company or name of existing projects will never
       // need to change, which should mostly be correct.
-      if (projects.map(project => project.id).indexOf(payload.projectId) === -1) {
+      if (projects.map(project => project.id).indexOf(projectId) === -1) {
         const project = {
           company: tickets[0].company.name,
-          id: payload.projectId,
+          id: projectId,
           name: tickets[0].project.name,
         };
 
