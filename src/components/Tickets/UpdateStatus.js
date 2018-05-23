@@ -10,18 +10,53 @@ const statuses = [
   'New',
 ];
 
-const UpdateStatus = ({ ticket, value, dispatch }) => (
-  <div>
-    <select 
-      value={value}
-      onChange={e => dispatch(TicketsActions.updateStatus({ params: { ticket, status: e.target.value }}))}
-    >
-      {statuses.map(status => (
-        <option value={status} key={status}>{status}</option>
-      ))}
-    </select>
-  </div>
-);
+const Icon = ({ pending }) => {
+  console.log(pending);
+  // No response yet
+  if (pending.inProgress) {
+    return <span className="glyphicon glyphicon-refresh" aria-hidden="true"></span>;
+  }
+
+  if (pending.response) {
+    if (pending.response.status == 200) {
+      return <span className="glyphicon glyphicon-ok" aria-hidden="true"></span>;
+    }
+
+    if (pending.response.status == 400) {
+      return <span className="glyphicon glyphicon-remove" aria-hidden="true"></span>;
+    }
+  }
+
+  return null;
+};
 
 
-export default connect()(UpdateStatus);
+const UpdateStatus = ({ ticket, value, dispatch, pending }) => {   
+  const updateStatus = (status) => {
+    dispatch(TicketsActions.updateStatus({ params: { ticket, status }}));
+  };
+
+  const isPending = pending.find(item => {
+    return item.params.ticket === ticket;
+  });
+
+  return (
+    <div>
+      <select 
+        onChange={e => updateStatus(e.target.value)}
+        value={value}
+      >
+        {statuses.map(status => (
+          <option value={status} key={status}>{status}</option>
+        ))}
+      </select>
+      {isPending && <Icon pending={isPending} /> }
+    </div>
+  )
+};
+
+const mapStateToProps = state => ({
+  pending: state.tickets.pending,
+});
+
+export default connect(mapStateToProps)(UpdateStatus);
