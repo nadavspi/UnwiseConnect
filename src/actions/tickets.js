@@ -133,6 +133,11 @@ export const updateStatus = payload => {
           response,
         }
       });
+
+      if (response.status === 200) {
+        dispatch(updateTickets({ projectId: payload.params.projectId }));
+      }
     });
+
   };
 }

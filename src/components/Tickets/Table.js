@@ -330,7 +330,11 @@ TicketsTable.defaultProps = {
         formatters: [
           (value, { rowData }) => {
             return (
-              <UpdateStatus value={value} ticket={rowData.id} />
+              <UpdateStatus 
+                projectId={rowData.project.id}
+                ticket={rowData.id} 
+                value={value}
+              />
             );
           }
         ],

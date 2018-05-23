@@ -31,9 +31,15 @@ const Icon = ({ pending }) => {
 };
 
 
-const UpdateStatus = ({ ticket, value, dispatch, pending }) => {   
+const UpdateStatus = ({ 
+  dispatch,
+  pending,
+  projectId,
+  ticket,
+  value,
+}) => {   
   const updateStatus = (status) => {
-    dispatch(TicketsActions.updateStatus({ params: { ticket, status }}));
+    dispatch(TicketsActions.updateStatus({ params: { ticket, status, projectId }}));
   };
 
   const isPending = pending.find(item => {
