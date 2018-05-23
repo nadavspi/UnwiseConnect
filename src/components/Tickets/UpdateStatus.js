@@ -8,21 +8,21 @@ const statuses = [
   'In Progress',
   'Open',
   'New',
+  'Canceled',
 ];
 
 const Icon = ({ pending }) => {
-  console.log(pending);
   // No response yet
   if (pending.inProgress) {
     return <span className="glyphicon glyphicon-refresh" aria-hidden="true"></span>;
   }
 
   if (pending.response) {
-    if (pending.response.status == 200) {
+    if (pending.response.status === 200) {
       return <span className="glyphicon glyphicon-ok" aria-hidden="true"></span>;
     }
 
-    if (pending.response.status == 400) {
+    if (pending.response.status === 400) {
       return <span className="glyphicon glyphicon-remove" aria-hidden="true"></span>;
     }
   }
@@ -47,8 +47,9 @@ const UpdateStatus = ({
   });
 
   return (
-    <div>
+    <div style={{ display: 'flex' }}>
       <select 
+        disabled={isPending && isPending.inProgress}
         onChange={e => updateStatus(e.target.value)}
         value={value}
       >
