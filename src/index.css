@@ -214,6 +214,10 @@ body {
   text-align: right;
 }
 
+.col--budget:not(:empty)::after {
+  content: ' hrs';
+}
+
 .ticket--overbudget .col--budget {
   background-color: #f2dede;
 }
