@@ -235,8 +235,8 @@ td.col--budget:not(:empty)::after {
   visibility: hidden;
 }
 
-.ticket-copy:hover .glyphicon-copy,
-.ticket-copy:focus .glyphicon-copy {
+.ticket-link:focus .glyphicon-copy, 
+.ticket-copy:hover .glyphicon-copy {
   visibility: visible
 }
 
