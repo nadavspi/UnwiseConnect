@@ -231,7 +231,7 @@ body {
   visibility: hidden;
 }
 
-.ticket-copy:hover .glyphicon-copy,
+.ticket-link:hover .glyphicon-copy, 
 .ticket-copy:focus .glyphicon-copy {
   visibility: visible
 }
