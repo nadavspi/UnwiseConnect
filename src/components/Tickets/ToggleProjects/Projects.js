@@ -18,7 +18,7 @@ const Projects = ({ projects, toggle, update }) => {
               type="checkbox"
               onChange={toggle.bind(this, project.id)}
             />
-            {project.company} &mdash; {project.name} <small>(ID: {project.id})</small>
+            {project.company} &mdash; {project.name} <small><a href={process.env.REACT_APP_CONNECTWISE_SERVER_URL + "/services/system_io/router/openrecord.rails?recordType=ProjectHeaderFV&recid=" + project.id} target="_blank" rel="noopener">(ID: {project.id})</a></small>
 
             <button
               className="btn-link btn-sm"

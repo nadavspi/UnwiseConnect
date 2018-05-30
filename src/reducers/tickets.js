@@ -1,5 +1,4 @@
 import { ActionTypes } from '../config/constants';
-import cloneDeep from 'lodash.clonedeep';
 
 const initialState = {
   flattened: [],
@@ -30,24 +29,20 @@ export default (state = initialState, action) => {
         },
         flattened: [
           ...state.flattened.filter(
-            ticket => ticket.project.id != action.payload.projectId
+            ticket => String(ticket.project.id) !== String(action.payload.projectId)
           ),
           ...action.payload.flattened,
         ],
       };
 
     case ActionTypes.TICKETS_REMOVE:
-      const nested = cloneDeep(state.nested);
+      const nested = { ...state.nested };
       delete nested[action.payload.projectId];
-      const nextFlattened = state.flattened.filter(
-        ticket => ticket.project.id != action.payload.projectId
-      );
-      console.log({ nextFlattened });
       return {
         ...state,
         nested,
         flattened: state.flattened.filter(
-          ticket => ticket.project.id != action.payload.projectId
+          ticket => String(ticket.project.id) !== String(action.payload.projectId)
         ),
       };
 

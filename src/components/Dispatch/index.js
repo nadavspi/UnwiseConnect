@@ -1,19 +1,55 @@
 import './dispatch.css';
+import * as resolve from 'table-resolver';
+import * as UserActions from '../../actions/user';
 import Fields from './Fields';
 import JSONPretty from 'react-json-pretty';
 import Queue from './Queue';
 import React, { Component } from 'react';
 import Table from '../Tickets/Table';
+import * as searchtabular from 'searchtabular';
 import { connect } from 'react-redux';
+import { compose } from 'redux';
 import { format as formatDate } from 'date-fns';
 import { search, dispatch as dispatchTickets } from '../../actions/tickets';
+import { multiInfix } from '../../helpers/utils';
 
 const fields = [
   {
     id: 'memberIdentifier',
     value: '',
-    type: 'text',
+    values: (tickets, value) => {
+      let resourcePopularity = {};
+      if (value) {
+        // Needed to account for custom values.
+        resourcePopularity[value] = 0;
+      }
+
+      tickets.map(ticket => {
+        const allResources = (ticket.resources || '') + ',' + (ticket.owner ? ticket.owner.identifier : '');
+        const splitResources = allResources.split(/[ ]*,[ ]*/);
+        return splitResources.map(resource => {
+          if (resource !== '') {
+            resourcePopularity[resource] = (resourcePopularity[resource] || 0) + 1;
+          }
+          return resource;
+        });
+      });
+
+      let resourceList = Object.keys(resourcePopularity);
+      resourceList.sort((a, b) => {
+        // Popularity, descending.
+        const popularity = resourcePopularity[b] - resourcePopularity[a];
+        if (popularity === 0) {
+          // Alphabetical, ascending.
+          return a.localeCompare(b);
+        }
+        return popularity;
+      });
+      return resourceList;
+    },
+    type: 'react-select',
     required: true,
+    allowCustom: true,
   },
   {
     id: 'startDate',
@@ -98,23 +134,31 @@ class Dispatch extends Component {
     };
 
     this.columns = this.columns.bind(this);
+    this.addFiltered = this.addFiltered.bind(this);
     this.dispatch = this.dispatch.bind(this);
     this.onFieldChange = this.onFieldChange.bind(this);
     this.onTicketSelect = this.onTicketSelect.bind(this);
     this.resetTickets = this.resetTickets.bind(this);
     this.search = this.search.bind(this);
     this.selectedTickets = this.selectedTickets.bind(this);
+    this.selectedTicketIds = this.selectedTicketIds.bind(this);
+    this.isTicketSelected = this.isTicketSelected.bind(this);
     this.setTicketHours = this.setTicketHours.bind(this);
+    this.toggleColumn = this.toggleColumn.bind(this);
   }
 
-  columns(selectedTickets, onChange) {
+  toggleColumn(payload) {
+    this.props.dispatch(UserActions.toggleColumn(payload));
+  }
+
+  columns(onChange) {
     return [
       {
         // Using a random property because it's easier than adding a new one
         // to all the rows
         property: 'mobileGuid',
         header: {
-          label: '',
+          label: 'Action',
         },
         visible: true,
         cell: {
@@ -126,12 +170,21 @@ class Dispatch extends Component {
                   type="button"
                   onClick={e => onChange(rowData.id)}
                 >
-                  Add/remove
+                  { this.isTicketSelected(rowData.id) ? 'Remove' : 'Add' }
                 </button>
               );
-            }
+            },
           ]
         },
+        filterType: 'custom',
+        customFilter: (
+          <button
+            type="button"
+            onClick={this.addFiltered}
+          >
+            Add All
+          </button>
+        ),
       },
       {
         property: 'company.name',
@@ -155,11 +208,24 @@ class Dispatch extends Component {
         visible: true,
       },
       {
-        property: 'phase.name',
+        property: 'phase.path',
         header: {
           label: 'Phase',
         },
         visible: true,
+        cell: {
+          resolve: value => `(${value})`,
+          formatters: [
+            (value, { rowData }) => {
+              const { name, path } = rowData.phase;
+              return (
+                <span title={path}>
+                  {name}
+                </span>
+              );
+            }
+          ]
+        },
       },
       {
         property: 'summary',
@@ -174,6 +240,21 @@ class Dispatch extends Component {
           label: 'Status',
         },
         visible: true,
+        filterType: 'dropdown',
+        extraOptions: [
+          (column, rowValues) => {
+            const closedValues = Table.closedTicketStatuses;
+            const openValues = rowValues.filter(item => !closedValues.includes(item));
+            return {
+              label: 'All Open',
+              value: openValues,
+            };
+          },
+          {
+            label: 'All Complete',
+            value: Table.closedTicketStatuses,
+          },
+        ],
       },
     ] 
   }
@@ -190,16 +271,24 @@ class Dispatch extends Component {
     this.props.dispatch(search(nextQuery));
   }
 
-  selectedTickets() {
+  selectedTicketIds() {
     const tickets = this.state.fields.find(field => field.id === 'tickets');
     if (!tickets) {
       console.warn('No tickets field found.');
       return [];
     }
 
-    return tickets.value.map(ticket => ticket.id).map(id => {
-      return this.props.tickets.flattened.find(ticket => ticket.id == id);
+    return tickets.value.map(ticket => ticket.id);
+  }
+
+  selectedTickets() {
+    return this.selectedTicketIds().map(id => {
+      return this.props.tickets.flattened.find(ticket => String(ticket.id) === String(id));
     });
+  }
+
+  isTicketSelected(ticketId) {
+    return this.selectedTicketIds().includes(ticketId);
   }
 
   resetTickets() {
@@ -218,7 +307,7 @@ class Dispatch extends Component {
   }
 
   onTicketSelect(id) {
-    const selectedIds = this.selectedTickets().map(ticket => ticket.id);
+    const selectedIds = this.selectedTicketIds();
     if (selectedIds.indexOf(id) === -1) {
       // Adding a ticket
       this.setState({
@@ -244,6 +333,49 @@ class Dispatch extends Component {
             return {
               ...field,
               value: field.value.filter(ticket => ticket.id !== id),
+            };
+          }
+
+          return field;
+        }),
+      });
+    }
+  }
+
+  addFiltered(e) {
+    const columns = this.columns(this.onTicketSelect);
+    const { query } = this.props.tickets;
+    const tickets = this.props.tickets.flattened;
+
+    const rows = resolve.resolve({
+      columns,
+      method: extra => compose(
+        resolve.byFunction('cell.resolve')(extra),
+        resolve.nested(extra),
+      )
+    })(tickets);
+    const searchExecutor = searchtabular.multipleColumns({ columns, query, strategy: multiInfix });
+    const filteredTickets = searchExecutor(rows);
+
+    const currentSelected = this.selectedTicketIds();
+    let newIdObjects = [];
+    for (let ticket of filteredTickets) {
+      if (!currentSelected.includes(ticket.id)) {
+        newIdObjects.push({ id: ticket.id });
+      }
+    }
+
+    if (newIdObjects.length) {
+      // Adding a ticket
+      this.setState({
+        fields: this.state.fields.map(field => {
+          if (field.id === 'tickets') {
+            return {
+              ...field,
+              value: [
+                ...field.value,
+                ...newIdObjects,
+              ],
             };
           }
 
@@ -318,7 +450,8 @@ class Dispatch extends Component {
             <header className="dispatch-header">
               <form>
                 <Fields 
-                  fields={this.state.fields} 
+                  fields={this.state.fields}
+                  tickets={this.props.tickets.flattened}
                   onChange={this.onFieldChange}
                 />
                 <button 
@@ -347,10 +480,14 @@ class Dispatch extends Component {
             />
             {this.props.tickets.flattened.length > 0 && (
               <Table
-                columns={this.columns(this.selectedTickets(), this.onTicketSelect)}
+                id="table-dispatch-tickets"
+                columns={this.columns(this.onTicketSelect)}
                 query={this.props.tickets.query}
                 search={this.search}
                 tickets={this.props.tickets.flattened}
+                selectedTicketIds={this.selectedTicketIds()}
+                toggleColumn={this.toggleColumn}
+                userColumns={this.props.userColumns}
               />
             )}
           </div>
@@ -362,6 +499,7 @@ class Dispatch extends Component {
 
 const mapStateToProps = state => ({
   tickets: state.tickets,
+  userColumns: state.user.columns,
 });
 
 

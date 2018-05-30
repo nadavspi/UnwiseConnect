@@ -14,7 +14,7 @@ export default class Queue extends Component {
 
   totalBudget() {
     const { selectedTickets: tickets } = this.props;
-    return tickets.map(ticket => {
+    const totalHours = tickets.map(ticket => {
       const remaining = (ticket.budgetHours || 0) - (ticket.actualHours || 0);
 
       if (remaining < 0) {
@@ -22,6 +22,9 @@ export default class Queue extends Component {
       }
       return remaining;
     }).reduce((a, b) => { return a + b }, 0);
+
+    // Round to two digits, then change '1.50' to '1.5' and '1.00' to '1'.
+    return totalHours.toFixed(2).replace(/\.?0+$/, '');
   }
 
   render() {

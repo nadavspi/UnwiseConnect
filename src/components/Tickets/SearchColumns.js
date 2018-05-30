@@ -22,6 +22,8 @@ class SearchColumns extends React.Component {
       return this.renderDropdownFilter(column);
     } else if (column.filterType === 'none') {
       return '';
+    } else if (column.filterType === 'custom') {
+      return typeof column.customFilter === 'function' ? column.customFilter() : column.customFilter;
     }
     return this.renderTextFilter(column);
   }
@@ -47,14 +49,18 @@ class SearchColumns extends React.Component {
 
   renderDropdownFilter(column) {
     const onQueryChange = (values) => {
+      // Flatten subarrays.
+      const flatValues = values.map(option => option.value).reduce((acc, val) => acc.concat(Array.isArray(val) ? val : [val]), []);
       this.props.onChange({
         ...this.props.query,
-        [column.property]: values.length ? values.map(option => option.value) : '',
+        [column.property]: flatValues.length ? [ ...new Set(flatValues) ] : '',
       });
     };
 
     const rowValues = this.props.rows.map(row => row[column.property]);
-    const options = [ ...new Set(rowValues) ].map(value => ({ value, label: value }));
+    const uniqueRowValues = [ ...new Set(rowValues) ];
+    const extraOptions = (column.extraOptions || []).map(this.evaluateExtraOption.bind(this, column, uniqueRowValues));
+    const options = extraOptions.concat(uniqueRowValues.map(value => ({ value, label: value })));
 
     return (
       <div className="column-filter-dropdown">
@@ -67,6 +73,13 @@ class SearchColumns extends React.Component {
         />
       </div>
     );
+  }
+
+  evaluateExtraOption(column, uniqueRowValues, option) {
+    if (typeof option === 'function') {
+      return option(column, uniqueRowValues);
+    }
+    return option;
   }
 }
 

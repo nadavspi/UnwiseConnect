@@ -3,13 +3,12 @@ import * as resolve from 'table-resolver';
 import * as search from 'searchtabular';
 import Pagination from './Pagination';
 import React from 'react';
-import Search from 'reactabular-search-field';
 import SearchColumns from './SearchColumns';
 import StartTimer from './StartTimer';
 import TicketLink from './TicketLink';
 import VisibilityToggles from 'react-visibility-toggles';
-import cloneDeep from 'lodash.clonedeep';
 import { compose } from 'redux';
+import { multiInfix } from '../../helpers/utils';
 
 function paginate({ page, perPage }) {
   return (rows = []) => {
@@ -26,27 +25,6 @@ function paginate({ page, perPage }) {
     };
   };
 }
-
-const multiInfix = term => ({
-  evaluate(value = '') {
-    if (!value) {
-      return false;
-    }
-
-    if (Array.isArray(value)) {
-      return value.some(v => this.doMatch(term, v));
-    }
-    if (Array.isArray(term)) {
-      return term.some(v => this.doMatch(v, value));
-    }
-
-    return this.doMatch(term, value);
-  },
-
-  doMatch(query, value) {
-    return value.indexOf(query) !== -1;
-  }
-});
 
 export default class TicketsTable extends React.Component {
   constructor(props) {
@@ -65,6 +43,7 @@ export default class TicketsTable extends React.Component {
     this.changePage = this.changePage.bind(this);
     this.search = this.search.bind(this);
     this.toggleColumn = this.toggleColumn.bind(this);
+    this.getHtmlId = this.getHtmlId.bind(this);
   }
 
   componentDidMount() {
@@ -72,8 +51,22 @@ export default class TicketsTable extends React.Component {
   }
 
   componentWillReceiveProps(nextProps) {
-    if (this.props.tickets.length !== nextProps.tickets.length) {
+    const lengthChanged = this.props.tickets.length !== nextProps.tickets.length;
+    // Using a string compare to reduce re-rendering.
+    let selectedChanged = (this.props.selectedTicketIds || []).join(',') !== (nextProps.selectedTicketIds || []).join(',');
+    if (lengthChanged) {
       this.prepareRows(nextProps.tickets);
+    } else if (selectedChanged) {
+      let rows = this.state.rows.map(row => {
+        return {
+          ...row,
+          selected: nextProps.selectedTicketIds.includes(row.id),
+        };
+      });
+
+      this.setState({
+        rows,
+      });
     }
   }
 
@@ -104,10 +97,9 @@ export default class TicketsTable extends React.Component {
     this.props.search(query);
   }
 
-  toggleColumn({ columnIndex }) {
-    const columns = cloneDeep(this.state.columns);
-    columns[columnIndex].visible = !columns[columnIndex].visible;
-    this.setState({ columns });
+  toggleColumn({ column }) {
+    const columnName = column.property;
+    this.props.toggleColumn({ columnName });
   }
 
   onBodyRow(row) {
@@ -146,6 +138,15 @@ export default class TicketsTable extends React.Component {
     return Math.round(sum * 100) / 100;
   }
 
+  getHtmlId() {
+    let htmlId = this.props.id || this.state.htmlId;
+    if (!htmlId) {
+      htmlId = 'table-' + Math.random().toString(36).substr(2, 9);
+      this.setState({ htmlId });
+    }
+    return htmlId;
+  }
+
   render() {
     const { query } = this.props;
     const { columns, pagination, rows } = this.state;
@@ -155,7 +156,7 @@ export default class TicketsTable extends React.Component {
       paginate(pagination),
       searchExecutor
     )(rows);
-    const visibleColumns = columns.filter(column => column.visible);
+    const visibleColumns = columns.filter(column => this.props.userColumns.includes(column.property));
     const TableFooter = ({ columns, rows }) => {
       return (
         <tfoot className="table-bordered__foot">
@@ -169,12 +170,17 @@ export default class TicketsTable extends React.Component {
     };
 
     return (
-      <div>
+      <div id={this.getHtmlId()}>
         <VisibilityToggles
           className="panel-body visibility-toggles"
+          isVisible={({ column }) => this.props.userColumns.includes(column.property)}
           columns={columns}
           onToggleColumn={this.toggleColumn}
         />
+
+      {this.props.userColumns.length === 0 && (
+        <div className="alert alert-warning">You haven't selected any columns above. That's why you don't see any tickets.</div>
+      )}
 
         <Table.Provider
           className="table table-striped table-bordered"
@@ -196,12 +202,15 @@ export default class TicketsTable extends React.Component {
             changePage={this.changePage}
             paginated={paginated}
             pagination={pagination}
+            topHtmlId={this.getHtmlId()}
           />
         )}
       </div>
     );
   }
 }
+
+TicketsTable.closedTicketStatuses = [ 'Completed', 'Ready for QA', 'Canceled', 'Closed' ];
 
 TicketsTable.defaultProps = {
   columns: [
@@ -210,21 +219,18 @@ TicketsTable.defaultProps = {
       header: {
         label: 'Company',
       },
-      visible: true,
     },
     {
       property: 'project.name',
       header: {
         label: 'Project',
       },
-      visible: true,
     },
     {
       property: 'id',
       header: {
         label: 'ID',
       },
-      visible: true,
       cell: {
         formatters: [
           (value) => {
@@ -242,7 +248,6 @@ TicketsTable.defaultProps = {
       header: {
         label: 'Toggl',
       },
-      visible: true,
       cell: {
         resolve: value => `(${value})`,
         formatters: [
@@ -256,25 +261,35 @@ TicketsTable.defaultProps = {
       filterType: 'none',
     },
     {
-      property: 'phase.name',
+      property: 'phase.path',
       header: {
         label: 'Phase',
       },
-      visible: false,
+      cell: {
+        resolve: value => `(${value})`,
+        formatters: [
+          (value, { rowData }) => {
+            const { name, path } = rowData.phase;
+            return (
+              <span title={path}>
+                {name}
+              </span>
+            );
+          }
+        ]
+      },
     },
     {
       property: 'summary',
       header: {
         label: 'Name',
       },
-      visible: true,
     },
     {
       property: 'budgetHours',
       header: {
         label: 'Budget Hours',
       },
-      visible: true,
       props: {
         className: 'col--budget',
       },
@@ -285,7 +300,6 @@ TicketsTable.defaultProps = {
       header: {
         label: 'Actual Hours',
       },
-      visible: true,
       props: {
         className: 'col--budget',
       },
@@ -296,22 +310,33 @@ TicketsTable.defaultProps = {
       header: {
         label: 'Status',
       },
-      visible: true,
       filterType: 'dropdown',
+      extraOptions: [
+        (column, rowValues) => {
+          const closedValues = TicketsTable.closedTicketStatuses;
+          const openValues = rowValues.filter(item => !closedValues.includes(item));
+          return {
+            label: 'All Open',
+            value: openValues,
+          };
+        },
+        {
+          label: 'All Complete',
+          value: TicketsTable.closedTicketStatuses,
+        },
+      ],
     },
     {
       property: 'billTime',
       header: {
         label: 'Billable',
       },
-      visible: false,
     },
     {
       property: 'resources',
       header: {
         label: 'Assigned',
       },
-      visible: false,
     },
   ],
 };

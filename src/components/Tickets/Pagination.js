@@ -2,11 +2,15 @@ import Pagify from 'react-pagify';
 import React from 'react';
 import pagifyBootstrapPreset from 'react-pagify-preset-bootstrap';
 import segmentize from 'segmentize';
+import cloneDeep from 'lodash.clonedeep';
 
-const Pagination = ({ changePage, pagination, paginated }) => {
+const Pagination = ({ changePage, pagination, paginated, topHtmlId }) => {
+  let preset = cloneDeep(pagifyBootstrapPreset);
+  preset.tags.link.props.href = topHtmlId ? '#' + topHtmlId : '#';
+
   return (
     <Pagify.Context
-      {...pagifyBootstrapPreset}
+      {...preset}
       onSelect={changePage}
       segments={segmentize({
         page: pagination.page,
