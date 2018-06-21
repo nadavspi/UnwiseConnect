@@ -87,7 +87,13 @@ class Budgets extends Component {
           </div>
           <div className="panel-body projects__wrapper">
             {this.state.items.map(item => (
-              <Item summary={item.summary} />
+              <Item summary={item.summary} 
+                    phase={item.phase}
+                    feature={item.feature}
+                    budgetHours={item.budgetHours}
+                    descriptions={item.descriptions}
+                    tags={item.tags}
+              />
             ))}
           </div>
         </div>
