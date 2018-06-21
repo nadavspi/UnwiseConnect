@@ -3,7 +3,7 @@ import React, { Component } from 'react';
 export default class NewItem extends Component {
 	constructor() {
 		super();
-		this.handleSubmit = this.handleSubmit.bind(this)
+		this.handleSubmit = this.handleSubmit.bind(this);
 	}
 
 	// create a new item the append it to the list
