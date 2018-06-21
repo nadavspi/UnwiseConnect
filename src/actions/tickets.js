@@ -31,12 +31,15 @@ export const subscribe = ({ projectId }) => {
         return 0;
       });
 
+      const statuses = [...new Set(flattened.map(ticket => ticket.status.name))];
+
       dispatch({
         type: ActionTypes.TICKETS_UPDATE,
         payload: {
-          projectId,
           flattened,
           nested,
+          projectId,
+          statuses,
         },
       });
     });

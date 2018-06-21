@@ -3,20 +3,6 @@ import * as TicketsActions from '../../actions/tickets';
 import React from 'react';
 import { connect } from 'react-redux';
 
-const statuses = [
-  'Assigned',
-  'Canceled',
-  'Closed',
-  'Completed',
-  'Failed QA',
-  'In Progress',
-  'Move to Next Sprint',
-  'New',
-  'Pending Code Review',
-  'Ready for QA',
-  'Waiting on parts/repair',
-];
-
 const Icon = ({ pending }) => {
   // No response yet
   if (pending.inProgress) {
@@ -41,6 +27,7 @@ const UpdateStatus = ({
   dispatch,
   pending,
   projectId,
+  statuses,
   ticket,
   value,
 }) => {   
@@ -70,6 +57,7 @@ const UpdateStatus = ({
 
 const mapStateToProps = state => ({
   pending: state.tickets.pending,
+  statuses: state.tickets.statuses,
 });
 
 export default connect(mapStateToProps)(UpdateStatus);
