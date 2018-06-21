@@ -6,7 +6,6 @@ const initialState = {
   nested: {},
   pending: [],
   query: {},
-  statuses: [],
   dispatching: {
     inProgress: false,
     response: null,
@@ -35,7 +34,6 @@ export default (state = initialState, action) => {
           ),
           ...action.payload.flattened,
         ],
-        statuses: action.payload.statuses,
       };
 
     case ActionTypes.TICKETS_REMOVE:

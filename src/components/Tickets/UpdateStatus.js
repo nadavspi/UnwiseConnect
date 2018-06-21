@@ -57,7 +57,7 @@ const UpdateStatus = ({
 
 const mapStateToProps = state => ({
   pending: state.tickets.pending,
-  statuses: state.tickets.statuses,
+  statuses: [...new Set(state.tickets.flattened.map(ticket => ticket.status.name))],
 });
 
 export default connect(mapStateToProps)(UpdateStatus);
