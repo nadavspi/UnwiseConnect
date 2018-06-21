@@ -1,9 +1,7 @@
-
 import React from 'react';
 import PropTypes from 'prop-types';
 
-class Item extends React.Componenet {
-
+class Item extends React.Component {
 	render() {
 		return (
 			<div>
@@ -14,6 +12,7 @@ class Item extends React.Componenet {
 }
 
 Item.propTypes = {
-	summary: PropTypes.string.isRequired
+	summary: PropTypes.string.isRequired,
 }
-export default Item
+
+export default Item;
