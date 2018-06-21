@@ -4,12 +4,14 @@ export default class NewItem extends Component {
 	constructor() {
 		super();
 		this.handleSubmit = this.handleSubmit.bind(this);
+		this.state={clicks: 1}
 	}
 
 	// create a new item the append it to the list
 	handleSubmit(event){
 		event.preventDefault();
-		console.log("Submit sent.");
+		this.setState({clicks: this.state.clicks + 1});
+		console.log(this.state.clicks + " submissions sent.");
 	}
 
 	render() {
