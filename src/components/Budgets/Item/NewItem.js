@@ -56,8 +56,53 @@ export default class NewItem extends Component {
         name: 'phase',
         label: 'Phase',
         type: 'text',
-      }
+      },
+      {
+        name: 'feature',
+        label: 'Feature',
+        type: 'text',
+      },
+      {
+        name: 'phase',
+        label: 'Phase',
+        type: 'text',
+      },
+      {
+        name: 'budgetColumn',
+        label: 'Team',
+        type: 'text',
+      },
+      {
+        name: 'budgetValue',
+        label: 'Hours',
+        type: 'number',
+      },
+      {
+        name: 'workplan',
+        label: 'Workplan',
+        type: 'text',
+      },
+      {
+        name: 'budget',
+        label: 'Budget',
+        type: 'text',
+      },
+      {
+        name: 'assumptions',
+        label: 'Assumptions',
+        type: 'text',
+      },
+      {
+        name: 'exclusions',
+        label: 'Exclusions',
+        type: 'text',
+      },{
+        name: 'tags',
+        label: 'Tags',
+        type: 'text',
+      },
     ];
+    
 		return (
 			<div>
 				<form onSubmit={this.handleSubmit}>
