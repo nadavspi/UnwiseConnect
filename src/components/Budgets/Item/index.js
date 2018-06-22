@@ -2,7 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 
 class Item extends React.Component {
-	
+
 	render() {
 		return (
 			<div>
@@ -40,6 +40,11 @@ class Item extends React.Component {
 
 Item.propTypes = {
 	summary: PropTypes.string.isRequired,
+	phase: PropTypes.string.isRequired,
+	feature: PropTypes.string.isRequired,
+	tags: PropTypes.string.isRequired, 
 }
+
+
 
 export default Item;
