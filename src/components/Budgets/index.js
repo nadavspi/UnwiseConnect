@@ -5,6 +5,7 @@ import NewItem from './Item/NewItem';
 class Budgets extends Component {
 	constructor() {
 		super();
+    this.handleNewItemSubmit = this.handleNewItemSubmit.bind(this);
 
     this.state = {
       items: [
@@ -69,8 +70,13 @@ class Budgets extends Component {
   }
 
   handleNewItemSubmit(newItem){
-    console.log('New Item: ' + newItem.feature);
-    // this.setState({items: this.state.items.push(newItem)})
+    console.log('New Item: ', newItem);
+    this.setState({ 
+      items: [
+        ...this.state.items,
+        newItem,
+      ],
+    });
   }
 
   render() {
@@ -85,7 +91,6 @@ class Budgets extends Component {
           </div>
         </div>
         <div className="row panel-body">
-          
           <NewItem onSubmit={this.handleNewItemSubmit}/>
           
           <div className="panel-body projects__wrapper">
@@ -93,12 +98,14 @@ class Budgets extends Component {
           </div>
           <div className="panel-body projects__wrapper">
             {this.state.items.map(item => (
-              <Item summary={item.summary} 
-                    phase={item.phase}
-                    feature={item.feature}
-                    budgetHours={item.budgetHours}
-                    descriptions={item.descriptions}
-                    tags={item.tags}
+              <Item 
+                budgetHours={item.budgetHours}
+                descriptions={item.descriptions}
+                feature={item.feature}
+                key={item.summary}
+                phase={item.phase}
+                summary={item.summary} 
+                tags={item.tags}
               />
             ))}
           </div>
