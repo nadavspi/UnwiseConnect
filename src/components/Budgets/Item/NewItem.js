@@ -102,7 +102,7 @@ export default class NewItem extends Component {
         type: 'text',
       },
     ];
-    
+
 		return (
 			<div>
 				<form onSubmit={this.handleSubmit}>
@@ -117,9 +117,7 @@ export default class NewItem extends Component {
                 />
               </div>
             ))}
-						<div className="input-group-btn">
-							<button type="submit" className="btn btn-primary">Add Item</button>
-						</div>
+						<button type="submit" className="btn btn-primary">Add Item</button>
 					</div>
 				</form>
 			</div>

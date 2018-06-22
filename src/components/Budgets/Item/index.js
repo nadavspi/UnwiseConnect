@@ -2,6 +2,23 @@ import React from 'react';
 import PropTypes from 'prop-types';
 
 class Item extends React.Component {
+	constructor(){
+		super();
+
+		this.onEdit = this.onEdit.bind(this);
+		this.onDelete = this.onDelete.bind(this);
+			
+	}
+
+	onEdit(){
+		console.log('edit: ' + this.props.summary);
+		this.props.onEdit(this.props.summary);
+	}
+
+	onDelete(){
+		console.log('delete: ' + this.props.summary);
+		this.props.onDelete(this.props.summary);
+	}
 
 	render() {
 		return (
@@ -33,6 +50,8 @@ class Item extends React.Component {
 					</ul>
 					<li>Tags: {this.props.tags}</li>
 				</ul>
+				<button onClick={this.onEdit} className="btn btn-primary">Edit Item</button>
+				<button onClick={this.onDelete} className="btn btn-primary">Delete Item</button>
 			</div> 
 		)
 	}

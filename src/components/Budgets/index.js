@@ -5,7 +5,10 @@ import NewItem from './Item/NewItem';
 class Budgets extends Component {
 	constructor() {
 		super();
+
     this.handleNewItemSubmit = this.handleNewItemSubmit.bind(this);
+    this.onEdit = this.onEdit.bind(this);
+    this.onDelete = this.onDelete.bind(this);
 
     this.state = {
       items: [
@@ -69,14 +72,38 @@ class Budgets extends Component {
     };
   }
 
-  handleNewItemSubmit(newItem){
-    console.log('New Item: ', newItem);
+  handleNewItemSubmit(item){
+    console.log('New Item: ', item);
     this.setState({ 
       items: [
         ...this.state.items,
-        newItem,
+        item,
       ],
     });
+  }
+
+  onEdit(key){
+    console.log(key + ' edited');
+  }
+
+  onDelete(key){
+    const tempList = [...this.state.items];
+
+    // pick up here
+    tempList.map(item => {
+      if(item.summary != key){
+        console.log(item.summary);
+        return item;
+      } 
+      console.log(item.summary);
+    });
+
+    this.setState({
+      items: [
+        ...tempList
+      ],
+    });
+    console.log(key + ' deleted');
   }
 
   render() {
@@ -84,16 +111,13 @@ class Budgets extends Component {
       <div>
         <div className="panel-uc panel panel-default">
           <div className="panel-uc__heading panel-heading clearfix">
-            <h4>Center (temp title)</h4>
-            <div className="panel-uc__manage">
-
-            </div>
+            <h4>Budget Tool</h4>
           </div>
         </div>
         <div className="row panel-body">
           <div className="panel-body projects__wrapper">
             <NewItem onSubmit={this.handleNewItemSubmit}/>
-            <h2> Features (temp title) </h2>
+            <h2> Items </h2>
             {this.state.items.map(item => (
               <Item 
                 budgetHours={item.budgetHours}
@@ -103,6 +127,8 @@ class Budgets extends Component {
                 phase={item.phase}
                 summary={item.summary} 
                 tags={item.tags}
+                onEdit={this.onEdit}
+                onDelete={this.onDelete}
               />
             ))}
           </div>
