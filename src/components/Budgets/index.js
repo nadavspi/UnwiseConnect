@@ -1,5 +1,4 @@
 import React, { Component } from 'react';
-import Table from './Table';
 import Item from './Item';
 import NewItem from './Item/NewItem';
 
@@ -69,6 +68,11 @@ class Budgets extends Component {
     };
   }
 
+  handleNewItemSubmit(newItem){
+    console.log('New Item: ' + newItem.feature);
+    // this.setState({items: this.state.items.push(newItem)})
+  }
+
   render() {
     return (
       <div>
@@ -81,7 +85,9 @@ class Budgets extends Component {
           </div>
         </div>
         <div className="row panel-body">
-          <NewItem />
+          
+          <NewItem onSubmit={this.handleNewItemSubmit}/>
+          
           <div className="panel-body projects__wrapper">
             <h2> Features (temp title) </h2>
           </div>
