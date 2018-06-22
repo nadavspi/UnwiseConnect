@@ -5,135 +5,73 @@ export default class NewItem extends Component {
 		super();
 		this.handleSubmit = this.handleSubmit.bind(this);
 		this.handleChange = this.handleChange.bind(this);
+
+    this.state = {};
 	}
 
-	handleChange(event){
-		// const target = event.target;
-		// const value = target.value;
-		// const id = target.id;
-		// console.log('ID: ' + id);
-		// console.log('Value: ' + value);
-		// this.setState({[id]: value});
+  handleChange(name, value) {
+    this.setState({ 
+      [name]: value,
+    });
 	}
 	
 	handleSubmit(event){
 		event.preventDefault();
-		const data = new FormData(event.target);
-		console.log("Before Upstream: " + data.get('summary'));
 		const newItem = {
-			summary: data.get('summary'),
-			phase: data.get('phase'),
-			feature: data.get('feature'),
+			summary: this.state.summary,
+			phase: this.state.phase,
+			feature: this.state.feature,
 			budgetHours: {
-				column: data.get('budgetColumn'),
-				value: data.get('budgetValue'),
+				column: this.state.budgetColumn,
+				value: this.state.budgetValue,
 			},
 			descriptions: {
 				workplan: [ 
-					data.get('workplan')
+					this.state.workplan
 				],
 				budget: [ 
-					data.get('budget')
+					this.state.budget
 				],
 				assumptions: [ 
-					data.get('assumptions')
+					this.state.assumptions
 				],
 				exclusions: [ 
-					data.get('exclusions')
+					this.state.exclusions
 				],
 
 			},
-			tags: data.get('tags')
+			tags: this.state.tags
 		};
 		this.props.onSubmit(newItem);
 	}
 
-						// <input name={this.attribute}
-						// 				type="text"
-						// 				className="form-control"
-						// 				placeholder="item"
-						// 				defaultValue="testSum"
-						// 				onChange={this.handleChange}
-						// />
-
-
 	render() {
+    const fields = [
+      {
+        name: 'summary',
+        label: 'Summary',
+        type: 'text',
+      },
+      {
+        name: 'phase',
+        label: 'Phase',
+        type: 'text',
+      }
+    ];
 		return (
 			<div>
 				<form onSubmit={this.handleSubmit}>
-					<div><label>Item ID</label></div>
 					<div className="input-group input-group-sm">						
-						<input 	name="summary"
-										type="text"
-										className="form-control"
-										placeholder="item"
-										defaultValue="testSum"
-										onChange={this.handleChange}
-						/>
-						<input 	name="phase"
-										type="text"
-										className="form-control"
-										placeholder="item"
-										value="testPhase"
-										onChange={this.handleChange}
-						/>
-						<input 	name="feature"
-										type="text"
-										className="form-control"
-										placeholder="item"
-										value="testFeat"
-										onChange={this.handleChange}
-						/>
-						<input 	name="budgetColumn"
-										type="text"
-										className="form-control"
-										placeholder="item"
-										value="testColumn"
-										onChange={this.handleChange}
-						/>
-						<input 	name="budgetHours"
-										type="text"
-										className="form-control"
-										placeholder="item"
-										value="testHours"
-										onChange={this.handleChange}
-						/>
-						<input 	name="workplan"
-										type="text"
-										className="form-control"
-										placeholder="item"
-										value="testWork"
-										onChange={this.handleChange}
-						/>
-						<input 	name="budget"
-										type="text"
-										className="form-control"
-										placeholder="item"
-										value="testBudget"
-										onChange={this.handleChange}
-						/>
-						<input 	name="assumptions"
-										type="text"
-										className="form-control"
-										placeholder="item"
-										value="testAssump"
-										onChange={this.handleChange}
-						/>
-						<input 	name="exclusions"
-										type="text"
-										className="form-control"
-										placeholder="item"
-										value="testExc"
-										onChange={this.handleChange}
-						/>
-						<input 	name="tags"
-										type="text"
-										className="form-control"
-										placeholder="item"
-										value="testTag"
-										onChange={this.handleChange}
-						/>						
-
+            {fields.map(field => (
+              <div>
+                <label htmlFor={field.name}>{field.label}</label>
+                <input 
+                  onChange={e => this.handleChange(field.name, e.target.value)}
+                  type={field.type}
+                  value={this.state[field.name]}
+                />
+              </div>
+            ))}
 						<div className="input-group-btn">
 							<button type="submit" className="btn btn-primary">Add Item</button>
 						</div>
