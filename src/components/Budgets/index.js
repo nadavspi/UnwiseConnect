@@ -91,12 +91,9 @@ class Budgets extends Component {
           </div>
         </div>
         <div className="row panel-body">
-          <NewItem onSubmit={this.handleNewItemSubmit}/>
-          
           <div className="panel-body projects__wrapper">
+            <NewItem onSubmit={this.handleNewItemSubmit}/>
             <h2> Features (temp title) </h2>
-          </div>
-          <div className="panel-body projects__wrapper">
             {this.state.items.map(item => (
               <Item 
                 budgetHours={item.budgetHours}
