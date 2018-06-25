@@ -28,8 +28,8 @@ export default class ItemForm extends Component {
 
     let item = this.state.item;
 
-    item.budgetHours.column = item.budgetColumn;
-    item.budgetHours.value = item.budgetValue;
+    item.budgetHours.column = item.column;
+    item.budgetHours.value = item.value;
 
     item.descriptions.workplan = item.workplan;
     item.descriptions.assumptions = item.assumptions;
@@ -66,13 +66,13 @@ export default class ItemForm extends Component {
         type: 'text',
       },
       {
-        name: 'budgetColumn',
+        name: 'column',
         label: 'Team',
         type: 'text',
         group: 'budgetHours',
       },
       {
-        name: 'budgetValue',
+        name: 'value',
         label: 'Hours',
         type: 'number',
         group: 'budgetHours',
