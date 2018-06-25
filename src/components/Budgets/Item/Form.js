@@ -16,8 +16,6 @@ export default class ItemForm extends Component {
   setItemValues() {
 		const item = this.props.editItem;
 		
-		console.log("set item value: " + item.budgetHours.column);
-
 		this.setState({
 			  summary: item.summary,
         phase: item.phase,
@@ -29,10 +27,8 @@ export default class ItemForm extends Component {
         assumptions: item.descriptions.assumptions,
         exclusions: item.descriptions.exclusions,
         tags: item.descriptions.tags,
-      });
-
-		console.log("set item value: " + item.feature);		
-	}
+    });
+  }
 
   handleChange(name, value) {
     this.setState({ 
@@ -106,7 +102,7 @@ export default class ItemForm extends Component {
       },
     ];
 
-    const submitBtnLabel = this.props.activeEdit ? 'Edit Item' : 'Add Item';
+    const submitBtnLabel = false ? 'Save Edit' : 'Add Item';
 
 		return (
 			<div>
@@ -134,5 +130,19 @@ export default class ItemForm extends Component {
 ItemForm.defaultProps = {
   item: {
     id: nanoid(),
+    summary:  "",
+          phase:    "",
+          feature:  "",
+          budgetHours: { 
+            column: "",
+            value: 0,
+          },
+          descriptions: {
+            workplan: [],
+            budget: [],
+            assumptions: [],
+            exclusions: [],
+          },
+          tags: "",
   },
 };
