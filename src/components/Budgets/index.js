@@ -87,23 +87,26 @@ class Budgets extends Component {
   }
 
   onDelete(key){
-    const tempList = [...this.state.items];
+    const currentList = [...this.state.items];
 
     // pick up here
-    tempList.map(item => {
-      if(item.summary != key){
-        console.log(item.summary);
+    let newList = [];
+    currentList.map(item => {
+      if(item.summary !== key){
+        newList = [
+          ...newList,
+          item
+        ];
         return item;
       } 
-      console.log(item.summary);
     });
 
+    
     this.setState({
       items: [
-        ...tempList
+        ...newList
       ],
     });
-    console.log(key + ' deleted');
   }
 
   render() {

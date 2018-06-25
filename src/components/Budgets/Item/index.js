@@ -16,7 +16,6 @@ class Item extends React.Component {
 	}
 
 	onDelete(){
-		console.log('delete: ' + this.props.summary);
 		this.props.onDelete(this.props.summary);
 	}
 
