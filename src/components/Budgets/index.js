@@ -187,8 +187,6 @@ class Budgets extends Component {
           <div className="panel-body projects__wrapper">
             <ItemForm
               onSubmit={this.handleNewSubmit}
-              activeEdit={this.state.activeEdit}
-              item={this.state.editItem}
             />
             <h2> Items </h2>
             {this.state.items.map(item => (
