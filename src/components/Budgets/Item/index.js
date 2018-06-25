@@ -16,7 +16,7 @@ class Item extends React.Component {
 	}
 
 	onDelete(){
-		this.props.onDelete(this.props.summary);
+		this.props.onDelete(this.props.itemId);
 	}
 
 	render() {
@@ -61,6 +61,7 @@ Item.propTypes = {
 	phase: PropTypes.string.isRequired,
 	feature: PropTypes.string.isRequired,
 	tags: PropTypes.string.isRequired, 
+  itemId: PropTypes.number.isRequired,
 }
 
 

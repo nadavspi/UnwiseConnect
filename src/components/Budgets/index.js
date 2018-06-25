@@ -169,14 +169,9 @@ class Budgets extends Component {
     console.log(item.summary + ' edited');
   }
 
-  onDelete(key){
-    const index = this.indexByKey(key);
-    
+  onDelete(itemId) {
     this.setState({
-      items: [
-        ...this.state.items.slice(0, index),
-        ...this.state.items.slice(index + 1),
-      ],
+      items: this.state.items.filter(item => item.id !== itemId),
     });
   }
 
@@ -204,6 +199,7 @@ class Budgets extends Component {
                 key={item.summary}
                 phase={item.phase}
                 summary={item.summary} 
+                itemId={item.id}
                 tags={item.tags}
                 setEdit={this.setEdit}
                 onDelete={this.onDelete}
