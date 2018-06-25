@@ -1,4 +1,5 @@
 import React from 'react';
+import ItemForm from './Form';
 import PropTypes from 'prop-types';
 
 class Item extends React.Component {
@@ -8,60 +9,63 @@ class Item extends React.Component {
 		this.onEdit = this.onEdit.bind(this);
 		this.onDelete = this.onDelete.bind(this);
 			
+    this.state = {
+      isEditing: false,
+    };
 	}
 
 	onEdit(){
-		console.log('edit: ' + this.props.summary);
-		this.props.setEdit(true, this.props.summary);
+    this.setState({ isEditing: true });
 	}
 
 	onDelete(){
-		this.props.onDelete(this.props.itemId);
+		this.props.onDelete(this.props.item.itemId);
 	}
 
 	render() {
 		return (
 			<div>
-				<h3>Item/Task(ID): {this.props.summary}</h3>
+				<h3>Item/Task(ID): {this.props.item.summary}</h3>
 				<ul> 
-					<li>Summary: {this.props.summary}</li>
-					<li>Phase: {this.props.phase}</li>
-					<li>Feature: {this.props.feature}</li>
+					<li>Summary: {this.props.item.summary}</li>
+					<li>Phase: {this.props.item.phase}</li>
+					<li>Feature: {this.props.item.feature}</li>
 					<h3>Budget Hours</h3>
 					<ul>
-						<li>Phase: {this.props.budgetHours.column}</li>
-						<li>Hours: {this.props.budgetHours.value}</li>
+						<li>Phase: {this.props.item.budgetHours.column}</li>
+						<li>Hours: {this.props.item.budgetHours.value}</li>
 					</ul>
 					<h3>Descriptions</h3>
 					<ul>
 						<li>
-							Workplan: {this.props.descriptions.workplan}
+							Workplan: {this.props.item.descriptions.workplan}
 						</li>
 						<li>
-							Budget: {this.props.descriptions.budget}
+							Budget: {this.props.item.descriptions.budget}
 						</li>
 						<li>
-							Assumptions: {this.props.descriptions.assumptions}
+							Assumptions: {this.props.item.descriptions.assumptions}
 						</li>  
 						<li>
-							Exclusions: {this.props.descriptions.exclusions}
+							Exclusions: {this.props.item.descriptions.exclusions}
 						</li>
 					</ul>
-					<li>Tags: {this.props.tags}</li>
+					<li>Tags: {this.props.item.tags}</li>
 				</ul>
 				<button onClick={this.onEdit} className="btn btn-primary">Edit Item</button>
 				<button onClick={this.onDelete} className="btn btn-primary">Delete Item</button>
+        {this.state.isEditing && (
+          <ItemForm 
+            item={this.props.item}
+          />
+        )}
 			</div> 
 		)
 	}
 }
 
 Item.propTypes = {
-	summary: PropTypes.string.isRequired,
-	phase: PropTypes.string.isRequired,
-	feature: PropTypes.string.isRequired,
-	tags: PropTypes.string.isRequired, 
-  itemId: PropTypes.number.isRequired,
+  item: React.PropTypes.object.isRequired,
 }
 
 
