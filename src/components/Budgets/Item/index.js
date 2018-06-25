@@ -12,7 +12,7 @@ class Item extends React.Component {
 
 	onEdit(){
 		console.log('edit: ' + this.props.summary);
-		this.props.onEdit(this.props.summary);
+		this.props.setEdit(true, this.props.summary);
 	}
 
 	onDelete(){

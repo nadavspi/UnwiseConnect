@@ -1,12 +1,34 @@
 import React, { Component } from 'react';
 
 export default class NewItem extends Component {
-	constructor() {
-		super();
+	constructor(props) {
+		super(props);
+		this.setItemValues = this.setItemValues.bind(this);
 		this.handleSubmit = this.handleSubmit.bind(this);
 		this.handleChange = this.handleChange.bind(this);
 
-    this.state = {};
+		this.state = {};  
+	}
+
+	setItemValues(){
+		const item = this.props.editItem;
+		
+		console.log("set item value: " + item.budgetHours.column);
+
+		this.setState({
+			  summary: item.summary,
+        phase: item.phase,
+        feature: item.feature,
+        budgetColumn: item.budgetHours.column,
+        budgetValue: item.budgetHours.value,
+        workplan: item.descriptions.workplan,
+        budget: item.descriptions.budget,
+        assumptions: item.descriptions.assumptions,
+        exclusions: item.descriptions.exclusions,
+        tags: item.descriptions.tags,
+      });
+
+		console.log("set item value: " + item.feature);		
 	}
 
   handleChange(name, value) {
@@ -63,11 +85,6 @@ export default class NewItem extends Component {
         type: 'text',
       },
       {
-        name: 'phase',
-        label: 'Phase',
-        type: 'text',
-      },
-      {
         name: 'budgetColumn',
         label: 'Team',
         type: 'text',
@@ -103,6 +120,8 @@ export default class NewItem extends Component {
       },
     ];
 
+    const submitBtnLabel = this.props.activeEdit ? 'Edit Item' : 'Add Item';
+
 		return (
 			<div>
 				<form onSubmit={this.handleSubmit}>
@@ -113,11 +132,11 @@ export default class NewItem extends Component {
                 <input 
                   onChange={e => this.handleChange(field.name, e.target.value)}
                   type={field.type}
-                  value={this.state[field.name]}
+                  value={this.props.editItem[field.name]}
                 />
               </div>
             ))}
-						<button type="submit" className="btn btn-primary">Add Item</button>
+						<button type="submit" className="btn btn-primary">{submitBtnLabel}</button>
 					</div>
 				</form>
 			</div>
