@@ -10,7 +10,7 @@ export default class NewItem extends Component {
 		this.state = {};  
 	}
 
-	setItemValues(){
+  setItemValues() {
 		const item = this.props.editItem;
 		
 		console.log("set item value: " + item.budgetHours.column);
@@ -73,11 +73,13 @@ export default class NewItem extends Component {
         name: 'summary',
         label: 'Summary',
         type: 'text',
+        required: true,
       },
       {
         name: 'phase',
         label: 'Phase',
         type: 'text',
+        required: true,
       },
       {
         name: 'feature',
@@ -96,12 +98,13 @@ export default class NewItem extends Component {
       },
       {
         name: 'workplan',
-        label: 'Workplan',
+        label: 'Workplan description',
         type: 'text',
+        required: true,
       },
       {
         name: 'budget',
-        label: 'Budget',
+        label: 'Budget description',
         type: 'text',
       },
       {
@@ -113,10 +116,12 @@ export default class NewItem extends Component {
         name: 'exclusions',
         label: 'Exclusions',
         type: 'text',
-      },{
+      },
+      {
         name: 'tags',
         label: 'Tags',
         type: 'text',
+        required: true,
       },
     ];
 
@@ -133,6 +138,7 @@ export default class NewItem extends Component {
                   onChange={e => this.handleChange(field.name, e.target.value)}
                   type={field.type}
                   value={this.props.editItem[field.name]}
+                  required={field.required}
                 />
               </div>
             ))}
