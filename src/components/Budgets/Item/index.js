@@ -23,42 +23,48 @@ class Item extends React.Component {
 	}
 
 	render() {
+		const item = this.props.item;
+
 		return (
 			<div>
-				<h3>Item/Task(ID): {this.props.item.summary}</h3>
+				<h3>Item/Task(ID): {item.summary}</h3>
 				<ul> 
-					<li>Summary: {this.props.item.summary}</li>
-					<li>Phase: {this.props.item.phase}</li>
-					<li>Feature: {this.props.item.feature}</li>
+					<li>Summary: {item.summary}</li>
+					<li>Phase: {item.phase}</li>
+					<li>Feature: {item.feature}</li>
 					<h3>Budget Hours</h3>
 					<ul>
-						<li>Phase: {this.props.item.budgetHours.column}</li>
-						<li>Hours: {this.props.item.budgetHours.value}</li>
+						<li>Phase: {item.budgetHours.column}</li>
+						<li>Hours: {item.budgetHours.value}</li>
 					</ul>
 					<h3>Descriptions</h3>
 					<ul>
 						<li>
-							Workplan: {this.props.item.descriptions.workplan}
+							Workplan: {item.descriptions.workplan}
 						</li>
 						<li>
-							Budget: {this.props.item.descriptions.budget}
+							Budget: {item.descriptions.budget}
 						</li>
 						<li>
-							Assumptions: {this.props.item.descriptions.assumptions}
+							Assumptions: {item.descriptions.assumptions}
 						</li>  
 						<li>
-							Exclusions: {this.props.item.descriptions.exclusions}
+							Exclusions: {item.descriptions.exclusions}
 						</li>
 					</ul>
-					<li>Tags: {this.props.item.tags}</li>
+					<li>Tags: {item.tags}</li>
 				</ul>
-				<button onClick={this.onEdit} className="btn btn-primary">Edit Item</button>
-				<button onClick={this.onDelete} className="btn btn-primary">Delete Item</button>
-        {this.state.isEditing && (
+				{this.state.isEditing && (
           <ItemForm 
-            item={this.props.item}
+            item={item}
           />
         )}
+        {!this.state.isEditing && (
+					<div>
+						<button onClick={this.onEdit} className="btn btn-primary">Edit Item</button>
+						<button onClick={this.onDelete} className="btn btn-primary">Delete Item</button>
+					</div>
+				)}
 			</div> 
 		)
 	}
