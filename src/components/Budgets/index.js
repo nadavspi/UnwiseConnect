@@ -15,6 +15,7 @@ class Budgets extends Component {
     this.state = {
       items: [
         {
+          id: 1,
           summary: "Klevu discovery & calls",
           phase: "dev/Klevu",
           feature: "Klevu",
@@ -35,6 +36,7 @@ class Budgets extends Component {
           tags: "klevu",
         },
         {
+          id: 2,
           summary: "Install Klevu extension",
           phase: "dev/Klevu",
           feature: "Klevu",
@@ -53,6 +55,7 @@ class Budgets extends Component {
           tags: "klevu",
         },
         {
+          id: 3,
           summary: "Configure Klevu flyout",
           phase: "dev/Klevu",
           feature: "Klevu",
@@ -187,9 +190,11 @@ class Budgets extends Component {
         </div>
         <div className="row panel-body">
           <div className="panel-body projects__wrapper">
-            <NewItem  onSubmit={this.handleNewSubmit}
-                      activeEdit={this.state.activeEdit}
-                      editItem={this.state.editItem}/>
+            <NewItem  
+              onSubmit={this.handleNewSubmit}
+              activeEdit={this.state.activeEdit}
+              editItem={this.state.editItem}
+            />
             <h2> Items </h2>
             {this.state.items.map(item => (
               <Item 
