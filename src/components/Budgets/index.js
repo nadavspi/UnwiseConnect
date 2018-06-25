@@ -6,8 +6,8 @@ class Budgets extends Component {
 	constructor() {
 		super();
 
-    this.setEdit  = this.setEdit.bind(this);
-    this.handleNewSubmit = this.handleNewSubmit.bind(this);
+    // this.setEdit  = this.setEdit.bind(this);
+    this.onFormSubmit = this.onFormSubmit.bind(this);
     this.onEdit   = this.onEdit.bind(this);
     this.onAdd   = this.onAdd.bind(this);
     this.onDelete = this.onDelete.bind(this);
@@ -74,46 +74,7 @@ class Budgets extends Component {
           tags: "klevu",
         },
       ],
-      activeEdit: false,
-      editItem: {
-          summary:  "",
-          phase:    "",
-          feature:  "",
-          budgetHours: { 
-            column: "",
-            value: 0,
-          },
-          descriptions: {
-            workplan: [],
-            budget: [],
-            assumptions: [],
-            exclusions: [],
-          },
-          tags: "",
-      },
     };
-  }
-
-  setEdit(bool, itemKey){
-    const index = this.indexByKey(itemKey)
-    const editItem = this.state.items[index];
-
-    this.setState({
-      activeEdit: bool,
-      editItem: {
-          summary:  editItem.summary,
-          phase:    editItem.phase,
-          feature:  editItem.feature,
-          budgetColumn: editItem.budgetHours.column,
-          budgetValue: editItem.budgetHours.value,
-          workplan: [editItem.descriptions.workplan],
-          budget: [editItem.descriptions.budget],
-          assumptions: [editItem.descriptions.assumptions],
-          exclusions: [editItem.descriptions.exclusions],
-          tags: editItem.tags,
-      },
-    }); 
-    console.log('Edit: ', this.state.activeEdit);
   }
 
   indexByKey(key){
@@ -124,9 +85,9 @@ class Budgets extends Component {
     return index;
   }
 
-  handleNewSubmit(item){
+  onFormSubmit(item){
     console.log('Item: ', item);
-    if (this.state.activeEdit) {
+    if (false) {
       this.onEdit(item);
     } else {
       this.onAdd(item);
@@ -151,22 +112,8 @@ class Budgets extends Component {
           item,
           ...this.state.items.slice(index + 1)
         ],
-        activeEdit: false,
-        editItem: {
-          summary:  "",
-          phase:    "",
-          feature:  "",
-          budgetColumn: "",
-          budgetValue: 0,
-          workplan: [],
-          budget: [],
-          assumptions: [],
-          exclusions: [],
-          tags: "",
-      },
       }
     )
-    console.log(item.summary + ' edited');
   }
 
   onDelete(itemId) {
@@ -186,13 +133,13 @@ class Budgets extends Component {
         <div className="row panel-body">
           <div className="panel-body projects__wrapper">
             <ItemForm
-              onSubmit={this.handleNewSubmit}
+              onSubmit={this.onFormSubmit}
             />
             <h2> Items </h2>
             {this.state.items.map(item => (
               <Item 
                 item={item}
-                setEdit={this.setEdit}
+                // setEdit={this.setEdit}
                 onDelete={this.onDelete}
               />
             ))}
