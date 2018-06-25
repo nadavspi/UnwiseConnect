@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import nanoid from 'nanoid';
 
 export default class ItemForm extends Component {
 	constructor(props) {
@@ -129,3 +130,9 @@ export default class ItemForm extends Component {
 		)
 	}
 }
+
+ItemForm.defaultProps = {
+  item: {
+    id: nanoid(),
+  },
+};
