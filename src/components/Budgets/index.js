@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import Item from './Item';
-import NewItem from './Item/NewItem';
+import ItemForm from './Item/Form';
 
 class Budgets extends Component {
 	constructor() {
@@ -126,7 +126,7 @@ class Budgets extends Component {
 
   handleNewSubmit(item){
     console.log('Item: ', item);
-    if(this.state.activeEdit){
+    if (this.state.activeEdit) {
       this.onEdit(item);
     } else {
       this.onAdd(item);
@@ -185,7 +185,7 @@ class Budgets extends Component {
         </div>
         <div className="row panel-body">
           <div className="panel-body projects__wrapper">
-            <NewItem  
+            <ItemForm
               onSubmit={this.handleNewSubmit}
               activeEdit={this.state.activeEdit}
               editItem={this.state.editItem}

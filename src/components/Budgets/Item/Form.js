@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 
-export default class NewItem extends Component {
+export default class ItemForm extends Component {
 	constructor(props) {
 		super(props);
 		this.setItemValues = this.setItemValues.bind(this);
