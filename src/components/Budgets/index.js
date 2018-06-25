@@ -188,19 +188,12 @@ class Budgets extends Component {
             <ItemForm
               onSubmit={this.handleNewSubmit}
               activeEdit={this.state.activeEdit}
-              editItem={this.state.editItem}
+              item={this.state.editItem}
             />
             <h2> Items </h2>
             {this.state.items.map(item => (
               <Item 
-                budgetHours={item.budgetHours}
-                descriptions={item.descriptions}
-                feature={item.feature}
-                key={item.summary}
-                phase={item.phase}
-                summary={item.summary} 
-                itemId={item.id}
-                tags={item.tags}
+                item={item}
                 setEdit={this.setEdit}
                 onDelete={this.onDelete}
               />
