@@ -6,8 +6,10 @@ class Budgets extends Component {
 	constructor() {
 		super();
 
-    this.handleNewItemSubmit = this.handleNewItemSubmit.bind(this);
-    this.onEdit = this.onEdit.bind(this);
+    this.setEdit  = this.setEdit.bind(this);
+    this.handleNewSubmit = this.handleNewSubmit.bind(this);
+    this.onEdit   = this.onEdit.bind(this);
+    this.onAdd   = this.onAdd.bind(this);
     this.onDelete = this.onDelete.bind(this);
 
     this.state = {
@@ -69,12 +71,67 @@ class Budgets extends Component {
           tags: "klevu",
         },
       ],
+      activeEdit: false,
+      editItem: {
+          summary:  "",
+          phase:    "",
+          feature:  "",
+          budgetHours: { 
+            column: "",
+            value: 0,
+          },
+          descriptions: {
+            workplan: [],
+            budget: [],
+            assumptions: [],
+            exclusions: [],
+          },
+          tags: "",
+      },
     };
   }
 
-  handleNewItemSubmit(item){
-    console.log('New Item: ', item);
-    this.setState({ 
+  setEdit(bool, itemKey){
+    const index = this.indexByKey(itemKey)
+    const editItem = this.state.items[index];
+
+    this.setState({
+      activeEdit: bool,
+      editItem: {
+          summary:  editItem.summary,
+          phase:    editItem.phase,
+          feature:  editItem.feature,
+          budgetColumn: editItem.budgetHours.column,
+          budgetValue: editItem.budgetHours.value,
+          workplan: [editItem.descriptions.workplan],
+          budget: [editItem.descriptions.budget],
+          assumptions: [editItem.descriptions.assumptions],
+          exclusions: [editItem.descriptions.exclusions],
+          tags: editItem.tags,
+      },
+    }); 
+    console.log('Edit: ', this.state.activeEdit);
+  }
+
+  indexByKey(key){
+    let index = -1;
+    let i = 0;
+    this.state.items.map(item => (item.summary == key) ? index = i : i++);
+    
+    return index;
+  }
+
+  handleNewSubmit(item){
+    console.log('Item: ', item);
+    if(this.state.activeEdit){
+      this.onEdit(item);
+    } else {
+      this.onAdd(item);
+    }
+  }
+
+  onAdd(item){
+      this.setState({ 
       items: [
         ...this.state.items,
         item,
@@ -82,29 +139,40 @@ class Budgets extends Component {
     });
   }
 
-  onEdit(key){
-    console.log(key + ' edited');
+  onEdit(item){
+    const index = this.indexByKey(item.summary);
+
+    this.setState({
+        items: [
+          ...this.state.items.slice(0,index),
+          item,
+          ...this.state.items.slice(index + 1)
+        ],
+        activeEdit: false,
+        editItem: {
+          summary:  "",
+          phase:    "",
+          feature:  "",
+          budgetColumn: "",
+          budgetValue: 0,
+          workplan: [],
+          budget: [],
+          assumptions: [],
+          exclusions: [],
+          tags: "",
+      },
+      }
+    )
+    console.log(item.summary + ' edited');
   }
 
   onDelete(key){
-    const currentList = [...this.state.items];
-
-    // pick up here
-    let newList = [];
-    currentList.map(item => {
-      if(item.summary !== key){
-        newList = [
-          ...newList,
-          item
-        ];
-        return item;
-      } 
-    });
-
+    const index = this.indexByKey(key);
     
     this.setState({
       items: [
-        ...newList
+        ...this.state.items.slice(0, index),
+        ...this.state.items.slice(index + 1),
       ],
     });
   }
@@ -119,7 +187,9 @@ class Budgets extends Component {
         </div>
         <div className="row panel-body">
           <div className="panel-body projects__wrapper">
-            <NewItem onSubmit={this.handleNewItemSubmit}/>
+            <NewItem  onSubmit={this.handleNewSubmit}
+                      activeEdit={this.state.activeEdit}
+                      editItem={this.state.editItem}/>
             <h2> Items </h2>
             {this.state.items.map(item => (
               <Item 
@@ -130,7 +200,7 @@ class Budgets extends Component {
                 phase={item.phase}
                 summary={item.summary} 
                 tags={item.tags}
-                onEdit={this.onEdit}
+                setEdit={this.setEdit}
                 onDelete={this.onDelete}
               />
             ))}
