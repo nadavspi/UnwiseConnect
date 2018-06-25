@@ -6,12 +6,6 @@ class Budgets extends Component {
 	constructor() {
 		super();
 
-    // this.setEdit  = this.setEdit.bind(this);
-    this.onFormSubmit = this.onFormSubmit.bind(this);
-    this.onEdit   = this.onEdit.bind(this);
-    this.onAdd   = this.onAdd.bind(this);
-    this.onDelete = this.onDelete.bind(this);
-
     this.state = {
       items: [
         {
@@ -75,27 +69,19 @@ class Budgets extends Component {
         },
       ],
     };
-  }
 
-  indexByKey(key){
-    let index = -1;
-    let i = 0;
-    this.state.items.map(item => (item.summary == key) ? index = i : i++);
-    
-    return index;
+    this.onFormSubmit = this.onFormSubmit.bind(this);
+    this.onEdit   = this.onEdit.bind(this);
+    this.onAdd   = this.onAdd.bind(this);
+    this.onDelete = this.onDelete.bind(this);
   }
 
   onFormSubmit(item){
-    console.log('Item: ', item);
-    if (false) {
-      this.onEdit(item);
-    } else {
-      this.onAdd(item);
-    }
+    this.onAdd(item);
   }
 
   onAdd(item){
-      this.setState({ 
+    this.setState({ 
       items: [
         ...this.state.items,
         item,
@@ -104,16 +90,8 @@ class Budgets extends Component {
   }
 
   onEdit(item){
-    const index = this.indexByKey(item.summary);
-
-    this.setState({
-        items: [
-          ...this.state.items.slice(0,index),
-          item,
-          ...this.state.items.slice(index + 1)
-        ],
-      }
-    )
+    console.log('Parent recieved: ' + item.summary);
+    console.log('No action performed.');
   }
 
   onDelete(itemId) {
@@ -139,7 +117,7 @@ class Budgets extends Component {
             {this.state.items.map(item => (
               <Item 
                 item={item}
-                // setEdit={this.setEdit}
+                onEdit={this.onEdit}
                 onDelete={this.onDelete}
               />
             ))}

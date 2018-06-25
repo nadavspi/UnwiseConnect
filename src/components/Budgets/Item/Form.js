@@ -4,30 +4,14 @@ import nanoid from 'nanoid';
 export default class ItemForm extends Component {
 	constructor(props) {
 		super(props);
-		this.setItemValues = this.setItemValues.bind(this);
-		this.handleSubmit = this.handleSubmit.bind(this);
-		this.handleChange = this.handleChange.bind(this);
 
     this.state = {
       item: props.item,
     };  
-	}
 
-  setItemValues() {
-		const item = this.props.editItem;
-		
-		this.setState({
-			  summary: item.summary,
-        phase: item.phase,
-        feature: item.feature,
-        budgetColumn: item.budgetHours.column,
-        budgetValue: item.budgetHours.value,
-        workplan: item.descriptions.workplan,
-        budget: item.descriptions.budget,
-        assumptions: item.descriptions.assumptions,
-        exclusions: item.descriptions.exclusions,
-        tags: item.descriptions.tags,
-    });
+    this.handleSubmit = this.handleSubmit.bind(this);
+    this.handleChange = this.handleChange.bind(this);
+
   }
 
   handleChange(name, value) {
@@ -41,6 +25,24 @@ export default class ItemForm extends Component {
 	
 	handleSubmit(event){
 		event.preventDefault();
+
+    let item = this.state.item;
+
+    item.budgetHours.column = item.budgetColumn;
+    item.budgetHours.value = item.budgetValue;
+
+    item.descriptions.workplan = item.workplan;
+    item.descriptions.assumptions = item.assumptions;
+    item.descriptions.exclusions = item.exclusions;
+    item.descriptions.budget = item.budget;
+
+    // item: {
+    //   item,
+    //   [group]: {
+    //     [name]: item[name],
+    //   }
+    // }
+  
 		this.props.onSubmit(this.state.item);
 	}
 
@@ -67,32 +69,38 @@ export default class ItemForm extends Component {
         name: 'budgetColumn',
         label: 'Team',
         type: 'text',
+        group: 'budgetHours',
       },
       {
         name: 'budgetValue',
         label: 'Hours',
         type: 'number',
+        group: 'budgetHours',
       },
       {
         name: 'workplan',
         label: 'Workplan description',
         type: 'text',
+        group: 'description',
         required: true,
       },
       {
         name: 'budget',
         label: 'Budget description',
         type: 'text',
+        group: 'description',
       },
       {
         name: 'assumptions',
         label: 'Assumptions',
         type: 'text',
+        group: 'description',
       },
       {
         name: 'exclusions',
         label: 'Exclusions',
         type: 'text',
+        group: 'description',
       },
       {
         name: 'tags',
@@ -102,7 +110,7 @@ export default class ItemForm extends Component {
       },
     ];
 
-    const submitBtnLabel = false ? 'Save Edit' : 'Add Item';
+    const submitBtnLabel = this.props.isEditing ? 'Save Edit' : 'Add Item';
 
 		return (
 			<div>
@@ -131,18 +139,19 @@ ItemForm.defaultProps = {
   item: {
     id: nanoid(),
     summary:  "",
-          phase:    "",
-          feature:  "",
-          budgetHours: { 
-            column: "",
-            value: 0,
-          },
-          descriptions: {
-            workplan: [],
-            budget: [],
-            assumptions: [],
-            exclusions: [],
-          },
-          tags: "",
+    phase:    "",
+    feature:  "",
+    budgetHours: { 
+      column: "",
+      value: 0,
+    },
+    descriptions: {
+      workplan: [],
+      budget: [],
+      assumptions: [],
+      exclusions: [],
+    },
+    tags: "",
   },
+  isEditing: false,
 };

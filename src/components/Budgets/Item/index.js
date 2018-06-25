@@ -6,12 +6,18 @@ class Item extends React.Component {
 	constructor(){
 		super();
 
-		this.onEdit = this.onEdit.bind(this);
-		this.onDelete = this.onDelete.bind(this);
-			
-    this.state = {
+		this.state = {
       isEditing: false,
     };
+    
+		this.onFormSubmit = this.onFormSubmit.bind(this);
+		this.onEdit = this.onEdit.bind(this);
+		this.onDelete = this.onDelete.bind(this);			
+ 	}
+
+	onFormSubmit(item){
+		this.setState({ isEditing: false, });
+		this.props.onEdit(item);
 	}
 
 	onEdit(){
@@ -19,7 +25,7 @@ class Item extends React.Component {
 	}
 
 	onDelete(){
-		this.props.onDelete(this.props.item.itemId);
+		this.props.onDelete(this.props.item.id);
 	}
 
 	render() {
@@ -57,6 +63,8 @@ class Item extends React.Component {
 				{this.state.isEditing && (
           <ItemForm 
             item={item}
+            isEditing={this.state.isEditing}
+            onSubmit={this.onFormSubmit}
           />
         )}
         {!this.state.isEditing && (
