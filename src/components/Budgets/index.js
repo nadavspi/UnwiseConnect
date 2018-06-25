@@ -89,9 +89,10 @@ class Budgets extends Component {
     });
   }
 
-  onEdit(item){
-    console.log('Parent recieved: ' + item.summary);
-    console.log('No action performed.');
+  onEdit(updatedItem){
+    this.setState({
+      items: this.state.items.map(item => updatedItem.id === item.id ? updatedItem : item),
+    })
   }
 
   onDelete(itemId) {
