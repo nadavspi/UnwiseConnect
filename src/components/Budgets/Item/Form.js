@@ -7,7 +7,9 @@ export default class ItemForm extends Component {
 		this.handleSubmit = this.handleSubmit.bind(this);
 		this.handleChange = this.handleChange.bind(this);
 
-		this.state = {};  
+    this.state = {
+      item: props.item,
+    };  
 	}
 
   setItemValues() {
@@ -33,38 +35,16 @@ export default class ItemForm extends Component {
 
   handleChange(name, value) {
     this.setState({ 
-      [name]: value,
+      item: {
+        ...this.state.item,
+        [name]: value,
+      },
     });
 	}
 	
 	handleSubmit(event){
 		event.preventDefault();
-		const newItem = {
-			summary: this.state.summary,
-			phase: this.state.phase,
-			feature: this.state.feature,
-			budgetHours: {
-				column: this.state.budgetColumn,
-				value: this.state.budgetValue,
-			},
-			descriptions: {
-				workplan: [ 
-					this.state.workplan
-				],
-				budget: [ 
-					this.state.budget
-				],
-				assumptions: [ 
-					this.state.assumptions
-				],
-				exclusions: [ 
-					this.state.exclusions
-				],
-
-			},
-			tags: this.state.tags
-		};
-		this.props.onSubmit(newItem);
+		this.props.onSubmit(this.state.item);
 	}
 
 	render() {
@@ -137,7 +117,7 @@ export default class ItemForm extends Component {
                 <input 
                   onChange={e => this.handleChange(field.name, e.target.value)}
                   type={field.type}
-                  value={this.props.editItem[field.name]}
+                  value={this.state.item[field.name]}
                   required={field.required}
                 />
               </div>
