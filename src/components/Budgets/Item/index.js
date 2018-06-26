@@ -1,6 +1,5 @@
 import React from 'react';
 import ItemForm from './Form';
-import PropTypes from 'prop-types';
 
 class Item extends React.Component {
 	constructor(){
@@ -33,14 +32,13 @@ class Item extends React.Component {
 
 		return (
 			<div>
-				<h3>Item/Task(ID): {item.summary}</h3>
+				<h3>Item/Task: {item.summary}</h3>
 				<ul> 
-					<li>Summary: {item.summary}</li>
 					<li>Phase: {item.phase}</li>
 					<li>Feature: {item.feature}</li>
 					<h3>Budget Hours</h3>
 					<ul>
-						<li>Phase: {item.budgetHours.column}</li>
+						<li>Column: {item.budgetHours.column}</li>
 						<li>Hours: {item.budgetHours.value}</li>
 					</ul>
 					<h3>Descriptions</h3>
