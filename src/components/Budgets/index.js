@@ -120,6 +120,7 @@ class Budgets extends Component {
                 item={item}
                 onEdit={this.onEdit}
                 onDelete={this.onDelete}
+                key={item.id}
               />
             ))}
           </div>
