@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import Item from './Item';
 import ItemForm from './Item/Form';
+import SearchBar from './Search';
 
 class Budgets extends Component {
 	constructor() {
@@ -68,12 +69,18 @@ class Budgets extends Component {
           tags: "klevu",
         },
       ],
+
     };
 
+    this.onFilter = this.onFilter.bind(this);
     this.onFormSubmit = this.onFormSubmit.bind(this);
     this.onEdit   = this.onEdit.bind(this);
-    this.onAdd   = this.onAdd.bind(this);
+    this.onAdd    = this.onAdd.bind(this);
     this.onDelete = this.onDelete.bind(this);
+  }
+
+  onFilter(field, value){
+
   }
 
   onFormSubmit(item){
@@ -115,6 +122,7 @@ class Budgets extends Component {
               onSubmit={this.onFormSubmit}
             />
             <h2> Items </h2>
+            <SearchBar />
             {this.state.items.map(item => (
               <Item 
                 item={item}
