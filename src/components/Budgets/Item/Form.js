@@ -5,21 +5,14 @@ export default class ItemForm extends Component {
 	constructor(props) {
 		super(props);
 
+    let groups = this.flatten(props.item);
     this.state = {
       item: {
         ...props.item,
-        column: props.item.budgetHours.column,
-        value: props.item.budgetHours.value,
-        workplan: props.item.descriptions.workplan,
-        assumptions: props.item.descriptions.assumptions,
-        exclusions: props.item.descriptions.exclusions,
-        budget: props.item.descriptions.budget,
-      }
-    };  
+        groups,
+      }    
+    }; 
 
-    this.flatten(this.state.item);
-
-    // this.flatten = this.flatten.bind(this);
     this.clearState = this.clearState.bind(this);
     this.onSubmit = this.onSubmit.bind(this);
     this.onChange = this.onChange.bind(this);
@@ -28,10 +21,16 @@ export default class ItemForm extends Component {
   }
 
   flatten(item){
-    let flatItem = item;
+    const groups = {
+        column: item.budgetHours.column,
+        value: item.budgetHours.value,
+        workplan: item.descriptions.workplan,
+        assumptions: item.descriptions.assumptions,
+        exclusions: item.descriptions.exclusions,
+        budget: item.descriptions.budget,
+    };
 
-    console.log('Flattened!');
-    return flatItem;
+    return groups;    
   }
 
   clearState(){
