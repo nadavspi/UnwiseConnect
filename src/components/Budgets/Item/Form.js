@@ -17,6 +17,10 @@ export default class ItemForm extends Component {
       }
     };  
 
+    this.flatten(this.state.item);
+
+    // this.flatten = this.flatten.bind(this);
+    this.clearState = this.clearState.bind(this);
     this.onSubmit = this.onSubmit.bind(this);
     this.onChange = this.onChange.bind(this);
     this.onCancel = this.onCancel.bind(this);
@@ -24,15 +28,39 @@ export default class ItemForm extends Component {
   }
 
   flatten(item){
-    let flatItem = {};
-    flatItem = item.map((child) =>{
-      if(child.isArray()){
+    let flatItem = item;
 
-      } else{
-
-      }
-    });
+    console.log('Flattened!');
     return flatItem;
+  }
+
+  clearState(){
+    this.setState({
+      item: {
+        id: nanoid(),
+        summary:  "",
+        phase:    "",
+        feature:  "",
+        budgetHours: { 
+          column: "",
+          value: 0,
+        },
+        descriptions: {
+          workplan: [],
+          budget: [],
+          assumptions: [],
+          exclusions: [],
+        },
+        tags: "",
+
+        column: "",
+        value: 0,
+        workplan: [],
+        budget: [],
+        assumptions: [],
+        exclusions: [],  
+      },
+    });
   }
 
   onCancel(){
@@ -138,23 +166,25 @@ export default class ItemForm extends Component {
     //   field = fields[i];
       
     //   if(field.group != null){
-    //     console.log(item.name);
+    //     console.log('Field Name: ', field.name);
+    //     console.log('Field Value: ', item[field.name]);
     //     group = field.group;
     //     if(groups[group] == null){
+    //       console.log('new group', groups[group]);
     //       groups[group] = {
-    //         [field.name]: item[name]
+    //         [field.name]: item[field.name]
     //       };
     //     } else {
+    //       console.log('existing group', groups[group]);
     //       groups[group] = {
     //         ...groups[group], 
-    //         [field.name]: item[name],
+    //         [field.name]: item[field.name],
     //       };
     //     }
     //     groups[field.group][field.name] = item[name];
     //   }
     // }
-
-    // console.log('Test: ', groups);
+    // console.log('Groups: ', groups);
 
     // this.setState({
     //   item: {
@@ -162,8 +192,9 @@ export default class ItemForm extends Component {
     //     groups,
     //   }
     // })
-  
+    
 		this.props.onSubmit(this.state.item);
+    this.clearState();
 	}
 
 	render() {
