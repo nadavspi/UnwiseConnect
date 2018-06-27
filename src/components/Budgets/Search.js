@@ -5,33 +5,16 @@ class SearchBar extends React.Component {
 		super();
 
 		this.state={
-			field: null,
-			filter: null,
+			field: "summary",
+			filter: "",
 		};
-
-		this.onFieldChange = this.onFieldChange.bind(this);
-		this.onFilterChange = this.onFilterChange.bind(this);
+		this.onChange = this.onChange.bind(this);
 	}
 
-	onFieldChange(value){
-
+	onChange(name, value){
 		this.setState({
-			field: value
-		});
-		if(this.state.field != null && this.state.fitler != null){
-			this.props.onFilter(this.state.field.value, this.state.filter);
-		}
-	}
-
-	onFilterChange(value){
-		this.setState({
-			filter: value
-		})
-		console.log(this.state.filter);
-		console.log(this.state.field);
-		if((this.state.field != null)){
-			this.props.onFilter(this.state.field, this.state.filter);
-		}
+			[name]: value
+		}, () => {this.props.onFilter(this.state.field, this.state.filter)});		
 	}
 
 	render(){
@@ -103,16 +86,15 @@ class SearchBar extends React.Component {
 				<h2>SearchBar</h2>
 				<select 
 					value={this.state.field}
-					onChange={e => this.onFieldChange(e.target.value)}>
-
+					onChange={e => this.onChange("field", e.target.value)}>
 					{fields.map( field => (
-						<option value={field.value}>{field.value}
+						<option value={field.value}>{field.label}
 						</option>
 					))}
 				</select>
 				<input
-					onChange={e => this.onFilterChange(e.target.value)}
 					value={this.state.filter}
+					onChange={e => this.onChange("filter",e.target.value)}
 				/>
 			</div>
 		)

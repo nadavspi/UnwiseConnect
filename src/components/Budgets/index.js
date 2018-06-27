@@ -79,15 +79,16 @@ class Budgets extends Component {
   }
 
   onFilter(field, value){
-    console.log('Field: ', field);
-    console.log('Value: ', value);
-    this.setState({
-      items: this.state.items.map((item) => (
-        item = {
-          ...item,
-          isVisible:item[field].includes(value),
-        })),
-    });
+    if(field != null && value != null){
+      this.setState({
+        items: this.state.items.map((item) => (
+          item = {
+            ...item,
+            isVisible:item[field].toLowerCase().includes(value.toLowerCase()),
+          }
+        )),
+      });  
+    }
   }
 
   onFormSubmit(item){
