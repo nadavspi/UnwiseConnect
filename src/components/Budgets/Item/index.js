@@ -80,6 +80,4 @@ Item.propTypes = {
   item: React.PropTypes.object.isRequired,
 }
 
-
-
 export default Item;
