@@ -1,5 +1,4 @@
 import React from 'react';
-import Select from 'react-select';
 
 class SearchBar extends React.Component {
 	constructor(){
@@ -15,17 +14,23 @@ class SearchBar extends React.Component {
 	}
 
 	onFieldChange(value){
+
 		this.setState({
 			field: value
 		});
+		if(this.state.field != null && this.state.fitler != null){
+			this.props.onFilter(this.state.field.value, this.state.filter);
+		}
 	}
 
 	onFilterChange(value){
 		this.setState({
 			filter: value
 		})
-		if(this.state.field == null){
-			
+		console.log(this.state.filter);
+		console.log(this.state.field);
+		if((this.state.field != null)){
+			this.props.onFilter(this.state.field, this.state.filter);
 		}
 	}
 
@@ -96,11 +101,15 @@ class SearchBar extends React.Component {
 		return (
 			<div className="section">
 				<h2>SearchBar</h2>
-				<Select
-					options={fields}
-					onChange={this.onFieldChange}
+				<select 
 					value={this.state.field}
-				/>
+					onChange={e => this.onFieldChange(e.target.value)}>
+
+					{fields.map( field => (
+						<option value={field.value}>{field.value}
+						</option>
+					))}
+				</select>
 				<input
 					onChange={e => this.onFilterChange(e.target.value)}
 					value={this.state.filter}
