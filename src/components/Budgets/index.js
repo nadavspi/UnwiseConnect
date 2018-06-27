@@ -69,7 +69,6 @@ class Budgets extends Component {
           tags: "klevu",
         },
       ],
-
     };
 
     this.onFilter = this.onFilter.bind(this);
@@ -80,7 +79,15 @@ class Budgets extends Component {
   }
 
   onFilter(field, value){
-
+    console.log('Field: ', field);
+    console.log('Value: ', value);
+    this.setState({
+      items: this.state.items.map((item) => (
+        item = {
+          ...item,
+          isVisible:item[field].includes(value),
+        })),
+    });
   }
 
   onFormSubmit(item){
@@ -122,8 +129,11 @@ class Budgets extends Component {
               onSubmit={this.onFormSubmit}
             />
             <h2> Items </h2>
-            <SearchBar />
-            {this.state.items.map(item => (
+            <SearchBar 
+              onFilter={this.onFilter}
+            />
+            {this.state.items.map(item => 
+              item.isVisible && (
               <Item 
                 item={item}
                 onEdit={this.onEdit}
