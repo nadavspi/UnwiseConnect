@@ -10,11 +10,15 @@ class SearchBar extends React.Component {
 	}
 
 	onValueChange(value) {
-    this.props.onFilter(this.props.filter.field, value)
+    this.props.onFilter({
+      value
+    });
 	}
 
 	onFieldChange(field) {
-    this.props.onFilter(field.value, this.props.filter.value) 
+    this.props.onFilter({
+      field: field.value
+    });
 	}
 
 	render(){

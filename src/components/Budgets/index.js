@@ -90,11 +90,7 @@ class Budgets extends Component {
     this.onDelete = this.onDelete.bind(this);
   }
 
-  onFilter(field, value) {
-    if (field == null && value == null) {
-      return;
-    }
-
+  onFilter({ field = this.state.filter.field, value = this.state.filter.value }) {
     this.setState({
       items: this.state.items.map((item) => (
         {
