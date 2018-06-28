@@ -35,32 +35,7 @@ export default class ItemForm extends Component {
   }
 
   clearState(){
-    this.setState({
-      item: {
-        id: nanoid(),
-        summary:  "",
-        phase:    "",
-        feature:  "",
-        budgetHours: { 
-          column: "",
-          value: 0,
-        },
-        descriptions: {
-          workplan: [],
-          budget: [],
-          assumptions: [],
-          exclusions: [],
-        },
-        tags: "",
-
-        column: "",
-        value: 0,
-        workplan: [],
-        budget: [],
-        assumptions: [],
-        exclusions: [],  
-      },
-    });
+    this.setState({ });
   }
 
   onCancel(){
@@ -120,7 +95,8 @@ export default class ItemForm extends Component {
     
 		this.props.onSubmit(this.state.item);
     this.clearState();
-    this.refs.summary.focus();
+    // Focus on the first input
+    this.refs[this.props.fields[0].name].focus();
 	}
 
 	render() {
