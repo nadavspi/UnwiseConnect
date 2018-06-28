@@ -6,11 +6,12 @@ export default class ItemForm extends Component {
 		super(props);
 
     let groups = this.flatten(props.item);
+
     this.state = {
       item: {
         ...props.item,
-        groups,
-      }    
+        ...groups,
+      },   
     }; 
 
     this.clearState = this.clearState.bind(this);
@@ -194,6 +195,7 @@ export default class ItemForm extends Component {
     
 		this.props.onSubmit(this.state.item);
     this.clearState();
+    this.refs.summary.focus();
 	}
 
 	render() {
@@ -270,6 +272,7 @@ export default class ItemForm extends Component {
               <div>
                 <label htmlFor={field.name}>{field.label}</label>
                 <input 
+                  ref={field.name}
                   onChange={e => this.onChange(field.name, e.target.value)}
                   type={field.type}
                   value={this.state.item[field.name]}
