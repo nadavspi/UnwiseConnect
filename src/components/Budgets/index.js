@@ -157,6 +157,7 @@ class Budgets extends Component {
             <h2> Items </h2>
             <SearchBar 
               filter={this.state.filter}
+              fields={this.state.fields}
               onFilter={this.onFilter}
             />
             {this.state.items.map(item => 
@@ -196,41 +197,35 @@ Budgets.defaultProps = {
       type: 'text',
     },
     {
-      name: 'column',
+      name: 'budgetHours.column',
       label: 'Team',
       type: 'text',
-      group: 'budgetHours',
     },
     {
-      name: 'value',
+      name: 'budgetHours.value',
       label: 'Hours',
       type: 'number',
-      group: 'budgetHours',
     },
     {
-      name: 'workplan',
+      name: 'descriptions.workplan',
       label: 'Workplan description',
       type: 'text',
-      group: 'descriptions',
       required: true,
     },
     {
-      name: 'budget',
+      name: 'descriptions.budget',
       label: 'Budget description',
       type: 'text',
-      group: 'descriptions',
     },
     {
-      name: 'assumptions',
+      name: 'descriptions.assumptions',
       label: 'Assumptions',
       type: 'text',
-      group: 'descriptions',
     },
     {
-      name: 'exclusions',
+      name: 'descriptions.exclusions',
       label: 'Exclusions',
       type: 'text',
-      group: 'descriptions',
     },
     {
       name: 'tags',
