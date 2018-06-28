@@ -1,16 +1,15 @@
 import React, { Component } from 'react';
 import nanoid from 'nanoid';
+import flatten from 'flat';
+import unflatten from 'flat';
 
 export default class ItemForm extends Component {
 	constructor(props) {
 		super(props);
 
-    let groups = this.flatten(props.item);
-
     this.state = {
       item: {
-        ...props.item,
-        ...groups,
+        ...flatten({ ...props.item }, { maxDepth: 2 }),
       },   
     }; 
 
@@ -18,20 +17,6 @@ export default class ItemForm extends Component {
     this.onSubmit = this.onSubmit.bind(this);
     this.onChange = this.onChange.bind(this);
     this.onCancel = this.onCancel.bind(this);
-
-  }
-
-  flatten(item){
-    const groups = {
-        column: item.budgetHours.column,
-        value: item.budgetHours.value,
-        workplan: item.descriptions.workplan,
-        assumptions: item.descriptions.assumptions,
-        exclusions: item.descriptions.exclusions,
-        budget: item.descriptions.budget,
-    };
-
-    return groups;    
   }
 
   clearState(){
@@ -54,47 +39,10 @@ export default class ItemForm extends Component {
 	onSubmit(event){
 		event.preventDefault();
 
-    let nextItem = { ...this.state.item };
-    
-    nextItem.budgetHours.column = nextItem.column;
-    nextItem.budgetHours.value = nextItem.value;
-
-    nextItem.descriptions.workplan = nextItem.workplan;
-    nextItem.descriptions.assumptions = nextItem.assumptions;
-    nextItem.descriptions.exclusions = nextItem.exclusions;
-    nextItem.descriptions.budget = nextItem.budget;
-
-    // item: {
-    //   item,
-    //   [group]: {
-    //     [name]: item[name],
-    //   }
-    // }
-    
-    
-    // let field, group;
-    // let groups = [];
-
-    // for(let i = 0; i < fields.length; i++){
-    //   field = fields[i];
-    //   if(field.group != null){
-    //     groups[field.group] = {
-    //       groups[field.group],
-    //       [field.name]: item[field.name],
-    //     }; 
-    //   }
-    // }
-    // console.log('Groups: ', groups);
-
-    // this.setState({
-    //   item: {
-    //     ...item,
-    //     groups,
-    //   }
-    // })
-    
-		this.props.onSubmit(this.state.item);
+    // Unflatten
+		this.props.onSubmit(flatten.unflatten({ ...this.state.item }));
     this.clearState();
+    
     // Focus on the first input
     this.refs[this.props.fields[0].name].focus();
 	}
