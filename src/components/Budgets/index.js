@@ -75,10 +75,10 @@ class Budgets extends Component {
       items: inputData.items.map((item) => (
         item = {
           ...item,
-          isVisible:true
+          isVisible: true,
         })),
       filter: {
-        field: '',
+        field: 'summary',
         value: '',
       }
     };
@@ -159,6 +159,7 @@ class Budgets extends Component {
             />
             <h2> Items </h2>
             <SearchBar 
+              filter={this.state.filter}
               onFilter={this.onFilter}
             />
             {this.state.items.map(item => 

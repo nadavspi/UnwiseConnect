@@ -4,26 +4,17 @@ import Select from 'react-select';
 class SearchBar extends React.Component {
 	constructor(){
 		super();
-
-		this.state={
-			field: "summary",
-			filter: "",
-		};
 	
-		this.onChange = this.onChange.bind(this);
-		this.onSelectChange = this.onSelectChange.bind(this);
+		this.onValueChange = this.onValueChange.bind(this);
+		this.onFieldChange = this.onFieldChange.bind(this);
 	}
 
-	onChange(name, value){
-		this.setState({
-			[name]: value
-		}, () => {this.props.onFilter(this.state.field, this.state.filter)});		
+	onValueChange(value) {
+    this.props.onFilter(this.props.filter.field, value)
 	}
 
-	onSelectChange(value){
-		this.setState({
-			field: value
-		}, () => {this.props.onFilter(this.state.field, this.state.filter)});		
+	onFieldChange(field) {
+    this.props.onFilter(field.value, this.props.filter.value) 
 	}
 
 	render(){
@@ -95,13 +86,13 @@ class SearchBar extends React.Component {
 				<h2>SearchBar</h2>
 				<Select 
 					name="field"
-					value={this.state.field}
+					value={this.props.filter.field}
 					options={fields}
-					onChange={this.onSelectChange}
+					onChange={this.onFieldChange}
 				/>
 				<input
-					value={this.state.filter}
-					onChange={e => this.onChange("filter",e.target.value)}
+					value={this.props.filter.value}
+					onChange={e => this.onValueChange(e.target.value)}
 				/>
 			</div>
 		)
