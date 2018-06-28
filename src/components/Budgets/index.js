@@ -163,6 +163,7 @@ class Budgets extends Component {
               item.isVisible && (
               <Item 
                 item={item}
+                fields={this.props.fields}
                 onEdit={this.onEdit}
                 onDelete={this.onDelete}
                 key={item.id}

@@ -61,6 +61,7 @@ class Item extends React.Component {
 				{this.state.isEditing && (
           <ItemForm 
             item={item}
+            fields={this.props.fields}
             isEditing={this.state.isEditing}
             onSubmit={this.onFormSubmit}
           />
@@ -80,11 +81,6 @@ Item.propTypes = {
   item: React.PropTypes.object.isRequired,
 }
 
-Item.defaultProps = {
-	item: {
-		isVisible: true,
-	}
-}
 
 
 export default Item;
