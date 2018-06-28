@@ -80,4 +80,11 @@ Item.propTypes = {
   item: React.PropTypes.object.isRequired,
 }
 
+Item.defaultProps = {
+	item: {
+		isVisible: true,
+	}
+}
+
+
 export default Item;
