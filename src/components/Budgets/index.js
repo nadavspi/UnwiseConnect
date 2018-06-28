@@ -90,21 +90,23 @@ class Budgets extends Component {
     this.onDelete = this.onDelete.bind(this);
   }
 
-  onFilter(field, value){
-    if(field != null && value != null){
-      this.setState({
-        items: this.state.items.map((item) => (
-          item = {
-            ...item,
-            isVisible:item[field].toLowerCase().includes(value.toLowerCase()),
-          }
-        )),
-        filter: {
-          field: field,
-          value: value,
-        }
-      });  
+  onFilter(field, value) {
+    if (field == null && value == null) {
+      return;
     }
+
+    this.setState({
+      items: this.state.items.map((item) => (
+        {
+          ...item,
+          isVisible: item[field].toLowerCase().includes(value.toLowerCase()),
+        }
+      )),
+      filter: {
+        field,
+        value,
+      }
+    });  
   }
 
   onFormSubmit(item){
