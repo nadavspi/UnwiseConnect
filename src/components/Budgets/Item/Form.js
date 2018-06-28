@@ -54,15 +54,15 @@ export default class ItemForm extends Component {
 	onSubmit(event){
 		event.preventDefault();
 
-    let item = this.state.item;
+    let nextItem = { ...this.state.item };
     
-    item.budgetHours.column = item.column;
-    item.budgetHours.value = item.value;
+    nextItem.budgetHours.column = nextItem.column;
+    nextItem.budgetHours.value = nextItem.value;
 
-    item.descriptions.workplan = item.workplan;
-    item.descriptions.assumptions = item.assumptions;
-    item.descriptions.exclusions = item.exclusions;
-    item.descriptions.budget = item.budget;
+    nextItem.descriptions.workplan = nextItem.workplan;
+    nextItem.descriptions.assumptions = nextItem.assumptions;
+    nextItem.descriptions.exclusions = nextItem.exclusions;
+    nextItem.descriptions.budget = nextItem.budget;
 
     // item: {
     //   item,
