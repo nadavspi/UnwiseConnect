@@ -1,4 +1,5 @@
 import React from 'react';
+import Select from 'react-select';
 
 class SearchBar extends React.Component {
 	constructor(){
@@ -8,12 +9,20 @@ class SearchBar extends React.Component {
 			field: "summary",
 			filter: "",
 		};
+	
 		this.onChange = this.onChange.bind(this);
+		this.onSelectChange = this.onSelectChange.bind(this);
 	}
 
 	onChange(name, value){
 		this.setState({
 			[name]: value
+		}, () => {this.props.onFilter(this.state.field, this.state.filter)});		
+	}
+
+	onSelectChange(value){
+		this.setState({
+			field: value
 		}, () => {this.props.onFilter(this.state.field, this.state.filter)});		
 	}
 
@@ -84,14 +93,12 @@ class SearchBar extends React.Component {
 		return (
 			<div className="section">
 				<h2>SearchBar</h2>
-				<select 
+				<Select 
+					name="field"
 					value={this.state.field}
-					onChange={e => this.onChange("field", e.target.value)}>
-					{fields.map( field => (
-						<option value={field.value}>{field.label}
-						</option>
-					))}
-				</select>
+					options={fields}
+					onChange={this.onSelectChange}
+				/>
 				<input
 					value={this.state.filter}
 					onChange={e => this.onChange("filter",e.target.value)}
