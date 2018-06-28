@@ -7,7 +7,7 @@ class Budgets extends Component {
 	constructor() {
 		super();
 
-    this.state = {
+    let inputData = {
       items: [
         {
           id: 1,
@@ -71,6 +71,18 @@ class Budgets extends Component {
       ],
     };
 
+    this.state = {
+      items: inputData.items.map((item) => (
+        item = {
+          ...item,
+          isVisible:true
+        })),
+      filter: {
+        field: '',
+        value: '',
+      }
+    };
+
     this.onFilter = this.onFilter.bind(this);
     this.onFormSubmit = this.onFormSubmit.bind(this);
     this.onEdit   = this.onEdit.bind(this);
@@ -87,6 +99,10 @@ class Budgets extends Component {
             isVisible:item[field].toLowerCase().includes(value.toLowerCase()),
           }
         )),
+        filter: {
+          field: field,
+          value: value,
+        }
       });  
     }
   }
@@ -96,6 +112,11 @@ class Budgets extends Component {
   }
 
   onAdd(item){
+    item = {
+      ...item,
+      isVisible:item[this.state.filter.field].toLowerCase().includes(this.state.filter.value),
+    }
+
     this.setState({ 
       items: [
         ...this.state.items,
@@ -105,6 +126,11 @@ class Budgets extends Component {
   }
 
   onEdit(updatedItem){
+    updatedItem = {
+      ...updatedItem,
+      isVisible:updatedItem[this.state.filter.field].toLowerCase().includes(this.state.filter.value),
+    }
+
     this.setState({
       items: this.state.items.map(item => updatedItem.id === item.id ? updatedItem : item),
     })
