@@ -156,6 +156,7 @@ class Budgets extends Component {
           <div className="panel-body projects__wrapper">
             <ItemForm
               onSubmit={this.onFormSubmit}
+              fields={this.props.fields}
             />
             <h2> Items </h2>
             <SearchBar 
@@ -177,5 +178,70 @@ class Budgets extends Component {
     );
   }
 }
+
+Budgets.defaultProps = {
+  fields: [
+    {
+      name: 'summary',
+      label: 'Summary',
+      type: 'text',
+      required: true,
+    },
+    {
+      name: 'phase',
+      label: 'Phase',
+      type: 'text',
+      required: true,
+    },
+    {
+      name: 'feature',
+      label: 'Feature',
+      type: 'text',
+    },
+    {
+      name: 'column',
+      label: 'Team',
+      type: 'text',
+      group: 'budgetHours',
+    },
+    {
+      name: 'value',
+      label: 'Hours',
+      type: 'number',
+      group: 'budgetHours',
+    },
+    {
+      name: 'workplan',
+      label: 'Workplan description',
+      type: 'text',
+      group: 'descriptions',
+      required: true,
+    },
+    {
+      name: 'budget',
+      label: 'Budget description',
+      type: 'text',
+      group: 'descriptions',
+    },
+    {
+      name: 'assumptions',
+      label: 'Assumptions',
+      type: 'text',
+      group: 'descriptions',
+    },
+    {
+      name: 'exclusions',
+      label: 'Exclusions',
+      type: 'text',
+      group: 'descriptions',
+    },
+    {
+      name: 'tags',
+      label: 'Tags',
+      type: 'text',
+      required: true,
+    },
+  ]
+};
 
 export default Budgets;

@@ -96,68 +96,6 @@ export default class ItemForm extends Component {
     //   }
     // }
     
-    const fields = [
-      {
-        name: 'summary',
-        label: 'Summary',
-        type: 'text',
-        required: true,
-      },
-      {
-        name: 'phase',
-        label: 'Phase',
-        type: 'text',
-        required: true,
-      },
-      {
-        name: 'feature',
-        label: 'Feature',
-        type: 'text',
-      },
-      {
-        name: 'column',
-        label: 'Team',
-        type: 'text',
-        group: 'budgetHours',
-      },
-      {
-        name: 'value',
-        label: 'Hours',
-        type: 'number',
-        group: 'budgetHours',
-      },
-      {
-        name: 'workplan',
-        label: 'Workplan description',
-        type: 'text',
-        group: 'descriptions',
-        required: true,
-      },
-      {
-        name: 'budget',
-        label: 'Budget description',
-        type: 'text',
-        group: 'descriptions',
-      },
-      {
-        name: 'assumptions',
-        label: 'Assumptions',
-        type: 'text',
-        group: 'descriptions',
-      },
-      {
-        name: 'exclusions',
-        label: 'Exclusions',
-        type: 'text',
-        group: 'descriptions',
-      },
-      {
-        name: 'tags',
-        label: 'Tags',
-        type: 'text',
-        required: true,
-      },
-    ];
     
     // let field, group;
     // let groups = [];
@@ -186,69 +124,7 @@ export default class ItemForm extends Component {
 	}
 
 	render() {
-    const fields = [
-      {
-        name: 'summary',
-        label: 'Summary',
-        type: 'text',
-        required: true,
-      },
-      {
-        name: 'phase',
-        label: 'Phase',
-        type: 'text',
-        required: true,
-      },
-      {
-        name: 'feature',
-        label: 'Feature',
-        type: 'text',
-      },
-      {
-        name: 'column',
-        label: 'Column',
-        type: 'text',
-        group: 'budgetHours',
-      },
-      {
-        name: 'value',
-        label: 'Hours',
-        type: 'number',
-        group: 'budgetHours',
-      },
-      {
-        name: 'workplan',
-        label: 'Workplan description',
-        type: 'text',
-        group: 'description',
-        required: true,
-      },
-      {
-        name: 'budget',
-        label: 'Budget description',
-        type: 'text',
-        group: 'description',
-      },
-      {
-        name: 'assumptions',
-        label: 'Assumptions',
-        type: 'text',
-        group: 'description',
-      },
-      {
-        name: 'exclusions',
-        label: 'Exclusions',
-        type: 'text',
-        group: 'description',
-      },
-      {
-        name: 'tags',
-        label: 'Tags',
-        type: 'text',
-        required: true,
-      },
-    ];
-
+    const { fields } = this.props;
     const submitBtnLabel = this.props.isEditing ? 'Save Edit' : 'Add Item';
 
 		return (
