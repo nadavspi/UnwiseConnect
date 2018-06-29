@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import Item from './Item';
 import ItemForm from './Item/Form';
 import SearchBar from './Search';
+import flatten from 'flat';
 
 class Budgets extends Component {
 	constructor() {
@@ -90,14 +91,18 @@ class Budgets extends Component {
     this.onDelete = this.onDelete.bind(this);
   }
 
+  isVisible(item, field = this.state.filter.field, value = this.state.filter.value) {
+    let flatItem = flatten(item);
+    return (flatItem[field] + '').toLowerCase().includes((value + '').toLowerCase());
+  }
+
   onFilter({ field = this.state.filter.field, value = this.state.filter.value }) {
     this.setState({
-      items: this.state.items.map((item) => (
-        {
+      items: this.state.items.map((item) => ({
           ...item,
-          isVisible: item[field].toLowerCase().includes(value.toLowerCase()),
-        }
-      )),
+          isVisible: this.isVisible(item, field, value),
+        })
+      ),
       filter: {
         field,
         value,
@@ -105,14 +110,14 @@ class Budgets extends Component {
     });  
   }
 
-  onFormSubmit(item){
+  onFormSubmit(item) {
     this.onAdd(item);
   }
 
-  onAdd(item){
+  onAdd(item) {
     item = {
       ...item,
-      isVisible:item[this.state.filter.field].toLowerCase().includes(this.state.filter.value),
+      isVisible: this.isVisible(item),
     }
 
     this.setState({ 
@@ -123,10 +128,10 @@ class Budgets extends Component {
     });
   }
 
-  onEdit(updatedItem){
+  onEdit(updatedItem) {
     updatedItem = {
       ...updatedItem,
-      isVisible:updatedItem[this.state.filter.field].toLowerCase().includes(this.state.filter.value),
+      isVisible: this.isVisible(updatedItem),
     }
 
     this.setState({
@@ -157,7 +162,7 @@ class Budgets extends Component {
             <h2> Items </h2>
             <SearchBar 
               filter={this.state.filter}
-              fields={this.state.fields}
+              fields={this.props.fields}
               onFilter={this.onFilter}
             />
             {this.state.items.map(item => 
