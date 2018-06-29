@@ -1,7 +1,6 @@
 import React, { Component } from 'react';
 import nanoid from 'nanoid';
 import flatten from 'flat';
-import unflatten from 'flat';
 
 export default class ItemForm extends Component {
 	constructor(props) {
@@ -13,14 +12,9 @@ export default class ItemForm extends Component {
       },   
     }; 
 
-    this.clearState = this.clearState.bind(this);
     this.onSubmit = this.onSubmit.bind(this);
     this.onChange = this.onChange.bind(this);
     this.onCancel = this.onCancel.bind(this);
-  }
-
-  clearState(){
-    this.setState({ });
   }
 
   onCancel(){
@@ -41,7 +35,7 @@ export default class ItemForm extends Component {
 
     // Unflatten
 		this.props.onSubmit(flatten.unflatten({ ...this.state.item }));
-    this.clearState();
+    this.setState( ItemForm.defaultProps );
     
     // Focus on the first input
     this.refs[this.props.fields[0].name].focus();
@@ -97,12 +91,12 @@ ItemForm.defaultProps = {
     },
     tags: "",
 
-    column: "",
-    value: 0,
-    workplan: [],
-    budget: [],
-    assumptions: [],
-    exclusions: [],  
+    'budgetHours.column': "",
+    'budgetHours.value': 0,
+    'descriptions.workplan': [],
+    'descriptions.budget': [],
+    'descriptions.assumptions': [],
+    'descriptions.exclusions': [],  
   },
   isEditing: false,
 };
