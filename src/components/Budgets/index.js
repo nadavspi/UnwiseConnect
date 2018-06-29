@@ -1,8 +1,11 @@
 import React, { Component } from 'react';
+import { BrowserRouter, Route, Link } from 'react-router';
+import flatten from 'flat';
+import ListView from './List';
+import TableView from './Table';
 import Item from './Item';
 import ItemForm from './Item/Form';
 import SearchBar from './Search';
-import flatten from 'flat';
 
 class Budgets extends Component {
 	constructor() {
@@ -89,6 +92,7 @@ class Budgets extends Component {
     this.onEdit   = this.onEdit.bind(this);
     this.onAdd    = this.onAdd.bind(this);
     this.onDelete = this.onDelete.bind(this);
+    this.toggleView = this.toggleView.bind(this);
   }
 
   isVisible(item, field = this.state.filter.field, value = this.state.filter.value) {
@@ -106,7 +110,8 @@ class Budgets extends Component {
       filter: {
         field,
         value,
-      }
+      },
+      toggleView:false
     });  
   }
 
@@ -145,6 +150,23 @@ class Budgets extends Component {
     });
   }
 
+  // <BrowserRouter>
+  //   <div>
+  //     <ul>
+  //       <li>
+  //         <Link to={'${match.url}/list'}>List View</Link>
+  //       </li>
+  //     </ul>
+  //     <Route path={'${match.url}/list'} component={ListView}/>
+  //   </div>
+  // </BrowserRouter>
+
+  toggleView(){
+    this.setState({
+      toggleView: !this.state.toggleView
+    });
+  }
+
   render() {
     return (
       <div>
@@ -159,22 +181,23 @@ class Budgets extends Component {
               onSubmit={this.onFormSubmit}
               fields={this.props.fields}
             />
-            <h2> Items </h2>
-            <SearchBar 
-              filter={this.state.filter}
-              fields={this.props.fields}
-              onFilter={this.onFilter}
-            />
-            {this.state.items.map(item => 
-              item.isVisible && (
-              <Item 
-                item={item}
+            <button onClick={this.toggleView}>Switch View</button>
+            {!this.state.toggleView && (
+              <ListView 
+                items={this.state.items}
+                filter={this.state.filter}
                 fields={this.props.fields}
+                onFilter={this.onFilter}
                 onEdit={this.onEdit}
                 onDelete={this.onDelete}
-                key={item.id}
               />
-            ))}
+            )}
+            {this.state.toggleView && (
+              <TableView
+                items={this.state.items}
+                fields={this.props.fields}
+              />
+            )}
           </div>
         </div>
       </div>
