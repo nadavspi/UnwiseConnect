@@ -171,6 +171,19 @@ class Budgets extends Component {
               </li>
             </ul>
             <Route 
+              exact path={this.props.match.url + '/'} 
+              render={() => (
+                <List
+                  items={this.state.items}
+                  filter={this.state.filter}
+                  fields={this.props.fields}
+                  onFilter={this.onFilter}
+                  onEdit={this.onEdit}
+                  onDelete={this.onDelete}
+                />
+              )}
+            />
+            <Route 
               path={this.props.match.url + '/list'} 
               render={() => (
                 <List
