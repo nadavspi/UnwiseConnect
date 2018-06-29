@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { BrowserRouter, Route, Link } from 'react-router';
+import { Route, Link } from 'react-router';
 import flatten from 'flat';
 import List from './List';
 import Table from './Table';
@@ -92,7 +92,6 @@ class Budgets extends Component {
     this.onEdit   = this.onEdit.bind(this);
     this.onAdd    = this.onAdd.bind(this);
     this.onDelete = this.onDelete.bind(this);
-    this.toggleView = this.toggleView.bind(this);
   }
 
   isVisible(item, field = this.state.filter.field, value = this.state.filter.value) {
@@ -111,7 +110,6 @@ class Budgets extends Component {
         field,
         value,
       },
-      toggleView:false
     });  
   }
 
@@ -150,27 +148,6 @@ class Budgets extends Component {
     });
   }
 
-  // <BrowserRouter>
-  //   <div>
-  //     <ul>
-  //       <li>
-  //         <Link to={'${match.url}/list'}>List View</Link>
-  //       </li>
-  //       <li>
-  //         <Link to={'${match.url}/table'}>List View</Link>       
-  //       </li>
-  //     </ul>
-  //     <Route path={'${match.url}/list'} component={ListView}/>
-  //     <Route path={'${match.url}/table'} component={TableView}/>
-  //   </div>
-  // </BrowserRouter>
-
-  toggleView(){
-    this.setState({
-      toggleView: !this.state.toggleView
-    });
-  }
-
   render() {
     return (
       <div>
@@ -185,23 +162,28 @@ class Budgets extends Component {
               onSubmit={this.onFormSubmit}
               fields={this.props.fields}
             />
-            <button onClick={this.toggleView}>Switch View</button>
-            {!this.state.toggleView && (
-              <List
-                items={this.state.items}
-                filter={this.state.filter}
-                fields={this.props.fields}
-                onFilter={this.onFilter}
-                onEdit={this.onEdit}
-                onDelete={this.onDelete}
-              />
-            )}
-            {this.state.toggleView && (
-              <Table
-                items={this.state.items}
-                fields={this.props.fields}
-              />
-            )}
+            <Route 
+              path={this.props.match.url + '/list'} 
+              render={() => (
+                <List
+                  items={this.state.items}
+                  filter={this.state.filter}
+                  fields={this.props.fields}
+                  onFilter={this.onFilter}
+                  onEdit={this.onEdit}
+                  onDelete={this.onDelete}
+                />
+              )}
+            />
+            <Route 
+              path={this.props.match.url + '/table'} 
+              render={() => (
+                <Table
+                  items={this.state.items}
+                  fields={this.props.fields}
+                />
+              )}
+            />
           </div>
         </div>
       </div>
