@@ -17,11 +17,11 @@ export default class ItemForm extends Component {
     this.onCancel = this.onCancel.bind(this);
   }
 
-  onCancel(){
+  onCancel() {
     this.props.onSubmit(this.props.item);
   }
 
-  onChange(name, value){
+  onChange(name, value) {
     this.setState({ 
       item: {
         ...this.state.item,
@@ -30,7 +30,7 @@ export default class ItemForm extends Component {
     });
 	}
 	
-	onSubmit(event){
+	onSubmit(event) {
 		event.preventDefault();
 
     // Unflatten

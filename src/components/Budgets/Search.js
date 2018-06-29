@@ -2,7 +2,7 @@ import React from 'react';
 import Select from 'react-select';
 
 class SearchBar extends React.Component {
-	constructor(){
+	constructor() {
 		super();
 	
 		this.onValueChange = this.onValueChange.bind(this);
@@ -21,69 +21,11 @@ class SearchBar extends React.Component {
     });
 	}
 
-	render(){
-		const fields = [
-      {
-        value: 'summary',
-        label: 'Summary',
-        type: 'text',
-        required: true,
-      },
-      {
-        value: 'phase',
-        label: 'Phase',
-        type: 'text',
-        required: true,
-      },
-      {
-        value: 'feature',
-        label: 'Feature',
-        type: 'text',
-      },
-      {
-        value: 'column',
-        label: 'Column',
-        type: 'text',
-        group: 'budgetHours',
-      },
-      {
-        value: 'value',
-        label: 'Hours',
-        type: 'number',
-        group: 'budgetHours',
-      },
-      {
-        value: 'workplan',
-        label: 'Workplan description',
-        type: 'text',
-        group: 'description',
-        required: true,
-      },
-      {
-        value: 'budget',
-        label: 'Budget description',
-        type: 'text',
-        group: 'description',
-      },
-      {
-        value: 'assumptions',
-        label: 'Assumptions',
-        type: 'text',
-        group: 'description',
-      },
-      {
-        value: 'exclusions',
-        label: 'Exclusions',
-        type: 'text',
-        group: 'description',
-      },
-      {
-        value: 'tags',
-        label: 'Tags',
-        type: 'text',
-        required: true,
-      },
-    ];
+	render() {
+		let fields = this.props.fields.map((field) => ({
+      ...field,
+      value: field.name,
+    }));
 
 		return (
 			<div className="section">
