@@ -1,8 +1,8 @@
 import React, { Component } from 'react';
 import { BrowserRouter, Route, Link } from 'react-router';
 import flatten from 'flat';
-import ListView from './List';
-import TableView from './Table';
+import List from './List';
+import Table from './Table';
 import Item from './Item';
 import ItemForm from './Item/Form';
 import SearchBar from './Search';
@@ -187,7 +187,7 @@ class Budgets extends Component {
             />
             <button onClick={this.toggleView}>Switch View</button>
             {!this.state.toggleView && (
-              <ListView 
+              <List
                 items={this.state.items}
                 filter={this.state.filter}
                 fields={this.props.fields}
@@ -197,7 +197,7 @@ class Budgets extends Component {
               />
             )}
             {this.state.toggleView && (
-              <TableView
+              <Table
                 items={this.state.items}
                 fields={this.props.fields}
               />
