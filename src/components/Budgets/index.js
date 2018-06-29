@@ -1,11 +1,10 @@
-import React, { Component } from 'react';
-import { Route, Link } from 'react-router';
 import flatten from 'flat';
+import Form from './Item/Form';
 import List from './List';
+import MultiSearch from './MultiSearch';
+import React, { Component } from 'react';
+import { Route, Link } from 'react-router-dom';
 import Table from './Table';
-import Item from './Item';
-import ItemForm from './Item/Form';
-import SearchBar from './Search';
 
 class Budgets extends Component {
 	constructor() {
@@ -158,10 +157,19 @@ class Budgets extends Component {
         </div>
         <div className="row panel-body">
           <div className="panel-body projects__wrapper">
-            <ItemForm
+            <Form
               onSubmit={this.onFormSubmit}
               fields={this.props.fields}
             />
+            <h3>View Selection</h3>
+            <ul>
+              <li>
+                <Link to={this.props.match.url + '/list'}>List</Link>
+              </li>
+              <li>
+                <Link to={this.props.match.url + '/table'}>Table</Link>
+              </li>
+            </ul>
             <Route 
               path={this.props.match.url + '/list'} 
               render={() => (
