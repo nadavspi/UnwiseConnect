@@ -156,8 +156,12 @@ class Budgets extends Component {
   //       <li>
   //         <Link to={'${match.url}/list'}>List View</Link>
   //       </li>
+  //       <li>
+  //         <Link to={'${match.url}/table'}>List View</Link>       
+  //       </li>
   //     </ul>
   //     <Route path={'${match.url}/list'} component={ListView}/>
+  //     <Route path={'${match.url}/table'} component={TableView}/>
   //   </div>
   // </BrowserRouter>
 
