@@ -50,7 +50,7 @@ export default class ItemForm extends Component {
 				<form onSubmit={this.onSubmit}>
 					<div className="input-group input-group-sm">						
             {fields.map((field) => (
-              <div>
+              <div key={field.name}>
                 <label htmlFor={field.name}>{field.label}</label>
                 <input 
                   ref={field.name}
@@ -58,7 +58,6 @@ export default class ItemForm extends Component {
                   type={field.type}
                   value={this.state.item[field.name]}
                   required={field.required}
-                  key={field.name}
                 />
               </div>
             ))}
