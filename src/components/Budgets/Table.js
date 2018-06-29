@@ -1,26 +1,8 @@
+import flatten from 'flat';
 import React, { Component } from 'react';
 import * as Table from 'reactabular-table';
-import flatten from 'flat';
-import Item from './Item';
-import SearchBar from './Search';
 
 class ItemTable extends Component {
-
-  // <SearchBar 
-  //   filter={this.props.filter}
-  //   fields={this.props.fields}
-  //   onFilter={this.props.onFilter}
-  // />
-  // {this.props.items.map(item => 
-  //   item.isVisible && (
-  //   <Item 
-  //     item={item}
-  //     fields={this.props.fields}
-  //     onEdit={this.props.onEdit}
-  //     onDelete={this.props.onDelete}
-  //     key={item.id}
-  //   />
-  // ))}
 
 	render() {
     const columns = this.props.fields.map((field) => field={
@@ -32,10 +14,7 @@ class ItemTable extends Component {
 
     const rows = this.props.items.map((item) => item={
       ...flatten({ ...item }, { maxDepth: 2 }),
-    })
-
-    console.log(columns);
-    console.log(rows);
+    });
 
 		return (
 			<div>
