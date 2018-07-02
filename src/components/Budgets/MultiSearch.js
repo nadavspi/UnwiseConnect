@@ -1,5 +1,6 @@
 import React from 'react';
 import Select from 'react-select';
+import { flattenArray } from '../../helpers/utils';
 
 class Search extends React.Component {
 	constructor(){
@@ -9,41 +10,24 @@ class Search extends React.Component {
 
 		this.onChange = this.onChange.bind(this);
 		this.onFilter = this.onFilter.bind(this);
+    this.createOptions = this.createOptions.bind(this);
 	}
 
+  createOptions() {
+    const tags = new Set(flattenArray(this.props.items.map(item => {
+      if (!item.tags) {
+        return '';
+      }
 
-	createOptions(){
-		// separates tags into arrays
-		let items = this.props.items.map((item) => 
-			item.tags.split(' ')
-		);
+      return item.tags.split(' ');
+    }))); 
 
-		let tagList = [];
-		let counter = 0;
-		
-		// flattens arrays to one long array
-		for(let i = 0; i < items.length; i++){
-			for(let j = 0; j < items[i].length; j++){
-				tagList[counter] = (items[i][j]);
-				counter++;
-			}
-		}
-
-		// find unique values for tags
-		let options = tagList.filter((item, index) =>
-			tagList.indexOf(item) === index
-		);
-
-		// add labels and values
-		options = options.map((item) => ({
-				value: item,
-				label: item,
-			})
-		);
-
-		return options;
-	}
-
+    const options = [...tags].map(tag => ({
+      value: tag,
+      label: tag,
+    }));
+    return options;
+  }
 
 	onChange(value){
 		this.setState({ value }, this.onFilter);
