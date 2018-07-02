@@ -86,16 +86,42 @@ class Budgets extends Component {
       }
     };
 
-    this.onFilter = this.onFilter.bind(this);
-    this.onFormSubmit = this.onFormSubmit.bind(this);
-    this.onEdit   = this.onEdit.bind(this);
     this.onAdd    = this.onAdd.bind(this);
     this.onDelete = this.onDelete.bind(this);
+    this.onEdit   = this.onEdit.bind(this);
+    this.onFilter = this.onFilter.bind(this);
+    this.onFormSubmit = this.onFormSubmit.bind(this);
+    this.onMultiFilter = this.onMultiFilter.bind(this);
   }
 
   isVisible(item, field = this.state.filter.field, value = this.state.filter.value) {
     let flatItem = flatten(item);
-    return (flatItem[field] + '').toLowerCase().includes((value + '').toLowerCase());
+    const itemValue = (flatItem[field] + '').toLowerCase();
+    const filterValue = (value + '').toLowerCase();
+    
+    return itemValue.includes(filterValue);
+  }
+
+  isMultiVisible(item, tags){
+    let itemTags;
+    console.log(item.tags);
+    
+    if(typeof item.tags === 'string'){
+      itemTags = [item.tags];
+    } else {
+      itemTags = item.tags;
+    }
+
+    console.log('MultiVisible', itemTags);
+    for(let i = 0; i < tags.length; i++) {
+      console.log('Value: ', tags[i].value);
+      console.log('Tags on Item: ', item.tags);
+      if(itemTags.indexOf(tags[i].value) >= 0) {
+        console.log('True on ', tags[i].value);
+        return true;
+      }
+    }
+    return tags.length === 0;
   }
 
   onFilter({ field = this.state.filter.field, value = this.state.filter.value }) {
@@ -104,12 +130,22 @@ class Budgets extends Component {
           ...item,
           isVisible: this.isVisible(item, field, value),
         })
-      ),
+      ),  
       filter: {
         field,
         value,
       },
     });  
+  }
+
+  onMultiFilter(values){
+    this.setState({
+      items: this.state.items.map((item) => ({
+        ...item,
+        isVisible: this.isMultiVisible(item, values)
+      })),
+      multifilter: values
+    });
   }
 
   onFormSubmit(item) {
@@ -160,6 +196,10 @@ class Budgets extends Component {
             <Form
               onSubmit={this.onFormSubmit}
               fields={this.props.fields}
+            />
+            <MultiSearch 
+              items={this.state.items}
+              onFilter={this.onMultiFilter}
             />
             <h3>View Selection</h3>
             <ul>
