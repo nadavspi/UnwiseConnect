@@ -92,6 +92,7 @@ class Budgets extends Component {
     this.onFilter = this.onFilter.bind(this);
     this.onFormSubmit = this.onFormSubmit.bind(this);
     this.onMultiFilter = this.onMultiFilter.bind(this);
+    this.renderList = this.renderList.bind(this);
   }
 
   isVisible(item, field = this.state.filter.field, value = this.state.filter.value) {
@@ -183,6 +184,19 @@ class Budgets extends Component {
     });
   }
 
+  renderList() {
+    return (
+      <List
+        items={this.state.items}
+        filter={this.state.filter}
+        fields={this.props.fields}
+        onFilter={this.onFilter}
+        onEdit={this.onEdit}
+        onDelete={this.onDelete}
+      />
+    );
+  }
+
   render() {
     return (
       <div>
@@ -211,30 +225,12 @@ class Budgets extends Component {
               </li>
             </ul>
             <Route 
-              exact path={this.props.match.url + '/'} 
-              render={() => (
-                <List
-                  items={this.state.items}
-                  filter={this.state.filter}
-                  fields={this.props.fields}
-                  onFilter={this.onFilter}
-                  onEdit={this.onEdit}
-                  onDelete={this.onDelete}
-                />
-              )}
+              exact path={this.props.match.url} 
+              render={this.renderList}
             />
             <Route 
               path={this.props.match.url + '/list'} 
-              render={() => (
-                <List
-                  items={this.state.items}
-                  filter={this.state.filter}
-                  fields={this.props.fields}
-                  onFilter={this.onFilter}
-                  onEdit={this.onEdit}
-                  onDelete={this.onDelete}
-                />
-              )}
+              render={this.renderList}
             />
             <Route 
               path={this.props.match.url + '/table'} 
