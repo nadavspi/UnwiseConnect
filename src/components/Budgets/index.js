@@ -218,15 +218,22 @@ class Budgets extends Component {
   }
 
   render() {
-    const columns = this.props.fields.map((field) => field={
-      property: field.name,      
-      header: {
-        label: field.label,
-      },
-      filterType:field.filterType,
-      customFilter: (property=this.property) => {
-        return this.onCustomFilter(property);
+    const columns = this.props.fields.map((field) => {
+      const column = {
+        property: field.name,      
+        header: {
+          label: field.label,
+        },
+        filterType: field.filterType,
       }
+
+      if (field.filterType === 'custom') {
+        column.customFilter = () => {
+          return this.onCustomFilter(field.name);
+        }
+      }
+
+      return column;
     });
 
     let userColumns = columns.map((field) => field = field.property);
