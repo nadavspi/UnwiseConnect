@@ -1,3 +1,4 @@
+import CSVExport from './CSVExport';
 import flatten from 'flat';
 import Form from './Item/Form';
 import List from './List';
@@ -5,7 +6,6 @@ import MultiSearch from './MultiSearch';
 import React, { Component } from 'react';
 import { Route, Link } from 'react-router-dom';
 import Table from '../Tickets/Table';
-// import Table from './Table';
 
 class Budgets extends Component {
 	constructor() {
@@ -117,13 +117,6 @@ class Budgets extends Component {
   }
 
   betterIsVisible(item, query){
-    // const results = query.filter((attr) => {
-    //   (typeof query[attr] === 'string') ?
-    //   item[attr].includes(query[attr]) 
-    //   : true       
-    // });
-
-    // return query.length === results.length
     let results = false;
     return results;
   }
@@ -138,7 +131,6 @@ class Budgets extends Component {
 
   isMultiVisible(item, tags){
     let itemTags;
-    console.log(item.tags);
     
     if(typeof item.tags === 'string'){
       itemTags = [item.tags];
@@ -201,12 +193,10 @@ class Budgets extends Component {
   }
 
   onCustomFilter(property){
-    console.log('On custom filter', property);
-
-    return <MultiSearch 
+    return (<MultiSearch 
               items={this.state.items}
               onFilter={this.onFilter}
-            />;
+            />);
   }
 
   onDelete(itemId) {
@@ -268,7 +258,7 @@ class Budgets extends Component {
           label: field.label,
         },
         filterType: field.filterType,
-      }
+      };
 
       if (field.filterType === 'custom') {
         column.customFilter = () => {
@@ -315,15 +305,20 @@ class Budgets extends Component {
             <Route 
               path={this.props.match.url + '/table'} 
               render={() => (
-                <Table
-                  id="table-search-items"
-                  query={this.state.query}
-                  search={this.search}
-                  tickets={this.state.items}
-                  toggleColumn={this.toggleColumn}
-                  userColumns={userColumns}
-                  columns={columns}
-                />                        
+                <div>
+                  <Table
+                    id="table-search-items"
+                    query={this.state.query}
+                    search={this.search}
+                    tickets={this.state.items}
+                    toggleColumn={this.toggleColumn}
+                    userColumns={userColumns}
+                    columns={columns}
+                  />
+                  <CSVExport 
+                    items={this.state.items}
+                    columns={userColumns}/>
+                </div>                        
               )}
             />
           </div>
@@ -331,20 +326,7 @@ class Budgets extends Component {
       </div>
     );
   }
-
- 
 }
-
-    // <Table
-    //   items={this.state.items.filter((item) => item.isVisible)}
-    //   fields={this.props.fields}
-    //   onFilter={this.onFilter}
-    //   query={this.state.query}
-    //   search={this.search}
-    // />    
-
-    
-
 
 Budgets.defaultProps = {
   fields: [
