@@ -92,7 +92,7 @@ class Budgets extends Component {
         'budgetHours.column': '',  
         tags: '',
       },
-      userColumns: []
+      userColumns: {},
     };
 
     this.betterIsVisible = this.betterIsVisible.bind(this);
@@ -241,21 +241,13 @@ class Budgets extends Component {
    }
 
    toggleColumn(payload){
-     if(typeof this.state.userColumns[payload.columnName] === 'undefined'){
-       this.setState({
-         userColumns: {
-           ...this.state.userColumns,
-           [payload.columnName]: true,
-         }
-       });
-     } else {
-       this.setState({
-         userColumns: {
-           ...this.state.userColumns,
-           [payload.columnName]: this.state.userColumns[payload.className],
-         }
-       });
-     }
+     const isVisible = this.state.userColumns[payload.columnName];
+     this.setState({
+       userColumns: {
+         ...this.state.userColumns,
+         [payload.columnName]: !isVisible,
+       }
+     });
    }
 
 
