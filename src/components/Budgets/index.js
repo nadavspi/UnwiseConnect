@@ -90,7 +90,7 @@ class Budgets extends Component {
         phase:'',
         feature:'',
         'budgetHours.column': '',  
-        tags:[],
+        tags: '',
       },
       userColumns: []
     };
