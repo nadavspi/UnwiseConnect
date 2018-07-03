@@ -217,6 +217,48 @@ class Budgets extends Component {
     })
   }
 
+  renderList() {
+     return (
+       <List
+         items={this.state.items}
+         filter={this.state.filter}
+         fields={this.props.fields}
+         onFilter={this.onFilter}
+         onEdit={this.onEdit}
+         onDelete={this.onDelete}
+       />
+     );
+   }
+
+   search(query){
+     this.setState({
+       items: this.state.items.map((item) => ({
+         ...item,
+         isVisible: this.betterIsVisible(item, query),
+       })),
+       query: query,
+     });
+   }
+
+   toggleColumn(payload){
+     if(typeof this.state.userColumns[payload.columnName] === 'undefined'){
+       this.setState({
+         userColumns: {
+           ...this.state.userColumns,
+           [payload.columnName]: true,
+         }
+       });
+     } else {
+       this.setState({
+         userColumns: {
+           ...this.state.userColumns,
+           [payload.columnName]: this.state.userColumns[payload.className],
+         }
+       });
+     }
+   }
+
+
   render() {
     const columns = this.props.fields.map((field) => {
       const column = {
@@ -287,48 +329,6 @@ class Budgets extends Component {
         </div>
       </div>
     );
-  }
-
-
- renderList() {
-    return (
-      <List
-        items={this.state.items}
-        filter={this.state.filter}
-        fields={this.props.fields}
-        onFilter={this.onFilter}
-        onEdit={this.onEdit}
-        onDelete={this.onDelete}
-      />
-    );
-  }
-
-  search(query){
-    this.setState({
-      items: this.state.items.map((item) => ({
-        ...item,
-        isVisible: this.betterIsVisible(item, query),
-      })),
-      query: query,
-    });
-  }
-
-  toggleColumn(payload){
-    if(typeof this.state.userColumns[payload.columnName] === 'undefined'){
-      this.setState({
-        userColumns: {
-          ...this.state.userColumns,
-          [payload.columnName]: true,
-        }
-      });
-    } else {
-      this.setState({
-        userColumns: {
-          ...this.state.userColumns,
-          [payload.columnName]: this.state.userColumns[payload.className],
-        }
-      });
-    }
   }
 
  
