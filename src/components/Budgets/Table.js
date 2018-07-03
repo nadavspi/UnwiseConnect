@@ -1,8 +1,13 @@
 import flatten from 'flat';
 import React, { Component } from 'react';
+import SearchColumns from './SearchColumns';
 import * as Table from 'reactabular-table';
 
 class ItemTable extends Component {
+
+  search(query){
+    this.props.search(query);
+  }
 
 	render() {
     const columns = this.props.fields.map((field) => field={
@@ -10,6 +15,7 @@ class ItemTable extends Component {
       header: {
         label: field.label,
       },
+      filterType:field.filterType,
     });
 
     const rows = this.props.items.map((item) => item={
@@ -23,7 +29,15 @@ class ItemTable extends Component {
           className="table table-striped table-bordered"
           columns={columns}
         >
-          <Table.Header />
+          <Table.Header>
+            <SearchColumns 
+              items={this.props.items}
+              columns={columns}
+              onFilter={this.props.onFilter}
+              query={this.props.query}
+              search={this.search}
+            />
+          </Table.Header>
           <Table.Body rows={rows} rowKey="id" />
         </Table.Provider>
 			</div>

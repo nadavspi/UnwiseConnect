@@ -10,7 +10,7 @@ class Search extends React.Component {
 
 		this.onChange = this.onChange.bind(this);
 		this.onFilter = this.onFilter.bind(this);
-    this.createOptions = this.createOptions.bind(this);
+	    this.createOptions = this.createOptions.bind(this);
 	}
 
   createOptions() {
