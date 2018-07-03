@@ -224,8 +224,8 @@ class Budgets extends Component {
         label: field.label,
       },
       filterType:field.filterType,
-      customFilter: () => {
-        return this.onCustomFilter(this.property);
+      customFilter: (property=this.property) => {
+        return this.onCustomFilter(property);
       }
     });
 
