@@ -11,7 +11,7 @@ class Budgets extends Component {
 	constructor() {
 		super();
 
-    let inputData = {
+    const inputData = {
       items: [
         {
           id: 1,
@@ -75,6 +75,15 @@ class Budgets extends Component {
       ],
     };
 
+    const defaultUserColumns = {
+      summary: true,
+      phase: true,
+      feature: true,
+      'budgetHours.column': true,
+      'budgetHours.value': true,
+      tags: true,
+    };
+
     this.state = {
       items: inputData.items.map((item) => (
         item = {
@@ -92,7 +101,7 @@ class Budgets extends Component {
         'budgetHours.column': '',  
         tags: '',
       },
-      userColumns: {},
+      userColumns: defaultUserColumns,
     };
 
     this.betterIsVisible = this.betterIsVisible.bind(this);
