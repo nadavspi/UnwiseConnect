@@ -1,10 +1,10 @@
 import flatten from 'flat';
 import Form from './Item/Form';
 import List from './List';
-import MultiSearch from './MultiSearch';
 import React, { Component } from 'react';
 import { Route, Link } from 'react-router-dom';
-import Table from './Table';
+import Table from '../Tickets/Table';
+// import Table from './Table';
 
 class Budgets extends Component {
 	constructor() {
@@ -83,9 +83,18 @@ class Budgets extends Component {
       filter: {
         field: 'summary',
         value: '',
-      }
+      },
+      query: {
+        summary:'',
+        phase:'',
+        feature:'',
+        'budgetHours.column': '',  
+        tags:[],
+      },
+      userColumns: []
     };
 
+    this.betterIsVisible = this.betterIsVisible.bind(this);
     this.onAdd    = this.onAdd.bind(this);
     this.onDelete = this.onDelete.bind(this);
     this.onEdit   = this.onEdit.bind(this);
@@ -93,6 +102,20 @@ class Budgets extends Component {
     this.onFormSubmit = this.onFormSubmit.bind(this);
     this.onMultiFilter = this.onMultiFilter.bind(this);
     this.renderList = this.renderList.bind(this);
+    this.search   = this.search.bind(this);
+    this.toggleColumn = this.toggleColumn.bind(this);
+  }
+
+  betterIsVisible(item, query){
+    // const results = query.filter((attr) => {
+    //   (typeof query[attr] === 'string') ?
+    //   item[attr].includes(query[attr]) 
+    //   : true       
+    // });
+
+    // return query.length === results.length
+    let results = false;
+    return results;
   }
 
   isVisible(item, field = this.state.filter.field, value = this.state.filter.value) {
@@ -184,20 +207,17 @@ class Budgets extends Component {
     });
   }
 
-  renderList() {
-    return (
-      <List
-        items={this.state.items}
-        filter={this.state.filter}
-        fields={this.props.fields}
-        onFilter={this.onFilter}
-        onEdit={this.onEdit}
-        onDelete={this.onDelete}
-      />
-    );
-  }
-
   render() {
+    const columns = this.props.fields.map((field) => field={
+      property: field.name,      
+      header: {
+        label: field.label,
+      },
+      filterType:field.filterType,
+    });
+    let userColumns = columns.map((field) => field = field.property);
+    userColumns = userColumns.filter((column) => this.state.userColumns[column]);
+
     return (
       <div>
         <div className="panel-uc panel panel-default">
@@ -210,10 +230,6 @@ class Budgets extends Component {
             <Form
               onSubmit={this.onFormSubmit}
               fields={this.props.fields}
-            />
-            <MultiSearch 
-              items={this.state.items}
-              onFilter={this.onMultiFilter}
             />
             <h3>View Selection</h3>
             <ul>
@@ -236,9 +252,14 @@ class Budgets extends Component {
               path={this.props.match.url + '/table'} 
               render={() => (
                 <Table
-                  items={this.state.items}
-                  fields={this.props.fields}
-                />
+                  id="table-search-items"
+                  query={this.state.query}
+                  search={this.search}
+                  tickets={this.state.items}
+                  toggleColumn={this.toggleColumn}
+                  userColumns={userColumns}
+                  columns={columns}
+                />                        
               )}
             />
           </div>
@@ -246,59 +267,124 @@ class Budgets extends Component {
       </div>
     );
   }
+
+
+ renderList() {
+    return (
+      <List
+        items={this.state.items}
+        filter={this.state.filter}
+        fields={this.props.fields}
+        onFilter={this.onFilter}
+        onEdit={this.onEdit}
+        onDelete={this.onDelete}
+      />
+    );
+  }
+
+  search(query){
+    this.setState({
+      items: this.state.items.map((item) => ({
+        ...item,
+        isVisible: this.betterIsVisible(item, query),
+      })),
+      query: query,
+    });
+  }
+
+  toggleColumn(payload){
+    if(typeof this.state.userColumns[payload.columnName] === 'undefined'){
+      this.setState({
+        userColumns: {
+          ...this.state.userColumns,
+          [payload.columnName]: true,
+        }
+      });
+    } else {
+      this.setState({
+        userColumns: {
+          ...this.state.userColumns,
+          [payload.columnName]: this.state.userColumns[payload.className],
+        }
+      });
+    }
+  }
+
+ 
 }
+
+    // <Table
+    //   items={this.state.items.filter((item) => item.isVisible)}
+    //   fields={this.props.fields}
+    //   onFilter={this.onFilter}
+    //   query={this.state.query}
+    //   search={this.search}
+    // />    
+
+    
+
 
 Budgets.defaultProps = {
   fields: [
     {
+      filterType: 'textfield',
       name: 'summary',
       label: 'Summary',
       type: 'text',
       required: true,
     },
     {
+      filterType: 'textfield',
       name: 'phase',
       label: 'Phase',
       type: 'text',
       required: true,
     },
     {
+      filterType: 'textfield',
       name: 'feature',
       label: 'Feature',
       type: 'text',
     },
     {
+      filterType: 'textfield',
       name: 'budgetHours.column',
       label: 'Team',
       type: 'text',
     },
     {
+      filterType: 'textfield',
       name: 'budgetHours.value',
       label: 'Hours',
       type: 'number',
     },
     {
+      filterType: 'none',
       name: 'descriptions.workplan',
       label: 'Workplan description',
       type: 'text',
       required: true,
     },
     {
+      filterType: 'none',
       name: 'descriptions.budget',
       label: 'Budget description',
       type: 'text',
     },
     {
+      filterType: 'none',
       name: 'descriptions.assumptions',
       label: 'Assumptions',
       type: 'text',
     },
     {
+      filterType: 'none',
       name: 'descriptions.exclusions',
       label: 'Exclusions',
       type: 'text',
     },
     {
+      filterType: 'dropdown',
       name: 'tags',
       label: 'Tags',
       type: 'text',
