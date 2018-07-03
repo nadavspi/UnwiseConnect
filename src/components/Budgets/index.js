@@ -1,6 +1,7 @@
 import flatten from 'flat';
 import Form from './Item/Form';
 import List from './List';
+import MultiSearch from './MultiSearch';
 import React, { Component } from 'react';
 import { Route, Link } from 'react-router-dom';
 import Table from '../Tickets/Table';
@@ -190,6 +191,21 @@ class Budgets extends Component {
     });
   }
 
+  onCustomFilter(property){
+    console.log('On custom filter', property);
+
+    return <MultiSearch 
+              items={this.state.items}
+              onFilter={this.onFilter}
+            />;
+  }
+
+  onDelete(itemId) {
+    this.setState({
+      items: this.state.items.filter(item => item.id !== itemId),
+    });
+  }
+
   onEdit(updatedItem) {
     updatedItem = {
       ...updatedItem,
@@ -201,12 +217,6 @@ class Budgets extends Component {
     })
   }
 
-  onDelete(itemId) {
-    this.setState({
-      items: this.state.items.filter(item => item.id !== itemId),
-    });
-  }
-
   render() {
     const columns = this.props.fields.map((field) => field={
       property: field.name,      
@@ -214,10 +224,14 @@ class Budgets extends Component {
         label: field.label,
       },
       filterType:field.filterType,
+      customFilter: () => {
+        return this.onCustomFilter(this.property);
+      }
     });
+
     let userColumns = columns.map((field) => field = field.property);
     userColumns = userColumns.filter((column) => this.state.userColumns[column]);
-
+    
     return (
       <div>
         <div className="panel-uc panel panel-default">
@@ -384,7 +398,7 @@ Budgets.defaultProps = {
       type: 'text',
     },
     {
-      filterType: 'dropdown',
+      filterType: 'custom',
       name: 'tags',
       label: 'Tags',
       type: 'text',
