@@ -98,27 +98,42 @@ class Budgets extends Component {
         summary:'',
         phase:'',
         feature:'',
-        'budgetHours.column': '',  
+        'budgetHours.column': '',
+        'budgetHours.value': '',  
         tags: '',
       },
       userColumns: defaultUserColumns,
     };
 
-    this.betterIsVisible = this.betterIsVisible.bind(this);
     this.onAdd    = this.onAdd.bind(this);
     this.onDelete = this.onDelete.bind(this);
     this.onEdit   = this.onEdit.bind(this);
     this.onFilter = this.onFilter.bind(this);
     this.onFormSubmit = this.onFormSubmit.bind(this);
-    this.onMultiFilter = this.onMultiFilter.bind(this);
     this.renderList = this.renderList.bind(this);
     this.search   = this.search.bind(this);
     this.toggleColumn = this.toggleColumn.bind(this);
   }
 
   betterIsVisible(item, query){
-    let results = false;
-    return results;
+    let result = true;
+
+    for (const property in query) {
+      if(typeof property === 'string'){
+        console.log(property, 'is', (typeof property));  
+        if(query.property !== item.property){
+          result = false;
+        }
+      } else {
+        console.log(property, 'is not a string');
+        // if(item.property.indexOf(query.property) === -1){
+        //   result = false;
+        // }
+      }
+    }
+    
+    console.log(query);
+    return result;
   }
 
   isVisible(item, field = this.state.filter.field, value = this.state.filter.value) {
@@ -127,27 +142,6 @@ class Budgets extends Component {
     const filterValue = (value + '').toLowerCase();
     
     return itemValue.includes(filterValue);
-  }
-
-  isMultiVisible(item, tags){
-    let itemTags;
-    
-    if(typeof item.tags === 'string'){
-      itemTags = [item.tags];
-    } else {
-      itemTags = item.tags;
-    }
-
-    console.log('MultiVisible', itemTags);
-    for(let i = 0; i < tags.length; i++) {
-      console.log('Value: ', tags[i].value);
-      console.log('Tags on Item: ', item.tags);
-      if(itemTags.indexOf(tags[i].value) >= 0) {
-        console.log('True on ', tags[i].value);
-        return true;
-      }
-    }
-    return tags.length === 0;
   }
 
   onFilter({ field = this.state.filter.field, value = this.state.filter.value }) {
@@ -162,16 +156,6 @@ class Budgets extends Component {
         value,
       },
     });  
-  }
-
-  onMultiFilter(values){
-    this.setState({
-      items: this.state.items.map((item) => ({
-        ...item,
-        isVisible: this.isMultiVisible(item, values)
-      })),
-      multifilter: values
-    });
   }
 
   onFormSubmit(item) {
@@ -193,10 +177,13 @@ class Budgets extends Component {
   }
 
   onCustomFilter(property){
-    return (<MultiSearch 
+    if(property === 'tags') {
+      return (<MultiSearch 
               items={this.state.items}
-              onFilter={this.onFilter}
+              query={this.state.query}
+              onFilter={this.search}
             />);
+    }
   }
 
   onDelete(itemId) {
