@@ -20,7 +20,7 @@ class CSVExport extends Component {
 			if(err) {
 				return console.log(err);
 			}
-			this.exportToBroswer(csv);;
+			this.exportToBroswer(csv);
 		});
 
 	}
