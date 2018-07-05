@@ -213,6 +213,8 @@ class Budgets extends Component {
     this.setState({
       items: this.state.items.filter(item => item.id !== itemId),
     });
+
+    this.props.dispatch(BudgetsActions.removeItem(itemId));
   }
 
   onEdit(updatedItem) {

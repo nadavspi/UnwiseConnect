@@ -161,6 +161,11 @@ export default (state = initialState, action) => {
 					action.item, 
 				],
 			};
+		case ActionTypes.BUDGETS_REMOVE_ITEM:
+			return {
+				...state,
+				items: state.items.filter(item => item.id !== action.itemId)
+			}
 		default:
 			return state;
 	}
