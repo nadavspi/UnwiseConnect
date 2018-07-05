@@ -195,8 +195,8 @@ class Budgets extends Component {
   onCustomFilter(property){
     if(property === 'tags') {
       return (<MultiSearch 
-                items={this.state.items}
-                query={this.state.query}
+                items={this.props.items}
+                query={this.props.query}
                 onFilter={this.search}
               />);
     }
@@ -230,12 +230,10 @@ class Budgets extends Component {
 
    search(query) {
      this.setState({
-       items: this.state.items.map((item) => ({
-         ...item,
-         isVisible: this.betterIsVisible(item, query),
-       })),
        query: query,
      });
+
+     this.props.dispatch(BudgetsActions.search(query));
    }
 
    toggleColumn(payload){
@@ -307,7 +305,7 @@ class Budgets extends Component {
                 <div>
                   <Table
                     id="table-search-items"
-                    query={this.state.query}
+                    query={this.props.query}
                     search={this.search}
                     tickets={this.props.items}
                     toggleColumn={this.toggleColumn}
@@ -328,6 +326,7 @@ class Budgets extends Component {
 const mapStateToProps = state => ({
   items: state.budgets.items,
   fields: state.budgets.fields,
+  query: state.budgets.query,
 })
 
 export default connect(mapStateToProps)(Budgets);

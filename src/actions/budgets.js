@@ -21,6 +21,13 @@ export const subscribe = (payload) => {
 	}
 }
 
+export const search = (query) => {
+	return {
+		type: ActionTypes.BUDGETS_SEARCH,
+		query,
+	}
+}
+
 export const updateItem = (updatedItem) => {
 	return {
 		type: ActionTypes.BUDGETS_UPDATE_ITEM,
