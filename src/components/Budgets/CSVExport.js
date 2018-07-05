@@ -1,6 +1,6 @@
 import flatten from 'flat';
 import React, { Component } from 'react';
-import json2csv from 'json2csv';
+import Json2csv2Parser from 'json2csv';
 
 class CSVExport extends Component {
 	constructor(){
@@ -9,17 +9,44 @@ class CSVExport extends Component {
 		this.exportFile = this.exportFile.bind(this);
 	}
 
-	exportFile(){
+	convertFileType(){
+
+		const fields = ['car', 'price', 'color'];
+		const myCars = [
+		  {
+		    "car": "Audi",
+		    "price": 40000,
+		    "color": "blue"
+		  }, {
+		    "car": "BMW",
+		    "price": 35000,
+		    "color": "black"
+		  }, {
+		    "car": "Porsche",
+		    "price": 60000,
+		    "color": "green"
+		  }
+		];
+		
+		const json2csvParser = new Json2csv2Parser({ fields });
+		const csv = json2csvParser.parse(myCars);
+	
+		console.log(csv);
+	
+	}
+
+	exportFile() {
 		console.log(this.props.columns);
 		console.log(this.props.items);
 
-		this.reduceItemColumns();
-		// sendItemInfoToBeReformatted();
-		// convertToCSV();
-		// exportToBroswer();
+		this.reformatColumns(this.reduceItemColumns());
+		
+		
+		this.convertFileType();
+		// this.exportToBroswer();
 	}
 
-	reduceItemColumns(){
+	reduceItemColumns() {
 		const columns = this.props.columns;
 		
 		const reducedItems = this.props.items.map((item) => {
@@ -38,6 +65,22 @@ class CSVExport extends Component {
 		return reducedItems;
 	}
 
+	reformatColumns(items) {
+		let reformattedItems = {};
+
+		reformattedItems = items.map((item) => ({
+			feature: item.feature,
+			[item['budgetHours.column']]: item['budgetHours.value'],
+			description: item['descriptions.budget'],
+			assumptions: item['descriptions.assumptions'],
+			exclusions: item['descriptions.exclusions'],
+		}));
+
+		console.log(reformattedItems);
+
+		return reformattedItems;
+	}
+
 	render() {
 		return (
 			<button 
@@ -51,46 +94,46 @@ class CSVExport extends Component {
 
 CSVExport.defaultProps = {
 	columns: [{
-		property:'feature',
+		value:'feature',
 		label:'Page/Feature',
 	},{
-		property:'',
+		value:'',
 		label:'T&M',
 	},{
-		property:'budgetHours.column',
+		value:'Disc',
 		label:'Disc',
 	},{
-		property:'budgetHours.column',
+		value:'Design',
 		label:'Design',
 	},{
-		property:'budgetHours.column',
+		value:'Dev',
 		label:'Dev',
 	},{
-		property:'budgetHours.column',
+		value:'Testing',
 		label:'Testing',
 	},{
-		property:'budgetHours.column',
+		value:'Remediation',
 		label:'Remediation',
 	},{
-		property:'budgetHours.column',
+		value:'Deploy',
 		label:'Deploy',
 	},{
-		property:'',
+		value:'',
 		label:'PM',
 	},{
-		property:'',
+		value:'',
 		label:'Total',
 	},{
-		property:'',
+		value:'',
 		label:'Description',
 	},{
-		property:'descriptions.assumptions',
+		value:'descriptions.assumptions',
 		label:'Assumptions',
 	},{
-		property:'',
+		value:'',
 		label:'Client Responsibilities',
 	},{
-		property:'descriptions.exclusions',
+		value:'descriptions.exclusions',
 		label:'Exclusions',
 	},
 	]
