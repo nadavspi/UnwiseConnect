@@ -144,15 +144,12 @@ const initialState = {
       type: 'text',
       required: true,
     },
-  ]
+  ],
+  query: { },
 };
 
 export default (state = initialState, action) => {
 	switch(action.type) {
-		case ActionTypes.BUDGETS_SUBSCRIBE:
-			return {
-				...state,
-			};
 		case ActionTypes.BUDGETS_ADD_ITEM:
 			return {
 				...state,
@@ -161,16 +158,30 @@ export default (state = initialState, action) => {
 					action.item, 
 				],
 			};
+
 		case ActionTypes.BUDGETS_REMOVE_ITEM:
 			return {
 				...state,
 				items: state.items.filter(item => item.id !== action.itemId)
-			}
+			};
+
+		case ActionTypes.BUDGETS_SEARCH:
+			return {
+				...state,
+				query: action.query,
+			};
+
+		case ActionTypes.BUDGETS_SUBSCRIBE:
+			return {
+				...state,
+			};
+
 		case ActionTypes.BUDGETS_UPDATE_ITEM:
 			return {
 				...state,
 				items: state.items.map(item => action.updatedItem.id === item.id ? action.updatedItem : item),
-			}
+			};
+
 		default:
 			return state;
 	}
