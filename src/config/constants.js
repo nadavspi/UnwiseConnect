@@ -14,6 +14,8 @@ export const ref = firebase.database().ref();
 export const firebaseAuth = firebase.auth;
 
 export const ActionTypes = {
+  BUDGETS_ADD_ITEM: 'BUDGETS_ADD_ITEM',
+  BUDGETS_SUBSCRIBE: 'BUDGETS_SUBSCRIBE',
   ERROR: 'ERROR',
   FIREBASE_SET_ERROR: 'FIREBASE_SET_ERROR',
   FIREBASE_SET_REQUEST: 'FIREBASE_SET_REQUEST',
