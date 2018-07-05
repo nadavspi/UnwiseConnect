@@ -119,20 +119,22 @@ class Budgets extends Component {
     let result = true;
 
     for (const property in query) {
-      if(typeof property === 'string'){
-        console.log(property, 'is', (typeof property));  
-        if(query.property !== item.property){
+      if(!Array.isArray(query[property])){
+        
+        item[property] = (item[property] + '').toLowerCase();  
+        if(item[property].indexOf((query[property]).toLowerCase()) === -1){
           result = false;
         }
       } else {
-        console.log(property, 'is not a string');
-        // if(item.property.indexOf(query.property) === -1){
-        //   result = false;
-        // }
+        
+        for (const value in query[property]) {
+          if(item[property].indexOf(value) === -1){
+            result = false;
+          }
+        }
       }
     }
     
-    console.log(query);
     return result;
   }
 
@@ -179,10 +181,10 @@ class Budgets extends Component {
   onCustomFilter(property){
     if(property === 'tags') {
       return (<MultiSearch 
-              items={this.state.items}
-              query={this.state.query}
-              onFilter={this.search}
-            />);
+                items={this.state.items}
+                query={this.state.query}
+                onFilter={this.search}
+              />);
     }
   }
 
@@ -302,9 +304,7 @@ class Budgets extends Component {
                     userColumns={userColumns}
                     columns={columns}
                   />
-                  <CSVExport 
-                    items={this.state.items}
-                    columns={userColumns}/>
+                  <CSVExport items={this.state.items} />
                 </div>                        
               )}
             />
