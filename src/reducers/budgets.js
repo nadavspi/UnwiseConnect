@@ -1,7 +1,7 @@
 import { ActionTypes } from '../config/constants';
 
 const initialState = {
-	items: [ ],
+	items: [],
   fields: [
     {
       filterType: 'textfield',
@@ -68,7 +68,7 @@ const initialState = {
       required: true,
     },
   ],
-  query: { },
+  query: {},
 };
 
 export default (state = initialState, action) => {
