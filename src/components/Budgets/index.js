@@ -10,11 +10,10 @@ import { connect } from 'react-redux';
 import { Route, Link } from 'react-router-dom';
 
 class Budgets extends Component {
-	constructor() {
+	constructor(props) {
 		super();
 
-    const inputData = {
-      items: [
+    const inputData = [
         {
           id: 1,
           summary: "Klevu discovery & calls",
@@ -91,8 +90,9 @@ class Budgets extends Component {
           },
           tags: "build",
         },
-      ],
-    };
+    ];
+
+    props.dispatch(BudgetsActions.subscribe(inputData));
 
     const defaultUserColumns = {
       summary: true,
@@ -104,22 +104,9 @@ class Budgets extends Component {
     };
 
     this.state = {
-      items: inputData.items.map((item) => (
-        item = {
-          ...item,
-          isVisible: true,
-        })),
       filter: {
         field: 'summary',
         value: '',
-      },
-      query: {
-        summary:'',
-        phase:'',
-        feature:'',
-        'budgetHours.column': '',
-        'budgetHours.value': '',  
-        tags: '',
       },
       userColumns: defaultUserColumns,
     };
@@ -134,29 +121,6 @@ class Budgets extends Component {
     this.toggleColumn = this.toggleColumn.bind(this);
   }
 
-  betterIsVisible(item, query){
-    let result = true;
-
-    for (const property in query) {
-      if(!Array.isArray(query[property])){
-        
-        item[property] = (item[property] + '').toLowerCase();  
-        if(item[property].indexOf((query[property]).toLowerCase()) === -1){
-          result = false;
-        }
-      } else {
-        
-        for (const value in query[property]) {
-          if(item[property].indexOf(value) === -1){
-            result = false;
-          }
-        }
-      }
-    }
-    
-    return result;
-  }
-
   isVisible(item, field = this.state.filter.field, value = this.state.filter.value) {
     let flatItem = flatten(item);
     const itemValue = (flatItem[field] + '').toLowerCase();
@@ -167,11 +131,6 @@ class Budgets extends Component {
 
   onFilter({ field = this.state.filter.field, value = this.state.filter.value }) {
     this.setState({
-      items: this.state.items.map((item) => ({
-          ...item,
-          isVisible: this.isVisible(item, field, value),
-        })
-      ),  
       filter: {
         field,
         value,
@@ -308,7 +267,7 @@ class Budgets extends Component {
                     userColumns={userColumns}
                     columns={columns}
                   />
-                  <CSVExport items={this.state.items} />
+                  <CSVExport items={this.props.items} />
                 </div>                        
               )}
             />
