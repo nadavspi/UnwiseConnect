@@ -189,13 +189,6 @@ class Budgets extends Component {
       isVisible: this.isVisible(item),
     }
 
-    this.setState({ 
-      items: [
-        ...this.state.items,
-        item,
-      ],
-    });
-
     this.props.dispatch(BudgetsActions.addItem(item));
   }
 
@@ -210,10 +203,6 @@ class Budgets extends Component {
   }
 
   onDelete(itemId) {
-    this.setState({
-      items: this.state.items.filter(item => item.id !== itemId),
-    });
-
     this.props.dispatch(BudgetsActions.removeItem(itemId));
   }
 
@@ -223,9 +212,7 @@ class Budgets extends Component {
       isVisible: this.isVisible(updatedItem),
     }
 
-    this.setState({
-      items: this.state.items.map(item => updatedItem.id === item.id ? updatedItem : item),
-    })
+    this.props.dispatch(BudgetsActions.updateItem(updatedItem));
   }
 
   renderList() {

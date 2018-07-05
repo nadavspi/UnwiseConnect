@@ -166,6 +166,11 @@ export default (state = initialState, action) => {
 				...state,
 				items: state.items.filter(item => item.id !== action.itemId)
 			}
+		case ActionTypes.BUDGETS_UPDATE_ITEM:
+			return {
+				...state,
+				items: state.items.map(item => action.updatedItem.id === item.id ? action.updatedItem : item),
+			}
 		default:
 			return state;
 	}
