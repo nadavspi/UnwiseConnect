@@ -11,12 +11,9 @@ class CSVExport extends Component {
 
 	convertFileType(data){
 
-		const values = this.props.columns.map((column) => (column.value));
-		const labels = this.props.columns.map((column) => (column.label));
-
 		const options = {
-			headers: values,
-			rename: labels,
+			headers: this.props.columns.map((column) => (column.value)),
+			rename: this.props.columns.map((column) => (column.label)),
 		};
 		
 		jsonexport(data, options, (err,csv) => {
@@ -45,19 +42,33 @@ class CSVExport extends Component {
 			...flatten({ ...item }, { maxDepth:2})
 		}));
 
-		console.log('FlAT', filteredItems)
-
 		return filteredItems;
 	}
 
 	reformatColumns(items) {
 		let reformattedItems = {};
-		console.log(items);
 
 		reformattedItems = items.map((item) => ({
-			feature: item.feature,
+			// let newItem = {};
+			// for (property in this.props.columns) {
+			// 	if(property.group == 'phase' && property.value === item['budgetHours.column']){
+			// 		newItem = {
+			// 			...newItem,
+			// 			[item['budgetHours.column']]: item['budgetHours.value'],
+			// 			total: item['budgetHours.value'],
+			// 		}
+			// 	} else {
+			// 		newItem = {
+			// 			...newItem,
+			// 			[property.value]: item[property.value],
+			// 		}
+			// 	}
+			// }
+			// return newItem;
+			
 			[item['budgetHours.column']]: item['budgetHours.value'],
 			total: item['budgetHours.value'],
+			feature: item.feature,
 			description: item['descriptions.budget'],
 			'descriptions.assumptions': item['descriptions.assumptions'],
 			'descriptions.exclusions': item['descriptions.exclusions'],
@@ -123,8 +134,7 @@ CSVExport.defaultProps = {
 		value:'descriptions.exclusions',
 		label:'Exclusions',
 	},
-	]
-		 
+	]	 
 }
 
 export default CSVExport;
