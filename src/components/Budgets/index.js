@@ -72,6 +72,23 @@ class Budgets extends Component {
           },
           tags: "klevu",
         },
+        {
+          id: 10,
+          summary: "Development meetings",
+          phase: "dev",
+          feature: "Build",
+          budgetHours: { 
+            column: "Development",
+            value: 20,
+          },
+          descriptions: {
+            workplan: [],
+            budget: [],
+            assumptions: [],
+            exclusions: [],
+          },
+          tags: "build",
+        },
       ],
     };
 
@@ -218,7 +235,7 @@ class Budgets extends Component {
      );
    }
 
-   search(query){
+   search(query) {
      this.setState({
        items: this.state.items.map((item) => ({
          ...item,
