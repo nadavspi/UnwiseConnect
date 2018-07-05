@@ -122,14 +122,6 @@ class Budgets extends Component {
     this.toggleColumn = this.toggleColumn.bind(this);
   }
 
-  isVisible(item, field = this.state.filter.field, value = this.state.filter.value) {
-    let flatItem = flatten(item);
-    const itemValue = (flatItem[field] + '').toLowerCase();
-    const filterValue = (value + '').toLowerCase();
-    
-    return itemValue.includes(filterValue);
-  }
-
   onFilter({ field = this.state.filter.field, value = this.state.filter.value }) {
     this.setState({
       filter: {
@@ -144,11 +136,6 @@ class Budgets extends Component {
   }
 
   onAdd(item) {
-    item = {
-      ...item,
-      isVisible: this.isVisible(item),
-    }
-
     this.props.dispatch(BudgetsActions.addItem(item));
   }
 
@@ -167,11 +154,6 @@ class Budgets extends Component {
   }
 
   onEdit(updatedItem) {
-    updatedItem = {
-      ...updatedItem,
-      isVisible: this.isVisible(updatedItem),
-    }
-
     this.props.dispatch(BudgetsActions.updateItem(updatedItem));
   }
 
