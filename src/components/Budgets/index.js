@@ -229,10 +229,6 @@ class Budgets extends Component {
    }
 
    search(query) {
-     this.setState({
-       query: query,
-     });
-
      this.props.dispatch(BudgetsActions.search(query));
    }
 
