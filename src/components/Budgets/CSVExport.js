@@ -1,6 +1,6 @@
 import flatten from 'flat';
 import React, { Component } from 'react';
-import Json2csv2Parser from 'json2csv';
+import jsonexport from 'jsonexport';
 
 class CSVExport extends Component {
 	constructor(){
@@ -9,71 +9,58 @@ class CSVExport extends Component {
 		this.exportFile = this.exportFile.bind(this);
 	}
 
-	convertFileType(){
+	convertFileType(data){
 
-		const fields = ['car', 'price', 'color'];
-		const myCars = [
-		  {
-		    "car": "Audi",
-		    "price": 40000,
-		    "color": "blue"
-		  }, {
-		    "car": "BMW",
-		    "price": 35000,
-		    "color": "black"
-		  }, {
-		    "car": "Porsche",
-		    "price": 60000,
-		    "color": "green"
-		  }
-		];
+		const values = this.props.columns.map((column) => (column.value));
+		const labels = this.props.columns.map((column) => (column.label));
+
+		const options = {
+			headers: values,
+			rename: labels,
+		};
 		
-		const json2csvParser = new Json2csv2Parser({ fields });
-		const csv = json2csvParser.parse(myCars);
-	
-		console.log(csv);
-	
+		jsonexport(data, options, (err,csv) => {
+			if(err) {
+				return console.log(err);
+			}
+			this.exportToBroswer(csv);;
+		});
+
 	}
 
 	exportFile() {
-		console.log(this.props.columns);
 		console.log(this.props.items);
-
-		this.reformatColumns(this.reduceItemColumns());
-		
-		
-		this.convertFileType();
-		// this.exportToBroswer();
+	
+		this.convertFileType(this.reformatColumns(this.filterItems()));
 	}
 
-	reduceItemColumns() {
-		const columns = this.props.columns;
+	exportToBroswer(csv) {
+		console.log(csv);
+	}
+
+	filterItems() {
 		
-		const reducedItems = this.props.items.map((item) => {
-			const reducedItem = {};
-			const flatItem = {...flatten({ ...item }, { maxDepth: 2})}
+		let filteredItems = this.props.items.filter((item) => item.isVisible);
+		filteredItems = filteredItems.map((item) => ({
+			...flatten({ ...item }, { maxDepth:2})
+		}));
 
-			for(let i = 0; i < columns.length; i++){
-				reducedItem[columns[i]] = flatItem[columns[i]];
-			}
+		console.log('FlAT', filteredItems)
 
-			return reducedItem;
-		});
-
-		console.log(reducedItems);
-
-		return reducedItems;
+		return filteredItems;
 	}
 
 	reformatColumns(items) {
 		let reformattedItems = {};
+		console.log(items);
 
 		reformattedItems = items.map((item) => ({
 			feature: item.feature,
 			[item['budgetHours.column']]: item['budgetHours.value'],
+			total: item['budgetHours.value'],
 			description: item['descriptions.budget'],
-			assumptions: item['descriptions.assumptions'],
-			exclusions: item['descriptions.exclusions'],
+			'descriptions.assumptions': item['descriptions.assumptions'],
+			'descriptions.exclusions': item['descriptions.exclusions'],
 		}));
 
 		console.log(reformattedItems);
@@ -97,10 +84,10 @@ CSVExport.defaultProps = {
 		value:'feature',
 		label:'Page/Feature',
 	},{
-		value:'',
+		value:'t&m',
 		label:'T&M',
 	},{
-		value:'Disc',
+		value:'Discovery',
 		label:'Disc',
 	},{
 		value:'Design',
@@ -118,13 +105,13 @@ CSVExport.defaultProps = {
 		value:'Deploy',
 		label:'Deploy',
 	},{
-		value:'',
+		value:'PM',
 		label:'PM',
 	},{
-		value:'',
+		value:'total',
 		label:'Total',
 	},{
-		value:'',
+		value:'description',
 		label:'Description',
 	},{
 		value:'descriptions.assumptions',
