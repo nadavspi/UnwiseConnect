@@ -1,11 +1,13 @@
+import * as BudgetsActions from '../../actions/budgets';
 import CSVExport from './CSVExport';
 import flatten from 'flat';
 import Form from './Item/Form';
 import List from './List';
 import MultiSearch from './MultiSearch';
 import React, { Component } from 'react';
-import { Route, Link } from 'react-router-dom';
 import Table from '../Tickets/Table';
+import { connect } from 'react-redux';
+import { Route, Link } from 'react-router-dom';
 
 class Budgets extends Component {
 	constructor() {
@@ -193,6 +195,8 @@ class Budgets extends Component {
         item,
       ],
     });
+
+    this.props.dispatch(BudgetsActions.addItem(item));
   }
 
   onCustomFilter(property){
@@ -225,7 +229,7 @@ class Budgets extends Component {
   renderList() {
      return (
        <List
-         items={this.state.items}
+         items={this.props.items}
          filter={this.state.filter}
          fields={this.props.fields}
          onFilter={this.onFilter}
@@ -316,7 +320,7 @@ class Budgets extends Component {
                     id="table-search-items"
                     query={this.state.query}
                     search={this.search}
-                    tickets={this.state.items}
+                    tickets={this.props.items}
                     toggleColumn={this.toggleColumn}
                     userColumns={userColumns}
                     columns={columns}
@@ -332,73 +336,9 @@ class Budgets extends Component {
   }
 }
 
-Budgets.defaultProps = {
-  fields: [
-    {
-      filterType: 'textfield',
-      name: 'summary',
-      label: 'Summary',
-      type: 'text',
-      required: true,
-    },
-    {
-      filterType: 'textfield',
-      name: 'phase',
-      label: 'Phase',
-      type: 'text',
-      required: true,
-    },
-    {
-      filterType: 'textfield',
-      name: 'feature',
-      label: 'Feature',
-      type: 'text',
-    },
-    {
-      filterType: 'textfield',
-      name: 'budgetHours.column',
-      label: 'Team',
-      type: 'text',
-    },
-    {
-      filterType: 'textfield',
-      name: 'budgetHours.value',
-      label: 'Hours',
-      type: 'number',
-    },
-    {
-      filterType: 'none',
-      name: 'descriptions.workplan',
-      label: 'Workplan description',
-      type: 'text',
-      required: true,
-    },
-    {
-      filterType: 'none',
-      name: 'descriptions.budget',
-      label: 'Budget description',
-      type: 'text',
-    },
-    {
-      filterType: 'none',
-      name: 'descriptions.assumptions',
-      label: 'Assumptions',
-      type: 'text',
-    },
-    {
-      filterType: 'none',
-      name: 'descriptions.exclusions',
-      label: 'Exclusions',
-      type: 'text',
-    },
-    {
-      filterType: 'custom',
-      name: 'tags',
-      label: 'Tags',
-      type: 'text',
-      required: true,
-    },
-  ]
-};
+const mapStateToProps = state => ({
+  items: state.budgets.items,
+  fields: state.budgets.fields,
+})
 
-export default Budgets;
+export default connect(mapStateToProps)(Budgets);
