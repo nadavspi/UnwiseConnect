@@ -117,6 +117,7 @@ class Budgets extends Component {
     this.onFilter = this.onFilter.bind(this);
     this.onFormSubmit = this.onFormSubmit.bind(this);
     this.renderList = this.renderList.bind(this);
+    this.renderTable = this.renderTable.bind(this);
     this.search   = this.search.bind(this);
     this.toggleColumn = this.toggleColumn.bind(this);
   }
@@ -175,6 +176,7 @@ class Budgets extends Component {
   }
 
   renderList() {
+
      return (
        <List
          items={this.props.items}
@@ -183,8 +185,49 @@ class Budgets extends Component {
          onFilter={this.onFilter}
          onEdit={this.onEdit}
          onDelete={this.onDelete}
+         query={this.props.query}
+         rows={this.props.items}
        />
      );
+   }
+
+   renderTable() {
+      
+      const columns = this.props.fields.map((field) => {
+      const column = {
+        property: field.name,      
+        header: {
+          label: field.label,
+        },
+        filterType: field.filterType,
+      };
+
+      if (field.filterType === 'custom') {
+        column.customFilter = () => {
+          return this.onCustomFilter(field.name);
+        }
+      }
+
+        return column;
+      });
+
+      let userColumns = columns.map((field) => field.property);
+      userColumns = userColumns.filter((column) => this.state.userColumns[column]);
+
+      return (
+        <div>
+          <Table
+            id="table-search-items"
+            query={this.props.query}
+            search={this.search}
+            tickets={this.props.items}
+            toggleColumn={this.toggleColumn}
+            userColumns={userColumns}
+            columns={columns}
+          />
+          <CSVExport items={this.props.items} />
+        </div> 
+      );
    }
 
    search(query) {
@@ -203,27 +246,7 @@ class Budgets extends Component {
 
 
   render() {
-    const columns = this.props.fields.map((field) => {
-      const column = {
-        property: field.name,      
-        header: {
-          label: field.label,
-        },
-        filterType: field.filterType,
-      };
 
-      if (field.filterType === 'custom') {
-        column.customFilter = () => {
-          return this.onCustomFilter(field.name);
-        }
-      }
-
-      return column;
-    });
-
-    let userColumns = columns.map((field) => field = field.property);
-    userColumns = userColumns.filter((column) => this.state.userColumns[column]);
-    
     return (
       <div>
         <div className="panel-uc panel panel-default">
@@ -256,20 +279,7 @@ class Budgets extends Component {
             />
             <Route 
               path={this.props.match.url + '/table'} 
-              render={() => (
-                <div>
-                  <Table
-                    id="table-search-items"
-                    query={this.props.query}
-                    search={this.search}
-                    tickets={this.props.items}
-                    toggleColumn={this.toggleColumn}
-                    userColumns={userColumns}
-                    columns={columns}
-                  />
-                  <CSVExport items={this.props.items} />
-                </div>                        
-              )}
+              render={this.renderTable}
             />
           </div>
         </div>
