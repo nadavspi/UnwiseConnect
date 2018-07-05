@@ -10,7 +10,7 @@ class Search extends React.Component {
 
 		this.onChange = this.onChange.bind(this);
 		this.onFilter = this.onFilter.bind(this);
-	    this.createOptions = this.createOptions.bind(this);
+	  this.createOptions = this.createOptions.bind(this);
 	}
 
   createOptions() {
@@ -34,7 +34,14 @@ class Search extends React.Component {
 	}
 	
 	onFilter(){
-		this.props.onFilter(this.state.value);
+		const tagList = this.state.value.map((tag) => (tag.value));
+
+		const query = {
+			...this.props.query,
+			tags: (tagList.length !== 0) ? tagList : ''
+		};
+
+		this.props.onFilter(query);
 	}
 	
 	render() {
