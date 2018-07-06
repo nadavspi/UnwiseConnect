@@ -76,13 +76,13 @@ const initialState = {
   ],
   query: {},
   userColumns: {
-      summary: true,
-      phase: true,
-      feature: true,
-      'budgetHours.column': true,
-      'budgetHours.value': true,
-      tags: true,
-    },
+    summary: true,
+    phase: true,
+    feature: true,
+    'budgetHours.column': true,
+    'budgetHours.value': true,
+    tags: true,
+  },
 };
 
 export default (state = initialState, action) => {
