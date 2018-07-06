@@ -10,13 +10,13 @@ class List extends Component {
 	      
 	render() {
     const { query, rows } = this.props;
-    const columns = this.props.fields.map((field) => field={
+    const columns = this.props.fields.map((field) => ({
       property: field.name,      
       header: {
         label: field.label,
       },
       filterType:field.filterType,
-    });
+    }));
 
     const searchExecutor = search.multipleColumns({ 
       columns, 
