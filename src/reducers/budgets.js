@@ -111,7 +111,6 @@ export default (state = initialState, action) => {
 		case ActionTypes.BUDGETS_SUBSCRIBE:
 			return {
 				...state,
-        items: action.payload,
 			};
 
     case ActionTypes.BUDGETS_TOGGLE_COL:
@@ -121,6 +120,12 @@ export default (state = initialState, action) => {
           ...state.userColumns,
           [action.payload.columnName]: !state.userColumns[action.payload.columnName],
         }
+      };
+
+    case ActionTypes.BUDGETS_UPDATE:
+      return {
+        ...state,
+        items: action.payload.items,
       };
 
 		case ActionTypes.BUDGETS_UPDATE_ITEM:
