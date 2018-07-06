@@ -1,10 +1,8 @@
 import * as BudgetsActions from '../../actions/budgets';
-import CSVExport from './CSVExport';
 import Form from './Item/Form';
 import List from './List';
-import MultiSearch from './MultiSearch';
 import React, { Component } from 'react';
-import Table from '../Tickets/Table';
+import Table from './Table';
 import { connect } from 'react-redux';
 import { Route, Link } from 'react-router-dom';
 
@@ -135,16 +133,6 @@ class Budgets extends Component {
     this.props.dispatch(BudgetsActions.addItem({ item }));
   }
 
-  onCustomFilter(property){
-    if(property === 'tags') {
-      return (<MultiSearch 
-                items={this.props.items}
-                query={this.props.query}
-                onFilter={this.search}
-              />);
-    }
-  }
-
   onDelete(itemId) {
     this.props.dispatch(BudgetsActions.removeItem({ itemId }));
   }
@@ -170,46 +158,16 @@ class Budgets extends Component {
    }
 
    renderTable() {
-      
-    const columns = this.props.fields.map((field) => {
-      const column = {
-        property: field.name,      
-        header: {
-          label: field.label,
-        },
-        filterType: field.filterType,
-      };
-
-      if (field.filterType === 'custom') {
-        column.customFilter = () => {
-          return this.onCustomFilter(field.name);
-        }
-      }
-
-      return column;
-    });
-
-    let userColumns = columns.map((field) => field.property);
-    userColumns = userColumns.filter((column) => this.props.userColumns[column]);
 
     return (
-      <div>
-        <Table
-          id="table-search-items"
-          query={this.props.query}
-          search={this.search}
-          tickets={this.props.items}
-          toggleColumn={this.toggleColumn}
-          userColumns={userColumns}
-          columns={columns}
-        />
-        <CSVExport 
-          items={this.props.items}
-          fields={this.props.fields} 
-          query={this.props.query}
-          rows={this.props.items}
-        />
-      </div> 
+      <Table 
+        fields={this.props.fields}
+        items={this.props.items}
+        query={this.props.query}
+        search={this.search}
+        toggleColumn={this.toggleColumn}
+        userColumns={this.props.userColumns}
+      /> 
     );
    }
 
