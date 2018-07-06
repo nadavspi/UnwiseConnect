@@ -49,9 +49,9 @@ class Table extends Component {
         />
         <CSVExport 
           items={this.props.items}
-          fields={this.props.fields} 
+          fields={this.props.fields}
+          filterItems={this.props.filterItems} 
           query={this.props.query}
-          rows={this.props.items}
         />
       </div> 
     );

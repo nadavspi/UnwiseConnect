@@ -1,10 +1,13 @@
 import * as BudgetsActions from '../../actions/budgets';
 import Form from './Item/Form';
 import List from './List';
+import * as search from 'searchtabular';
 import React, { Component } from 'react';
 import Table from './Table';
 import { connect } from 'react-redux';
 import { Route, Link } from 'react-router-dom';
+import { compose } from 'redux';
+import { multiInfix } from '../../helpers/utils';
 
 class Budgets extends Component {
 	constructor(props) {
@@ -17,6 +20,7 @@ class Budgets extends Component {
       },
     };    
 
+    this.filterItems = this.filterItems.bind(this);
     this.onAdd    = this.onAdd.bind(this);
     this.onDelete = this.onDelete.bind(this);
     this.onEdit   = this.onEdit.bind(this);
@@ -30,6 +34,25 @@ class Budgets extends Component {
 
   componentDidMount() {
     this.props.dispatch(BudgetsActions.subscribe());
+  }
+
+  filterItems(items, query) {
+    const rows = this.props.items;
+    const columns = this.props.fields.map((field) => ({
+      property: field.name,      
+      header: {
+        label: field.label,
+      },
+      filterType:field.filterType,
+    }));
+
+    const searchExecutor = search.multipleColumns({ 
+      columns, 
+      query, 
+      strategy: multiInfix });
+    const visibleItems = compose(searchExecutor)(rows);
+
+    return visibleItems;
   }
 
   onFilter({ field = this.state.filter.field, value = this.state.filter.value }) {
@@ -70,12 +93,12 @@ class Budgets extends Component {
        <List
          items={this.props.items}
          filter={this.state.filter}
+         filterItems={this.filterItems}
          fields={this.props.fields}
          onFilter={this.onFilter}
          onEdit={this.onEdit}
          onDelete={this.onDelete}
          query={this.props.query}
-         rows={this.props.items}
        />
      );
    }
@@ -85,6 +108,7 @@ class Budgets extends Component {
     return (
       <Table 
         fields={this.props.fields}
+        filterItems={this.filterItems}
         items={this.props.items}
         query={this.props.query}
         search={this.search}
