@@ -25,7 +25,6 @@ class Budgets extends Component {
     this.onDelete = this.onDelete.bind(this);
     this.onEdit   = this.onEdit.bind(this);
     this.onFilter = this.onFilter.bind(this);
-    this.onFormSubmit = this.onFormSubmit.bind(this);
     this.renderList = this.renderList.bind(this);
     this.renderTable = this.renderTable.bind(this);
     this.search   = this.search.bind(this);
@@ -69,10 +68,6 @@ class Budgets extends Component {
     };
 
     this.props.dispatch(BudgetsActions.search({ query: newQuery })); 
-  }
-
-  onFormSubmit(item) {
-    this.onAdd(item);
   }
 
   onAdd(item) {
@@ -139,7 +134,7 @@ class Budgets extends Component {
         <div className="row panel-body">
           <div className="panel-body projects__wrapper">
             <Form
-              onSubmit={this.onFormSubmit}
+              onSubmit={this.onAdd}
               fields={this.props.fields}
             />
             <h3>View Selection</h3>
