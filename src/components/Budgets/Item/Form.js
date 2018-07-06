@@ -94,6 +94,7 @@ ItemForm.defaultProps = {
     'budgetHours.value': 0,
     'descriptions.workplan': [],
     'descriptions.budget': [],
+    'descriptions.clientResponsibilities': [],
     'descriptions.assumptions': [],
     'descriptions.exclusions': [],  
   },
