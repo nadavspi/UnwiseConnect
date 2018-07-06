@@ -1,6 +1,5 @@
 import * as BudgetsActions from '../../actions/budgets';
 import CSVExport from './CSVExport';
-import flatten from 'flat';
 import Form from './Item/Form';
 import List from './List';
 import MultiSearch from './MultiSearch';
@@ -92,8 +91,6 @@ class Budgets extends Component {
         },
     ];
 
-    props.dispatch(BudgetsActions.subscribe(inputData));
-
     const defaultUserColumns = {
       summary: true,
       phase: true,
@@ -102,14 +99,19 @@ class Budgets extends Component {
       'budgetHours.value': true,
       tags: true,
     };
+    
+    props.dispatch(BudgetsActions.subscribe(inputData));
+
+    for (const column in defaultUserColumns) {
+      props.dispatch(BudgetsActions.toggleColumn(column));
+    }
 
     this.state = {
       filter: {
         field: 'summary',
         value: '',
       },
-      userColumns: defaultUserColumns,
-    };
+    };    
 
     this.onAdd    = this.onAdd.bind(this);
     this.onDelete = this.onDelete.bind(this);
@@ -194,7 +196,7 @@ class Budgets extends Component {
       });
 
       let userColumns = columns.map((field) => field.property);
-      userColumns = userColumns.filter((column) => this.state.userColumns[column]);
+      userColumns = userColumns.filter((column) => this.props.userColumns[column]);
 
       return (
         <div>
@@ -217,13 +219,7 @@ class Budgets extends Component {
    }
 
    toggleColumn(payload){
-     const isVisible = this.state.userColumns[payload.columnName];
-     this.setState({
-       userColumns: {
-         ...this.state.userColumns,
-         [payload.columnName]: !isVisible,
-       }
-     });
+     this.props.dispatch(BudgetsActions.toggleColumn(payload.columnName));
    }
 
 
@@ -274,6 +270,7 @@ const mapStateToProps = state => ({
   items: state.budgets.items,
   fields: state.budgets.fields,
   query: state.budgets.query,
+  userColumns: state.budgets.userColumns,
 })
 
 export default connect(mapStateToProps)(Budgets);
