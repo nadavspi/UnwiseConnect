@@ -75,7 +75,14 @@ const initialState = {
     },
   ],
   query: {},
-  userColumns: {},
+  userColumns: {
+      summary: true,
+      phase: true,
+      feature: true,
+      'budgetHours.column': true,
+      'budgetHours.value': true,
+      tags: true,
+    },
 };
 
 export default (state = initialState, action) => {
@@ -85,20 +92,20 @@ export default (state = initialState, action) => {
 				...state,
 				items: [ 
 					...state.items, 
-					action.item, 
+					action.payload.item, 
 				],
 			};
 
 		case ActionTypes.BUDGETS_REMOVE_ITEM:
 			return {
 				...state,
-				items: state.items.filter(item => item.id !== action.itemId)
+				items: state.items.filter(item => item.id !== action.payload.itemId)
 			};
 
 		case ActionTypes.BUDGETS_SEARCH:
 			return {
 				...state,
-				query: action.query,
+				query: action.payload.query,
 			};
 
 		case ActionTypes.BUDGETS_SUBSCRIBE:
@@ -112,14 +119,14 @@ export default (state = initialState, action) => {
         ...state,
         userColumns: {
           ...state.userColumns,
-          [action.payload]: !state.userColumns[action.payload],
+          [action.payload.columnName]: !state.userColumns[action.payload.columnName],
         }
       };
 
 		case ActionTypes.BUDGETS_UPDATE_ITEM:
 			return {
 				...state,
-				items: state.items.map(item => action.updatedItem.id === item.id ? action.updatedItem : item),
+				items: state.items.map(item => action.payload.updatedItem.id === item.id ? action.payload.updatedItem : item),
 			};
 
 		default:

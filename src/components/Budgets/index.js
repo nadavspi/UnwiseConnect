@@ -91,20 +91,7 @@ class Budgets extends Component {
         },
     ];
 
-    const defaultUserColumns = {
-      summary: true,
-      phase: true,
-      feature: true,
-      'budgetHours.column': true,
-      'budgetHours.value': true,
-      tags: true,
-    };
-
     props.dispatch(BudgetsActions.subscribe(inputData));
-
-    for (const column in defaultUserColumns) {
-      props.dispatch(BudgetsActions.toggleColumn(column));
-    }
 
     this.state = {
       filter: {
@@ -137,7 +124,7 @@ class Budgets extends Component {
       [field]: value,
     };
 
-    this.props.dispatch(BudgetsActions.search(newQuery)); 
+    this.props.dispatch(BudgetsActions.search({ query: newQuery })); 
   }
 
   onFormSubmit(item) {
@@ -145,7 +132,7 @@ class Budgets extends Component {
   }
 
   onAdd(item) {
-    this.props.dispatch(BudgetsActions.addItem(item));
+    this.props.dispatch(BudgetsActions.addItem({ item }));
   }
 
   onCustomFilter(property){
@@ -159,11 +146,11 @@ class Budgets extends Component {
   }
 
   onDelete(itemId) {
-    this.props.dispatch(BudgetsActions.removeItem(itemId));
+    this.props.dispatch(BudgetsActions.removeItem({ itemId }));
   }
 
   onEdit(updatedItem) {
-    this.props.dispatch(BudgetsActions.updateItem(updatedItem));
+    this.props.dispatch(BudgetsActions.updateItem({ updatedItem }));
   }
 
   renderList() {
@@ -227,11 +214,11 @@ class Budgets extends Component {
    }
 
    search(query) {
-     this.props.dispatch(BudgetsActions.search(query));
+     this.props.dispatch(BudgetsActions.search({ query }));
    }
 
    toggleColumn(payload){
-     this.props.dispatch(BudgetsActions.toggleColumn(payload.columnName));
+     this.props.dispatch(BudgetsActions.toggleColumn({ columnName: payload.columnName }));
    }
 
 

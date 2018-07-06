@@ -1,43 +1,43 @@
 import { ActionTypes } from '../config/constants';
 
-export const addItem = (item) => {
+export const addItem = payload => {
 	return {
 		type: ActionTypes.BUDGETS_ADD_ITEM,
-		item,
+		payload,
 	}
 }
 
-export const removeItem = (itemId) => {
+export const removeItem = payload => {
 	return {
 		type: ActionTypes.BUDGETS_REMOVE_ITEM,
-		itemId,
+		payload,
 	}
 }
 
-export const subscribe = (payload) => {
+export const subscribe = payload => {
 	return {
 		type: ActionTypes.BUDGETS_SUBSCRIBE,	
 		payload,
 	}
 }
 
-export const search = (query) => {
+export const search = payload => {
 	return {
 		type: ActionTypes.BUDGETS_SEARCH,
-		query,
+		payload,
 	}
 }
 
-export const toggleColumn = (payload) => {
+export const toggleColumn = payload => {
 	return {
 		type: ActionTypes.BUDGETS_TOGGLE_COL,
 		payload,
 	}
 }
 
-export const updateItem = (updatedItem) => {
+export const updateItem = payload => {
 	return {
 		type: ActionTypes.BUDGETS_UPDATE_ITEM,
-		updatedItem,
+		payload,
 	}
 }
