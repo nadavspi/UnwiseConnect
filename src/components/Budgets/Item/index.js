@@ -50,6 +50,9 @@ class Item extends React.Component {
 							Budget: {item.descriptions.budget}
 						</li>
 						<li>
+							Client Responsibilities: {item.descriptions.clientResponsibilities}
+						</li>
+						<li>
 							Assumptions: {item.descriptions.assumptions}
 						</li>  
 						<li>
