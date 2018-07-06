@@ -69,6 +69,7 @@ const initialState = {
     },
   ],
   query: {},
+  userColumns: {},
 };
 
 export default (state = initialState, action) => {
@@ -99,6 +100,15 @@ export default (state = initialState, action) => {
 				...state,
         items: action.payload,
 			};
+
+    case ActionTypes.BUDGETS_TOGGLE_COL:
+      return {
+        ...state,
+        userColumns: {
+          ...state.userColumns,
+          [action.payload]: !state.userColumns[action.payload],
+        }
+      };
 
 		case ActionTypes.BUDGETS_UPDATE_ITEM:
 			return {
