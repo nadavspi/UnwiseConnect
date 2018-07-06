@@ -28,6 +28,13 @@ export const search = (query) => {
 	}
 }
 
+export const toggleColumn = (payload) => {
+	return {
+		type: ActionTypes.BUDGETS_TOGGLE_COL,
+		payload,
+	}
+}
+
 export const updateItem = (updatedItem) => {
 	return {
 		type: ActionTypes.BUDGETS_UPDATE_ITEM,
