@@ -1,6 +1,9 @@
+import * as search from 'searchtabular';
 import flatten from 'flat';
-import React, { Component } from 'react';
 import jsonexport from 'jsonexport';
+import React, { Component } from 'react';
+import { compose } from 'redux';
+import { multiInfix } from '../../helpers/utils';
 
 class CSVExport extends Component {
 	constructor(){
@@ -26,29 +29,37 @@ class CSVExport extends Component {
 	}
 
 	exportFile() {
-		console.log(this.props.items);
-	
-		this.convertFileType(this.reformatColumns(this.filterItems()));
+		this.convertFileType(this.reformatColumns(this.filterItems(this.props.items, this.props.query)));
 	}
 
 	exportToBroswer(csv) {
 		console.log(csv);
 	}
 
-	filterItems() {
+	filterItems(items, query) {
 		
-		let filteredItems = this.props.items.filter((item) => item.isVisible);
-		filteredItems = filteredItems.map((item) => ({
-			...flatten({ ...item }, { maxDepth:2})
-		}));
+    const { rows } = this.props;
+    const columns = this.props.fields.map((field) => ({
+      property: field.name,      
+      header: {
+        label: field.label,
+      },
+      filterType:field.filterType,
+    }));
 
-		return filteredItems;
+    const searchExecutor = search.multipleColumns({ 
+      columns, 
+      query, 
+      strategy: multiInfix });
+    const visibleItems = compose(searchExecutor)(rows);
+
+		return visibleItems;
 	}
 
 	reformatColumns(items) {
 		let reformattedItems = {};
 
-		reformattedItems = items.map((item) => ({
+		reformattedItems = items.map((item) => {
 			// let newItem = {};
 			// for (property in this.props.columns) {
 			// 	if(property.group == 'phase' && property.value === item['budgetHours.column']){
@@ -65,16 +76,21 @@ class CSVExport extends Component {
 			// 	}
 			// }
 			// return newItem;
-			
-			[item['budgetHours.column']]: item['budgetHours.value'],
-			total: item['budgetHours.value'],
-			feature: item.feature,
-			description: item['descriptions.budget'],
-			'descriptions.assumptions': item['descriptions.assumptions'],
-			'descriptions.exclusions': item['descriptions.exclusions'],
-		}));
+			const flatItem = flatten(item, { maxDepth: 2 });
 
-		console.log(reformattedItems);
+			const reformattedItem = {
+				[flatItem['budgetHours.column']]: flatItem['budgetHours.value'],
+				total: flatItem['budgetHours.value'],
+				feature: flatItem.feature,
+				description: flatItem['descriptions.budget'],
+				'descriptions.assumptions': flatItem['descriptions.assumptions'],
+				'descriptions.exclusions': flatItem['descriptions.exclusions'],
+			};
+			console.log(flatItem);
+			console.log(reformattedItem);
+
+			return reformattedItem;
+		});
 
 		return reformattedItems;
 	}
