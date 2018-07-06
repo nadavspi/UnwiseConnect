@@ -1,28 +1,12 @@
-import * as search from 'searchtabular';
 import React, { Component } from 'react';
 import Item from './Item';
 import SearchBar from './Search';
-import { compose } from 'redux';
-import { multiInfix } from '../../helpers/utils';
 
 class List extends Component {
-
 	      
 	render() {
-    const { query, rows } = this.props;
-    const columns = this.props.fields.map((field) => ({
-      property: field.name,      
-      header: {
-        label: field.label,
-      },
-      filterType:field.filterType,
-    }));
-
-    const searchExecutor = search.multipleColumns({ 
-      columns, 
-      query, 
-      strategy: multiInfix });
-    const visibleItems = compose(searchExecutor)(rows);
+   
+    const visibleItems = this.props.filterItems(this.props.items, this.props.query);
 
 		return (
 			<div>

@@ -1,9 +1,6 @@
-import * as search from 'searchtabular';
 import flatten from 'flat';
 import jsonexport from 'jsonexport';
 import React, { Component } from 'react';
-import { compose } from 'redux';
-import { multiInfix } from '../../helpers/utils';
 
 class CSVExport extends Component {
 	constructor(){
@@ -29,31 +26,11 @@ class CSVExport extends Component {
 	}
 
 	exportFile() {
-		this.convertFileType(this.reformatColumns(this.filterItems(this.props.items, this.props.query)));
+		this.convertFileType(this.reformatColumns(this.props.filterItems(this.props.items,this.props.query)));
 	}
 
 	exportToBroswer(csv) {
 		console.log(csv);
-	}
-
-	filterItems(items, query) {
-		
-    const { rows } = this.props;
-    const columns = this.props.fields.map((field) => ({
-      property: field.name,      
-      header: {
-        label: field.label,
-      },
-      filterType:field.filterType,
-    }));
-
-    const searchExecutor = search.multipleColumns({ 
-      columns, 
-      query, 
-      strategy: multiInfix });
-    const visibleItems = compose(searchExecutor)(rows);
-
-		return visibleItems;
 	}
 
 	reformatColumns(items) {
