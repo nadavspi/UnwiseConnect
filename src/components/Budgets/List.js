@@ -2,7 +2,6 @@ import * as search from 'searchtabular';
 import React, { Component } from 'react';
 import Item from './Item';
 import SearchBar from './Search';
-import Pagination from '../Tickets/Pagination';
 import { compose } from 'redux';
 import { multiInfix } from '../../helpers/utils';
 
