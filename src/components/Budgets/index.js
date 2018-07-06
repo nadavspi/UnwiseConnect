@@ -99,7 +99,7 @@ class Budgets extends Component {
       'budgetHours.value': true,
       tags: true,
     };
-    
+
     props.dispatch(BudgetsActions.subscribe(inputData));
 
     for (const column in defaultUserColumns) {
@@ -209,7 +209,12 @@ class Budgets extends Component {
             userColumns={userColumns}
             columns={columns}
           />
-          <CSVExport items={this.props.items} />
+          <CSVExport 
+            items={this.props.items}
+            fields={this.props.fields} 
+            query={this.props.query}
+            rows={this.props.items}
+          />
         </div> 
       );
    }
