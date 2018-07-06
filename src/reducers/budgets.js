@@ -56,6 +56,12 @@ const initialState = {
     },
     {
       filterType: 'none',
+      name: 'descriptions.clientResponsibilities',
+      label: 'Client Responsibilities',
+      type: 'text',
+    },
+    {
+      filterType: 'none',
       name: 'descriptions.exclusions',
       label: 'Exclusions',
       type: 'text',
