@@ -57,25 +57,23 @@ class CSVExport extends Component {
 	}
 
 	reformatColumns(items) {
-		let reformattedItems = {};
+		let reformattedList = {};
 
-		reformattedItems = items.map((item) => {
-			// let newItem = {};
-			// for (property in this.props.columns) {
-			// 	if(property.group == 'phase' && property.value === item['budgetHours.column']){
-			// 		newItem = {
-			// 			...newItem,
-			// 			[item['budgetHours.column']]: item['budgetHours.value'],
-			// 			total: item['budgetHours.value'],
-			// 		}
-			// 	} else {
-			// 		newItem = {
-			// 			...newItem,
-			// 			[property.value]: item[property.value],
-			// 		}
-			// 	}
-			// }
-			// return newItem;
+		// reformattedList = {
+		// 	...reformattedList,
+		// 	newItem = {
+		// 		[flatItem['budgetHours.column']: existingItem[sameCol].value + flatItem['budgetHours.value'],
+		// 		total: existingItem[total] + flatItem['budgetHours.value'],
+		// 		description: existingItem.description + flatItem['descriptions.budget'],
+		// 		'descriptions.assumptions': existingItem['description.assumptions'] + flatItem['descriptions.assumptions'],
+		// 		'descriptions.exclusions': existingItem['description.exclusions'] + flatItem['descriptions.exclusions'],
+		// 	}
+		// }
+
+		// reformattedList[item.feature] = existingItem
+
+		reformattedList = items.map((item) => {
+			
 			const flatItem = flatten(item, { maxDepth: 2 });
 
 			const reformattedItem = {
@@ -86,13 +84,13 @@ class CSVExport extends Component {
 				'descriptions.assumptions': flatItem['descriptions.assumptions'],
 				'descriptions.exclusions': flatItem['descriptions.exclusions'],
 			};
-			console.log(flatItem);
-			console.log(reformattedItem);
 
 			return reformattedItem;
 		});
 
-		return reformattedItems;
+		console.log(reformattedList);
+
+		return reformattedList;
 	}
 
 	render() {
@@ -144,7 +142,7 @@ CSVExport.defaultProps = {
 		value:'descriptions.assumptions',
 		label:'Assumptions',
 	},{
-		value:'',
+		value:'descriptions.clientResponsibilities',
 		label:'Client Responsibilities',
 	},{
 		value:'descriptions.exclusions',

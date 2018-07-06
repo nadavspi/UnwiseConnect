@@ -29,7 +29,7 @@ class SearchBar extends React.Component {
 
 		return (
 			<div className="section">
-				<h2>SearchBar</h2>
+				<h2>Search</h2>
 				<Select 
 					name="field"
 					value={this.props.filter.field}
