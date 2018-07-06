@@ -78,7 +78,7 @@ class Budgets extends Component {
           phase: "dev",
           feature: "Build",
           budgetHours: { 
-            column: "Development",
+            column: "Dev",
             value: 20,
           },
           descriptions: {
@@ -130,7 +130,14 @@ class Budgets extends Component {
         field,
         value,
       },
-    });  
+    }); 
+    
+    const newQuery = {
+      ...this.props.query,
+      [field]: value,
+    };
+
+    this.props.dispatch(BudgetsActions.search(newQuery)); 
   }
 
   onFormSubmit(item) {
@@ -177,7 +184,7 @@ class Budgets extends Component {
 
    renderTable() {
       
-      const columns = this.props.fields.map((field) => {
+    const columns = this.props.fields.map((field) => {
       const column = {
         property: field.name,      
         header: {
@@ -192,31 +199,31 @@ class Budgets extends Component {
         }
       }
 
-        return column;
-      });
+      return column;
+    });
 
-      let userColumns = columns.map((field) => field.property);
-      userColumns = userColumns.filter((column) => this.props.userColumns[column]);
+    let userColumns = columns.map((field) => field.property);
+    userColumns = userColumns.filter((column) => this.props.userColumns[column]);
 
-      return (
-        <div>
-          <Table
-            id="table-search-items"
-            query={this.props.query}
-            search={this.search}
-            tickets={this.props.items}
-            toggleColumn={this.toggleColumn}
-            userColumns={userColumns}
-            columns={columns}
-          />
-          <CSVExport 
-            items={this.props.items}
-            fields={this.props.fields} 
-            query={this.props.query}
-            rows={this.props.items}
-          />
-        </div> 
-      );
+    return (
+      <div>
+        <Table
+          id="table-search-items"
+          query={this.props.query}
+          search={this.search}
+          tickets={this.props.items}
+          toggleColumn={this.toggleColumn}
+          userColumns={userColumns}
+          columns={columns}
+        />
+        <CSVExport 
+          items={this.props.items}
+          fields={this.props.fields} 
+          query={this.props.query}
+          rows={this.props.items}
+        />
+      </div> 
+    );
    }
 
    search(query) {
