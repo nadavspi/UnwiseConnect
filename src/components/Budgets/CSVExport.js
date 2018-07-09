@@ -35,25 +35,6 @@ class CSVExport extends Component {
 
 	reformatColumns(items) {
 
-		// list = {
-		// 	klevu: {
-		// 		dev:,
-		// 		total:,
-		// 		exclusions:,
-		// 	}
-		// }
-
-		// list = [{
-		// 	feature: klevu,
-		// 	dev:,
-		// 	total:,
-		// }, {
-		// 	feature: exia,
-		// 	dev:,
-		// 	total:,
-		// }
-		// ]
-
 		const flatList = items.map((item) => flatten(item, { maxDepth: 2 }));
 		
 		// convert columns
@@ -69,7 +50,7 @@ class CSVExport extends Component {
 					reformattedItem[property] = item[property];
 				}
 			}
-					
+
 			return reformattedItem;
 		});
 
@@ -98,8 +79,6 @@ class CSVExport extends Component {
 
 		return concatList;
 	}
-
-
 
 	render() {
 		return (
