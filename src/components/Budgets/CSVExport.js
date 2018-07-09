@@ -11,7 +11,6 @@ class CSVExport extends Component {
 	}
 
 	convertFileType(data) {
-
 		const options = {
 			headers: this.props.columns.map((column) => (column.value)),
 			rename: this.props.columns.map((column) => (column.label)),
@@ -30,7 +29,6 @@ class CSVExport extends Component {
 	}
 
 	reformatColumns(items) {
-
 		const flatList = items.map((item) => flatten(item, { maxDepth: 2 }));
 		
 		// convert columns
@@ -54,13 +52,19 @@ class CSVExport extends Component {
 
 		// combine on feature
 		reformattedList.map((item) => {
-			if(typeof concatObj[item.feature] === 'undefined') {
+      // Feature isn't already in the object
+			if (typeof concatObj[item.feature] === 'undefined') {
 				concatObj[item.feature] = item;
 			} else {
+        // Add to existing feature
 				for (const property in item) {
 					if(Array.isArray(item[property])) {
-						concatObj[item.feature][property] = [...concatObj[item.feature][property], ...item[property]];
+            concatObj[item.feature][property] = [
+              ...concatObj[item.feature][property],
+              ...item[property],
+            ];
 					} else if(typeof item[property] === 'number') {
+            // Sum the numbers
 						concatObj[item.feature][property] = concatObj[item.feature][property] + item[property] || item[property];
 					} 
 				}

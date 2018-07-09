@@ -5,9 +5,8 @@ import TicketTable from '../Tickets/Table';
 import { connect } from 'react-redux';
   
 class Table extends Component {
-  
-  onCustomFilter(property){
-    if(property === 'tags') {
+  onCustomFilter(property) {
+    if (property === 'tags') {
       return (
         <MultiSearch 
           items={this.props.items}
