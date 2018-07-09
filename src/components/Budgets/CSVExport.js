@@ -57,15 +57,21 @@ class CSVExport extends Component {
 		const flatList = items.map((item) => flatten(item, { maxDepth: 2 }));
 		
 		// convert columns
-		const reformattedList = flatList.map((item) => ({
+		const reformattedList = flatList.map((item) => {
+			let reformattedItem = {
 				[item['budgetHours.column']]: item['budgetHours.value'],
 				total: item['budgetHours.value'],
 				feature: item.feature,
-				'descriptions.budget': item['descriptions.budget'],
-				'descriptions.assumptions': item['descriptions.assumptions'],
-				'descriptions.clientResponsibilities': item['descriptions.clientResponsibilities'],
-				'descriptions.exclusions': item['descriptions.exclusions'],								
-		}));
+			};
+
+			for (const property in item) {
+				if(Array.isArray(item[property])) {
+					reformattedItem[property] = item[property];
+				}
+			}
+					
+			return reformattedItem;
+		});
 
 		let concatObj = {};
 
@@ -79,7 +85,6 @@ class CSVExport extends Component {
 						concatObj[item.feature][property] = [...concatObj[item.feature][property], ...item[property]];
 					} else if(typeof item[property] === 'number') {
 						concatObj[item.feature][property] = concatObj[item.feature][property] + item[property] || item[property];
-						console.log(property);
 					} 
 				}
 			}
@@ -90,11 +95,6 @@ class CSVExport extends Component {
 		for (const element in concatObj) {
 			concatList = [...concatList, concatObj[element]];
 		}
-
-		console.log(reformattedList);
-		console.log(concatObj);
-		console.log(concatList);
-
 
 		return concatList;
 	}
