@@ -33,6 +33,9 @@ class Budgets extends Component {
 
   componentDidMount() {
     this.props.dispatch(BudgetsActions.subscribe());
+    const visibleItems = this.filterItems(this.props.items, this.props.query);
+    this.props.dispatch(BudgetsActions.search({ query: this.props.query, visibleItems }));
+
   }
 
   filterItems(items, query) {
@@ -98,7 +101,7 @@ class Budgets extends Component {
      );
    }
 
-   renderTable() {
+  renderTable() {
 
     return (
       <Table 
@@ -111,15 +114,15 @@ class Budgets extends Component {
         userColumns={this.props.userColumns}
       /> 
     );
-   }
+  }
 
-   search(query) {
-     this.props.dispatch(BudgetsActions.search({ query }));
-   }
+  search(query) {
+    this.props.dispatch(BudgetsActions.search({ query }));
+  }
 
-   toggleColumn(payload){
-     this.props.dispatch(BudgetsActions.toggleColumn({ columnName: payload.columnName }));
-   }
+  toggleColumn(payload){
+    this.props.dispatch(BudgetsActions.toggleColumn({ columnName: payload.columnName }));
+  }
 
 
   render() {
@@ -170,6 +173,6 @@ const mapStateToProps = state => ({
   fields: state.budgets.fields,
   query: state.budgets.query,
   userColumns: state.budgets.userColumns,
-})
+});
 
 export default connect(mapStateToProps)(Budgets);
