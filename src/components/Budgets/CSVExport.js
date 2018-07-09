@@ -41,6 +41,17 @@ class CSVExport extends Component {
 
 		let concatObj = {};
 
+    const itemsByFeature = reformattedList.reduce((features, item) => {
+      features[item.feature] = [
+        ...features[item.feature] || [],
+        item,
+      ];
+
+      return features;
+    }, {});
+
+    console.log({ itemsByFeature, reformattedList });
+
 		// combine on feature
 		reformattedList.map((item) => {
       // Feature isn't already in the object
