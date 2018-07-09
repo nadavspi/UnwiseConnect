@@ -3,17 +3,32 @@ import flatten from 'flat';
 export function reformatColumns(items) {
 	const flatList = items.map((item) => flatten(item, { maxDepth: 2 }));
 		
+	const reformattedList = rotateOnTeam(flatList);
+	const itemsByFeature = groupByFeature(reformattedList);
+	const concatObj = concatOnProperties(reformattedList);
+	const concatList = convertToList(concatObj);
+
+	console.log({ concatObj });
+
+	console.log('Output:', concatList);
+
+	return concatList;
+}
+
+function rotateOnTeam(list) {
 	// convert columns
-  const reformattedList = flatList.map((item) => ({
+  const rotatedList = list.map((item) => ({
     ...item,
     // Put the hours in the right column
     [item['budgetHours.column']]: item['budgetHours.value'],
     total: item['budgetHours.value'],
   }));
 
-	let concatObj = {};
+  return rotatedList;
+}
 
-  const itemsByFeature = reformattedList.reduce((features, item) => {
+function groupByFeature(reformattedList) {
+	const itemsByFeature = reformattedList.reduce((features, item) => {
     features[item.feature] = [
       ...features[item.feature] || [],
       item,
@@ -22,10 +37,14 @@ export function reformatColumns(items) {
     return features;
   }, {});
 
-  console.log({ itemsByFeature, reformattedList });
+  return itemsByFeature;
+}
+
+function concatOnProperties(list) {
+	let concatObj = {};
 
 	// combine on feature
-	reformattedList.map((item) => {
+	list.map((item) => {
     // Feature isn't already in the object
 		if (typeof concatObj[item.feature] === 'undefined') {
 			concatObj[item.feature] = item;
@@ -45,11 +64,16 @@ export function reformatColumns(items) {
 		}
 	});
 
-	// convert concatObj from properties to array elements
-	let concatList = [];
-	for (const element in concatObj) {
-		concatList = [...concatList, concatObj[element]];
+	return concatObj;
+}
+
+// convert concatObj from properties to array elements
+function convertToList(object) {
+	let list = [];
+
+	for (const element in object) {
+		list = [...list, object[element]];
 	}
 
-	return concatList;
+	return list;
 }
