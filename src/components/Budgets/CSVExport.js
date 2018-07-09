@@ -32,21 +32,12 @@ class CSVExport extends Component {
 		const flatList = items.map((item) => flatten(item, { maxDepth: 2 }));
 		
 		// convert columns
-		const reformattedList = flatList.map((item) => {
-			let reformattedItem = {
-				[item['budgetHours.column']]: item['budgetHours.value'],
-				total: item['budgetHours.value'],
-				feature: item.feature,
-			};
-
-			for (const property in item) {
-				if(Array.isArray(item[property])) {
-					reformattedItem[property] = item[property];
-				}
-			}
-
-			return reformattedItem;
-		});
+    const reformattedList = flatList.map((item) => ({
+      ...item,
+      // Put the hours in the right column
+      [item['budgetHours.column']]: item['budgetHours.value'],
+      total: item['budgetHours.value'],
+    }));
 
 		let concatObj = {};
 
