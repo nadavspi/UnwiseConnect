@@ -1,4 +1,3 @@
-import jsonexport from 'jsonexport';
 import React, { Component } from 'react';
 import { CSVLink } from 'react-csv';
 import { reformatColumns } from '../../helpers/reformat';
