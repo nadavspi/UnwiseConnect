@@ -83,6 +83,7 @@ const initialState = {
     'budgetHours.value': true,
     tags: true,
   },
+  visibleItems: [],
 };
 
 export default (state = initialState, action) => {
@@ -103,9 +104,10 @@ export default (state = initialState, action) => {
 			};
 
 		case ActionTypes.BUDGETS_SEARCH:
-			return {
+      return {
 				...state,
 				query: action.payload.query,
+        visibleItems: action.payload.visibleItems,
 			};
 
 		case ActionTypes.BUDGETS_SUBSCRIBE:
@@ -126,6 +128,7 @@ export default (state = initialState, action) => {
       return {
         ...state,
         items: action.payload.items,
+        visibleItems: action.payload.items,
       };
 
 		case ActionTypes.BUDGETS_UPDATE_ITEM:

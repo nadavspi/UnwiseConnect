@@ -26,9 +26,7 @@ class CSVExport extends Component {
 	}
 
 	exportFile() {
-		const data = this.reformatColumns(this.props.filterItems(this.props.items,this.props.query));
-		console.log(data);
-		return data;
+		return this.reformatColumns(this.props.visibleItems);
 	}
 
 	reformatColumns(items) {
