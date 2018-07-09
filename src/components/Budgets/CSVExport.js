@@ -34,41 +34,72 @@ class CSVExport extends Component {
 	}
 
 	reformatColumns(items) {
-		let reformattedList = {};
 
-		// reformattedList = {
-		// 	...reformattedList,
-		// 	newItem = {
-		// 		[flatItem['budgetHours.column']: existingItem[sameCol].value + flatItem['budgetHours.value'],
-		// 		total: existingItem[total] + flatItem['budgetHours.value'],
-		// 		description: existingItem.description + flatItem['descriptions.budget'],
-		// 		'descriptions.assumptions': existingItem['description.assumptions'] + flatItem['descriptions.assumptions'],
-		// 		'descriptions.exclusions': existingItem['description.exclusions'] + flatItem['descriptions.exclusions'],
+		// list = {
+		// 	klevu: {
+		// 		dev:,
+		// 		total:,
+		// 		exclusions:,
 		// 	}
 		// }
 
-		// reformattedList[item.feature] = existingItem
+		// list = [{
+		// 	feature: klevu,
+		// 	dev:,
+		// 	total:,
+		// }, {
+		// 	feature: exia,
+		// 	dev:,
+		// 	total:,
+		// }
+		// ]
 
-		reformattedList = items.map((item) => {
-			
-			const flatItem = flatten(item, { maxDepth: 2 });
+		const flatList = items.map((item) => flatten(item, { maxDepth: 2 }));
+		
+		// convert columns
+		const reformattedList = flatList.map((item) => ({
+				[item['budgetHours.column']]: item['budgetHours.value'],
+				total: item['budgetHours.value'],
+				feature: item.feature,
+				'descriptions.budget': item['descriptions.budget'],
+				'descriptions.assumptions': item['descriptions.assumptions'],
+				'descriptions.clientResponsibilities': item['descriptions.clientResponsibilities'],
+				'descriptions.exclusions': item['descriptions.exclusions'],								
+		}));
 
-			const reformattedItem = {
-				[flatItem['budgetHours.column']]: flatItem['budgetHours.value'],
-				total: flatItem['budgetHours.value'],
-				feature: flatItem.feature,
-				description: flatItem['descriptions.budget'],
-				'descriptions.assumptions': flatItem['descriptions.assumptions'],
-				'descriptions.exclusions': flatItem['descriptions.exclusions'],
-			};
+		let concatObj = {};
 
-			return reformattedItem;
+		// combine on feature
+		reformattedList.map((item) => {
+			if(typeof concatObj[item.feature] === 'undefined') {
+				concatObj[item.feature] = item;
+			} else {
+				for (const property in item) {
+					if(Array.isArray(item[property])) {
+						concatObj[item.feature][property] = [...concatObj[item.feature][property], ...item[property]];
+					} else if(typeof item[property] === 'number') {
+						concatObj[item.feature][property] = concatObj[item.feature][property] + item[property] || item[property];
+						console.log(property);
+					} 
+				}
+			}
 		});
 
-		console.log(reformattedList);
+		// convert concatObj from properties to array elements
+		let concatList = [];
+		for (const element in concatObj) {
+			concatList = [...concatList, concatObj[element]];
+		}
 
-		return reformattedList;
+		console.log(reformattedList);
+		console.log(concatObj);
+		console.log(concatList);
+
+
+		return concatList;
 	}
+
+
 
 	render() {
 		return (
@@ -113,7 +144,7 @@ CSVExport.defaultProps = {
 		value:'total',
 		label:'Total',
 	},{
-		value:'description',
+		value:'descriptions.budget',
 		label:'Description',
 	},{
 		value:'descriptions.assumptions',
