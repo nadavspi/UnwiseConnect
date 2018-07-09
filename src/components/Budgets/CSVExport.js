@@ -1,4 +1,3 @@
-import flatten from 'flat';
 import jsonexport from 'jsonexport';
 import React, { Component } from 'react';
 import { CSVLink } from 'react-csv';
@@ -9,20 +8,6 @@ class CSVExport extends Component {
 		super();
 
 		this.exportFile = this.exportFile.bind(this);
-	}
-
-	convertFileType(data) {
-		const options = {
-			headers: this.props.columns.map((column) => (column.value)),
-			rename: this.props.columns.map((column) => (column.label)),
-		};
-		
-		jsonexport(data, options, (err,csv) => {
-			if(err) {
-				return console.log(err);
-			}
-			return csv;
-		});
 	}
 
 	exportFile() {
