@@ -8,11 +8,13 @@ class Table extends Component {
   
   onCustomFilter(property){
     if(property === 'tags') {
-      return (<MultiSearch 
-                items={this.props.items}
-                query={this.props.query}
-                onFilter={this.props.search}
-              />);
+      return (
+        <MultiSearch 
+          items={this.props.items}
+          query={this.props.query}
+          onFilter={this.props.search}
+        />
+      );
     }
   }
 
