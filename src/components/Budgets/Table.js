@@ -2,6 +2,7 @@ import CSVExport from './CSVExport';
 import MultiSearch from './MultiSearch';
 import React, { Component } from 'react';
 import TicketTable from '../Tickets/Table';
+import { connect } from 'react-redux';
   
 class Table extends Component {
   
@@ -50,12 +51,20 @@ class Table extends Component {
         <CSVExport 
           items={this.props.items}
           fields={this.props.fields}
-          filterItems={this.props.filterItems} 
           query={this.props.query}
+          visibleItems={this.props.visibleItems}
         />
       </div> 
     );
   }
 }
 
-export default Table;
+const mapStateToProps = state => ({
+  items: state.budgets.items,
+  fields: state.budgets.fields,
+  query: state.budgets.query,
+  userColumns: state.budgets.userColumns,
+  visibleItems: state.budgets.visibleItems,
+});
+
+export default connect(mapStateToProps)(Table);

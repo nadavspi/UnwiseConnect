@@ -33,9 +33,6 @@ class Budgets extends Component {
 
   componentDidMount() {
     this.props.dispatch(BudgetsActions.subscribe());
-    const visibleItems = this.filterItems(this.props.items, this.props.query);
-    this.props.dispatch(BudgetsActions.search({ query: this.props.query, visibleItems }));
-
   }
 
   filterItems(items, query) {
@@ -70,7 +67,7 @@ class Budgets extends Component {
       [field]: value,
     };
 
-    this.props.dispatch(BudgetsActions.search({ query: newQuery })); 
+    this.props.dispatch(BudgetsActions.search({ query: newQuery, visibleItems:this.filterItems(this.props.items, newQuery) })); 
   }
 
   onAdd(item) {
@@ -89,14 +86,10 @@ class Budgets extends Component {
 
      return (
        <List
-         items={this.props.items}
          filter={this.state.filter}
-         filterItems={this.filterItems}
-         fields={this.props.fields}
          onFilter={this.onFilter}
          onEdit={this.onEdit}
          onDelete={this.onDelete}
-         query={this.props.query}
        />
      );
    }
@@ -105,19 +98,15 @@ class Budgets extends Component {
 
     return (
       <Table 
-        fields={this.props.fields}
-        filterItems={this.filterItems}
-        items={this.props.items}
-        query={this.props.query}
         search={this.search}
         toggleColumn={this.toggleColumn}
-        userColumns={this.props.userColumns}
       /> 
     );
   }
 
   search(query) {
-    this.props.dispatch(BudgetsActions.search({ query }));
+    const visibleItems = this.filterItems(this.props.items, query);
+    this.props.dispatch(BudgetsActions.search({ query, visibleItems }));
   }
 
   toggleColumn(payload){
@@ -173,6 +162,7 @@ const mapStateToProps = state => ({
   fields: state.budgets.fields,
   query: state.budgets.query,
   userColumns: state.budgets.userColumns,
+  visibleItems: state.budgets.visibleItems,
 });
 
 export default connect(mapStateToProps)(Budgets);
