@@ -1,3 +1,4 @@
+import XLSX from 'xlsx';
 import React, { Component } from 'react';
 import { CSVLink } from 'react-csv';
 import { reformatColumns } from '../../helpers/reformat';
@@ -6,6 +7,7 @@ class CSVExport extends Component {
 	constructor(){
 		super();
 
+		this.exportXlsx = this.exportXlsx.bind(this);
 		this.exportFile = this.exportFile.bind(this);
 	}
 
@@ -13,10 +15,117 @@ class CSVExport extends Component {
 		return reformatColumns(this.props.visibleItems);
 	}
 
-	render() {
+	unravel(array){
+		let string = '';
+		
+		if(Array.isArray(array)) {	
+			array.map((element) => {
+				string += element + '\n';
+			});
+		} else {
+			string = array;
+		}
 
+		return string;
+	}
+
+	exportXlsx() {
+		const items = reformatColumns(this.props.visibleItems);
+		
+		const rows = items.map((item) => {
+			const row = {
+				...this.props.defaultRow,	
+			};
+
+			for (const property in item) {
+				const column = this.props.columns.find((element) => {
+					return element.key === property;
+				});
+				console.log('column:', column);
+				if(typeof column !== 'undefined') {
+					row[column.label] = (property.indexOf('descriptions.') > -1) ? this.unravel(item[property]) : item[property];
+				}
+			}
+
+			return row;
+		});
+
+		const header = this.props.columns.map((column) => (column.label));
+
+		const rowOffset = 2;
+
+		const footer = {
+			Feature: 'Estimated Total Hours',
+			Disc: {
+				function: 'SUM(C' + rowOffset + ':C' + (rowOffset + rows.length - 1) + ')',
+				col: 2,
+			},
+			Design: {
+				function: 'SUM(D' + rowOffset + ':D' + (rowOffset + rows.length - 1) + ')',
+				col: 3,
+			},
+			Dev: {
+				function: 'SUM(E' + rowOffset + ':E' + (rowOffset + rows.length - 1 ) + ')',
+				col: 4,
+			},
+			Testing: {
+				function: 'SUM(F' + rowOffset + ':F' + (rowOffset + rows.length - 1 ) + ')',
+				col: 5,
+			},
+			Remediation: {
+				function: 'SUM(G' + rowOffset + ':G' + (rowOffset + rows.length - 1 ) + ')',
+				col: 6,
+			},
+			Deploy: {
+				function: 'SUM(H' + rowOffset + ':H' + (rowOffset + rows.length - 1 ) + ')',
+				col: 7,
+			},
+			PM: {
+				function: 'SUM(I' + rowOffset + ':I' + (rowOffset + rows.length - 1 ) + ')',
+				col: 8,
+			},
+			Total: {
+				function: 'SUM(C' + (rowOffset + rows.length) + ':I' + (rowOffset + rows.length) + ')',
+				col: 9,
+			},
+		};
+		
+
+		const wb = XLSX.utils.book_new();
+
+		const ws = XLSX.utils.json_to_sheet([...rows, footer],{ header:header });
+
+		for(let i = rowOffset; i < rows.length + rowOffset; i++){
+			for (const property in rows[i - rowOffset]) {
+				const prop = rows[i - rowOffset][property];
+
+				if (typeof prop === 'object' && !Array.isArray(prop)) {
+					const formula = prop.function.replace(new RegExp('{row}', 'g'), (i));
+					
+					const cell = { f: formula, t:'n'};
+					const cell_ref = XLSX.utils.encode_cell({ c:prop.col, r:(i - 1) });
+					ws[cell_ref] = cell;	
+				}
+			}
+		}
+		
+		XLSX.utils.book_append_sheet(wb,ws,'Budget');
+
+		console.log('Testing xlsx');
+		console.log(header);
+		console.log(rows);
+		console.log(footer);
+		XLSX.writeFile(wb, 'Budget.xlsx');
+	}
+
+	render() {
 		return (
 			<div>
+				<button
+					onClick={this.exportXlsx}
+					className="btn btn-primary">
+					Write to Xlsx
+				</button>
 				<CSVLink
 					data={this.exportFile()}
 					headers={this.props.columns}
@@ -30,64 +139,83 @@ class CSVExport extends Component {
 }
 
 CSVExport.defaultProps = {
-	columns: [{
-		key:'feature',		
-		value:'feature',
-		label:'Page/Feature',
-	},{
-		key:'t&m',
-		value:'t&m',
-		label:'T&M',
-	},{
-		key:'Discovery',
-		value:'Discovery',
-		label:'Disc',
-	},{
-		key:'Design',
-		value:'Design',
-		label:'Design',
-	},{
-		key:'Dev',
-		value:'Dev',
-		label:'Dev',
-	},{
-		key:'Testing',
-		value:'Testing',
-		label:'Testing',
-	},{
-		key:'Remediation',
-		value:'Remediation',
-		label:'Remediation',
-	},{
-		key:'Deploy',
-		value:'Deploy',
-		label:'Deploy',
-	},{
-		key:'PM',
-		value:'PM',
-		label:'PM',
-	},{
-		key:'total',
-		value:'total',
-		label:'Total',
-	},{
-		key:'descriptions.budget',
-		value:'descriptions.budget',
-		label:'Description',
-	},{
-		key:'descriptions.assumptions',
-		value:'descriptions.assumptions',
-		label:'Assumptions',
-	},{
-		key:'descriptions.clientResponsibilities',
-		value:'descriptions.clientResponsibilities',
-		label:'Client Responsibilities',
-	},{
-		key:'descriptions.exclusions',
-		value:'descriptions.exclusions',
-		label:'Exclusions',
-	},
-	]	 
+	columns: [
+		{
+			key:'feature',		
+			value:'feature',
+			label:'Feature',
+		},{
+			key:'t&m',
+			value:'t&m',
+			label:'T&M',
+		},{
+			key:'Discovery',
+			value:'Discovery',
+			label:'Disc',
+		},{
+			key:'Design',
+			value:'Design',
+			label:'Design',
+		},{
+			key:'Dev',
+			value:'Dev',
+			label:'Dev',
+		},{
+			key:'Testing',
+			value:'Testing',
+			label:'Testing',
+		},{
+			key:'Remediation',
+			value:'Remediation',
+			label:'Remediation',
+		},{
+			key:'Deploy',
+			value:'Deploy',
+			label:'Deploy',
+		},{
+			key:'PM',
+			value:'PM',
+			label:'PM',
+		},{
+			key:'total',
+			value:'total',
+			label:'Total',
+		},{
+			key:'descriptions.budget',
+			value:'descriptions.budget',
+			label:'Description',
+		},{
+			key:'descriptions.assumptions',
+			value:'descriptions.assumptions',
+			label:'Assumptions',
+		},{
+			key:'descriptions.clientResponsibilities',
+			value:'descriptions.clientResponsibilities',
+			label:'Client Responsibilities',
+		},{
+			key:'descriptions.exclusions',
+			value:'descriptions.exclusions',
+			label:'Exclusions',
+		},
+	],
+	defaultRow: {
+		Testing: {
+			function: 'SUM(E{row})*F$2',
+			col: 5,
+		},
+		Remediation: {
+			function: 'SUM(E{row})*G$2',
+			col: 6,
+		},
+		PM: {
+			function: 'SUM(C{row}:H{row})*I$2',
+			col: 8,
+		},
+		Total: {
+			function: 'SUM(C{row}:I{row})',
+			col: 9,
+		},
+	}, 
 }
 
 export default CSVExport;
