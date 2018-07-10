@@ -8,10 +8,6 @@ export function reformatColumns(items) {
 	const concatObj = concatOnProperties(reformattedList);
 	const concatList = convertToList(concatObj);
 
-	console.log({ concatObj });
-
-	console.log('Output:', concatList);
-
 	return concatList;
 }
 
