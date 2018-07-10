@@ -32,6 +32,7 @@ class CSVExport extends Component {
 	exportXlsx() {
 		const items = reformatColumns(this.props.visibleItems);
 		
+		// reformat columns for xlsx
 		const rows = items.map((item) => {
 			const row = {
 				...this.props.defaultRow,	
@@ -52,7 +53,7 @@ class CSVExport extends Component {
 
 		const header = this.props.columns.map((column) => (column.label));
 
-		const rowOffset = 2;
+		const rowOffset = 5;
 
 		const footer = {
 			Feature: 'Estimated Total Hours',
@@ -90,11 +91,18 @@ class CSVExport extends Component {
 			},
 		};
 		
-
+		// creates workbook
 		const wb = XLSX.utils.book_new();
 
-		const ws = XLSX.utils.json_to_sheet([...rows, footer],{ header:header });
+		// creates worksheet
+		const ws = XLSX.utils.json_to_sheet(
+			[...rows, footer],
+			{ 
+				header:header,
+				origin: 'A4',
+			});
 
+		// adds functions to rows
 		for(let i = rowOffset; i < rows.length + rowOffset; i++){
 			for (const property in rows[i - rowOffset]) {
 				const prop = rows[i - rowOffset][property];
@@ -106,6 +114,18 @@ class CSVExport extends Component {
 					const cell_ref = XLSX.utils.encode_cell({ c:prop.col, r:(i - 1) });
 					ws[cell_ref] = cell;	
 				}
+			}
+		}
+
+		// adds functions to footer
+		for (const property in footer) {
+			const prop = footer[property];
+			if (typeof prop === 'object' && !Array.isArray(prop)) {
+				const formula = prop.function.replace(new RegExp('{row}', 'g'), (rowOffset + rows.length));
+				
+				const cell = { f: formula, t:'n'};
+				const cell_ref = XLSX.utils.encode_cell({ c:prop.col, r:(rowOffset + rows.length - 1) });
+				ws[cell_ref] = cell;	
 			}
 		}
 		
@@ -141,60 +161,46 @@ class CSVExport extends Component {
 CSVExport.defaultProps = {
 	columns: [
 		{
-			key:'feature',		
-			value:'feature',
+			key:'feature',	
 			label:'Feature',
 		},{
 			key:'t&m',
-			value:'t&m',
 			label:'T&M',
 		},{
 			key:'Discovery',
-			value:'Discovery',
 			label:'Disc',
 		},{
 			key:'Design',
-			value:'Design',
 			label:'Design',
 		},{
 			key:'Dev',
-			value:'Dev',
 			label:'Dev',
 		},{
 			key:'Testing',
-			value:'Testing',
 			label:'Testing',
 		},{
 			key:'Remediation',
-			value:'Remediation',
 			label:'Remediation',
 		},{
 			key:'Deploy',
-			value:'Deploy',
 			label:'Deploy',
 		},{
 			key:'PM',
-			value:'PM',
 			label:'PM',
 		},{
 			key:'total',
-			value:'total',
 			label:'Total',
 		},{
 			key:'descriptions.budget',
-			value:'descriptions.budget',
 			label:'Description',
 		},{
 			key:'descriptions.assumptions',
-			value:'descriptions.assumptions',
 			label:'Assumptions',
 		},{
 			key:'descriptions.clientResponsibilities',
-			value:'descriptions.clientResponsibilities',
 			label:'Client Responsibilities',
 		},{
 			key:'descriptions.exclusions',
-			value:'descriptions.exclusions',
 			label:'Exclusions',
 		},
 	],
