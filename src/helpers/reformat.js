@@ -21,8 +21,7 @@ function rotateOnTeam(list) {
     ...item,
     // Put the hours in the right column
     [item['budgetHours.column']]: item['budgetHours.value'],
-    total: item['budgetHours.value'],
-  }));
+   }));
 
   return rotatedList;
 }
