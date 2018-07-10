@@ -37,7 +37,8 @@
     "searchtabular": "^1.4.0",
     "segmentize": "^0.4.1",
     "sort-by": "^1.2.0",
-    "table-resolver": "4.0.1"
+    "table-resolver": "4.0.1",
+    "xlsx": "^0.13.2"
   },
   "scripts": {
     "start": "react-scripts start",
