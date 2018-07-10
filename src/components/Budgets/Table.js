@@ -50,9 +50,6 @@ class Table extends Component {
           columns={columns}
         />
         <CSVExport 
-          items={this.props.items}
-          fields={this.props.fields}
-          query={this.props.query}
           visibleItems={this.props.visibleItems}
         />
       </div> 
