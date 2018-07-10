@@ -51,6 +51,8 @@ class CSVExport extends Component {
 			return row;
 		});
 
+		const bufferRows = new Array(15);
+
 		const header = this.props.columns.map((column) => (column.label));
 
 		const rowOffset = 5;
@@ -58,35 +60,35 @@ class CSVExport extends Component {
 		const footer = {
 			Feature: 'Estimated Total Hours',
 			Disc: {
-				function: 'SUM(C' + rowOffset + ':C' + (rowOffset + rows.length - 1) + ')',
+				function: 'SUM(C' + rowOffset + ':C' + (rowOffset + rows.length + bufferRows.length - 1) + ')',
 				col: 2,
 			},
 			Design: {
-				function: 'SUM(D' + rowOffset + ':D' + (rowOffset + rows.length - 1) + ')',
+				function: 'SUM(D' + rowOffset + ':D' + (rowOffset + rows.length + bufferRows.length - 1) + ')',
 				col: 3,
 			},
 			Dev: {
-				function: 'SUM(E' + rowOffset + ':E' + (rowOffset + rows.length - 1 ) + ')',
+				function: 'SUM(E' + rowOffset + ':E' + (rowOffset + rows.length + bufferRows.length - 1 ) + ')',
 				col: 4,
 			},
 			Testing: {
-				function: 'SUM(F' + rowOffset + ':F' + (rowOffset + rows.length - 1 ) + ')',
+				function: 'SUM(F' + rowOffset + ':F' + (rowOffset + rows.length + bufferRows.length - 1 ) + ')',
 				col: 5,
 			},
 			Remediation: {
-				function: 'SUM(G' + rowOffset + ':G' + (rowOffset + rows.length - 1 ) + ')',
+				function: 'SUM(G' + rowOffset + ':G' + (rowOffset + rows.length + bufferRows.length - 1 ) + ')',
 				col: 6,
 			},
 			Deploy: {
-				function: 'SUM(H' + rowOffset + ':H' + (rowOffset + rows.length - 1 ) + ')',
+				function: 'SUM(H' + rowOffset + ':H' + (rowOffset + rows.length + bufferRows.length - 1 ) + ')',
 				col: 7,
 			},
 			PM: {
-				function: 'SUM(I' + rowOffset + ':I' + (rowOffset + rows.length - 1 ) + ')',
+				function: 'SUM(I' + rowOffset + ':I' + (rowOffset + rows.length + bufferRows.length - 1 ) + ')',
 				col: 8,
 			},
 			Total: {
-				function: 'SUM(C' + (rowOffset + rows.length) + ':I' + (rowOffset + rows.length) + ')',
+				function: 'SUM(C' + (rowOffset + rows.length + bufferRows.length) + ':I' + (rowOffset + rows.length + bufferRows.length) + ')',
 				col: 9,
 			},
 		};
@@ -96,11 +98,16 @@ class CSVExport extends Component {
 
 		// creates worksheet
 		const ws = XLSX.utils.json_to_sheet(
-			[...rows, footer],
+			[
+				...rows, 
+				...bufferRows,
+				footer,
+			],
 			{ 
 				header:header,
 				origin: 'A4',
-			});
+			}
+		);
 
 		// adds functions to rows
 		for(let i = rowOffset; i < rows.length + rowOffset; i++){
@@ -121,13 +128,20 @@ class CSVExport extends Component {
 		for (const property in footer) {
 			const prop = footer[property];
 			if (typeof prop === 'object' && !Array.isArray(prop)) {
-				const formula = prop.function.replace(new RegExp('{row}', 'g'), (rowOffset + rows.length));
+				const formula = prop.function.replace(new RegExp('{row}', 'g'), (rowOffset + rows.length + bufferRows.length));
 				
 				const cell = { f: formula, t:'n'};
-				const cell_ref = XLSX.utils.encode_cell({ c:prop.col, r:(rowOffset + rows.length - 1) });
+				const cell_ref = XLSX.utils.encode_cell({ c:prop.col, r:(rowOffset + rows.length + bufferRows.length - 1) });
 				ws[cell_ref] = cell;	
 			}
 		}
+
+		// adds constants
+		this.props.constants.map((constant) => {
+			const cell = {v: constant.value, t: constant.type}
+			const cell_ref = XLSX.utils.encode_cell({c: constant.col, r: constant.row});
+			ws[cell_ref] = cell;	
+		});
 		
 		XLSX.utils.book_append_sheet(wb,ws,'Budget');
 
@@ -144,7 +158,7 @@ class CSVExport extends Component {
 				<button
 					onClick={this.exportXlsx}
 					className="btn btn-primary">
-					Write to Xlsx
+					Export to Xlsx
 				</button>
 				<CSVLink
 					data={this.exportFile()}
@@ -221,7 +235,28 @@ CSVExport.defaultProps = {
 			function: 'SUM(C{row}:I{row})',
 			col: 9,
 		},
-	}, 
+	},
+	constants: [
+	{
+		label: 'Testing',
+		value: 0.2,
+		type: 'n',
+		col: 5,
+		row: 1,
+	},{
+		label: 'Remediation',
+		value: 0.4,
+		type: 'n',
+		col: 6,
+		row: 1,
+	},{
+		label: 'PM',
+		value: 0.2,
+		type: 'n',
+		col: 8,
+		row: 1,
+	},
+	],
 }
 
 export default CSVExport;
