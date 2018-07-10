@@ -1,3 +1,4 @@
+import CSVExport from './CSVExport';
 import React, { Component } from 'react';
 import Item from './Item';
 import SearchBar from './Search';
@@ -24,6 +25,9 @@ class List extends Component {
             key={item.id}
           />
         )}
+        <CSVExport 
+          visibleItems={this.props.visibleItems}
+        />
       </div>
 		);
 	}
