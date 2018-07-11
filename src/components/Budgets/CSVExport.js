@@ -44,7 +44,6 @@ class CSVExport extends Component {
 					const column = this.props.columns.find((element) => {
 						return element.key === property;
 					});
-					console.log('column:', column);
 					if(typeof column !== 'undefined') {
 						row[column.label] = (property.indexOf('descriptions.') > -1) ? this.unravel(item[property]) : item[property];
 					}

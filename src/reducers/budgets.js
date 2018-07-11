@@ -1,8 +1,7 @@
 import { ActionTypes } from '../config/constants';
-import nanoid from 'nanoid';
 
 const initialState = {
-	items: [],
+	itemList: {},
   fields: [
     {
       filterType: 'textfield',
@@ -84,32 +83,7 @@ const initialState = {
     'budgetHours.value': true,
     tags: true,
   },
-  defaultItem:  {
-    id: nanoid(),
-    summary:  "",
-    phase:    "",
-    feature:  "",
-    budgetHours: { 
-      column: "",
-      value: 0,
-    },
-    descriptions: {
-      workplan: [],
-      budget: [],
-      assumptions: [],
-      exclusions: [],
-    },
-    tags: "",
-
-    'budgetHours.column': "",
-    'budgetHours.value': 0,
-    'descriptions.workplan': [],
-    'descriptions.budget': [],
-    'descriptions.clientResponsibilities': [],
-    'descriptions.assumptions': [],
-    'descriptions.exclusions': [],  
-  },
-  visibleItems: [],
+  visibleItemList: {},
 };
 
 export default (state = initialState, action) => {
@@ -117,23 +91,29 @@ export default (state = initialState, action) => {
 		case ActionTypes.BUDGETS_ADD_ITEM:
 			return {
 				...state,
-				items: [ 
-					...state.items, 
-					action.payload.item, 
-				],
+        itemList: {
+          ...state.itemList,
+          [action.payload.item.id]: action.payload.item,
+        }
 			};
 
 		case ActionTypes.BUDGETS_REMOVE_ITEM:
-			return {
-				...state,
-				items: state.items.filter(item => item.id !== action.payload.itemId)
-			};
+      delete state.itemList[action.payload.itemId];
+
+      return state;
 
 		case ActionTypes.BUDGETS_SEARCH:
+      const visibleItemList = {};
+      action.payload.visibleItems.map((item) => {
+          visibleItemList[item.id] = item;
+      });
+
+      console.log(visibleItemList);
+
       return {
 				...state,
 				query: action.payload.query,
-        visibleItems: action.payload.visibleItems,
+        visibleItemList,
 			};
 
 		case ActionTypes.BUDGETS_SUBSCRIBE:
@@ -153,15 +133,19 @@ export default (state = initialState, action) => {
     case ActionTypes.BUDGETS_UPDATE:
       return {
         ...state,
-        items: action.payload.items,
-        visibleItems: action.payload.items,
+        itemList: action.payload.itemList,
+        visibleItemList: action.payload.itemList,
       };
 
 		case ActionTypes.BUDGETS_UPDATE_ITEM:
-			return {
-				...state,
-				items: state.items.map(item => action.payload.updatedItem.id === item.id ? action.payload.updatedItem : item),
-			};
+			
+      return {
+        ...state,
+        itemList: { 
+          ...state.itemList,
+          [action.payload.updatedItem.id]: action.payload.updatedItem,
+        },
+      };
 
 		default:
 			return state;

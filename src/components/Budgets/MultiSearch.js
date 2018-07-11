@@ -1,7 +1,6 @@
 import React from 'react';
 import Select from 'react-select';
 import { connect } from 'react-redux';
-import { flattenArray } from '../../helpers/utils';
 
 class Search extends React.Component {
 	constructor(){
@@ -15,13 +14,16 @@ class Search extends React.Component {
 	}
 
   createOptions() {
-    const tags = new Set(flattenArray(this.props.items.map(item => {
-      if (!item.tags) {
-        return '';
-      }
+  	let tags = [];
 
-      return item.tags.split(' ');
-    }))); 
+  	for (const item in this.props.itemList) {
+  		if(this.props.itemList.hasOwnProperty(item)) {
+  			const tagGroup = this.props.itemList[item].tags;
+  			tags = [...tags, ...tagGroup.split(' ')];
+  		}
+  	}
+
+  	tags = new Set(tags);
 
     const options = [...tags].map(tag => ({
       value: tag,
@@ -61,7 +63,7 @@ class Search extends React.Component {
 }
 
 const mapStateToProps = state => ({
-	items: state.budgets.items,
+	itemList: state.budgets.itemList,
 	query: state.budgets.query,
 });
 

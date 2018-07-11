@@ -8,6 +8,7 @@ import { connect } from 'react-redux';
 import { Route, Link } from 'react-router-dom';
 import { compose } from 'redux';
 import { multiInfix } from '../../helpers/utils';
+import { convertToList } from '../../helpers/reformat';
 
 class Budgets extends Component {
 	constructor(props) {
@@ -36,7 +37,7 @@ class Budgets extends Component {
   }
 
   filterItems(items, query) {
-    const rows = this.props.items;
+    const rows = this.props.itemArray;
     const columns = this.props.fields.map((field) => ({
       property: field.name,      
       header: {
@@ -67,7 +68,7 @@ class Budgets extends Component {
       [field]: value,
     };
 
-    this.props.dispatch(BudgetsActions.search({ query: newQuery, visibleItems:this.filterItems(this.props.items, newQuery) })); 
+    this.props.dispatch(BudgetsActions.search({ query: newQuery, visibleItems:this.filterItems(this.props.itemArray, newQuery) })); 
   }
 
   onAdd(item) {
@@ -104,7 +105,7 @@ class Budgets extends Component {
   }
 
   search(query) {
-    const visibleItems = this.filterItems(this.props.items, query);
+    const visibleItems = this.filterItems(this.props.itemArray, query);
     this.props.dispatch(BudgetsActions.search({ query, visibleItems }));
   }
 
@@ -156,11 +157,11 @@ class Budgets extends Component {
 }
 
 const mapStateToProps = state => ({
-  items: state.budgets.items,
+  itemArray: convertToList(state.budgets.itemList),
   fields: state.budgets.fields,
   query: state.budgets.query,
   userColumns: state.budgets.userColumns,
-  visibleItems: state.budgets.visibleItems,
+  visibleItems: convertToList(state.budgets.visibleItems),
 });
 
 export default connect(mapStateToProps)(Budgets);

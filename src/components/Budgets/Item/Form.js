@@ -1,4 +1,5 @@
 import flatten from 'flat';
+import nanoid from 'nanoid';
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 
@@ -38,7 +39,10 @@ class Form extends Component {
     
     this.setState({ 
       isEditing: Form.defaultProps.isEditing, 
-      item: this.props.item, 
+      item: {
+        ...this.props.item,
+        id: nanoid(),
+      }, 
     });
     
     // Focus on the first input
@@ -77,11 +81,35 @@ class Form extends Component {
 }
 
 Form.defaultProps = {
+  item: {
+    id: nanoid(),
+    summary:  "",
+    phase:    "",
+    feature:  "",
+    budgetHours: { 
+      column: "",
+      value: 0,
+    },
+    descriptions: {
+      workplan: [],
+      budget: [],
+      assumptions: [],
+      exclusions: [],
+    },
+    tags: "",
+
+    'budgetHours.column': "",
+    'budgetHours.value': 0,
+    'descriptions.workplan': [],
+    'descriptions.budget': [],
+    'descriptions.clientResponsibilities': [],
+    'descriptions.assumptions': [],
+    'descriptions.exclusions': [],  
+  },
   isEditing: false,
 };
 
 const mapStateToProps = state => ({
-  item: state.budgets.defaultItem,
   fields: state.budgets.fields,
 });
 
