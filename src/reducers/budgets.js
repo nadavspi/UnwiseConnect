@@ -1,4 +1,5 @@
 import { ActionTypes } from '../config/constants';
+import nanoid from 'nanoid';
 
 const initialState = {
 	items: [],
@@ -82,6 +83,31 @@ const initialState = {
     'budgetHours.column': true,
     'budgetHours.value': true,
     tags: true,
+  },
+  defaultItem:  {
+    id: nanoid(),
+    summary:  "",
+    phase:    "",
+    feature:  "",
+    budgetHours: { 
+      column: "",
+      value: 0,
+    },
+    descriptions: {
+      workplan: [],
+      budget: [],
+      assumptions: [],
+      exclusions: [],
+    },
+    tags: "",
+
+    'budgetHours.column': "",
+    'budgetHours.value': 0,
+    'descriptions.workplan': [],
+    'descriptions.budget': [],
+    'descriptions.clientResponsibilities': [],
+    'descriptions.assumptions': [],
+    'descriptions.exclusions': [],  
   },
   visibleItems: [],
 };
