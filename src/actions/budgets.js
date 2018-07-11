@@ -24,19 +24,12 @@ export const subscribe = payload => {
 		
     const itemsRef = ref.child(`items`);
     itemsRef.on('value', snapshot => {
-      const itemsGroup = snapshot.val();
-      let items = [];
-      for(const item in itemsGroup) {
-        if(itemsGroup.hasOwnProperty(item)) {
-          items = [...items, itemsGroup[item]];
-        }
-      }
+      const itemList = snapshot.val();
 
       dispatch({
         type: ActionTypes.BUDGETS_UPDATE,
         payload: { 
-          items,
-          itemList: itemsGroup,
+          itemList: itemList,
         }
       });
     });   
