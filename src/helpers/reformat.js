@@ -4,7 +4,7 @@ export function reformatColumns(items) {
 	const flatList = items.map((item) => flatten(item, { maxDepth: 2 }));
 		
 	const reformattedList = rotateOnTeam(flatList);
-	const itemsByFeature = groupByFeature(reformattedList);
+	// const itemsByFeature = groupByFeature(reformattedList);
 	const concatObj = concatOnProperties(reformattedList);
 	const concatList = convertToList(concatObj);
 
@@ -22,18 +22,18 @@ function rotateOnTeam(list) {
   return rotatedList;
 }
 
-function groupByFeature(reformattedList) {
-	const itemsByFeature = reformattedList.reduce((features, item) => {
-    features[item.feature] = [
-      ...features[item.feature] || [],
-      item,
-    ];
+// function groupByFeature(reformattedList) {
+// 	const itemsByFeature = reformattedList.reduce((features, item) => {
+//     features[item.feature] = [
+//       ...features[item.feature] || [],
+//       item,
+//     ];
 
-    return features;
-  }, {});
+//     return features;
+//   }, {});
 
-  return itemsByFeature;
-}
+//   return itemsByFeature;
+// }
 
 function concatOnProperties(list) {
 	let concatObj = {};
@@ -57,6 +57,7 @@ function concatOnProperties(list) {
 				} 
 			}
 		}
+		return item;
 	});
 
 	return concatObj;
@@ -67,7 +68,9 @@ function convertToList(object) {
 	let list = [];
 
 	for (const element in object) {
-		list = [...list, object[element]];
+		if(object.hasOwnProperty(element)) {
+			list = [...list, object[element]];
+		}
 	}
 
 	return list;
