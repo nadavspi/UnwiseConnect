@@ -32,7 +32,7 @@ class Budgets extends Component {
   }
 
   componentDidMount() {
-    this.props.dispatch(BudgetsActions.subscribe({ defaultItem: this.props.defaultItem }));
+    this.props.dispatch(BudgetsActions.subscribe());
   }
 
   filterItems(items, query) {
