@@ -64,7 +64,7 @@ function concatOnProperties(list) {
 }
 
 // convert concatObj from properties to array elements
-function convertToList(object) {
+export function convertToList(object) {
 	let list = [];
 
 	for (const element in object) {
