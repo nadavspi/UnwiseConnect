@@ -1,8 +1,8 @@
-import React, { Component } from 'react';
-import nanoid from 'nanoid';
 import flatten from 'flat';
+import React, { Component } from 'react';
+import { connect } from 'react-redux';
 
-export default class ItemForm extends Component {
+class Form extends Component {
 	constructor(props) {
 		super(props);
 
@@ -35,11 +35,15 @@ export default class ItemForm extends Component {
 
     // Unflatten
 		this.props.onSubmit(flatten.unflatten({ ...this.state.item }));
-    this.setState( ItemForm.defaultProps );
+    
+    this.setState({ 
+      isEditing: Form.defaultProps.isEditing, 
+      item: this.props.item, 
+    });
     
     // Focus on the first input
     this.refs[this.props.fields[0].name].focus();
-	}
+  }
 
 	render() {
     const { fields } = this.props;
@@ -72,31 +76,13 @@ export default class ItemForm extends Component {
 	}
 }
 
-ItemForm.defaultProps = {
-  item: {
-    id: nanoid(),
-    summary:  "",
-    phase:    "",
-    feature:  "",
-    budgetHours: { 
-      column: "",
-      value: 0,
-    },
-    descriptions: {
-      workplan: [],
-      budget: [],
-      assumptions: [],
-      exclusions: [],
-    },
-    tags: "",
-
-    'budgetHours.column': "",
-    'budgetHours.value': 0,
-    'descriptions.workplan': [],
-    'descriptions.budget': [],
-    'descriptions.clientResponsibilities': [],
-    'descriptions.assumptions': [],
-    'descriptions.exclusions': [],  
-  },
+Form.defaultProps = {
   isEditing: false,
 };
+
+const mapStateToProps = state => ({
+  item: state.budgets.defaultItem,
+  fields: state.budgets.fields,
+});
+
+export default connect(mapStateToProps)(Form);
