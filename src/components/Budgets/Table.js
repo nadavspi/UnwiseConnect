@@ -3,6 +3,7 @@ import MultiSearch from './MultiSearch';
 import React, { Component } from 'react';
 import TicketTable from '../Tickets/Table';
 import { connect } from 'react-redux';
+import { convertToList } from '../../helpers/reformat';
   
 class Table extends Component {
   onCustomFilter(property) {
@@ -35,14 +36,13 @@ class Table extends Component {
     });
 
     const userColumns = columns.map((field) => field.property).filter((column) => this.props.userColumns[column]);
-
     return (
       <div>
         <TicketTable
           id="table-search-items"
           query={this.props.query}
           search={this.props.search}
-          tickets={this.props.items}
+          tickets={this.props.itemArray}
           toggleColumn={this.props.toggleColumn}
           userColumns={userColumns}
           columns={columns}
@@ -56,11 +56,11 @@ class Table extends Component {
 }
 
 const mapStateToProps = state => ({
-  items: state.budgets.items,
+  itemArray: convertToList(state.budgets.itemList),
   fields: state.budgets.fields,
   query: state.budgets.query,
   userColumns: state.budgets.userColumns,
-  visibleItems: state.budgets.visibleItems,
+  visibleItems: convertToList(state.budgets.visibleItemList),
 });
 
 export default connect(mapStateToProps)(Table);

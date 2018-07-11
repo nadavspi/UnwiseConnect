@@ -36,6 +36,7 @@ export const subscribe = payload => {
         type: ActionTypes.BUDGETS_UPDATE,
         payload: { 
           items,
+          itemList: itemsGroup,
         }
       });
     });   
