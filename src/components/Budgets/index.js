@@ -32,7 +32,7 @@ class Budgets extends Component {
   }
 
   componentDidMount() {
-    this.props.dispatch(BudgetsActions.subscribe());
+    this.props.dispatch(BudgetsActions.subscribe({ defaultItem: this.props.defaultItem }));
   }
 
   filterItems(items, query) {
@@ -95,7 +95,6 @@ class Budgets extends Component {
    }
 
   renderTable() {
-
     return (
       <Table 
         search={this.search}
@@ -127,7 +126,6 @@ class Budgets extends Component {
           <div className="panel-body projects__wrapper">
             <Form
               onSubmit={this.onAdd}
-              fields={this.props.fields}
             />
             <h3>View Selection</h3>
             <ul>
