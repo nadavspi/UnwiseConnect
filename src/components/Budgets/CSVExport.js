@@ -21,6 +21,7 @@ class CSVExport extends Component {
 		if(Array.isArray(array)) {	
 			array.map((element) => {
 				string += element + '\n';
+				return element;
 			});
 		} else {
 			string = array;
@@ -39,12 +40,14 @@ class CSVExport extends Component {
 			};
 
 			for (const property in item) {
-				const column = this.props.columns.find((element) => {
-					return element.key === property;
-				});
-				console.log('column:', column);
-				if(typeof column !== 'undefined') {
-					row[column.label] = (property.indexOf('descriptions.') > -1) ? this.unravel(item[property]) : item[property];
+				if(item.hasOwnProperty(property)) {
+					const column = this.props.columns.find((element) => {
+						return element.key === property;
+					});
+					console.log('column:', column);
+					if(typeof column !== 'undefined') {
+						row[column.label] = (property.indexOf('descriptions.') > -1) ? this.unravel(item[property]) : item[property];
+					}
 				}
 			}
 
@@ -112,27 +115,31 @@ class CSVExport extends Component {
 		// adds functions to rows
 		for(let i = rowOffset; i < rows.length + rowOffset; i++){
 			for (const property in rows[i - rowOffset]) {
-				const prop = rows[i - rowOffset][property];
+				if(rows[i - rowOffset].hasOwnProperty(property)) {
+					const prop = rows[i - rowOffset][property];
 
-				if (typeof prop === 'object' && !Array.isArray(prop)) {
-					const formula = prop.function.replace(new RegExp('{row}', 'g'), (i));
-					
-					const cell = { f: formula, t:'n'};
-					const cell_ref = XLSX.utils.encode_cell({ c:prop.col, r:(i - 1) });
-					ws[cell_ref] = cell;	
+					if (typeof prop === 'object' && !Array.isArray(prop)) {
+						const formula = prop.function.replace(new RegExp('{row}', 'g'), (i));
+						
+						const cell = { f: formula, t:'n'};
+						const cell_ref = XLSX.utils.encode_cell({ c:prop.col, r:(i - 1) });
+						ws[cell_ref] = cell;	
+					}
 				}
 			}
 		}
 
 		// adds functions to footer
 		for (const property in footer) {
-			const prop = footer[property];
-			if (typeof prop === 'object' && !Array.isArray(prop)) {
-				const formula = prop.function.replace(new RegExp('{row}', 'g'), (rowOffset + rows.length + bufferRows.length));
-				
-				const cell = { f: formula, t:'n'};
-				const cell_ref = XLSX.utils.encode_cell({ c:prop.col, r:(rowOffset + rows.length + bufferRows.length - 1) });
-				ws[cell_ref] = cell;	
+			if(footer.hasOwnProperty(property)) {
+				const prop = footer[property];
+				if (typeof prop === 'object' && !Array.isArray(prop)) {
+					const formula = prop.function.replace(new RegExp('{row}', 'g'), (rowOffset + rows.length + bufferRows.length));
+					
+					const cell = { f: formula, t:'n'};
+					const cell_ref = XLSX.utils.encode_cell({ c:prop.col, r:(rowOffset + rows.length + bufferRows.length - 1) });
+					ws[cell_ref] = cell;	
+				}
 			}
 		}
 
@@ -141,6 +148,7 @@ class CSVExport extends Component {
 			const cell = {v: constant.value, t: constant.type}
 			const cell_ref = XLSX.utils.encode_cell({c: constant.col, r: constant.row});
 			ws[cell_ref] = cell;	
+			return constant;
 		});
 		
 		XLSX.utils.book_append_sheet(wb,ws,'Budget');
