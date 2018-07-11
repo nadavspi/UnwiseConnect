@@ -145,10 +145,6 @@ class CSVExport extends Component {
 		
 		XLSX.utils.book_append_sheet(wb,ws,'Budget');
 
-		console.log('Testing xlsx');
-		console.log(header);
-		console.log(rows);
-		console.log(footer);
 		XLSX.writeFile(wb, 'Budget.xlsx');
 	}
 
@@ -237,25 +233,25 @@ CSVExport.defaultProps = {
 		},
 	},
 	constants: [
-	{
-		label: 'Testing',
-		value: 0.2,
-		type: 'n',
-		col: 5,
-		row: 1,
-	},{
-		label: 'Remediation',
-		value: 0.4,
-		type: 'n',
-		col: 6,
-		row: 1,
-	},{
-		label: 'PM',
-		value: 0.2,
-		type: 'n',
-		col: 8,
-		row: 1,
-	},
+		{
+			label: 'Testing',
+			value: 0.2,
+			type: 'n',
+			col: 5,
+			row: 1,
+		},{
+			label: 'Remediation',
+			value: 0.4,
+			type: 'n',
+			col: 6,
+			row: 1,
+		},{
+			label: 'PM',
+			value: 0.2,
+			type: 'n',
+			col: 8,
+			row: 1,
+		},
 	],
 }
 
