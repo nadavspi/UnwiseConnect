@@ -1,5 +1,6 @@
 import React from 'react';
 import Select from 'react-select';
+import { connect } from 'react-redux';
 import { flattenArray } from '../../helpers/utils';
 
 class Search extends React.Component {
@@ -59,4 +60,9 @@ class Search extends React.Component {
 
 }
 
-export default Search;
+const mapStateToProps = state => ({
+	items: state.budgets.items,
+	query: state.budgets.query,
+});
+
+export default connect(mapStateToProps)(Search);
