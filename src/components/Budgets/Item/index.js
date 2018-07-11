@@ -1,5 +1,5 @@
 import React from 'react';
-import ItemForm from './Form';
+import Form from './Form';
 import { connect } from 'react-redux';
 
 class Item extends React.Component {
@@ -64,9 +64,8 @@ class Item extends React.Component {
 					<li>Tags: {item.tags}</li>
 				</ul>
 				{this.state.isEditing && (
-          <ItemForm 
+          <Form 
             item={item}
-            fields={this.props.fields}
             isEditing={this.state.isEditing}
             onSubmit={this.onFormSubmit}
           />
