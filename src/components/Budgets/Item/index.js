@@ -1,5 +1,6 @@
 import React from 'react';
 import ItemForm from './Form';
+import { connect } from 'react-redux';
 
 class Item extends React.Component {
 	constructor(){
@@ -36,6 +37,7 @@ class Item extends React.Component {
 				<ul> 
 					<li>Phase: {item.phase}</li>
 					<li>Feature: {item.feature}</li>
+					<li>T&M: {item['t&m']}</li>
 					<h3>Budget Hours</h3>
 					<ul>
 						<li>Column: {item.budgetHours.column}</li>
@@ -84,6 +86,9 @@ Item.propTypes = {
   item: React.PropTypes.object.isRequired,
 }
 
+const mapStateToProps = state => ({
+  fields: state.budgets.fields,
+});
 
 
-export default Item;
+export default connect(mapStateToProps)(Item);
