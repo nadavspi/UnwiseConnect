@@ -8,7 +8,6 @@ import { convertToList } from '../../helpers/reformat';
 class List extends Component {
 	      
 	render() {
-
 		return (
 			<div>
 			 <h2> List View </h2>
