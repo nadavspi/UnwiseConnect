@@ -22,6 +22,8 @@ class Table extends Component {
             onFilter={this.props.search}
           />
         );
+      default:
+        console.warn('Could not find filter for property ' + property);
     }
   }
 
