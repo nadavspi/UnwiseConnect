@@ -2,16 +2,28 @@ import { ActionTypes } from '../config/constants';
 import { ref } from '../config/constants';
 
 export const addItem = payload => {
-	return {
-		type: ActionTypes.BUDGETS_ADD_ITEM,
-		payload,
+	return dispatch => {
+		const itemRef =	ref.child(`items/${payload.item.id}`);
+
+		itemRef.set( payload.item );
+
+		dispatch({
+			type: ActionTypes.BUDGETS_ADD_ITEM,
+			payload,
+		});
 	}
 }
 
 export const removeItem = payload => {
-	return {
-		type: ActionTypes.BUDGETS_REMOVE_ITEM,
-		payload,
+	return dispatch => {
+		const itemRef =	ref.child(`items/${payload.itemId}`);
+
+		itemRef.remove();
+
+		dispatch({
+			type: ActionTypes.BUDGETS_REMOVE_ITEM,
+			payload,
+		});
 	}
 }
 
@@ -51,8 +63,14 @@ export const toggleColumn = payload => {
 }
 
 export const updateItem = payload => {
-	return {
-		type: ActionTypes.BUDGETS_UPDATE_ITEM,
-		payload,
+	return dispatch => {
+		const itemRef =	ref.child(`items/${payload.updatedItem.id}`);		
+
+		itemRef.update(payload.updatedItem);
+
+		dispatch({
+			type: ActionTypes.BUDGETS_UPDATE_ITEM,
+			payload,	
+		})
 	}
 }
