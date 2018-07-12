@@ -18,7 +18,7 @@ class Search extends React.Component {
 
   	for (const item in this.props.itemList) {
   		if(this.props.itemList.hasOwnProperty(item)) {
-  			const tagGroup = this.props.itemList[item].tags;
+  			const tagGroup = this.props.itemList[item][this.props.column];
   			tags = [...tags, ...tagGroup.split(' ')];
   		}
   	}

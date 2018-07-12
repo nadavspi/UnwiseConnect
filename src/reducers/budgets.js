@@ -18,6 +18,24 @@ const initialState = {
       required: true,
     },
     {
+      filterType: 'custom',
+      name: 't&m',
+      label: 'T&M',
+      type: 'dropdown',
+      options: [
+        {
+          name: 't&m',
+          label: 'Fixed Fee',
+          value: false,
+        },
+        {
+          name: 't&m',
+          label: 'T&M',
+          value: true,
+        },
+      ],
+    },
+    {
       filterType: 'textfield',
       name: 'feature',
       label: 'Feature',
