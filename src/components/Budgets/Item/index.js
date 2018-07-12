@@ -31,12 +31,11 @@ class Item extends React.Component {
 	render() {
 		const item = this.props.item;
 
-		console.log(item['t&m']);
-
 		let fixedBudget;
 		if(item.hasOwnProperty('t&m')) {
 			fixedBudget = item['t&m'].toString();
 		} 
+
 		return (
 			<div>
 				<h3>Item/Task: {item.summary}</h3>

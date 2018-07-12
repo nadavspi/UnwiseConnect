@@ -26,12 +26,12 @@ const initialState = {
         {
           name: 't&m',
           label: 'Fixed Fee',
-          value: false,
+          value: 'FALSE',
         },
         {
           name: 't&m',
           label: 'T&M',
-          value: true,
+          value: 'TRUE',
         },
       ],
     },
