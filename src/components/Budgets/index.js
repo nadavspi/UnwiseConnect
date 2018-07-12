@@ -84,7 +84,6 @@ class Budgets extends Component {
   }
 
   renderList() {
-
      return (
        <List
          filter={this.state.filter}
