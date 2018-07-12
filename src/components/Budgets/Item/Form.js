@@ -56,7 +56,7 @@ class Form extends Component {
   }
 
   inputFormat(field){
-    if(field.type == 'dropdown') {
+    if(field.type === 'dropdown') {
       return(
         <Select 
           name={field.name}
