@@ -99,16 +99,16 @@ export default (state = initialState, action) => {
 
 		case ActionTypes.BUDGETS_REMOVE_ITEM:
       delete state.itemList[action.payload.itemId];
-
+      
       return state;
 
 		case ActionTypes.BUDGETS_SEARCH:
       const visibleItemList = {};
       action.payload.visibleItems.map((item) => {
           visibleItemList[item.id] = item;
-      });
 
-      console.log(visibleItemList);
+          return item;
+      });
 
       return {
 				...state,
@@ -138,7 +138,6 @@ export default (state = initialState, action) => {
       };
 
 		case ActionTypes.BUDGETS_UPDATE_ITEM:
-			
       return {
         ...state,
         itemList: { 
