@@ -7,12 +7,21 @@ import { convertToList } from '../../helpers/reformat';
   
 class Table extends Component {
   onCustomFilter(property) {
-    if (property === 'tags') {
-      return (
-        <MultiSearch 
-          onFilter={this.props.search}
-        />
-      );
+    switch(property) {
+      case 'tags':
+        return (
+          <MultiSearch 
+            column={property}
+            onFilter={this.props.search}
+          />
+        );
+      case 't&m':
+        return (
+          <MultiSearch
+            column={property}
+            onFilter={this.props.search}
+          />
+        );
     }
   }
 

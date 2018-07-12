@@ -1,6 +1,7 @@
 import flatten from 'flat';
 import nanoid from 'nanoid';
 import React, { Component } from 'react';
+import Select from 'react-select';
 import { connect } from 'react-redux';
 
 class Form extends Component {
@@ -15,6 +16,7 @@ class Form extends Component {
 
     this.onSubmit = this.onSubmit.bind(this);
     this.onChange = this.onChange.bind(this);
+    this.onChangeDropdown = this.onChangeDropdown.bind(this);
     this.onCancel = this.onCancel.bind(this);
   }
 
@@ -30,6 +32,10 @@ class Form extends Component {
       },
     });
 	}
+
+  onChangeDropdown(field) {
+    this.onChange(field.name, field.value);
+  }
 	
 	onSubmit(event) {
 		event.preventDefault();
@@ -44,9 +50,31 @@ class Form extends Component {
         id: nanoid(),
       }, 
     });
-    
+
     // Focus on the first input
     this.refs[this.props.fields[0].name].focus();
+  }
+
+  inputFormat(field){
+    if(field.type == 'dropdown') {
+      return(
+        <Select 
+          name={field.name}
+          value={this.state.item[field.name]}
+          options={field.options}
+          onChange={this.onChangeDropdown}
+        />
+      );
+    }
+    return (
+      <input 
+        ref={field.name}
+        onChange={e => this.onChange(field.name, e.target.value)}
+        type={field.type}
+        value={this.state.item[field.name]}
+        required={field.required}
+      />
+    );
   }
 
 	render() {
@@ -60,13 +88,7 @@ class Form extends Component {
             {fields.map((field) => (
               <div key={field.name}>
                 <label htmlFor={field.name}>{field.label}</label>
-                <input 
-                  ref={field.name}
-                  onChange={e => this.onChange(field.name, e.target.value)}
-                  type={field.type}
-                  value={this.state.item[field.name]}
-                  required={field.required}
-                />
+                {this.inputFormat(field)}
               </div>
             ))}
 						<button type="submit" className="btn btn-primary">{submitBtnLabel}</button>
