@@ -83,10 +83,10 @@ const initialState = {
   query: {},
   userColumns: {
     summary: true,
-    phase: false,
+    phase: true,
     feature: true,
-    'budgetHours.column': false,
-    'budgetHours.value': false,
+    'budgetHours.column': true,
+    'budgetHours.value': true,
     tags: true,
     edit: true,
   },
