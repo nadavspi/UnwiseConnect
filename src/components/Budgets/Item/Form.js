@@ -45,21 +45,17 @@ export default class ItemForm extends Component {
     const { fields } = this.props;
     const submitBtnLabel = this.props.isEditing ? 'Save Edit' : 'Add Item';
 
-    return (
-      <div>
-        <form onSubmit={this.onSubmit}>
-          <div className="input-group input-group-sm">            
+		return (
+			<div>
+				<form onSubmit={this.onSubmit}>
+					<div>						
             {fields.map((field) => (
-              <div key={field.name}>
-                <label htmlFor={field.name}>{field.label}</label>
-                <input 
-                  ref={field.name}
-                  onChange={e => this.onChange(field.name, e.target.value)}
-                  type={field.type}
-                  value={this.state.item[field.name]}
-                  required={field.required}
-                />
-              </div>
+              !field.isInteractive && (
+                <div key={field.name}>
+                  <label htmlFor={field.name}>{field.label}</label>
+                  {this.inputFormat(field)}
+                </div>
+              )
             ))}
             <button type="submit" className="btn btn-primary">{submitBtnLabel}</button>
             {this.props.isEditing && (
