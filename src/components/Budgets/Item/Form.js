@@ -84,12 +84,14 @@ class Form extends Component {
 		return (
 			<div>
 				<form onSubmit={this.onSubmit}>
-					<div className="input-group input-group-sm">						
+					<div>						
             {fields.map((field) => (
-              <div key={field.name}>
-                <label htmlFor={field.name}>{field.label}</label>
-                {this.inputFormat(field)}
-              </div>
+              !field.isInteractive && (
+                <div key={field.name}>
+                  <label htmlFor={field.name}>{field.label}</label>
+                  {this.inputFormat(field)}
+                </div>
+              )
             ))}
 						<button type="submit" className="btn btn-primary">{submitBtnLabel}</button>
             {this.props.isEditing && (
