@@ -87,9 +87,9 @@ class Budgets extends Component {
      return (
        <List
          filter={this.state.filter}
-         onFilter={this.onFilter}
-         onEdit={this.onEdit}
          onDelete={this.onDelete}
+         onEdit={this.onEdit}
+         onFilter={this.onFilter}
        />
      );
    }
@@ -97,6 +97,8 @@ class Budgets extends Component {
   renderTable() {
     return (
       <Table 
+        onDelete={this.onDelete}
+        onEdit={this.onEdit}
         search={this.search}
         toggleColumn={this.toggleColumn}
       /> 
