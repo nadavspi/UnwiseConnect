@@ -18,11 +18,19 @@ class EditColumn extends Component {
   }
 
   toggleEdit() {
-    this.setState({ isEditing: true });
+    const isEditing = true;
+    this.setState({
+      ...this.state,
+      isEditing,
+    });
   }
 
   onEdit(item) {
-    this.setState({ isEditing: false });
+    const isEditing = false;
+    this.setState({
+      ...this.state,
+      isEditing,
+    });
 
     this.props.onEdit(item);
   }
@@ -38,7 +46,6 @@ class EditColumn extends Component {
           <button
             className="btn btn-primary"
             onClick={this.toggleEdit}
-            type="button"
           >
             Edit
           </button>
@@ -53,7 +60,6 @@ class EditColumn extends Component {
         <button
           className="btn btn-primary"
           onClick={this.onDelete}
-          type="button"
         >
           Delete
         </button>
