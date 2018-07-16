@@ -18,7 +18,7 @@ class CSVExport extends Component {
 	unravel(array){
 		let string = '';
 		
-		if(Array.isArray(array)) {	
+		if (Array.isArray(array)) {	
 			array.map((element) => {
 				string += element + '\n';
 				return element;
@@ -40,11 +40,11 @@ class CSVExport extends Component {
 			};
 
 			for (const property in item) {
-				if(item.hasOwnProperty(property)) {
+				if (item.hasOwnProperty(property)) {
 					const column = this.props.columns.find((element) => {
 						return element.key === property;
 					});
-					if(typeof column !== 'undefined') {
+					if (typeof column !== 'undefined') {
 						row[column.label] = (property.indexOf('descriptions.') > -1) ? this.unravel(item[property]) : item[property];
 					}
 				}
@@ -58,42 +58,17 @@ class CSVExport extends Component {
 		const header = this.props.columns.map((column) => (column.label));
 
 		const rowOffset = 5;
-
-		const footer = {
-			Feature: 'Estimated Total Hours',
-			Disc: {
-				function: 'SUM(C' + rowOffset + ':C' + (rowOffset + rows.length + bufferRows.length - 1) + ')',
-				col: 2,
-			},
-			Design: {
-				function: 'SUM(D' + rowOffset + ':D' + (rowOffset + rows.length + bufferRows.length - 1) + ')',
-				col: 3,
-			},
-			Dev: {
-				function: 'SUM(E' + rowOffset + ':E' + (rowOffset + rows.length + bufferRows.length - 1 ) + ')',
-				col: 4,
-			},
-			Testing: {
-				function: 'SUM(F' + rowOffset + ':F' + (rowOffset + rows.length + bufferRows.length - 1 ) + ')',
-				col: 5,
-			},
-			Remediation: {
-				function: 'SUM(G' + rowOffset + ':G' + (rowOffset + rows.length + bufferRows.length - 1 ) + ')',
-				col: 6,
-			},
-			Deploy: {
-				function: 'SUM(H' + rowOffset + ':H' + (rowOffset + rows.length + bufferRows.length - 1 ) + ')',
-				col: 7,
-			},
-			PM: {
-				function: 'SUM(I' + rowOffset + ':I' + (rowOffset + rows.length + bufferRows.length - 1 ) + ')',
-				col: 8,
-			},
-			Total: {
-				function: 'SUM(C' + (rowOffset + rows.length + bufferRows.length) + ':I' + (rowOffset + rows.length + bufferRows.length) + ')',
-				col: 9,
-			},
-		};
+		const footerPos = rowOffset + rows.length + bufferRows.length;
+		const tailPos = footerPos - 1;
+		
+		const footer = this.props.footer;
+		for (const col in footer) {
+			if (footer.hasOwnProperty(col) && footer[col].hasOwnProperty('function')) {
+				footer[col].function = footer[col].function.replace(new RegExp('{rowOffset}', 'g'), rowOffset);
+				footer[col].function = footer[col].function.replace(new RegExp('{tailPos}', 'g'), tailPos);
+				footer[col].function = footer[col].function.replace(new RegExp('{footerPos}', 'g'), footerPos);
+			}
+		}
 		
 		// creates workbook
 		const wb = XLSX.utils.book_new();
@@ -114,7 +89,7 @@ class CSVExport extends Component {
 		// adds functions to rows
 		for(let i = rowOffset; i < rows.length + rowOffset; i++){
 			for (const property in rows[i - rowOffset]) {
-				if(rows[i - rowOffset].hasOwnProperty(property)) {
+				if (rows[i - rowOffset].hasOwnProperty(property)) {
 					const prop = rows[i - rowOffset][property];
 
 					if (typeof prop === 'object' && !Array.isArray(prop)) {
@@ -130,7 +105,7 @@ class CSVExport extends Component {
 
 		// adds functions to footer
 		for (const property in footer) {
-			if(footer.hasOwnProperty(property)) {
+			if (footer.hasOwnProperty(property)) {
 				const prop = footer[property];
 				if (typeof prop === 'object' && !Array.isArray(prop)) {
 					const formula = prop.function.replace(new RegExp('{row}', 'g'), (rowOffset + rows.length + bufferRows.length));
@@ -260,6 +235,41 @@ CSVExport.defaultProps = {
 			row: 1,
 		},
 	],
+	footer: {
+		Feature: 'Estimated Total Hours',
+			Disc: {
+				function: 'SUM(C{rowOffset}:C{tailPos})',
+				col: 2,
+			},
+			Design: {
+				function: 'SUM(D{rowOffset}:D{tailPos})',
+				col: 3,
+			},
+			Dev: {
+				function: 'SUM(E{rowOffset}:E{tailPos})',
+				col: 4,
+			},
+			Testing: {
+				function: 'SUM(F{rowOffset}:F{tailPos})',
+				col: 5,
+			},
+			Remediation: {
+				function: 'SUM(G{rowOffset}:G{tailPos})',
+				col: 6,
+			},
+			Deploy: {
+				function: 'SUM(H{rowOffset}:H{tailPos})',
+				col: 7,
+			},
+			PM: {
+				function: 'SUM(I{rowOffset}:I{tailPos})',
+				col: 8,
+			},
+			Total: {
+				function: 'SUM(C{footerPos}:I{footerPos})',
+				col: 9,
+			},
+	},
 }
 
 export default CSVExport;
