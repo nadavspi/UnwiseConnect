@@ -108,7 +108,7 @@ class CSVExport extends Component {
 			if (footer.hasOwnProperty(property)) {
 				const prop = footer[property];
 				if (typeof prop === 'object' && !Array.isArray(prop)) {
-					const formula = prop.function.replace(new RegExp('{row}', 'g'), (rowOffset + rows.length + bufferRows.length));
+					const formula = prop.function;
 					
 					const cell = { f: formula, t:'n'};
 					const cell_ref = XLSX.utils.encode_cell({ c:prop.col, r:(rowOffset + rows.length + bufferRows.length - 1) });
