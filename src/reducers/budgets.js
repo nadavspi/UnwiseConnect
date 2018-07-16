@@ -115,10 +115,9 @@ export default (state = initialState, action) => {
         query: action.payload.query,
       };
 
-    case ActionTypes.BUDGETS_SUBSCRIBE:
-      return {
-        ...state,
-      };
+		case ActionTypes.BUDGETS_SUBSCRIBE:
+			return state;
+
 
     case ActionTypes.BUDGETS_TOGGLE_COL:
       return {
