@@ -142,9 +142,7 @@ export default (state = initialState, action) => {
 			};
 
 		case ActionTypes.BUDGETS_SUBSCRIBE:
-			return {
-				...state,
-			};
+			return state;
 
     case ActionTypes.BUDGETS_TOGGLE_COL:
       return {

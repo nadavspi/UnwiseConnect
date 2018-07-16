@@ -11,7 +11,7 @@ export const addItem = payload => {
 			type: ActionTypes.BUDGETS_ADD_ITEM,
 			payload,
 		});
-	}
+	};
 }
 
 export const removeItem = payload => {
@@ -24,7 +24,7 @@ export const removeItem = payload => {
 			type: ActionTypes.BUDGETS_REMOVE_ITEM,
 			payload,
 		});
-	}
+	};
 }
 
 export const subscribe = payload => {
@@ -39,27 +39,27 @@ export const subscribe = payload => {
       const itemList = snapshot.val();
 
       dispatch({
-        type: ActionTypes.BUDGETS_UPDATE,
-        payload: { 
-          itemList: itemList,
+	      type: ActionTypes.BUDGETS_UPDATE,
+	      payload: { 
+	        itemList: itemList,
         }
       });
     });   
-	}
+	};
 }
 
 export const search = payload => {
 	return {
 		type: ActionTypes.BUDGETS_SEARCH,
 		payload,
-	}
+	};
 }
 
 export const toggleColumn = payload => {
 	return {
 		type: ActionTypes.BUDGETS_TOGGLE_COL,
 		payload,
-	}
+	};
 }
 
 export const updateItem = payload => {
@@ -71,6 +71,6 @@ export const updateItem = payload => {
 		dispatch({
 			type: ActionTypes.BUDGETS_UPDATE_ITEM,
 			payload,	
-		})
-	}
+		});
+	};
 }
