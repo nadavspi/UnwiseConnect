@@ -15,7 +15,7 @@ function rotateOnTeam(list) {
   const rotatedList = list.map((item) => ({
     ...item,
     // Put the hours in the right column
-    [item['budgetHours.column']]: item['budgetHours.value'],
+    [item['budgetHours.column']]: parseInt(item['budgetHours.value']),
    }));
 
   return rotatedList;
@@ -45,7 +45,6 @@ function concatOnProperties(list) {
 		}
 		return item;
 	});
-
 	return concatObj;
 }
 
