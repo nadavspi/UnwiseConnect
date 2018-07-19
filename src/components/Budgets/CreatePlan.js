@@ -21,7 +21,7 @@ class CreatePlan extends Component {
   onChangeField(id, type, e) {   
     const field = this.props.flags[id];
 
-    if(field.hasChild) {
+    if(field.isParent) {
       const value = !this.state.parents[field.property];
       this.setState({
         ...this.state,
@@ -133,13 +133,13 @@ CreatePlan.defaultProps = {
       id: 'Dry',
       property: 'dry',
       type: 'boolean',
-      hasChild: true,
+      isParent: true,
     },
     Sprint: {
       id: 'Sprint',
       property: 'sprint',
       type: 'boolean',
-      hasChild: true,
+      isParent: true,
     },
     SprintNumber: {
       id: 'SprintNumber',
@@ -151,7 +151,7 @@ CreatePlan.defaultProps = {
       id: 'Site',
       property: 'site',
       type: 'boolean',
-      hasChild: true,
+      isParent: true,
     },
     SiteName: {
       id: 'SiteName',
@@ -163,7 +163,7 @@ CreatePlan.defaultProps = {
       id: 'Prefix',
       property: 'prefix',
       type: 'boolean',
-      hasChild: true,
+      isParent: true,
     },
     OldPrefix: {
       id: 'OldPrefix',
