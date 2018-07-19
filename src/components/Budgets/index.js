@@ -1,5 +1,5 @@
 import * as BudgetsActions from '../../actions/budgets';
-import ExportWorkplan from './ExportWorkplan';
+import CreatePlan from './CreatePlan';
 import Form from './Item/Form';
 import List from './List';
 import * as search from 'searchtabular';
@@ -130,7 +130,7 @@ class Budgets extends Component {
             <Form
               onSubmit={this.onAdd}
             />
-            <ExportWorkplan />
+            <CreatePlan />
             <h3>View Selection</h3>
             <ul>
               <li>
