@@ -3,6 +3,7 @@ import Select from 'react-select';
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { convertToList } from '../../helpers/reformat';
+import { createPlan } from '../../actions/budgets';
 
 class CreatePlan extends Component {
   constructor() {
@@ -53,11 +54,11 @@ class CreatePlan extends Component {
     event.preventDefault();
 
     const projectId = this.state.project.value;
-    const tags = this.props.query.tags;
+    const tags = this.props.query.tags || '';
+    const params = {};
+
     const parents = this.state.parents;
     const children = this.state.children;
-
-    const params = {};
 
     for (const parent in parents) {
       if(parents.hasOwnProperty(parent)) {
@@ -85,15 +86,16 @@ class CreatePlan extends Component {
       params,
     };
 
-    console.log('Creating...');
-    console.log('Payload', payload);
+    this.props.dispatch(createPlan(payload));
   }
 
   render () {
+    const { inProgress, resposne } = this.props.dispatchingPlan;
     const fields = convertToList(this.props.flags).filter(flag => {
       return (!flag.hasParent || this.state.parents[flag.parentProperty])
     }).map(flag => {
       const newFlag = flag;
+      // Prevents open children from being left blank
       if(newFlag.hasParent) {
         newFlag.required = true;
       }
@@ -119,7 +121,7 @@ class CreatePlan extends Component {
           <button
             type="submit"
             className="btn btn-primary">
-            Create Workplan
+            {inProgress ? 'Creating...' : 'Create Workplan'}
           </button>
         </form>
       </div>
@@ -195,6 +197,7 @@ CreatePlan.defaultProps = {
 };
 
 const mapPropsToState = state => ({
+  dispatchingPlan: state.budgets.dispatchingPlan,
   query: state.budgets.query,
   projects: state.projects,
 });
