@@ -90,7 +90,7 @@ class CreatePlan extends Component {
   }
 
   render () {
-    const { inProgress, resposne } = this.props.dispatchingPlan;
+    const { inProgress } = this.props.dispatchingPlan;
     const fields = convertToList(this.props.flags).filter(flag => {
       return (!flag.hasParent || this.state.parents[flag.parentProperty])
     }).map(flag => {
@@ -101,6 +101,8 @@ class CreatePlan extends Component {
       }
       return newFlag;
     });
+
+    console.log(this.props.projects);
 
     return (
       <div>
@@ -115,7 +117,7 @@ class CreatePlan extends Component {
           <Select
             required={true}
             value={this.state.project}
-            options={this.props.testProjects}
+            options={this.props.projects}
             onChange={this.onChangeProject}
           />
           <button
@@ -180,26 +182,15 @@ CreatePlan.defaultProps = {
       type: 'text',
     },
   },
-  testProjects: [
-    {
-      value: 13,
-      label: 'Firebase Project',
-    },
-    {
-      value: 13,
-      label: 'Another Project',
-    },
-    {
-      value: 13,
-      label: 'Project M',
-    },
-  ],
 };
 
 const mapPropsToState = state => ({
   dispatchingPlan: state.budgets.dispatchingPlan,
   query: state.budgets.query,
-  projects: state.projects,
+  projects: Object.keys(state.tickets.nested).map(projectId => ({
+    value: projectId,
+    label: state.tickets.nested[projectId][0].project.name,
+  })),
 });
 
 export default connect(mapPropsToState)(CreatePlan);
