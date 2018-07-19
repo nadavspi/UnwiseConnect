@@ -109,6 +109,10 @@ const initialState = {
     edit: true,
   },
   visibleItemList: {},
+  dispatchingPlan: {
+    inProgress: false,
+    response: null,
+  }
 };
 
 export default (state = initialState, action) => {
@@ -121,6 +125,24 @@ export default (state = initialState, action) => {
           [action.payload.item.id]: action.payload.item,
         }
 			};
+
+    case ActionTypes.BUDGETS_DISPATCH_PLAN:
+      return {
+        ...state,
+        dispatchingPlan: {
+          inProgress: true,
+          response: null,
+        }
+      };
+
+    case ActionTypes.BUDGETS_DISPATCH_PLAN_SUCCESS:
+      return {
+        ...state,
+        dispatchingPlan: {
+          inProgress: false,
+          response: action.payload.result,
+        }
+      };
 
 		case ActionTypes.BUDGETS_REMOVE_ITEM:
       delete state.itemList[action.payload.itemId];

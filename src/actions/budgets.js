@@ -1,5 +1,5 @@
-import { ActionTypes } from '../config/constants';
-import { ref } from '../config/constants';
+import { ActionTypes, ref } from '../config/constants';
+import { dispatchPlan } from '../helpers/cw';
 
 export const addItem = payload => {
 	return dispatch => {
@@ -12,6 +12,22 @@ export const addItem = payload => {
 			payload,
 		});
 	};
+}
+
+export const createPlan = payload => {
+  return dispatch => {
+    dispatch ({
+      type: ActionTypes.BUDGETS_DISPATCH_PLAN,
+      payload,
+    });
+
+    dispatchPlan(payload).then(response => {
+      dispatch({
+        type: ActionTypes.BUDGETS_DISPATCH_PLAN_SUCCESS,
+        payload: response,
+      });
+    });
+  };
 }
 
 export const removeItem = payload => {
