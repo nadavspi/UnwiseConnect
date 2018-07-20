@@ -113,10 +113,11 @@ class CreatePlan extends Component {
           />
           <h4>Project</h4>
           <Select
-            required={true}
-            value={this.state.project}
+            className="select-bar"
             options={this.props.projects}
             onChange={this.onChangeProject}
+            required={true}
+            value={this.state.project}
           />
           <button
             type="submit"

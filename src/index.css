@@ -265,3 +265,12 @@ td.col--budget:not(:empty)::after {
   right: 0px;
   bottom: 0px;
 }
+
+.edit-item {
+  top: 25%;
+  bottom: 75%;
+}
+
+.select-bar {
+  max-width: 350px;
+}
