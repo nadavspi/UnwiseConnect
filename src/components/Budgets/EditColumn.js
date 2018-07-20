@@ -1,4 +1,3 @@
-import classnames from 'classnames';
 import Form from './Item/Form';
 import Modal from 'react-modal';
 import React, { Component } from 'react';
