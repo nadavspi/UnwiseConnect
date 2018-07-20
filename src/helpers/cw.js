@@ -10,6 +10,14 @@ export const fetchTickets = projectId => {
   return fetch(`${process.env.REACT_APP_API_URL}/v1/tickets/${projectId}`, { headers }).then(checkStatus).then(parseJSON);
 }
 
+export const fetchTicketNotes = ticketId => {
+  const headers = {
+    Authorization: `Basic ${process.env.REACT_APP_API_KEY}`,
+  };
+  console.log('Fetch from', process.env.REACT_APP_API_URL);
+  return fetch(`${process.env.REACT_APP_API_URL}/v1/ticket/${ticketId}/notes`, { headers }).then(checkStatus).then(parseJSON);  
+}
+
 export const dispatchTickets = params => {
   const headers = {
     Authorization: `Basic ${process.env.REACT_APP_API_KEY}`,
