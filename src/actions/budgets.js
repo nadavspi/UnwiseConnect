@@ -90,3 +90,16 @@ export const updateItem = payload => {
 		});
 	};
 }
+
+export const addBudget = payload => {
+  return dispatch => {
+    // const budgetRef = ref.child(`budgets/${payload.budget.id}`);
+
+    // budgetRef.set(payload.budget);
+    
+    dispatch({
+      type: ActionTypes.BUDGETS_ADD_BUDGET,
+      payload,
+    });
+  };
+}

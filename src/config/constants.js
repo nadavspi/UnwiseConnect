@@ -14,6 +14,7 @@ export const ref = firebase.database().ref();
 export const firebaseAuth = firebase.auth;
 
 export const ActionTypes = {
+  BUDGETS_ADD_BUDGET: 'BUDGETS_ADD_BUDGET',
   BUDGETS_ADD_ITEM: 'BUDGETS_ADD_ITEM',
   BUDGETS_DISPATCH_PLAN: 'BUDGETS_DISPATCH_PLAN',
   BUDGETS_DISPATCH_PLAN_SUCCESS: 'BUDGETS_DISPATCH_PLAN_SUCCESS',
