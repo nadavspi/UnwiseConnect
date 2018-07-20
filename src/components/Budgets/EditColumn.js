@@ -13,6 +13,10 @@ class EditColumn extends Component {
 		this.onEdit = this.onEdit.bind(this);
 		this.toggleEdit = this.toggleEdit.bind(this);
 	}
+  
+  componentWillMount() {
+    Modal.setAppElement('body');
+  }
 
 	onDelete() {
 		this.props.onDelete(this.props.row.id);
