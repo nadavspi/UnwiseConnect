@@ -1,7 +1,8 @@
 import * as BudgetsActions from '../../actions/budgets';
+import * as search from 'searchtabular';
 import Form from './Item/Form';
 import List from './List';
-import * as search from 'searchtabular';
+import PresetBudgets from './PresetBudgets';
 import React, { Component } from 'react';
 import Table from './Table';
 import { connect } from 'react-redux';
@@ -138,6 +139,7 @@ class Budgets extends Component {
                 <Link to={this.props.match.url + '/table'}>Table</Link>
               </li>
             </ul>
+            <PresetBudgets />
             <Route 
               exact path={this.props.match.url} 
               render={this.renderList}
