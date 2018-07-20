@@ -109,10 +109,28 @@ const initialState = {
     edit: true,
   },
   visibleItemList: {},
+  dispatchingPlan: {
+    inProgress: false,
+    response: null,
+  },
+  presets: [],
 };
 
 export default (state = initialState, action) => {
   switch(action.type) {
+    case ActionTypes.BUDGETS_ADD_BUDGET:
+      console.log('Payload', action.payload);
+      return {
+        ...state,
+        presets: [
+          ...state.presets,
+          { 
+            label: action.payload.name,
+            value: action.payload.query,
+          },
+        ],
+      };
+
     case ActionTypes.BUDGETS_ADD_ITEM:
       return {
         ...state,
