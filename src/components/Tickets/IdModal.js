@@ -1,6 +1,8 @@
 import classnames from 'classnames';
 import React, { Component } from 'react';
+import Modal from 'react-modal';
 import { fetchTicketNotes } from '../../helpers/cw';
+
 class IdModal extends Component {
   constructor() {
     super();
@@ -14,14 +16,16 @@ class IdModal extends Component {
     this.expand = this.expand.bind(this);
   }
 
+  componentWillMount() {
+    Modal.setAppElement('body');
+  }
+
   displayNotes() {
-    console.log(this.props.ticketNumber);
     fetchTicketNotes(this.props.ticketNumber).then(results => {
-      console.log(results);
       const notes = results.map(note => ({
-        createdBy: note.createdBy,
-        dateCreated: note. dateCreated,
-        id: note.is,
+        createdBy: note.member.name,
+        dateCreated: note.dateCreated,
+        id: note.id,
         text: note.text,
       }));
 
@@ -45,23 +49,24 @@ class IdModal extends Component {
   }
 
   render () {
-    const className = classnames('btn-group', {
-      'open': this.state.expanded,
-    });
-
     return (
-      <div className={className}>
+      <div>
         <button 
-          className="btn btn-default dropdown-toggle"
+          className="btn btn-default"
           onClick={this.expand}>
-          notes
+          Notes
         </button>
-        <div className="dropdown-menu">
+        <Modal
+          contentLabel="Notes Modal"
+          isOpen={this.state.expanded}
+          overlayClassName="modal-overlay"
+          onRequestClose={this.expand}
+          shouldCloseOnOverlayClick={true}
+        >
           {this.state.notes.map(message => 
             <div key={message.id}>
               <p>{message.text}</p>
-              <p>{message.createdBy}</p>
-              <p>{message.dateCreated}</p>
+              <p>- {message.createdBy}<br />{message.dateCreated}</p>
             </div>
           )}
           <button
@@ -69,10 +74,14 @@ class IdModal extends Component {
             onClick={this.expand}>
             close
           </button>
-        </div>
-      </div>
+        </Modal>
+      </div>        
     );
   }
 }
 
 export default IdModal;
+
+
+
+
