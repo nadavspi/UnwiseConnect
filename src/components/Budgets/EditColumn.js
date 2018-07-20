@@ -13,6 +13,10 @@ class EditColumn extends Component {
     this.onEdit = this.onEdit.bind(this);
     this.toggleEdit = this.toggleEdit.bind(this);
   }
+  
+  componentWillMount() {
+    Modal.setAppElement('body');
+  }
 
   onDelete() {
     this.props.onDelete(this.props.row.id);
@@ -28,9 +32,9 @@ class EditColumn extends Component {
     this.props.onEdit(item);
   }
 
-	render() {
-		return (
-			<div>
+  render() {
+    return (
+      <div>
         <Modal
           contentLabel="Edit Item Modal"
           isOpen={this.state.isEditing}
@@ -50,12 +54,12 @@ class EditColumn extends Component {
         >
           Edit
         </button>
-	      <button
-	      	className="btn btn-primary"
-	      	onClick={this.onDelete}
-	      >
-	      	Delete
-	      </button>
+        <button
+          className="btn btn-primary"
+          onClick={this.onDelete}
+        >
+          Delete
+        </button>
       </div>
     );
   }
