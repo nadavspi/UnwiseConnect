@@ -87,7 +87,7 @@ class Form extends Component {
 					<div>						
             {fields.map((field) => (
               !field.isInteractive && (
-                <div key={field.name}>
+                <div key={field.name} className="item-field">
                   <label htmlFor={field.name}>{field.label}</label>
                   {this.inputFormat(field)}
                 </div>
