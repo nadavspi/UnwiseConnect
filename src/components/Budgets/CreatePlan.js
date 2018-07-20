@@ -102,8 +102,6 @@ class CreatePlan extends Component {
       return newFlag;
     });
 
-    console.log(this.props.projects);
-
     return (
       <div>
         <h3>Create Workplan</h3>
