@@ -1,3 +1,4 @@
+import flatten from 'flat';
 import nanoid from 'nanoid';
 import React, { Component } from 'react';
 import Select from 'react-select';
@@ -35,8 +36,7 @@ class PresetBudgets extends Component {
         id: nanoid(),
       },
     };
-
-    this.props.dispatch(addPreset(payload));
+    this.props.dispatch(addPreset(flatten.unflatten({ ...payload })));
 
     this.setState({
       ...this.state,
@@ -66,7 +66,6 @@ class PresetBudgets extends Component {
     const payload = {
       elementId: this.state.preset.id,
     };
-    console.log(payload);
     this.props.dispatch(removePreset(payload));
 
     this.setState({
@@ -80,11 +79,27 @@ class PresetBudgets extends Component {
       this.props.search({});
       return;
     }
-    this.props.search(this.state.preset.value);
+    
+    const preset = this.props.presets.filter(preset => preset.id === this.state.preset.id)[0];
+    const maintainedProps = this.props.maintainDepth.map((property) => preset.value[property]);
+    let query = {...preset.value};
+    let newQuery = {};
+    
+    this.props.maintainDepth.map((property) => {
+      query[property] = undefined;
+    });
+
+    newQuery = flatten(query);
+    this.props.maintainDepth.map((property, index) => {
+      console.log(property);
+      newQuery[property] = maintainedProps[index];
+    });
+
+    this.props.search(newQuery);
   }
 
   onUpdate() {
-    console.log('Preset', this.state.preset.id);
+
     const payload = {
       preset: {
         label: this.state.preset.label,
@@ -92,7 +107,7 @@ class PresetBudgets extends Component {
         id: this.state.preset.id,
       }
     };
-    this.props.dispatch(updatePreset(payload));
+    this.props.dispatch(updatePreset(flatten.unflatten({ ...payload })));
   }
 
   render () {
@@ -124,6 +139,7 @@ class PresetBudgets extends Component {
           <label>Save As:</label>
           <input
             onChange={e => this.onChange('name', e.target.value)}
+            required={true}
             value={this.state.name}
           >
           </input>
@@ -137,6 +153,12 @@ class PresetBudgets extends Component {
     );
   }
 }
+
+PresetBudgets.defaultProps = {
+  maintainDepth: [
+    'tags',
+  ],
+};
 
 const mapPropsToState = state => ({
   presets: convertToList(state.budgets.presets),
