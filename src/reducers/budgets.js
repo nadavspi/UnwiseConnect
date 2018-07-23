@@ -44,7 +44,7 @@ const initialState = {
     {
       filterType: 'textfield',
       name: 'budgetHours.column',
-      label: 'Team',
+      label: 'Column',
       type: 'text',
     },
     {
@@ -98,7 +98,7 @@ const initialState = {
       isInteractive: true,
     },
   ],
-  query: { summary: 'Install'},
+  query: {},
   userColumns: {
     summary: true,
     phase: false,
