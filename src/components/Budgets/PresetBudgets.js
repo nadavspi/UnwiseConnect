@@ -66,6 +66,7 @@ class PresetBudgets extends Component {
   }
 
   onUpdate() {
+    console.log('Preset', this.state.preset.id);
     const payload = {
       preset: {
         label: this.state.preset.label,

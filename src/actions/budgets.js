@@ -127,13 +127,16 @@ export const updateItem = payload => {
 
 export const updatePreset = payload => {
   return dispatch => {
-    const presetRef = ref.child(`budgets/${payload.updatedPreset.id}`);
+    const presetRef = ref.child(`budgets/${payload.preset.id}`);
 
-    presetRef.update(payload.updatedPreset);
+    presetRef.update(payload.preset);
 
     dispatch({
-      type: ActionTypes.BUDGETS_UPDATE_PRESET,
-      payload,  
+      type: ActionTypes.BUDGETS_ADD,
+      payload: {
+        elementType: 'presets',
+        element: payload.preset,
+      },  
     });
   };
 }
