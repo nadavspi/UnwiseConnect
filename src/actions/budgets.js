@@ -1,30 +1,34 @@
 import { ActionTypes, ref } from '../config/constants';
 import { dispatchPlan } from '../helpers/cw';
 
-export const addBudget = payload => {
-  return dispatch => {
-    const budgetRef = ref.child(`budgets/${payload.budget.id}`);
-
-    budgetRef.set(payload.budget);
-    
-    dispatch({
-      type: ActionTypes.BUDGETS_ADD_BUDGET,
-      payload,
-    });
-  };
-}
-
 export const addItem = payload => {
 	return dispatch => {
 		const itemRef =	ref.child(`items/${payload.item.id}`);
 
 		itemRef.set( payload.item );
-
-		dispatch({
-			type: ActionTypes.BUDGETS_ADD_ITEM,
-			payload,
+    dispatch({
+			type: ActionTypes.BUDGETS_ADD,
+			payload: {
+        element: payload.item,
+        elementType: 'itemList',
+      },
 		});
 	};
+}
+
+export const addPreset = payload => {
+  return dispatch => {
+    const budgetRef = ref.child(`budgets/${payload.budget.id}`);
+
+    budgetRef.set(payload.budget);
+    dispatch({
+      type: ActionTypes.BUDGETS_ADD,
+      payload: {
+        element: payload.budget,
+        elementType: 'presets',
+      },
+    });
+  };
 }
 
 export const createPlan = payload => {
@@ -119,5 +123,18 @@ export const updateItem = payload => {
 			payload,	
 		});
 	};
+}
+
+export const updatePreset = payload => {
+  return dispatch => {
+    const presetRef = ref.child(`budgets/${payload.updatedPreset.id}`);
+
+    presetRef.update(payload.updatedPreset);
+
+    dispatch({
+      type: ActionTypes.BUDGETS_UPDATE_PRESET,
+      payload,  
+    });
+  };
 }
 

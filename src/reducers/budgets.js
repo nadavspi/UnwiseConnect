@@ -118,28 +118,16 @@ const initialState = {
 
 export default (state = initialState, action) => {
 	switch(action.type) {
-    case ActionTypes.BUDGETS_ADD_BUDGET:
-      console.log('Payload', action.payload);
+    case ActionTypes.BUDGETS_ADD:
+      const payload = action.payload;
+      
       return {
         ...state,
-        presets: {
-          ...state.presets,
-          [action.payload.id]: {
-            id: action.payload.id, 
-            label: action.payload.label,
-            value: action.payload.value,
-          },
+        [payload.elementType]: {
+          ...state[payload.elementType],
+          [payload.element.id]: payload.element,
         },
       };
-
-		case ActionTypes.BUDGETS_ADD_ITEM:
-			return {
-				...state,
-        itemList: {
-          ...state.itemList,
-          [action.payload.item.id]: action.payload.item,
-        }
-			};
 
     case ActionTypes.BUDGETS_DISPATCH_PLAN:
       return {
