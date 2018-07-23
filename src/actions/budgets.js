@@ -52,6 +52,22 @@ export const removeItem = payload => {
   };
 }
 
+export const removePreset = payload => {
+  return dispatch => {
+    const presetRef = ref.child(`budgets/${payload.elementId}`);
+
+    presetRef.remove();
+
+    dispatch({
+      type: ActionTypes.BUDGETS_REMOVE_ITEM,
+      payload: {
+        elementId: payload.elementId,
+        elementType: 'presets',
+      },
+    });
+  };
+}
+
 export const subscribe = payload => {
   return dispatch => {
 

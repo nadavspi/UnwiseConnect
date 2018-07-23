@@ -117,7 +117,7 @@ const initialState = {
 };
 
 export default (state = initialState, action) => {
-	switch(action.type) {
+  switch(action.type) {
     case ActionTypes.BUDGETS_ADD:
       const payload = action.payload;
       console.log('reducers');
@@ -138,8 +138,17 @@ export default (state = initialState, action) => {
         }
       };
 
+    case ActionTypes.BUDGETS_DISPATCH_PLAN_SUCCESS:
+      return {
+        ...state,
+        dispatchingPlan: {
+          inProgress: false,
+          response: action.payload.result,
+        }
+      };
+
     case ActionTypes.BUDGETS_REMOVE_ITEM:
-      delete state.itemList[action.payload.itemId];
+      delete state[action.payload.elementType][action.payload.elementId];
       
       return state;
 
