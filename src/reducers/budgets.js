@@ -44,7 +44,7 @@ const initialState = {
     {
       filterType: 'textfield',
       name: 'budgetHours.column',
-      label: 'Team',
+      label: 'Column',
       type: 'text',
     },
     {
