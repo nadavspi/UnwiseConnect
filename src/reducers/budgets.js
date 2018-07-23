@@ -120,7 +120,7 @@ export default (state = initialState, action) => {
 	switch(action.type) {
     case ActionTypes.BUDGETS_ADD:
       const payload = action.payload;
-      
+      console.log('reducers');
       return {
         ...state,
         [payload.elementType]: {
