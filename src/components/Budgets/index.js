@@ -139,7 +139,9 @@ class Budgets extends Component {
                 <Link to={this.props.match.url + '/table'}>Table</Link>
               </li>
             </ul>
-            <PresetBudgets />
+            <PresetBudgets 
+              search={this.search}
+            />
             <Route 
               exact path={this.props.match.url} 
               render={this.renderList}
