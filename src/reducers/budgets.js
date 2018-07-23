@@ -148,7 +148,7 @@ export default (state = initialState, action) => {
       };
 
 		case ActionTypes.BUDGETS_REMOVE_ITEM:
-      delete state.itemList[action.payload.itemId];
+      delete state[action.payload.elementType][action.payload.elementId];
       
       return state;
 

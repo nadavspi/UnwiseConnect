@@ -1,7 +1,7 @@
 import nanoid from 'nanoid';
 import React, { Component } from 'react';
 import Select from 'react-select';
-import { addPreset, subscribePresets, updatePreset } from '../../actions/budgets';
+import { addPreset, removePreset, subscribePresets, updatePreset } from '../../actions/budgets';
 import { connect } from 'react-redux';
 import { convertToList } from '../../helpers/reformat';
 
@@ -17,6 +17,7 @@ class PresetBudgets extends Component {
     this.onAdd = this.onAdd.bind(this);
     this.onChange = this.onChange.bind(this);
     this.onChangePreset = this.onChangePreset.bind(this);
+    this.onDelete = this.onDelete.bind(this);
     this.onLoad = this.onLoad.bind(this);
     this.onUpdate = this.onUpdate.bind(this);
   }
@@ -54,6 +55,23 @@ class PresetBudgets extends Component {
     this.setState({
       ...this.state,
       preset: preset,
+    });
+  }
+
+  onDelete() {
+    if(this.state.preset === null) {
+      return;
+    }
+
+    const payload = {
+      elementId: this.state.preset.id,
+    };
+    console.log(payload);
+    this.props.dispatch(removePreset(payload));
+
+    this.setState({
+      ...this.state,
+      preset: null,
     });
   }
 
@@ -96,6 +114,11 @@ class PresetBudgets extends Component {
           className="btn btn-primary"
           onClick={this.onUpdate}>
           Update
+        </button>
+        <button 
+          className="btn btn-primary"
+          onClick={this.onDelete}>
+          Delete
         </button>
         <form onSubmit={this.onAdd}>
           <label>Save As:</label>
