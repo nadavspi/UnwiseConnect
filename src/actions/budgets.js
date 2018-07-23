@@ -54,8 +54,11 @@ export const removeItem = payload => {
 		itemRef.remove();
 
 		dispatch({
-			type: ActionTypes.BUDGETS_REMOVE_ITEM,
-			payload,
+			type: ActionTypes.BUDGETS_REMOVE,
+			payload: {
+        elementId: payload.itemId,
+        elementType: 'itemList',
+      },
 		});
 	};
 }
@@ -67,7 +70,7 @@ export const removePreset = payload => {
     presetRef.remove();
 
     dispatch({
-      type: ActionTypes.BUDGETS_REMOVE_ITEM,
+      type: ActionTypes.BUDGETS_REMOVE,
       payload: {
         elementId: payload.elementId,
         elementType: 'presets',
