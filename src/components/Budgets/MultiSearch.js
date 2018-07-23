@@ -56,11 +56,10 @@ class Search extends React.Component {
 				multi
 				onChange={this.onChange}
 				options={options}
-				value={this.state.value}
+				value={this.props.query[this.props.column]}
 			/>
 		);
 	}
-
 }
 
 const mapStateToProps = state => ({
