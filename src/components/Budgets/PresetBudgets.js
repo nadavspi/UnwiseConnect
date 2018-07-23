@@ -1,7 +1,7 @@
 import nanoid from 'nanoid';
 import React, { Component } from 'react';
 import Select from 'react-select';
-import { addBudget, subscribePresets } from '../../actions/budgets';
+import { addPreset, subscribePresets, updatePreset } from '../../actions/budgets';
 import { connect } from 'react-redux';
 import { convertToList } from '../../helpers/reformat';
 
@@ -18,6 +18,7 @@ class PresetBudgets extends Component {
     this.onChange = this.onChange.bind(this);
     this.onChangePreset = this.onChangePreset.bind(this);
     this.onLoad = this.onLoad.bind(this);
+    this.onUpdate = this.onUpdate.bind(this);
   }
 
   componentDidMount() {
@@ -34,7 +35,7 @@ class PresetBudgets extends Component {
       },
     };
 
-    this.props.dispatch(addBudget(payload));
+    this.props.dispatch(addPreset(payload));
 
     this.setState({
       ...this.state,
@@ -53,19 +54,29 @@ class PresetBudgets extends Component {
     this.setState({
       ...this.state,
       preset: preset,
-    })
+    });
   }
 
   onLoad() {
-    if(this.props.preset === null) {
+    if(this.state.preset === null) {
       this.props.search({});
       return;
     }
     this.props.search(this.state.preset.value);
   }
 
+  onUpdate() {
+    const payload = {
+      preset: {
+        label: this.state.preset.label,
+        value: this.props.query,
+        id: this.state.preset.id,
+      }
+    };
+    this.props.dispatch(updatePreset(payload));
+  }
+
   render () {
-    console.log(this.props.presets);
     return (
       <div>
         <h3>Load Budget</h3>
@@ -79,6 +90,10 @@ class PresetBudgets extends Component {
         <button 
           className="btn btn-primary"
           onClick={this.onLoad}>
+          Load
+        </button><button 
+          className="btn btn-primary"
+          onClick={this.onUpdate}>
           Update
         </button>
         <form onSubmit={this.onAdd}>
