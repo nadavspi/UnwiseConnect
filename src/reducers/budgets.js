@@ -98,7 +98,7 @@ const initialState = {
       isInteractive: true,
     },
   ],
-  query: {},
+  query: { summary: 'Install'},
   userColumns: {
     summary: true,
     phase: false,
@@ -120,7 +120,6 @@ export default (state = initialState, action) => {
   switch(action.type) {
     case ActionTypes.BUDGETS_ADD:
       const payload = action.payload;
-      console.log('reducers');
       return {
         ...state,
         [payload.elementType]: {
@@ -147,7 +146,7 @@ export default (state = initialState, action) => {
         }
       };
 
-    case ActionTypes.BUDGETS_REMOVE_ITEM:
+    case ActionTypes.BUDGETS_REMOVE:
       delete state[action.payload.elementType][action.payload.elementId];
       
       return state;
@@ -160,6 +159,7 @@ export default (state = initialState, action) => {
           return item;
       });
 
+      console.log('Search:', action.payload.query);
       return {
         ...state,
         query: action.payload.query,

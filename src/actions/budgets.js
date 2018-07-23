@@ -1,18 +1,18 @@
 import { ActionTypes, ref } from '../config/constants';
 
 export const addItem = payload => {
-	return dispatch => {
-		const itemRef =	ref.child(`items/${payload.item.id}`);
+  return dispatch => {
+    const itemRef = ref.child(`items/${payload.item.id}`);
 
-		itemRef.set( payload.item );
+    itemRef.set( payload.item );
     dispatch({
-			type: ActionTypes.BUDGETS_ADD,
-			payload: {
+      type: ActionTypes.BUDGETS_ADD,
+      payload: {
         element: payload.item,
         elementType: 'itemList',
       },
-		});
-	};
+    });
+  };
 }
 
 export const addPreset = payload => {
@@ -46,8 +46,11 @@ export const removeItem = payload => {
     itemRef.remove();
 
     dispatch({
-      type: ActionTypes.BUDGETS_REMOVE_ITEM,
-      payload,
+      type: ActionTypes.BUDGETS_REMOVE,
+      payload: {
+        elementId: payload.itemId,
+        elementType: 'itemList',
+      },
     });
   };
 }
@@ -59,7 +62,7 @@ export const removePreset = payload => {
     presetRef.remove();
 
     dispatch({
-      type: ActionTypes.BUDGETS_REMOVE_ITEM,
+      type: ActionTypes.BUDGETS_REMOVE,
       payload: {
         elementId: payload.elementId,
         elementType: 'presets',
