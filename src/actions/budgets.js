@@ -1,6 +1,19 @@
 import { ActionTypes, ref } from '../config/constants';
 import { dispatchPlan } from '../helpers/cw';
 
+export const addBudget = payload => {
+  return dispatch => {
+    const budgetRef = ref.child(`budgets/${payload.budget.id}`);
+
+    budgetRef.set(payload.budget);
+    
+    dispatch({
+      type: ActionTypes.BUDGETS_ADD_BUDGET,
+      payload,
+    });
+  };
+}
+
 export const addItem = payload => {
 	return dispatch => {
 		const itemRef =	ref.child(`items/${payload.item.id}`);
@@ -57,11 +70,28 @@ export const subscribe = payload => {
       dispatch({
 	      type: ActionTypes.BUDGETS_UPDATE,
 	      payload: { 
-	        itemList: itemList,
+	        itemList,
+          visibleItemList: itemList,
         }
       });
     });   
 	};
+}
+
+export const subscribePresets = payload => {
+  return dispatch => {
+    const budgetRef = ref.child(`budgets`);
+    budgetRef.on('value', snapshot => {
+      const presets = snapshot.val();
+
+      dispatch({
+        type: ActionTypes.BUDGETS_UPDATE,
+        payload: {
+          presets,
+        }
+      });
+    });   
+  };
 }
 
 export const search = payload => {
@@ -91,15 +121,3 @@ export const updateItem = payload => {
 	};
 }
 
-export const addBudget = payload => {
-  return dispatch => {
-    // const budgetRef = ref.child(`budgets/${payload.budget.id}`);
-
-    // budgetRef.set(payload.budget);
-    
-    dispatch({
-      type: ActionTypes.BUDGETS_ADD_BUDGET,
-      payload,
-    });
-  };
-}
