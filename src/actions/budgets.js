@@ -1,5 +1,18 @@
 import { ActionTypes, ref } from '../config/constants';
 
+export const addBudget = payload => {
+  return dispatch => {
+    const budgetRef = ref.child(`budgets/${payload.budget.id}`);
+
+    budgetRef.set(payload.budget);
+    
+    dispatch({
+      type: ActionTypes.BUDGETS_ADD_BUDGET,
+      payload,
+    });
+  };
+}
+
 export const addItem = payload => {
   return dispatch => {
     const itemRef = ref.child(`budgets/items/${payload.item.id}`);
@@ -40,7 +53,24 @@ export const subscribe = payload => {
       dispatch({
         type: ActionTypes.BUDGETS_UPDATE,
         payload: { 
-          itemList: itemList,
+          itemList,
+          visibleItemList: itemList,
+        }
+      });
+    });   
+  };
+}
+
+export const subscribePresets = payload => {
+  return dispatch => {
+    const budgetRef = ref.child(`budgets`);
+    budgetRef.on('value', snapshot => {
+      const presets = snapshot.val();
+
+      dispatch({
+        type: ActionTypes.BUDGETS_UPDATE,
+        payload: {
+          presets,
         }
       });
     });   
@@ -74,15 +104,3 @@ export const updateItem = payload => {
   };
 }
 
-export const addBudget = payload => {
-  return dispatch => {
-    // const budgetRef = ref.child(`budgets/${payload.budget.id}`);
-
-    // budgetRef.set(payload.budget);
-    
-    dispatch({
-      type: ActionTypes.BUDGETS_ADD_BUDGET,
-      payload,
-    });
-  };
-}

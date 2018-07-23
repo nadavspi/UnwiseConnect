@@ -113,7 +113,7 @@ const initialState = {
     inProgress: false,
     response: null,
   },
-  presets: [],
+  presets: {},
 };
 
 export default (state = initialState, action) => {
@@ -122,13 +122,14 @@ export default (state = initialState, action) => {
       console.log('Payload', action.payload);
       return {
         ...state,
-        presets: [
+        presets: {
           ...state.presets,
-          { 
-            label: action.payload.name,
-            value: action.payload.query,
+          [action.payload.id]: {
+            id: action.payload.id, 
+            label: action.payload.label,
+            value: action.payload.value,
           },
-        ],
+        },
       };
 
     case ActionTypes.BUDGETS_ADD_ITEM:
@@ -174,8 +175,7 @@ export default (state = initialState, action) => {
     case ActionTypes.BUDGETS_UPDATE:
       return {
         ...state,
-        itemList: action.payload.itemList,
-        visibleItemList: action.payload.itemList,
+        ...action.payload,
       };
 
     case ActionTypes.BUDGETS_UPDATE_ITEM:

@@ -1,27 +1,37 @@
+import nanoid from 'nanoid';
 import React, { Component } from 'react';
 import Select from 'react-select';
-import { addBudget } from '../../actions/budgets';
+import { addBudget, subscribePresets } from '../../actions/budgets';
 import { connect } from 'react-redux';
+import { convertToList } from '../../helpers/reformat';
 
 class PresetBudgets extends Component {
   constructor() {
     super();
 
     this.state = {
-      name: 'testBudget',
+      name: '',
       preset: '',
     }
     
     this.onAdd = this.onAdd.bind(this);
     this.onChange = this.onChange.bind(this);
     this.onChangePreset = this.onChangePreset.bind(this);
+    this.onLoad = this.onLoad.bind(this);
+  }
+
+  componentDidMount() {
+    this.props.dispatch(subscribePresets());
   }
 
   onAdd(e) {
     e.preventDefault();
     const payload = {
-      name: this.state.name,
-      query: this.props.query,
+      budget: {
+        label: this.state.name,
+        value: this.props.query,
+        id: nanoid(),
+      },
     };
 
     this.props.dispatch(addBudget(payload));
@@ -46,7 +56,16 @@ class PresetBudgets extends Component {
     })
   }
 
+  onLoad() {
+    if(this.props.preset === null) {
+      this.props.search({});
+      return;
+    }
+    this.props.search(this.state.preset.value);
+  }
+
   render () {
+    console.log(this.props.presets);
     return (
       <div>
         <h3>Load Budget</h3>
@@ -58,7 +77,8 @@ class PresetBudgets extends Component {
           value={this.state.preset}
         />
         <button 
-          className="btn btn-primary">
+          className="btn btn-primary"
+          onClick={this.onLoad}>
           Update
         </button>
         <form onSubmit={this.onAdd}>
@@ -80,7 +100,7 @@ class PresetBudgets extends Component {
 }
 
 const mapPropsToState = state => ({
-  presets: state.budgets.presets,
+  presets: convertToList(state.budgets.presets),
   query: state.budgets.query,
 });
 
