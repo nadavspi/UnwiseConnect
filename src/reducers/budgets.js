@@ -119,6 +119,8 @@ const initialState = {
 };
 
 export default (state = initialState, action) => {
+  const MAX_BUFFER = 10;
+
 	switch(action.type) {
     case ActionTypes.BUDGETS_ADD:
       const payload = action.payload;
@@ -130,7 +132,7 @@ export default (state = initialState, action) => {
         },
         past:[
           { ...state },
-          ...state.past,
+          ...state.past.slice(1,10),
         ],
         future: [],
       };
@@ -160,7 +162,7 @@ export default (state = initialState, action) => {
         ...state,
         past:[
           { ...state },
-          ...state.past,
+          ...state.past.slice(1,10),
         ],
         future: [],
       };
@@ -183,6 +185,7 @@ export default (state = initialState, action) => {
 			return state;
 
     case ActionTypes.BUDGETS_SWAP_STATE:
+      const MAX_BUFFER = 10;
       switch(action.payload.value) {
         case 'undo':
           return {
@@ -192,8 +195,8 @@ export default (state = initialState, action) => {
                 ...state,
               },
               ...state.future,
-            ],
-            past: [...state.past].splice(1)
+            ].splice(0,MAX_BUFFER),
+            past: [...state.past].splice(1,MAX_BUFFER),
           };
         case 'redo':
           return {
@@ -203,8 +206,8 @@ export default (state = initialState, action) => {
                 ...state,
               },
               ...state.past,
-            ],
-            future: [...state.future].splice(1)
+            ].slice(0,MAX_BUFFER),
+            future: [...state.future].splice(1,MAX_BUFFER),
           };
         default: 
           return state;
@@ -240,7 +243,7 @@ export default (state = initialState, action) => {
         },
         past:[
           { ...state },
-          ...state.past,
+          ...state.past.slice(1,10),
         ],
         future: [],
       };
