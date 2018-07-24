@@ -109,11 +109,42 @@ const initialState = {
     edit: true,
   },
   visibleItemList: {},
+  dispatchingPlan: {
+    inProgress: false,
+    response: null,
+  },
+  presets: {},
+  past: [],
+  future: [],
 };
 
 export default (state = initialState, action) => {
-  switch(action.type) {
-    case ActionTypes.BUDGETS_ADD_ITEM:
+	switch(action.type) {
+    case ActionTypes.BUDGETS_ADD:
+      const payload = action.payload;
+      return {
+        ...state,
+        [payload.elementType]: {
+          ...state[payload.elementType],
+          [payload.element.id]: payload.element,
+        },
+        past:[
+          { ...state },
+          ...state.past,
+        ],
+        future: [],
+      };
+
+    case ActionTypes.BUDGETS_DISPATCH_PLAN:
+      return {
+        ...state,
+        dispatchingPlan: {
+          inProgress: true,
+          response: null,
+        }
+      };
+
+    case ActionTypes.BUDGETS_DISPATCH_PLAN_SUCCESS:
       return {
         ...state,
         itemList: {
@@ -125,7 +156,14 @@ export default (state = initialState, action) => {
     case ActionTypes.BUDGETS_REMOVE_ITEM:
       delete state.itemList[action.payload.itemId];
       
-      return state;
+      return { 
+        ...state,
+        past:[
+          { ...state },
+          ...state.past,
+        ],
+        future: [],
+      };
 
     case ActionTypes.BUDGETS_SEARCH:
       const visibleItemList = {};
@@ -144,6 +182,35 @@ export default (state = initialState, action) => {
     case ActionTypes.BUDGETS_SUBSCRIBE:
       return state;
 
+    case ActionTypes.BUDGETS_SWAP_STATE:
+      switch(action.payload.value) {
+        case 'undo':
+          return {
+            ...state.past[0],
+            future: [
+              {
+                ...state,
+              },
+              ...state.future,
+            ],
+            past: [...state.past].splice(1)
+          };
+        case 'redo':
+          return {
+            ...state.future[0],
+            past: [
+              {
+                ...state,
+              },
+              ...state.past,
+            ],
+            future: [...state.future].splice(1)
+          };
+        default: 
+          return state;
+      }
+      return state;
+
     case ActionTypes.BUDGETS_TOGGLE_COL:
       return {
         ...state,
@@ -156,8 +223,12 @@ export default (state = initialState, action) => {
     case ActionTypes.BUDGETS_UPDATE:
       return {
         ...state,
-        itemList: action.payload.itemList,
-        visibleItemList: action.payload.itemList,
+        ...action.payload,
+        past:[
+          { ...state },
+          ...state.past,
+        ],
+        future: [],
       };
 
     case ActionTypes.BUDGETS_UPDATE_ITEM:
@@ -167,6 +238,11 @@ export default (state = initialState, action) => {
           ...state.itemList,
           [action.payload.updatedItem.id]: action.payload.updatedItem,
         },
+        past:[
+          { ...state },
+          ...state.past,
+        ],
+        future: [],
       };
 
     default:
