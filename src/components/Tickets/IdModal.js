@@ -1,4 +1,3 @@
-import classnames from 'classnames';
 import React, { Component } from 'react';
 import Modal from 'react-modal';
 import { fetchTicketNotes } from '../../helpers/cw';
