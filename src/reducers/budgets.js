@@ -114,6 +114,8 @@ const initialState = {
     response: null,
   },
   presets: {},
+  past: [],
+  future: [],
 };
 
 export default (state = initialState, action) => {
@@ -126,6 +128,11 @@ export default (state = initialState, action) => {
           ...state[payload.elementType],
           [payload.element.id]: payload.element,
         },
+        past:[
+          { ...state },
+          ...state.past,
+        ],
+        future: [],
       };
 
     case ActionTypes.BUDGETS_DISPATCH_PLAN:
@@ -149,7 +156,14 @@ export default (state = initialState, action) => {
 		case ActionTypes.BUDGETS_REMOVE:
       delete state[action.payload.elementType][action.payload.elementId];
       
-      return state;
+      return { 
+        ...state,
+        past:[
+          { ...state },
+          ...state.past,
+        ],
+        future: [],
+      };
 
 		case ActionTypes.BUDGETS_SEARCH:
       const visibleItemList = {};
@@ -159,7 +173,6 @@ export default (state = initialState, action) => {
           return item;
       });
 
-      console.log('Search:', action.payload.query);
       return {
 				...state,
 				query: action.payload.query,
@@ -168,6 +181,35 @@ export default (state = initialState, action) => {
 
 		case ActionTypes.BUDGETS_SUBSCRIBE:
 			return state;
+
+    case ActionTypes.BUDGETS_SWAP_STATE:
+      switch(action.payload.value) {
+        case 'undo':
+          return {
+            ...state.past[0],
+            future: [
+              {
+                ...state,
+              },
+              ...state.future,
+            ],
+            past: [...state.past].splice(1)
+          };
+        case 'redo':
+          return {
+            ...state.future[0],
+            past: [
+              {
+                ...state,
+              },
+              ...state.past,
+            ],
+            future: [...state.future].splice(1)
+          };
+        default: 
+          return state;
+      }
+      return state;
 
     case ActionTypes.BUDGETS_TOGGLE_COL:
       return {
@@ -182,6 +224,11 @@ export default (state = initialState, action) => {
       return {
         ...state,
         ...action.payload,
+        past:[
+          { ...state },
+          ...state.past,
+        ],
+        future: [],
       };
 
 		case ActionTypes.BUDGETS_UPDATE_ITEM:
@@ -191,6 +238,11 @@ export default (state = initialState, action) => {
           ...state.itemList,
           [action.payload.updatedItem.id]: action.payload.updatedItem,
         },
+        past:[
+          { ...state },
+          ...state.past,
+        ],
+        future: [],
       };
 
 		default:

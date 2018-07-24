@@ -124,6 +124,13 @@ export const search = payload => {
 	};
 }
 
+export const swapState = payload => {
+  return {
+      type: ActionTypes.BUDGETS_SWAP_STATE,
+      payload,
+  };
+}
+
 export const toggleColumn = payload => {
 	return {
 		type: ActionTypes.BUDGETS_TOGGLE_COL,
