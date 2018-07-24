@@ -112,6 +112,10 @@ class Budgets extends Component {
     this.props.dispatch(BudgetsActions.search({ query, visibleItems }));
   }
 
+  swapState(value){
+    this.props.dispatch(BudgetsActions.swapState({ value }));
+  }
+
   toggleColumn(payload){
     this.props.dispatch(BudgetsActions.toggleColumn({ columnName: payload.columnName }));
   }
@@ -144,6 +148,17 @@ class Budgets extends Component {
             <PresetBudgets 
               search={this.search}
             />
+            <h3>Undo/Redo List Change</h3>
+            <button
+              className="btn btn-primary"
+              onClick={e => this.swapState('undo')}>
+              Undo
+            </button>
+            <button
+              className="btn btn-primary"
+              onClick={e => this.swapState('redo')}>
+              Redo
+            </button>
             <Route 
               exact path={this.props.match.url} 
               render={this.renderList}
@@ -169,6 +184,7 @@ const mapStateToProps = state => ({
   query: state.budgets.query,
   userColumns: state.budgets.userColumns,
   visibleItems: convertToList(state.budgets.visibleItemList),
+  past: state.budgets.past,
 });
 
 export default connect(mapStateToProps)(Budgets);
