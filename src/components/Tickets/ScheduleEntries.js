@@ -1,18 +1,17 @@
-import Modal from 'react-modal';
 import React, { Component } from 'react';
-import ScheduleEntries from './ScheduleEntries';
+import Modal from 'react-modal';
 import { fetchTicketNotes } from '../../helpers/cw';
 
-class IdModal extends Component {
+class ScheduleEntries extends Component {
   constructor() {
     super();
 
     this.state = { 
       expanded: false, 
-      notes: [],
+      entries: [],
     };
 
-    this.displayNotes = this.displayNotes.bind(this);
+    this.displayEntries = this.displayEntries.bind(this);
     this.expand = this.expand.bind(this);
   }
 
@@ -20,7 +19,7 @@ class IdModal extends Component {
     Modal.setAppElement('body');
   }
 
-  displayNotes() {
+  displayEntries() {
     fetchTicketNotes(this.props.ticketNumber).then(results => {
       const notes = results.map(note => ({
         createdBy: note.member.name,
@@ -30,9 +29,22 @@ class IdModal extends Component {
       }));
 
       this.setState({
-        ...this.state,
-        notes,
-      });
+      ...this.state,
+      entries: [
+        {
+          id: 1,
+          text:'first entry',
+          createdBy: 'author 1',
+          datCreated: new Date(),
+        }, 
+        {
+          id: 2,
+          text:'second entry',
+          createdBy: 'author 2',
+          datCreated: new Date(),
+        },
+      ],
+    });
     });
   }
 
@@ -44,26 +56,26 @@ class IdModal extends Component {
     });
 
     if(willExpand) {
-      this.displayNotes();
+      this.displayEntries();
     }   
   }
 
-  render () {
+  render() {
     return (
       <div>
-        <button 
+        <button
           className="btn btn-default"
           onClick={this.expand}>
-          Notes
+          Schedule
         </button>
         <Modal
-          contentLabel="Notes Modal"
+          contentLabel="Entries Modal"
           isOpen={this.state.expanded}
           overlayClassName="modal-overlay"
           onRequestClose={this.expand}
           shouldCloseOnOverlayClick={true}
         >
-          {this.state.notes.map(message => 
+          {this.state.entries.map(message => 
             <div key={message.id}>
               <p>{message.text}</p>
               <p>- {message.createdBy}<br />{message.dateCreated}</p>
@@ -75,14 +87,9 @@ class IdModal extends Component {
             close
           </button>
         </Modal>
-        <ScheduleEntries ticketNumber={this.props.ticketNumber} />
-      </div>        
+      </div>
     );
   }
 }
 
-export default IdModal;
-
-
-
-
+export default ScheduleEntries;
