@@ -1,3 +1,4 @@
+import 'bootstrap/dist/css/bootstrap.css';
 import flatten from 'flat';
 import nanoid from 'nanoid';
 import React, { Component } from 'react';
@@ -113,42 +114,46 @@ class PresetBudgets extends Component {
   render () {
     return (
       <div>
-        <h3>Load Budget</h3>
-        <label>Load:</label>
-        <Select 
-          className="select-bar"
-          onChange={this.onChangePreset}
-          options={this.props.presets}
-          value={this.state.preset}
-        />
-        <button 
-          className="btn btn-primary"
-          onClick={this.onLoad}>
-          Load
-        </button><button 
-          className="btn btn-primary"
-          onClick={this.onUpdate}>
-          Update
-        </button>
-        <button 
-          className="btn btn-primary"
-          onClick={this.onDelete}>
-          Delete
-        </button>
-        <form onSubmit={this.onAdd}>
-          <label>Save As:</label>
-          <input
-            onChange={e => this.onChange('name', e.target.value)}
-            required={true}
-            value={this.state.name}
-          >
-          </input>
+        <div>
+          <h3>Load Budget</h3>
+          <label>Load:</label>
+          <Select 
+            className="select-bar"
+            onChange={this.onChangePreset}
+            options={this.props.presets}
+            value={this.state.preset}
+          />
           <button 
             className="btn btn-primary"
-            type="submit">
-            Save New
+            onClick={this.onLoad}>
+            Load
+          </button><button 
+            className="btn btn-primary"
+            onClick={this.onUpdate}>
+            Update
           </button>
-        </form>
+          <button 
+            className="btn btn-primary" 
+            onClick={this.onDelete}>
+            Delete
+          </button>
+        </div>
+        <div>
+          <form onSubmit={this.onAdd}>
+            <label>Save As:</label>
+            <input
+              onChange={e => this.onChange('name', e.target.value)}
+              required={true}
+              value={this.state.name}
+            >
+            </input>
+            <button 
+              className="btn btn-primary"
+              type="submit">
+              Save New
+            </button>
+          </form>
+        </div>
       </div>
     );
   }

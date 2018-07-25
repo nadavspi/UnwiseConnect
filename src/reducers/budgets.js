@@ -88,14 +88,14 @@ const initialState = {
       filterType: 'custom',
       name: 'tags',
       label: 'Tags',
-      type: 'text',
       required: true,
+      type: 'text',
     },
     {
       filterType: 'none',
+      isInteractive: true,
       name: 'edit',
       label: 'Edit',
-      isInteractive: true,
     },
   ],
   query: {},
@@ -119,8 +119,6 @@ const initialState = {
 };
 
 export default (state = initialState, action) => {
-  const MAX_BUFFER = 10;
-
 	switch(action.type) {
     case ActionTypes.BUDGETS_ADD:
       const payload = action.payload;

@@ -184,7 +184,6 @@ const mapStateToProps = state => ({
   query: state.budgets.query,
   userColumns: state.budgets.userColumns,
   visibleItems: convertToList(state.budgets.visibleItemList),
-  past: state.budgets.past,
 });
 
 export default connect(mapStateToProps)(Budgets);
