@@ -1,4 +1,5 @@
 import fetch from 'isomorphic-fetch';
+import moment from 'moment';
 import { checkStatus, parseJSON } from './utils';
 require('es6-promise').polyfill();
 
@@ -20,5 +21,28 @@ export const dispatchTickets = params => {
     headers,
     method: 'POST',
     body: JSON.stringify(params),
+  }).then(checkStatus).then(parseJSON);
+}
+
+
+export const fetchScheduleForDeveloper = (developer,date) => {
+  const headers = {
+    Authorization: `Basic ${process.env.REACT_APP_API_KEY}`,
+    'Content-Type': 'application/json'
+  };
+
+  return fetch(`${process.env.REACT_APP_API_URL}/v1/schedule/${developer}/${date}`, {
+    headers
+  }).then(checkStatus).then(parseJSON);
+}
+
+export const fetchScheduleSummary = (date) => {
+  const headers = {
+    Authorization: `Basic ${process.env.REACT_APP_API_KEY}`,
+    'Content-Type': 'application/json'
+  };
+
+  return fetch(`${process.env.REACT_APP_API_URL}/v1/schedules/${date}`, {
+    headers
   }).then(checkStatus).then(parseJSON);
 }
