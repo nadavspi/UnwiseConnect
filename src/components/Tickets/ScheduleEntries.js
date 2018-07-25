@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import Modal from 'react-modal';
-import { fetchTicketNotes } from '../../helpers/cw';
+import { fetchScheduleEntryById, fetchTicketScheduleEntryIds } from '../../helpers/cw';
 
 class ScheduleEntries extends Component {
   constructor() {
@@ -20,31 +20,15 @@ class ScheduleEntries extends Component {
   }
 
   displayEntries() {
-    fetchTicketNotes(this.props.ticketNumber).then(results => {
-      const notes = results.map(note => ({
-        createdBy: note.member.name,
-        dateCreated: note.dateCreated,
-        id: note.id,
-        text: note.text,
+    fetchTicketScheduleEntryIds(this.props.ticketNumber).then(results => {
+      return Promise.all(results.map(result => {
+        return fetchScheduleEntryById(result);
       }));
-
+    }).then(entries => {
       this.setState({
-      ...this.state,
-      entries: [
-        {
-          id: 1,
-          text:'first entry',
-          createdBy: 'author 1',
-          datCreated: new Date(),
-        }, 
-        {
-          id: 2,
-          text:'second entry',
-          createdBy: 'author 2',
-          datCreated: new Date(),
-        },
-      ],
-    });
+        ...this.state,
+        entries: entries,
+      });
     });
   }
 
@@ -58,6 +42,20 @@ class ScheduleEntries extends Component {
     if(willExpand) {
       this.displayEntries();
     }   
+  }
+
+  entryCard(entry) {
+    return(
+      <div>
+        <p>
+          User: {entry.member.name} 
+          <br />
+          Hours: {entry.hours} | Start: {entry.dateStart} - End: {entry.dateEnd}
+          <br />
+          {(!entry.acknowledgedFlag) ? 'Not' : ''}Acknowledged | {entry.status.name} | {(entry.doneFlag) ? 'Done' : 'Open'}
+        </p>
+      </div>
+    );
   }
 
   render() {
@@ -75,10 +73,9 @@ class ScheduleEntries extends Component {
           onRequestClose={this.expand}
           shouldCloseOnOverlayClick={true}
         >
-          {this.state.entries.map(message => 
-            <div key={message.id}>
-              <p>{message.text}</p>
-              <p>- {message.createdBy}<br />{message.dateCreated}</p>
+          {this.state.entries.map(entry => 
+            <div key={entry.id}>
+              {this.entryCard(entry)}
             </div>
           )}
           <button
