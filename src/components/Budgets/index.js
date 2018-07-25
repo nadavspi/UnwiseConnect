@@ -166,7 +166,7 @@ const mapStateToProps = state => ({
   fields: state.budgets.fields,
   query: state.budgets.query,
   userColumns: state.budgets.userColumns,
-  visibleItems: convertToList(state.budgets.visibleItems),
+  visibleItems: convertToList(state.budgets.visibleItemList),
 });
 
 export default connect(mapStateToProps)(Budgets);
