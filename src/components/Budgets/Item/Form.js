@@ -1,8 +1,10 @@
-import React, { Component } from 'react';
-import nanoid from 'nanoid';
 import flatten from 'flat';
+import nanoid from 'nanoid';
+import React, { Component } from 'react';
+import Select from 'react-select';
+import { connect } from 'react-redux';
 
-export default class ItemForm extends Component {
+class Form extends Component {
 	constructor(props) {
 		super(props);
 
@@ -14,6 +16,7 @@ export default class ItemForm extends Component {
 
     this.onSubmit = this.onSubmit.bind(this);
     this.onChange = this.onChange.bind(this);
+    this.onChangeDropdown = this.onChangeDropdown.bind(this);
     this.onCancel = this.onCancel.bind(this);
   }
 
@@ -29,17 +32,68 @@ export default class ItemForm extends Component {
       },
     });
 	}
+
+  onChangeDropdown(field) {
+    this.onChange(field.name, field.value);
+  }
 	
 	onSubmit(event) {
 		event.preventDefault();
 
     // Unflatten
 		this.props.onSubmit(flatten.unflatten({ ...this.state.item }));
-    this.setState( ItemForm.defaultProps );
     
+    this.setState({ 
+      isEditing: Form.defaultProps.isEditing, 
+      item: {
+        ...this.props.item,
+        id: nanoid(),
+      }, 
+    });
+
     // Focus on the first input
     this.refs[this.props.fields[0].name].focus();
-	}
+  }
+
+  inputFormat(field){
+    if(field.type === 'dropdown') {
+      return(
+        <Select 
+          name={field.name}
+          value={this.state.item[field.name]}
+          options={field.options}
+          onChange={this.onChangeDropdown}
+        />
+      );
+    }
+    if(field.name.indexOf('descriptions.') > -1) {
+      return (
+        <textarea 
+          style={
+            { 
+              minWidth: '145px', 
+              maxWidth: '145px',
+              minHeight: '5em',
+            }
+          }
+          ref={field.name}
+          onChange={e => this.onChange(field.name, e.target.value)}
+          required={field.required}
+          type={field.type}
+          value={this.state.item[field.name]}
+        />
+      );
+    }
+    return (
+      <input 
+        ref={field.name}
+        onChange={e => this.onChange(field.name, e.target.value)}
+        type={field.type}
+        value={this.state.item[field.name]}
+        required={field.required}
+      />
+    );
+  }
 
 	render() {
     const { fields } = this.props;
@@ -48,20 +102,16 @@ export default class ItemForm extends Component {
 		return (
 			<div>
 				<form onSubmit={this.onSubmit}>
-					<div className="input-group input-group-sm">						
+					<div className="grid-container">						
             {fields.map((field) => (
-              <div key={field.name}>
-                <label htmlFor={field.name}>{field.label}</label>
-                <input 
-                  ref={field.name}
-                  onChange={e => this.onChange(field.name, e.target.value)}
-                  type={field.type}
-                  value={this.state.item[field.name]}
-                  required={field.required}
-                />
-              </div>
+              !field.isInteractive && (
+                <div key={field.name} className="item-field" style={field.style}>
+                  <label htmlFor={field.name}>{field.label}</label>
+                  {this.inputFormat(field)}
+                </div>
+              )
             ))}
-						<button type="submit" className="btn btn-primary">{submitBtnLabel}</button>
+						<button type="submit" className="btn btn-primary" style={{gridColumn: '1 / -1'}}>{submitBtnLabel}</button>
             {this.props.isEditing && (
               <button onClick={this.onCancel} className="btn btn-primary">Cancel</button>
 				    )}
@@ -72,7 +122,7 @@ export default class ItemForm extends Component {
 	}
 }
 
-ItemForm.defaultProps = {
+Form.defaultProps = {
   item: {
     id: nanoid(),
     summary:  "",
@@ -94,8 +144,15 @@ ItemForm.defaultProps = {
     'budgetHours.value': 0,
     'descriptions.workplan': [],
     'descriptions.budget': [],
+    'descriptions.clientResponsibilities': [],
     'descriptions.assumptions': [],
     'descriptions.exclusions': [],  
   },
   isEditing: false,
 };
+
+const mapStateToProps = state => ({
+  fields: state.budgets.fields,
+});
+
+export default connect(mapStateToProps)(Form);
