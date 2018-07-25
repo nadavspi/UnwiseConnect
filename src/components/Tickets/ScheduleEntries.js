@@ -9,6 +9,7 @@ class ScheduleEntries extends Component {
     this.state = { 
       expanded: false, 
       entries: [],
+      isLoading: false,
     };
 
     this.displayEntries = this.displayEntries.bind(this);
@@ -28,6 +29,7 @@ class ScheduleEntries extends Component {
       this.setState({
         ...this.state,
         entries: entries,
+        isLoading: false,
       });
     });
   }
@@ -37,6 +39,7 @@ class ScheduleEntries extends Component {
     this.setState({
       ...this.state,
       expanded: willExpand,
+      isLoading: willExpand,
     });
 
     if(willExpand) {
@@ -71,8 +74,10 @@ class ScheduleEntries extends Component {
           isOpen={this.state.expanded}
           overlayClassName="modal-overlay"
           onRequestClose={this.expand}
-          shouldCloseOnOverlayClick={true}
-        >
+          shouldCloseOnOverlayClick={true}>
+          {(this.state.isLoading) && (
+            <p style={{textAlign: 'center'}}>Loading . . . </p>
+          )}
           {this.state.entries.map(entry => 
             <div key={entry.id}>
               {this.entryCard(entry)}
