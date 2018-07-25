@@ -66,6 +66,24 @@ class Form extends Component {
         />
       );
     }
+    if(field.name.indexOf('descriptions.') > -1) {
+      return (
+        <textarea 
+          style={
+            { 
+              minWidth: '145px', 
+              maxWidth: '145px',
+              minHeight: '5em',
+            }
+          }
+          ref={field.name}
+          onChange={e => this.onChange(field.name, e.target.value)}
+          required={field.required}
+          type={field.type}
+          value={this.state.item[field.name]}
+        />
+      );
+    }
     return (
       <input 
         ref={field.name}
@@ -84,16 +102,16 @@ class Form extends Component {
 		return (
 			<div>
 				<form onSubmit={this.onSubmit}>
-					<div>						
+					<div className="grid-container">						
             {fields.map((field) => (
               !field.isInteractive && (
-                <div key={field.name} className="item-field">
+                <div key={field.name} className="item-field" style={field.style}>
                   <label htmlFor={field.name}>{field.label}</label>
                   {this.inputFormat(field)}
                 </div>
               )
             ))}
-						<button type="submit" className="btn btn-primary">{submitBtnLabel}</button>
+						<button type="submit" className="btn btn-primary" style={{gridColumn: '1 / -1'}}>{submitBtnLabel}</button>
             {this.props.isEditing && (
               <button onClick={this.onCancel} className="btn btn-primary">Cancel</button>
 				    )}
