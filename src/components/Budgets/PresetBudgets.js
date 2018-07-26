@@ -37,7 +37,7 @@ class PresetBudgets extends Component {
         id: nanoid(),
         editHistory: [
           {
-            date: new Date(),
+            date: (new Date()).toString(),
           },
         ],
       },
@@ -47,7 +47,7 @@ class PresetBudgets extends Component {
     this.setState({
       ...this.state,
       name: '',
-    })
+    });
   }
 
   onChange(property, value) {
@@ -97,7 +97,6 @@ class PresetBudgets extends Component {
 
     newQuery = flatten(query);
     this.props.maintainDepth.map((property, index) => {
-      console.log(property);
       newQuery[property] = maintainedProps[index];
     });
 
@@ -105,7 +104,7 @@ class PresetBudgets extends Component {
   }
 
   onUpdate() {
-    console.log('update at', new Date());
+   
     const payload = {
       preset: {
         label: this.state.preset.label,
@@ -113,16 +112,17 @@ class PresetBudgets extends Component {
         id: this.state.preset.id,
         editHistory: [
           {
-            date: new Date(),
+            date: new Date().toString(),
           },
-          ...this.state.preset.editHistory,
+          ...convertToList(this.state.preset.editHistory),
         ],
-      }
+      },
     };
     this.props.dispatch(updatePreset(flatten.unflatten({ ...payload })));
   }
 
   render () {
+    const options = this.props.presets.sort((a,b) => new Date(b.editHistory[0].date) - new Date(a.editHistory[0].date));
     return (
       <div>
         <div>
@@ -131,7 +131,7 @@ class PresetBudgets extends Component {
           <Select 
             className="select-bar"
             onChange={this.onChangePreset}
-            options={this.props.presets}
+            options={options}
             value={this.state.preset}
           />
           <button 
