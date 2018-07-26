@@ -50,7 +50,7 @@ class IdModal extends Component {
           onRequestClose={this.expand}
           shouldCloseOnOverlayClick={true}
         > 
-          <nav className="navbar navbar-uc navbar-static-top">
+          <nav className="navbar navbar-static-top">
             <div className="container">
               <ul className="nav nav-settings">
                 {this.props.tabs.map((tab,index) => (
@@ -58,7 +58,8 @@ class IdModal extends Component {
                     <li>
                       <button 
                         className="btn btn-default"
-                        onClick={e => this.show(tab.property)}>
+                        onClick={e => this.show(tab.property)}
+                        style={{borderColor: 'transparent'}}>
                         {tab.label}
                       </button>    
                     </li>
