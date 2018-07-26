@@ -35,6 +35,11 @@ class PresetBudgets extends Component {
         label: this.state.name,
         value: this.props.query,
         id: nanoid(),
+        editHistory: [
+          {
+            date: new Date(),
+          },
+        ],
       },
     };
     this.props.dispatch(addPreset(flatten.unflatten({ ...payload })));
@@ -100,12 +105,18 @@ class PresetBudgets extends Component {
   }
 
   onUpdate() {
-
+    console.log('update at', new Date());
     const payload = {
       preset: {
         label: this.state.preset.label,
         value: this.props.query,
         id: this.state.preset.id,
+        editHistory: [
+          {
+            date: new Date(),
+          },
+          ...this.state.preset.editHistory,
+        ],
       }
     };
     this.props.dispatch(updatePreset(flatten.unflatten({ ...payload })));
