@@ -1,5 +1,4 @@
 import React, { Component } from 'react';
-import Modal from 'react-modal';
 import { fetchScheduleEntryById, fetchTicketScheduleEntryIds } from '../../helpers/cw';
 
 class ScheduleEntries extends Component {
@@ -7,17 +6,11 @@ class ScheduleEntries extends Component {
     super();
 
     this.state = { 
-      expanded: false, 
       entries: [],
       isLoading: false,
     };
 
     this.displayEntries = this.displayEntries.bind(this);
-    this.expand = this.expand.bind(this);
-  }
-
-  componentWillMount() {
-    Modal.setAppElement('body');
   }
 
   displayEntries() {
@@ -32,19 +25,6 @@ class ScheduleEntries extends Component {
         isLoading: false,
       });
     });
-  }
-
-  expand() {
-    const willExpand = !this.state.expanded;
-    this.setState({
-      ...this.state,
-      expanded: willExpand,
-      isLoading: willExpand,
-    });
-
-    if(willExpand) {
-      this.displayEntries();
-    }   
   }
 
   entryCard(entry) {
@@ -62,19 +42,10 @@ class ScheduleEntries extends Component {
   }
 
   render() {
+    this.displayEntries();
+    
     return (
       <div>
-        <button
-          className="btn btn-default"
-          onClick={this.expand}>
-          Schedule
-        </button>
-        <Modal
-          contentLabel="Entries Modal"
-          isOpen={this.state.expanded}
-          overlayClassName="modal-overlay"
-          onRequestClose={this.expand}
-          shouldCloseOnOverlayClick={true}>
           <h3>Schedule Entries</h3>
           {(this.state.isLoading) && (
             <p style={{textAlign: 'center'}}>Loading . . . </p>
@@ -84,12 +55,6 @@ class ScheduleEntries extends Component {
               {this.entryCard(entry)}
             </div>
           )}
-          <button
-            className="btn btn-default"
-            onClick={this.expand}>
-            close
-          </button>
-        </Modal>
       </div>
     );
   }

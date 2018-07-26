@@ -10,10 +10,12 @@ class IdModal extends Component {
     this.state = { 
       expanded: false, 
       notes: [],
+      currTab: 'notes',
     };
 
     this.displayNotes = this.displayNotes.bind(this);
     this.expand = this.expand.bind(this);
+    this.show = this.show.bind(this);
   }
 
   componentWillMount() {
@@ -48,13 +50,20 @@ class IdModal extends Component {
     }   
   }
 
+  show(tabName) {
+    this.setState({
+      ...this.state,
+      currTab: tabName,
+    })
+  }
+
   render () {
     return (
       <div>
         <button 
           className="btn btn-default"
           onClick={this.expand}>
-          Notes
+          Details
         </button>
         <Modal
           contentLabel="Notes Modal"
@@ -62,13 +71,40 @@ class IdModal extends Component {
           overlayClassName="modal-overlay"
           onRequestClose={this.expand}
           shouldCloseOnOverlayClick={true}
-        >
-          <h3>Notes</h3>
-          {this.state.notes.map(message => 
-            <div key={message.id}>
-              <p>{message.text}</p>
-              <p>- {message.createdBy}<br />{message.dateCreated}</p>
+        > 
+        <nav className="navbar navbar-uc navbar-static-top">
+              <div className="container">
+                <ul className="nav nav-settings">
+                  <li>
+                    <button 
+                      className="btn btn-default"
+                      onClick={e => this.show('notes')}>
+                      Notes
+                    </button>
+                  </li>
+                  <li>
+                    <button 
+                      className="btn btn-default"
+                      onClick={e => this.show('scheduleEntries')}>
+                      Schedule Entries
+                    </button>
+                  </li>
+                </ul>
+              </div>
+            </nav>
+          {this.state.currTab === 'notes' && (
+            <div>
+              <h3>Notes</h3>
+              {this.state.notes.map(message => 
+                <div key={message.id}>
+                  <p>{message.text}</p>
+                  <p>- {message.createdBy}<br />{message.dateCreated}</p>
+                </div>
+              )}
             </div>
+          )}
+          {this.state.currTab === 'scheduleEntries' && (
+            <ScheduleEntries ticketNumber={this.props.ticketNumber} />
           )}
           <button
             className="btn btn-default"
@@ -76,7 +112,6 @@ class IdModal extends Component {
             close
           </button>
         </Modal>
-        <ScheduleEntries ticketNumber={this.props.ticketNumber} />
       </div>        
     );
   }
