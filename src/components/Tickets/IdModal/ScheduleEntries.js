@@ -13,6 +13,10 @@ class ScheduleEntries extends Component {
     this.displayEntries = this.displayEntries.bind(this);
   }
 
+  componentWillMount() {
+    this.displayEntries();
+  }
+
   displayEntries() {
     fetchTicketScheduleEntryIds(this.props.ticketNumber).then(results => {
       return Promise.all(results.map(result => {
@@ -42,8 +46,6 @@ class ScheduleEntries extends Component {
   }
 
   render() {
-    this.displayEntries();
-    
     return (
       <div>
           <h3>Schedule Entries</h3>

@@ -12,6 +12,10 @@ class Notes extends Component {
     this.displayNotes = this.displayNotes.bind(this);
   }
 
+  componentWillMount() {
+    this.displayNotes();
+  }
+
   displayNotes() {
     fetchTicketNotes(this.props.ticketNumber).then(results => {
       const notes = results.map(note => ({
@@ -29,8 +33,6 @@ class Notes extends Component {
   }
 
   render() {
-    this.displayNotes();
-    
     return (
       <div>
         <h3>Notes</h3>
