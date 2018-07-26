@@ -265,13 +265,6 @@ td.col--budget:not(:empty)::after {
   max-width: 350px;
 }
 
-.grid-container {
-  display: flex;
-  flex-wrap: wrap;
-  max-width: 480px;
-  grid-gap: 10px;
-}
-
 .item-field {
   min-width: 11em;
   max-width: 11em; 
