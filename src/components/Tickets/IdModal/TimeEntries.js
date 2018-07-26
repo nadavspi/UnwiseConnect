@@ -32,12 +32,16 @@ class TimeEntries extends Component {
   }
 
   entryCard(entry) {
+    const startDate = new Date(entry.timeStart);
+    const endDate = new Date(entry.timeEnd);
+
+    const date = startDate.getMonth() + '/' + startDate.getDate() + '/' + startDate.getFullYear();
     return(
       <div>
         <p>
           User: {entry.member.name} 
           <br />
-          Hours: {entry.actualHours} | Start: {entry.timeStart} - End: {entry.timeEnd}
+          Hours: {entry.actualHours} | {date}
           <br />
           Notes:
           <br />
