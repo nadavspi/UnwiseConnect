@@ -1,7 +1,7 @@
 import Modal from 'react-modal';
 import React, { Component } from 'react';
 import ScheduleEntries from './ScheduleEntries';
-import { fetchTicketNotes } from '../../helpers/cw';
+import Notes from './Notes';
 
 class IdModal extends Component {
   constructor() {
@@ -9,11 +9,9 @@ class IdModal extends Component {
 
     this.state = { 
       expanded: false, 
-      notes: [],
       currTab: 'notes',
     };
 
-    this.displayNotes = this.displayNotes.bind(this);
     this.expand = this.expand.bind(this);
     this.show = this.show.bind(this);
   }
@@ -22,32 +20,12 @@ class IdModal extends Component {
     Modal.setAppElement('body');
   }
 
-  displayNotes() {
-    fetchTicketNotes(this.props.ticketNumber).then(results => {
-      const notes = results.map(note => ({
-        createdBy: note.member.name,
-        dateCreated: note.dateCreated,
-        id: note.id,
-        text: note.text,
-      }));
-
-      this.setState({
-        ...this.state,
-        notes,
-      });
-    });
-  }
-
   expand() {
     const willExpand = !this.state.expanded;
     this.setState({
       ...this.state,
       expanded: willExpand,
     });
-
-    if(willExpand) {
-      this.displayNotes();
-    }   
   }
 
   show(tabName) {
@@ -72,36 +50,25 @@ class IdModal extends Component {
           onRequestClose={this.expand}
           shouldCloseOnOverlayClick={true}
         > 
-        <nav className="navbar navbar-uc navbar-static-top">
-              <div className="container">
-                <ul className="nav nav-settings">
-                  <li>
-                    <button 
-                      className="btn btn-default"
-                      onClick={e => this.show('notes')}>
-                      Notes
-                    </button>
-                  </li>
-                  <li>
-                    <button 
-                      className="btn btn-default"
-                      onClick={e => this.show('scheduleEntries')}>
-                      Schedule Entries
-                    </button>
-                  </li>
-                </ul>
-              </div>
-            </nav>
-          {this.state.currTab === 'notes' && (
-            <div>
-              <h3>Notes</h3>
-              {this.state.notes.map(message => 
-                <div key={message.id}>
-                  <p>{message.text}</p>
-                  <p>- {message.createdBy}<br />{message.dateCreated}</p>
-                </div>
-              )}
+          <nav className="navbar navbar-uc navbar-static-top">
+            <div className="container">
+              <ul className="nav nav-settings">
+                {this.props.tabs.map((tab,index) => (
+                  <div key={index}>
+                    <li>
+                      <button 
+                        className="btn btn-default"
+                        onClick={e => this.show(tab.property)}>
+                        {tab.label}
+                      </button>    
+                    </li>
+                  </div>
+                ))}
+              </ul>
             </div>
+          </nav>
+          {this.state.currTab === 'notes' && (
+            <Notes ticketNumber={this.props.ticketNumber} />
           )}
           {this.state.currTab === 'scheduleEntries' && (
             <ScheduleEntries ticketNumber={this.props.ticketNumber} />
@@ -115,6 +82,19 @@ class IdModal extends Component {
       </div>        
     );
   }
+}
+
+IdModal.defaultProps = {
+  tabs: [
+    {
+      label: 'Notes',
+      property: 'notes',
+    },
+    {
+      label: 'Schedule Entries',
+      property: 'scheduleEntries',
+    },
+  ],
 }
 
 export default IdModal;
