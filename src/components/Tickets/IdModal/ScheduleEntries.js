@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { fetchScheduleEntryById, fetchTicketScheduleEntryIds } from '../../helpers/cw';
+import { fetchScheduleEntryById, fetchTicketScheduleEntryIds } from '../../../helpers/cw';
 
 class ScheduleEntries extends Component {
   constructor() {
