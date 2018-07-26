@@ -55,7 +55,7 @@ class ScheduleEntries extends Component {
           <br />
           Hours: {entry.hours} | Start: {entry.dateStart} - End: {entry.dateEnd}
           <br />
-          {(!entry.acknowledgedFlag) ? 'Not' : ''}Acknowledged | {entry.status.name} | {(entry.doneFlag) ? 'Done' : 'Open'}
+          Marked as {(entry.doneFlag) ? 'Done' : 'Open'}
         </p>
       </div>
     );
@@ -75,6 +75,7 @@ class ScheduleEntries extends Component {
           overlayClassName="modal-overlay"
           onRequestClose={this.expand}
           shouldCloseOnOverlayClick={true}>
+          <h3>Schedule Entries</h3>
           {(this.state.isLoading) && (
             <p style={{textAlign: 'center'}}>Loading . . . </p>
           )}

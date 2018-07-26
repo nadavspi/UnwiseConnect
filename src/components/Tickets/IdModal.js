@@ -63,6 +63,7 @@ class IdModal extends Component {
           onRequestClose={this.expand}
           shouldCloseOnOverlayClick={true}
         >
+          <h3>Notes</h3>
           {this.state.notes.map(message => 
             <div key={message.id}>
               <p>{message.text}</p>
