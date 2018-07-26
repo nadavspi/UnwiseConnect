@@ -1,6 +1,7 @@
 import Modal from 'react-modal';
 import React, { Component } from 'react';
 import ScheduleEntries from './ScheduleEntries';
+import TimeEntries from './TimeEntries';
 import Notes from './Notes';
 
 class IdModal extends Component {
@@ -74,6 +75,9 @@ class IdModal extends Component {
           {this.state.currTab === 'scheduleEntries' && (
             <ScheduleEntries ticketNumber={this.props.ticketNumber} />
           )}
+          {this.state.currTab === 'timeEntries' && (
+            <TimeEntries ticketNumber={this.props.ticketNumber} />
+          )}
           <button
             className="btn btn-default"
             onClick={this.expand}>
@@ -94,6 +98,10 @@ IdModal.defaultProps = {
     {
       label: 'Schedule Entries',
       property: 'scheduleEntries',
+    },
+    {
+      label: 'Time Entries',
+      property: 'timeEntries',
     },
   ],
 }
