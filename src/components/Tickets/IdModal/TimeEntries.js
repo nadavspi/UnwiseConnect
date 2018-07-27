@@ -41,7 +41,7 @@ class TimeEntries extends Component {
         <p>
           User: {entry.member.name} 
           <br />
-          Hours: {entry.actualHours} | {date}
+          Actual Hours: {entry.actualHours} | {date}
           <br />
           Notes:
           <br />
