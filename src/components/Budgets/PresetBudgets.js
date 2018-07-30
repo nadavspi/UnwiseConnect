@@ -38,6 +38,7 @@ class PresetBudgets extends Component {
         editHistory: [
           {
             date: (new Date()).toString(),
+            name: this.props.user,
           },
         ],
       },
@@ -104,7 +105,6 @@ class PresetBudgets extends Component {
   }
 
   onUpdate() {
-   
     const payload = {
       preset: {
         label: this.state.preset.label,
@@ -113,6 +113,7 @@ class PresetBudgets extends Component {
         editHistory: [
           {
             date: new Date().toString(),
+            name: this.props.user,
           },
           ...convertToList(this.state.preset.editHistory),
         ],
@@ -179,6 +180,7 @@ PresetBudgets.defaultProps = {
 const mapPropsToState = state => ({
   presets: convertToList(state.budgets.presets),
   query: state.budgets.query,
+  user: state.user.creds.displayName,
 });
 
 export default connect(mapPropsToState)(PresetBudgets);
