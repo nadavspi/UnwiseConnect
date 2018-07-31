@@ -13,7 +13,15 @@ class PresetBudgets extends Component {
 
     this.state = {
       name: '',
-      preset: '',
+      preset: {
+        editHistory: [
+          {
+            name: '',
+            date: '',
+          },
+        ],
+      editMessage: '',
+      },
     }
     
     this.onAdd = this.onAdd.bind(this);
@@ -62,6 +70,7 @@ class PresetBudgets extends Component {
     this.setState({
       ...this.state,
       preset: preset,
+      editMessage: 'Last Edit: ' + preset.editHistory[0].name + ' on ' + preset.editHistory[0].date,
     });
   }
 
@@ -117,6 +126,7 @@ class PresetBudgets extends Component {
           },
           ...convertToList(this.state.preset.editHistory),
         ],
+        editMessage: 'Last Edit: ' + this.state.preset.editHistory[0].name + ' on ' + this.state.preset.editHistory[0].date,
       },
     };
     this.props.dispatch(updatePreset(flatten.unflatten({ ...payload })));
@@ -124,6 +134,7 @@ class PresetBudgets extends Component {
 
   render () {
     const options = this.props.presets.sort((a,b) => new Date(b.editHistory[0].date) - new Date(a.editHistory[0].date));
+    
     return (
       <div>
         <div>
@@ -135,6 +146,7 @@ class PresetBudgets extends Component {
             options={options}
             value={this.state.preset}
           />
+          <p>{this.state.editMessage}</p>
           <button 
             className="btn btn-primary"
             onClick={this.onLoad}>
