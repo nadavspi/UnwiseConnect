@@ -1,10 +1,8 @@
-import flatten from 'flat';
-import nanoid from 'nanoid';
 import React, { Component } from 'react';
-import Select from 'react-select';
-import { connect } from 'react-redux';
+import nanoid from 'nanoid';
+import flatten from 'flat';
 
-class Form extends Component {
+export default class ItemForm extends Component {
 	constructor(props) {
 		super(props);
 
@@ -16,7 +14,6 @@ class Form extends Component {
 
     this.onSubmit = this.onSubmit.bind(this);
     this.onChange = this.onChange.bind(this);
-    this.onChangeDropdown = this.onChangeDropdown.bind(this);
     this.onCancel = this.onCancel.bind(this);
   }
 
@@ -32,50 +29,17 @@ class Form extends Component {
       },
     });
 	}
-
-  onChangeDropdown(field) {
-    this.onChange(field.name, field.value);
-  }
 	
 	onSubmit(event) {
 		event.preventDefault();
 
     // Unflatten
 		this.props.onSubmit(flatten.unflatten({ ...this.state.item }));
+    this.setState( ItemForm.defaultProps );
     
-    this.setState({ 
-      isEditing: Form.defaultProps.isEditing, 
-      item: {
-        ...this.props.item,
-        id: nanoid(),
-      }, 
-    });
-
     // Focus on the first input
     this.refs[this.props.fields[0].name].focus();
-  }
-
-  inputFormat(field){
-    if(field.type === 'dropdown') {
-      return(
-        <Select 
-          name={field.name}
-          value={this.state.item[field.name]}
-          options={field.options}
-          onChange={this.onChangeDropdown}
-        />
-      );
-    }
-    return (
-      <input 
-        ref={field.name}
-        onChange={e => this.onChange(field.name, e.target.value)}
-        type={field.type}
-        value={this.state.item[field.name]}
-        required={field.required}
-      />
-    );
-  }
+	}
 
 	render() {
     const { fields } = this.props;
@@ -88,7 +52,13 @@ class Form extends Component {
             {fields.map((field) => (
               <div key={field.name}>
                 <label htmlFor={field.name}>{field.label}</label>
-                {this.inputFormat(field)}
+                <input 
+                  ref={field.name}
+                  onChange={e => this.onChange(field.name, e.target.value)}
+                  type={field.type}
+                  value={this.state.item[field.name]}
+                  required={field.required}
+                />
               </div>
             ))}
 						<button type="submit" className="btn btn-primary">{submitBtnLabel}</button>
@@ -102,7 +72,7 @@ class Form extends Component {
 	}
 }
 
-Form.defaultProps = {
+ItemForm.defaultProps = {
   item: {
     id: nanoid(),
     summary:  "",
@@ -124,15 +94,8 @@ Form.defaultProps = {
     'budgetHours.value': 0,
     'descriptions.workplan': [],
     'descriptions.budget': [],
-    'descriptions.clientResponsibilities': [],
     'descriptions.assumptions': [],
     'descriptions.exclusions': [],  
   },
   isEditing: false,
 };
-
-const mapStateToProps = state => ({
-  fields: state.budgets.fields,
-});
-
-export default connect(mapStateToProps)(Form);
