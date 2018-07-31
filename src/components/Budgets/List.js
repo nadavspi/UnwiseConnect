@@ -1,9 +1,11 @@
+import CSVExport from './CSVExport';
 import React, { Component } from 'react';
 import Item from './Item';
 import SearchBar from './Search';
+import { connect } from 'react-redux';
+import { convertToList } from '../../helpers/reformat';
 
 class List extends Component {
-
 	      
 	render() {
 		return (
@@ -14,19 +16,26 @@ class List extends Component {
           fields={this.props.fields}
           onFilter={this.props.onFilter}
         />
-        {this.props.items.map(item => 
-          item.isVisible && (
+        {this.props.visibleItems.map(item => 
           <Item 
             item={item}
-            fields={this.props.fields}
             onEdit={this.props.onEdit}
             onDelete={this.props.onDelete}
             key={item.id}
           />
-        ))}
+        )}
+        <CSVExport 
+          visibleItems={this.props.visibleItems}
+        />
       </div>
 		);
 	}
 }
 
-export default List;
+const mapStateToProps = state => ({
+  fields: state.budgets.fields,
+  visibleItems: convertToList(state.budgets.visibleItemList),
+});
+
+
+export default connect(mapStateToProps)(List);

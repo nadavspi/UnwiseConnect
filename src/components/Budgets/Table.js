@@ -1,48 +1,77 @@
-import flatten from 'flat';
+import CSVExport from './CSVExport';
+import MultiSearch from './MultiSearch';
 import React, { Component } from 'react';
-import SearchColumns from './SearchColumns';
-import * as Table from 'reactabular-table';
-
-class ItemTable extends Component {
-
-  search(query){
-    this.props.search(query);
+import TicketTable from '../Tickets/Table';
+import { connect } from 'react-redux';
+import { convertToList } from '../../helpers/reformat';
+  
+class Table extends Component {
+  onCustomFilter(property) {
+    switch(property) {
+      case 'tags':
+        return (
+          <MultiSearch 
+            column={property}
+            onFilter={this.props.search}
+          />
+        );
+      case 't&m':
+        return (
+          <MultiSearch
+            column={property}
+            onFilter={this.props.search}
+          />
+        );
+      default:
+        console.warn('Could not find filter for property ' + property);
+    }
   }
 
-	render() {
-    const columns = this.props.fields.map((field) => field={
-      property: field.name,      
-      header: {
-        label: field.label,
-      },
-      filterType:field.filterType,
+  render() {
+    const columns = this.props.fields.map((field) => {
+      const column = {
+        property: field.name,      
+        header: {
+          label: field.label,
+        },
+        filterType: field.filterType,
+      };
+
+      if (field.filterType === 'custom') {
+        column.customFilter = () => {
+          return this.onCustomFilter(field.name);
+        }
+      }
+
+      return column;
     });
 
-    const rows = this.props.items.map((item) => item={
-      ...flatten({ ...item }, { maxDepth: 2 }),
-    });
-
-		return (
-			<div>
-				<h2> Table View </h2>
-        <Table.Provider 
-          className="table table-striped table-bordered"
+    const userColumns = columns.map((field) => field.property).filter((column) => this.props.userColumns[column]);
+    return (
+      <div>
+        <TicketTable
+          id="table-search-items"
+          query={this.props.query}
+          search={this.props.search}
+          tickets={this.props.itemArray}
+          toggleColumn={this.props.toggleColumn}
+          userColumns={userColumns}
           columns={columns}
-        >
-          <Table.Header>
-            <SearchColumns 
-              items={this.props.items}
-              columns={columns}
-              onFilter={this.props.onFilter}
-              query={this.props.query}
-              search={this.search}
-            />
-          </Table.Header>
-          <Table.Body rows={rows} rowKey="id" />
-        </Table.Provider>
-			</div>
-		);
-	}
+        />
+        <CSVExport 
+          visibleItems={this.props.visibleItems}
+        />
+      </div> 
+    );
+  }
 }
 
-export default ItemTable;
+const mapStateToProps = state => ({
+  itemArray: convertToList(state.budgets.itemList),
+  fields: state.budgets.fields,
+  query: state.budgets.query,
+  userColumns: state.budgets.userColumns,
+  visibleItems: convertToList(state.budgets.visibleItemList),
+});
+
+export default connect(mapStateToProps)(Table);
