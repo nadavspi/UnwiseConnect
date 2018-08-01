@@ -3,8 +3,8 @@ import nanoid from 'nanoid';
 import flatten from 'flat';
 
 export default class ItemForm extends Component {
-	constructor(props) {
-		super(props);
+  constructor(props) {
+    super(props);
 
     this.state = {
       item: {
@@ -28,27 +28,27 @@ export default class ItemForm extends Component {
         [name]: value,
       },
     });
-	}
-	
-	onSubmit(event) {
-		event.preventDefault();
+  }
+  
+  onSubmit(event) {
+    event.preventDefault();
 
     // Unflatten
-		this.props.onSubmit(flatten.unflatten({ ...this.state.item }));
+    this.props.onSubmit(flatten.unflatten({ ...this.state.item }));
     this.setState( ItemForm.defaultProps );
     
     // Focus on the first input
     this.refs[this.props.fields[0].name].focus();
-	}
+  }
 
-	render() {
+  render() {
     const { fields } = this.props;
     const submitBtnLabel = this.props.isEditing ? 'Save Edit' : 'Add Item';
 
-		return (
-			<div>
-				<form onSubmit={this.onSubmit}>
-					<div className="input-group input-group-sm">						
+    return (
+      <div>
+        <form onSubmit={this.onSubmit}>
+          <div className="input-group input-group-sm">            
             {fields.map((field) => (
               <div key={field.name}>
                 <label htmlFor={field.name}>{field.label}</label>
@@ -61,15 +61,15 @@ export default class ItemForm extends Component {
                 />
               </div>
             ))}
-						<button type="submit" className="btn btn-primary">{submitBtnLabel}</button>
+            <button type="submit" className="btn btn-primary">{submitBtnLabel}</button>
             {this.props.isEditing && (
               <button onClick={this.onCancel} className="btn btn-primary">Cancel</button>
-				    )}
+            )}
           </div>
-				</form>
-			</div>
-		)
-	}
+        </form>
+      </div>
+    )
+  }
 }
 
 ItemForm.defaultProps = {

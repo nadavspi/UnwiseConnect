@@ -7,15 +7,15 @@ import { connect } from 'react-redux';
 import { Route, Link } from 'react-router-dom';
 
 class Budgets extends Component {
-	constructor(props) {
-		super();
+  constructor(props) {
+    super();
 
     this.state = {
       filter: {
         field: 'summary',
         value: '',
       },
-    };    
+    };
 
     this.onAdd    = this.onAdd.bind(this);
     this.onDelete = this.onDelete.bind(this);

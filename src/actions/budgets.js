@@ -1,27 +1,27 @@
 import { ActionTypes } from '../config/constants';
 
 export const addItem = payload => {
-	return {
-		type: ActionTypes.BUDGETS_ADD_ITEM,
-		payload,
-	}
+  return {
+    type: ActionTypes.BUDGETS_ADD_ITEM,
+    payload,
+  }
 }
 
 export const removeItem = payload => {
-	return {
-		type: ActionTypes.BUDGETS_REMOVE_ITEM,
-		payload,
-	}
+  return {
+    type: ActionTypes.BUDGETS_REMOVE_ITEM,
+    payload,
+  }
 }
 
 export const subscribe = payload => {
-	return dispatch => {
+  return dispatch => {
 
-		dispatch({
-			type: ActionTypes.BUDGETS_SUBSCRIBE,	
-		})
-			
-		const inputData = [
+    dispatch({
+      type: ActionTypes.BUDGETS_SUBSCRIBE,  
+    })
+      
+    const inputData = [
         {
           id: 1,
           summary: "Klevu discovery & calls",
@@ -101,31 +101,31 @@ export const subscribe = payload => {
     ];
 
     dispatch({
-    	type: ActionTypes.BUDGETS_UPDATE,
-    	payload: { 
-    		items: inputData,
-    	}
+      type: ActionTypes.BUDGETS_UPDATE,
+      payload: { 
+        items: inputData,
+      }
     })
-	}
+  }
 }
 
 export const search = payload => {
-	return {
-		type: ActionTypes.BUDGETS_SEARCH,
-		payload,
-	}
+  return {
+    type: ActionTypes.BUDGETS_SEARCH,
+    payload,
+  }
 }
 
 export const toggleColumn = payload => {
-	return {
-		type: ActionTypes.BUDGETS_TOGGLE_COL,
-		payload,
-	}
+  return {
+    type: ActionTypes.BUDGETS_TOGGLE_COL,
+    payload,
+  }
 }
 
 export const updateItem = payload => {
-	return {
-		type: ActionTypes.BUDGETS_UPDATE_ITEM,
-		payload,
-	}
+  return {
+    type: ActionTypes.BUDGETS_UPDATE_ITEM,
+    payload,
+  }
 }

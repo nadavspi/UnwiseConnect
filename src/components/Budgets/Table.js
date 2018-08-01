@@ -18,7 +18,7 @@ class Table extends Component {
   render() {
     const columns = this.props.fields.map((field) => {
       const column = {
-        property: field.name,      
+        property: field.name,
         header: {
           label: field.label,
         },

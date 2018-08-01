@@ -7,8 +7,8 @@ import { multiInfix } from '../../helpers/utils';
 
 class List extends Component {
 
-	      
-	render() {
+        
+  render() {
     const { query, rows } = this.props;
     const columns = this.props.fields.map((field) => ({
       property: field.name,      
@@ -24,10 +24,10 @@ class List extends Component {
       strategy: multiInfix });
     const visibleItems = compose(searchExecutor)(rows);
 
-		return (
-			<div>
-			 <h2> List View </h2>
-			 <SearchBar 
+    return (
+      <div>
+       <h2> List View </h2>
+       <SearchBar 
           filter={this.props.filter}
           fields={this.props.fields}
           onFilter={this.props.onFilter}
@@ -42,8 +42,8 @@ class List extends Component {
           />
         )}
       </div>
-		);
-	}
+    );
+  }
 }
 
 export default List;

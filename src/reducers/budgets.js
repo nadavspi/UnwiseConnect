@@ -1,7 +1,7 @@
 import { ActionTypes } from '../config/constants';
 
 const initialState = {
-	items: [],
+  items: [],
   fields: [
     {
       filterType: 'textfield',
@@ -86,32 +86,32 @@ const initialState = {
 };
 
 export default (state = initialState, action) => {
-	switch(action.type) {
-		case ActionTypes.BUDGETS_ADD_ITEM:
-			return {
-				...state,
-				items: [ 
-					...state.items, 
-					action.payload.item, 
-				],
-			};
+  switch(action.type) {
+    case ActionTypes.BUDGETS_ADD_ITEM:
+      return {
+        ...state,
+        items: [ 
+          ...state.items, 
+          action.payload.item, 
+        ],
+      };
 
-		case ActionTypes.BUDGETS_REMOVE_ITEM:
-			return {
-				...state,
-				items: state.items.filter(item => item.id !== action.payload.itemId)
-			};
+    case ActionTypes.BUDGETS_REMOVE_ITEM:
+      return {
+        ...state,
+        items: state.items.filter(item => item.id !== action.payload.itemId)
+      };
 
-		case ActionTypes.BUDGETS_SEARCH:
-			return {
-				...state,
-				query: action.payload.query,
-			};
+    case ActionTypes.BUDGETS_SEARCH:
+      return {
+        ...state,
+        query: action.payload.query,
+      };
 
-		case ActionTypes.BUDGETS_SUBSCRIBE:
-			return {
-				...state,
-			};
+    case ActionTypes.BUDGETS_SUBSCRIBE:
+      return {
+        ...state,
+      };
 
     case ActionTypes.BUDGETS_TOGGLE_COL:
       return {
@@ -128,13 +128,13 @@ export default (state = initialState, action) => {
         items: action.payload.items,
       };
 
-		case ActionTypes.BUDGETS_UPDATE_ITEM:
-			return {
-				...state,
-				items: state.items.map(item => action.payload.updatedItem.id === item.id ? action.payload.updatedItem : item),
-			};
+    case ActionTypes.BUDGETS_UPDATE_ITEM:
+      return {
+        ...state,
+        items: state.items.map(item => action.payload.updatedItem.id === item.id ? action.payload.updatedItem : item),
+      };
 
-		default:
-			return state;
-	}
+    default:
+      return state;
+  }
 };
