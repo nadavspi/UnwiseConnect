@@ -1,4 +1,5 @@
 import app from './app';
+import budgets from './budgets';
 import projects from './projects';
 import tickets from './tickets';
 import user from './user';
@@ -9,4 +10,5 @@ export default combineReducers({
   projects,
   tickets,
   user,
+  budgets,
 });

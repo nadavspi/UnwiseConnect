@@ -2,6 +2,7 @@ import * as Table from 'reactabular-table';
 import * as resolve from 'table-resolver';
 import * as search from 'searchtabular';
 import Pagination from './Pagination';
+import IdModal from './IdModal';
 import React from 'react';
 import SearchColumns from './SearchColumns';
 import StartTimer from './StartTimer';
@@ -235,7 +236,10 @@ TicketsTable.defaultProps = {
         formatters: [
           (value) => {
             return (
-              <TicketLink ticketNumber={value} />
+              <div>
+                <TicketLink ticketNumber={value} />
+                <IdModal ticketNumber={value} />
+              </div>
             );
           }
         ]

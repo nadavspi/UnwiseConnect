@@ -249,3 +249,24 @@ td.col--budget:not(:empty)::after {
   font-weight: bold;
   border-top-width: 2px;
 }
+
+.modal-overlay {
+  position: absolute;
+  z-index: 10;
+  box-sizing: border-box;
+  top: 0px;
+  left: 0px;
+  right: 0px;
+  bottom: 0px;
+  background-color: rgb(0,0,0,.5);
+}
+
+.select-bar {
+  max-width: 350px;
+}
+
+.item-field {
+  min-width: 11em;
+  max-width: 11em; 
+}
+
