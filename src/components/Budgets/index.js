@@ -1,125 +1,20 @@
-import CSVExport from './CSVExport';
-import flatten from 'flat';
+import * as BudgetsActions from '../../actions/budgets';
 import Form from './Item/Form';
 import List from './List';
-import MultiSearch from './MultiSearch';
 import React, { Component } from 'react';
+import Table from './Table';
+import { connect } from 'react-redux';
 import { Route, Link } from 'react-router-dom';
-import Table from '../Tickets/Table';
 
 class Budgets extends Component {
-	constructor() {
-		super();
-
-    const inputData = {
-      items: [
-        {
-          id: 1,
-          summary: "Klevu discovery & calls",
-          phase: "dev/Klevu",
-          feature: "Klevu",
-          budgetHours: { 
-            column: "Discovery",
-            value: 6,
-          },
-          descriptions: {
-            workplan: [
-              "Time for communication with Klevu.",
-            ],
-            budget: [],
-            assumptions: [
-              "Accounts for one onboarding call."
-            ],
-            exclusions: [],
-          },
-          tags: "klevu",
-        },
-        {
-          id: 2,
-          summary: "Install Klevu extension",
-          phase: "dev/Klevu",
-          feature: "Klevu",
-          budgetHours: { 
-            column: 'Dev',
-            value: 4,
-          },
-          descriptions: {
-            workplan: [
-              "Install Klevu extension using composer.",
-            ],
-            assumptions: [
-              "Install extension once using code provided by Klevu."
-            ],
-          },
-          tags: "klevu",
-        },
-        {
-          id: 3,
-          summary: "Configure Klevu flyout",
-          phase: "dev/Klevu",
-          feature: "Klevu",
-          budgetHours: { 
-            column: 'Dev',
-            value: 4,
-          },
-          descriptions: {
-            workplan: [
-              "Use Klevu control panel to choose between autocomplete and faceted.",
-            ],
-            assumptions: [
-              "Use one of out of box options provided by Klevu (autocomplete or faceted) without customization.",
-            ],
-          },
-          tags: "klevu",
-        },
-        {
-          id: 10,
-          summary: "Development meetings",
-          phase: "dev",
-          feature: "Build",
-          budgetHours: { 
-            column: "Development",
-            value: 20,
-          },
-          descriptions: {
-            workplan: [],
-            budget: [],
-            assumptions: [],
-            exclusions: [],
-          },
-          tags: "build",
-        },
-      ],
-    };
-
-    const defaultUserColumns = {
-      summary: true,
-      phase: true,
-      feature: true,
-      'budgetHours.column': true,
-      'budgetHours.value': true,
-      tags: true,
-    };
+  constructor(props) {
+    super();
 
     this.state = {
-      items: inputData.items.map((item) => (
-        item = {
-          ...item,
-          isVisible: true,
-        })),
       filter: {
         field: 'summary',
         value: '',
       },
-      query: {
-        summary:'',
-        phase:'',
-        feature:'',
-        'budgetHours.column': '',
-        'budgetHours.value': '',  
-        tags: '',
-      },
-      userColumns: defaultUserColumns,
     };
 
     this.onAdd    = this.onAdd.bind(this);
@@ -128,53 +23,29 @@ class Budgets extends Component {
     this.onFilter = this.onFilter.bind(this);
     this.onFormSubmit = this.onFormSubmit.bind(this);
     this.renderList = this.renderList.bind(this);
+    this.renderTable = this.renderTable.bind(this);
     this.search   = this.search.bind(this);
     this.toggleColumn = this.toggleColumn.bind(this);
   }
 
-  betterIsVisible(item, query){
-    let result = true;
-
-    for (const property in query) {
-      if(!Array.isArray(query[property])){
-        
-        item[property] = (item[property] + '').toLowerCase();  
-        if(item[property].indexOf((query[property]).toLowerCase()) === -1){
-          result = false;
-        }
-      } else {
-        
-        for (const value in query[property]) {
-          if(item[property].indexOf(value) === -1){
-            result = false;
-          }
-        }
-      }
-    }
-    
-    return result;
-  }
-
-  isVisible(item, field = this.state.filter.field, value = this.state.filter.value) {
-    let flatItem = flatten(item);
-    const itemValue = (flatItem[field] + '').toLowerCase();
-    const filterValue = (value + '').toLowerCase();
-    
-    return itemValue.includes(filterValue);
+  componentDidMount() {
+    this.props.dispatch(BudgetsActions.subscribe());
   }
 
   onFilter({ field = this.state.filter.field, value = this.state.filter.value }) {
     this.setState({
-      items: this.state.items.map((item) => ({
-          ...item,
-          isVisible: this.isVisible(item, field, value),
-        })
-      ),  
       filter: {
         field,
         value,
       },
-    });  
+    }); 
+    
+    const newQuery = {
+      ...this.props.query,
+      [field]: value,
+    };
+
+    this.props.dispatch(BudgetsActions.search({ query: newQuery })); 
   }
 
   onFormSubmit(item) {
@@ -182,102 +53,58 @@ class Budgets extends Component {
   }
 
   onAdd(item) {
-    item = {
-      ...item,
-      isVisible: this.isVisible(item),
-    }
-
-    this.setState({ 
-      items: [
-        ...this.state.items,
-        item,
-      ],
-    });
-  }
-
-  onCustomFilter(property){
-    if(property === 'tags') {
-      return (<MultiSearch 
-                items={this.state.items}
-                query={this.state.query}
-                onFilter={this.search}
-              />);
-    }
+    this.props.dispatch(BudgetsActions.addItem({ item }));
   }
 
   onDelete(itemId) {
-    this.setState({
-      items: this.state.items.filter(item => item.id !== itemId),
-    });
+    this.props.dispatch(BudgetsActions.removeItem({ itemId }));
   }
 
   onEdit(updatedItem) {
-    updatedItem = {
-      ...updatedItem,
-      isVisible: this.isVisible(updatedItem),
-    }
-
-    this.setState({
-      items: this.state.items.map(item => updatedItem.id === item.id ? updatedItem : item),
-    })
+    this.props.dispatch(BudgetsActions.updateItem({ updatedItem }));
   }
 
   renderList() {
+
      return (
        <List
-         items={this.state.items}
+         items={this.props.items}
          filter={this.state.filter}
          fields={this.props.fields}
          onFilter={this.onFilter}
          onEdit={this.onEdit}
          onDelete={this.onDelete}
+         query={this.props.query}
+         rows={this.props.items}
        />
      );
    }
 
+   renderTable() {
+
+    return (
+      <Table 
+        fields={this.props.fields}
+        items={this.props.items}
+        query={this.props.query}
+        search={this.search}
+        toggleColumn={this.toggleColumn}
+        userColumns={this.props.userColumns}
+      /> 
+    );
+   }
+
    search(query) {
-     this.setState({
-       items: this.state.items.map((item) => ({
-         ...item,
-         isVisible: this.betterIsVisible(item, query),
-       })),
-       query: query,
-     });
+     this.props.dispatch(BudgetsActions.search({ query }));
    }
 
    toggleColumn(payload){
-     const isVisible = this.state.userColumns[payload.columnName];
-     this.setState({
-       userColumns: {
-         ...this.state.userColumns,
-         [payload.columnName]: !isVisible,
-       }
-     });
+     this.props.dispatch(BudgetsActions.toggleColumn({ columnName: payload.columnName }));
    }
 
 
   render() {
-    const columns = this.props.fields.map((field) => {
-      const column = {
-        property: field.name,      
-        header: {
-          label: field.label,
-        },
-        filterType: field.filterType,
-      };
 
-      if (field.filterType === 'custom') {
-        column.customFilter = () => {
-          return this.onCustomFilter(field.name);
-        }
-      }
-
-      return column;
-    });
-
-    let userColumns = columns.map((field) => field = field.property);
-    userColumns = userColumns.filter((column) => this.state.userColumns[column]);
-    
     return (
       <div>
         <div className="panel-uc panel panel-default">
@@ -310,20 +137,7 @@ class Budgets extends Component {
             />
             <Route 
               path={this.props.match.url + '/table'} 
-              render={() => (
-                <div>
-                  <Table
-                    id="table-search-items"
-                    query={this.state.query}
-                    search={this.search}
-                    tickets={this.state.items}
-                    toggleColumn={this.toggleColumn}
-                    userColumns={userColumns}
-                    columns={columns}
-                  />
-                  <CSVExport items={this.state.items} />
-                </div>                        
-              )}
+              render={this.renderTable}
             />
           </div>
         </div>
@@ -332,73 +146,11 @@ class Budgets extends Component {
   }
 }
 
-Budgets.defaultProps = {
-  fields: [
-    {
-      filterType: 'textfield',
-      name: 'summary',
-      label: 'Summary',
-      type: 'text',
-      required: true,
-    },
-    {
-      filterType: 'textfield',
-      name: 'phase',
-      label: 'Phase',
-      type: 'text',
-      required: true,
-    },
-    {
-      filterType: 'textfield',
-      name: 'feature',
-      label: 'Feature',
-      type: 'text',
-    },
-    {
-      filterType: 'textfield',
-      name: 'budgetHours.column',
-      label: 'Team',
-      type: 'text',
-    },
-    {
-      filterType: 'textfield',
-      name: 'budgetHours.value',
-      label: 'Hours',
-      type: 'number',
-    },
-    {
-      filterType: 'none',
-      name: 'descriptions.workplan',
-      label: 'Workplan description',
-      type: 'text',
-      required: true,
-    },
-    {
-      filterType: 'none',
-      name: 'descriptions.budget',
-      label: 'Budget description',
-      type: 'text',
-    },
-    {
-      filterType: 'none',
-      name: 'descriptions.assumptions',
-      label: 'Assumptions',
-      type: 'text',
-    },
-    {
-      filterType: 'none',
-      name: 'descriptions.exclusions',
-      label: 'Exclusions',
-      type: 'text',
-    },
-    {
-      filterType: 'custom',
-      name: 'tags',
-      label: 'Tags',
-      type: 'text',
-      required: true,
-    },
-  ]
-};
+const mapStateToProps = state => ({
+  items: state.budgets.items,
+  fields: state.budgets.fields,
+  query: state.budgets.query,
+  userColumns: state.budgets.userColumns,
+})
 
-export default Budgets;
+export default connect(mapStateToProps)(Budgets);

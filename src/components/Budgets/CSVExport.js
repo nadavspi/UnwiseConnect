@@ -1,140 +1,155 @@
+import * as search from 'searchtabular';
 import flatten from 'flat';
-import React, { Component } from 'react';
 import jsonexport from 'jsonexport';
+import React, { Component } from 'react';
+import { compose } from 'redux';
+import { multiInfix } from '../../helpers/utils';
 
 class CSVExport extends Component {
-	constructor(){
-		super();
+  constructor(){
+    super();
 
-		this.exportFile = this.exportFile.bind(this);
-	}
+    this.exportFile = this.exportFile.bind(this);
+  }
 
-	convertFileType(data){
+  convertFileType(data){
 
-		const options = {
-			headers: this.props.columns.map((column) => (column.value)),
-			rename: this.props.columns.map((column) => (column.label)),
-		};
-		
-		jsonexport(data, options, (err,csv) => {
-			if(err) {
-				return console.log(err);
-			}
-			this.exportToBroswer(csv);;
-		});
+    const options = {
+      headers: this.props.columns.map((column) => (column.value)),
+      rename: this.props.columns.map((column) => (column.label)),
+    };
+    
+    jsonexport(data, options, (err,csv) => {
+      if(err) {
+        return console.log(err);
+      }
+      this.exportToBroswer(csv);
+    });
 
-	}
+  }
 
-	exportFile() {
-		console.log(this.props.items);
-	
-		this.convertFileType(this.reformatColumns(this.filterItems()));
-	}
+  exportFile() {
+    this.convertFileType(this.reformatColumns(this.filterItems(this.props.items, this.props.query)));
+  }
 
-	exportToBroswer(csv) {
-		console.log(csv);
-	}
+  exportToBroswer(csv) {
+    console.log(csv);
+  }
 
-	filterItems() {
-		
-		let filteredItems = this.props.items.filter((item) => item.isVisible);
-		filteredItems = filteredItems.map((item) => ({
-			...flatten({ ...item }, { maxDepth:2})
-		}));
+  filterItems(items, query) {
+    
+    const { rows } = this.props;
+    const columns = this.props.fields.map((field) => ({
+      property: field.name,      
+      header: {
+        label: field.label,
+      },
+      filterType:field.filterType,
+    }));
 
-		return filteredItems;
-	}
+    const searchExecutor = search.multipleColumns({ 
+      columns, 
+      query, 
+      strategy: multiInfix });
+    const visibleItems = compose(searchExecutor)(rows);
 
-	reformatColumns(items) {
-		let reformattedItems = {};
+    return visibleItems;
+  }
 
-		reformattedItems = items.map((item) => ({
-			// let newItem = {};
-			// for (property in this.props.columns) {
-			// 	if(property.group == 'phase' && property.value === item['budgetHours.column']){
-			// 		newItem = {
-			// 			...newItem,
-			// 			[item['budgetHours.column']]: item['budgetHours.value'],
-			// 			total: item['budgetHours.value'],
-			// 		}
-			// 	} else {
-			// 		newItem = {
-			// 			...newItem,
-			// 			[property.value]: item[property.value],
-			// 		}
-			// 	}
-			// }
-			// return newItem;
-			
-			[item['budgetHours.column']]: item['budgetHours.value'],
-			total: item['budgetHours.value'],
-			feature: item.feature,
-			description: item['descriptions.budget'],
-			'descriptions.assumptions': item['descriptions.assumptions'],
-			'descriptions.exclusions': item['descriptions.exclusions'],
-		}));
+  reformatColumns(items) {
+    let reformattedList = {};
 
-		console.log(reformattedItems);
+    // reformattedList = {
+    //  ...reformattedList,
+    //  newItem = {
+    //    [flatItem['budgetHours.column']: existingItem[sameCol].value + flatItem['budgetHours.value'],
+    //    total: existingItem[total] + flatItem['budgetHours.value'],
+    //    description: existingItem.description + flatItem['descriptions.budget'],
+    //    'descriptions.assumptions': existingItem['description.assumptions'] + flatItem['descriptions.assumptions'],
+    //    'descriptions.exclusions': existingItem['description.exclusions'] + flatItem['descriptions.exclusions'],
+    //  }
+    // }
 
-		return reformattedItems;
-	}
+    // reformattedList[item.feature] = existingItem
 
-	render() {
-		return (
-			<button 
-				onClick={this.exportFile}
-				className="btn btn-primary">
-				Export
-			</button>
-		);
-	}
+    reformattedList = items.map((item) => {
+      
+      const flatItem = flatten(item, { maxDepth: 2 });
+
+      const reformattedItem = {
+        [flatItem['budgetHours.column']]: flatItem['budgetHours.value'],
+        total: flatItem['budgetHours.value'],
+        feature: flatItem.feature,
+        description: flatItem['descriptions.budget'],
+        'descriptions.assumptions': flatItem['descriptions.assumptions'],
+        'descriptions.exclusions': flatItem['descriptions.exclusions'],
+      };
+
+      return reformattedItem;
+    });
+
+    console.log(reformattedList);
+
+    return reformattedList;
+  }
+
+  render() {
+    return (
+      <button 
+        onClick={this.exportFile}
+        className="btn btn-primary">
+        Export
+      </button>
+    );
+  }
 }
 
 CSVExport.defaultProps = {
-	columns: [{
-		value:'feature',
-		label:'Page/Feature',
-	},{
-		value:'t&m',
-		label:'T&M',
-	},{
-		value:'Discovery',
-		label:'Disc',
-	},{
-		value:'Design',
-		label:'Design',
-	},{
-		value:'Dev',
-		label:'Dev',
-	},{
-		value:'Testing',
-		label:'Testing',
-	},{
-		value:'Remediation',
-		label:'Remediation',
-	},{
-		value:'Deploy',
-		label:'Deploy',
-	},{
-		value:'PM',
-		label:'PM',
-	},{
-		value:'total',
-		label:'Total',
-	},{
-		value:'description',
-		label:'Description',
-	},{
-		value:'descriptions.assumptions',
-		label:'Assumptions',
-	},{
-		value:'',
-		label:'Client Responsibilities',
-	},{
-		value:'descriptions.exclusions',
-		label:'Exclusions',
-	},
-	]	 
+  columns: [{
+    value:'feature',
+    label:'Page/Feature',
+  },{
+    value:'t&m',
+    label:'T&M',
+  },{
+    value:'Discovery',
+    label:'Disc',
+  },{
+    value:'Design',
+    label:'Design',
+  },{
+    value:'Dev',
+    label:'Dev',
+  },{
+    value:'Testing',
+    label:'Testing',
+  },{
+    value:'Remediation',
+    label:'Remediation',
+  },{
+    value:'Deploy',
+    label:'Deploy',
+  },{
+    value:'PM',
+    label:'PM',
+  },{
+    value:'total',
+    label:'Total',
+  },{
+    value:'description',
+    label:'Description',
+  },{
+    value:'descriptions.assumptions',
+    label:'Assumptions',
+  },{
+    value:'descriptions.clientResponsibilities',
+    label:'Client Responsibilities',
+  },{
+    value:'descriptions.exclusions',
+    label:'Exclusions',
+  },
+  ]  
 }
+
 
 export default CSVExport;
