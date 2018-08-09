@@ -70,12 +70,9 @@ class Budgets extends Component {
        <List
          items={this.props.items}
          filter={this.state.filter}
-         fields={this.props.fields}
-         onFilter={this.onFilter}
-         onEdit={this.onEdit}
          onDelete={this.onDelete}
-         query={this.props.query}
-         rows={this.props.items}
+         onEdit={this.onEdit}
+         onFilter={this.onFilter}
        />
      );
    }
@@ -84,9 +81,8 @@ class Budgets extends Component {
 
     return (
       <Table 
-        fields={this.props.fields}
-        items={this.props.items}
-        query={this.props.query}
+        onDelete={this.onDelete}
+        onEdit={this.onEdit}
         search={this.search}
         toggleColumn={this.toggleColumn}
         userColumns={this.props.userColumns}

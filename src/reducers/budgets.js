@@ -73,6 +73,12 @@ const initialState = {
       type: 'text',
       required: true,
     },
+    {
+      filterType: 'none',
+      name: 'edit',
+      label: 'Edit',
+      isInteractive: true,
+    },
   ],
   query: {},
   userColumns: {
@@ -82,6 +88,7 @@ const initialState = {
     'budgetHours.column': true,
     'budgetHours.value': true,
     tags: true,
+    edit: true,
   },
 };
 
@@ -108,10 +115,9 @@ export default (state = initialState, action) => {
         query: action.payload.query,
       };
 
-    case ActionTypes.BUDGETS_SUBSCRIBE:
-      return {
-        ...state,
-      };
+		case ActionTypes.BUDGETS_SUBSCRIBE:
+			return state;
+
 
     case ActionTypes.BUDGETS_TOGGLE_COL:
       return {
