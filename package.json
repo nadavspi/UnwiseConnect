@@ -11,9 +11,12 @@
     "date-fns": "^1.28.5",
     "es6-promise": "^4.0.5",
     "firebase": "^3.6.1",
+    "flat": "^4.0.0",
     "github-api": "^3.0.0",
     "isomorphic-fetch": "^2.2.1",
+    "jsonexport": "^2.2.0",
     "lodash.clonedeep": "^4.5.0",
+    "nanoid": "^1.0.4",
     "prettier": "^0.20.0",
     "react": "^15.4.0",
     "react-dom": "^15.4.0",
@@ -38,7 +41,7 @@
     "table-resolver": "4.0.1"
   },
   "scripts": {
-    "start": "HTTPS=true react-scripts start",
+    "start": "react-scripts start",
     "build": "react-scripts build",
     "test": "react-scripts test --env=jsdom",
     "eject": "react-scripts eject"

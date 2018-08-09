@@ -164,3 +164,8 @@ export function multiInfix(term) {
     }
   };
 }
+
+export function flattenArray(arr) {
+  const flat = [].concat(...arr);
+  return flat.some(Array.isArray) ? flattenArray(flat) : flat;
+}
