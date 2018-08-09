@@ -76,30 +76,7 @@ class Table extends Component {
   }
 
   render() {
-<<<<<<< HEAD
-    const value = filter(...this.props.visibleItems);
-
-    const columns = this.props.fields.map((field) => {
-      const column = {
-        property: field.name,
-        header: {
-          label: field.label,
-        },
-        filterType: field.filterType,
-      };
-
-      if (field.filterType === 'custom') {
-        column.customFilter = () => {
-          return this.onCustomFilter(field.name);
-        }
-      }
-
-      return column;
-    });
-=======
     const columns = this.constructColumns();
->>>>>>> bd9f195... Add edit modal to table
-
     const userColumns = columns.map((field) => field.property).filter((column) => this.props.userColumns[column]);
 
     return (
