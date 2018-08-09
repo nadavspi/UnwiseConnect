@@ -38,6 +38,7 @@ class EditColumn extends Component {
 	        <button
 	          className="btn btn-primary"
 	          onClick={this.toggleEdit}
+            type="button"
 	        >
 	          Edit
 	        </button>
@@ -52,6 +53,7 @@ class EditColumn extends Component {
 	      <button
 	      	className="btn btn-primary"
 	      	onClick={this.onDelete}
+          type="button"
 	      >
 	      	Delete
 	      </button>
