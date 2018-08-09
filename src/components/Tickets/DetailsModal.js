@@ -3,7 +3,7 @@ import React, { Component } from 'react';
 import Modal from 'react-modal';
 import { fetchTicketNotes } from '../../helpers/cw';
 
-class IdModal extends Component {
+class DetailsModal extends Component {
   constructor() {
     super();
 
@@ -80,7 +80,7 @@ class IdModal extends Component {
   }
 }
 
-export default IdModal;
+export default DetailsModal;
 
 
 
