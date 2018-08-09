@@ -114,7 +114,7 @@ export const subscribe = payload => {
     dispatch({
       type: ActionTypes.BUDGETS_UPDATE,
       payload: { 
-        itemList: itemList,
+        itemList: inputData,
       }
     });
   };
