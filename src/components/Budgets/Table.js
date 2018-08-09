@@ -9,7 +9,7 @@ class Table extends Component {
   constructColumns() {
     const columns = this.props.fields.map((field) => {
       const column = {
-        property: field.name,      
+        property: field.name,
         header: {
           label: field.label,
         },

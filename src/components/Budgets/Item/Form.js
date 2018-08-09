@@ -45,10 +45,10 @@ export default class ItemForm extends Component {
     const { fields } = this.props;
     const submitBtnLabel = this.props.isEditing ? 'Save Edit' : 'Add Item';
 
-		return (
-			<div>
-				<form onSubmit={this.onSubmit}>
-					<div>						
+    return (
+      <div>
+        <form onSubmit={this.onSubmit}>
+          <div>
             {fields.map((field) => (
               !field.isInteractive && (
                 <div key={field.name}>

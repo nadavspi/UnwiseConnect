@@ -1,36 +1,36 @@
 import { ActionTypes } from '../config/constants';
 
 export const addItem = payload => {
-	return dispatch => {
-		const itemRef =	ref.child(`items/${payload.item.id}`);
+  return dispatch => {
+    const itemRef = ref.child(`items/${payload.item.id}`);
 
-		itemRef.set( payload.item );
+    itemRef.set( payload.item );
 
-		dispatch({
-			type: ActionTypes.BUDGETS_ADD_ITEM,
-			payload,
-		});
-	};
+    dispatch({
+      type: ActionTypes.BUDGETS_ADD_ITEM,
+      payload,
+    });
+  };
 }
 
 export const removeItem = payload => {
-	return dispatch => {
-		const itemRef =	ref.child(`items/${payload.itemId}`);
+  return dispatch => {
+    const itemRef = ref.child(`items/${payload.itemId}`);
 
-		itemRef.remove();
+    itemRef.remove();
 
-		dispatch({
-			type: ActionTypes.BUDGETS_REMOVE_ITEM,
-			payload,
-		});
-	};
+    dispatch({
+      type: ActionTypes.BUDGETS_REMOVE_ITEM,
+      payload,
+    });
+  };
 }
 
 export const subscribe = payload => {
   return dispatch => {
 
     dispatch({
-      type: ActionTypes.BUDGETS_SUBSCRIBE,  
+      type: ActionTypes.BUDGETS_SUBSCRIBE,
     })
       
     const inputData = [
@@ -112,38 +112,38 @@ export const subscribe = payload => {
         },
     ];
       dispatch({
-	      type: ActionTypes.BUDGETS_UPDATE,
-	      payload: { 
-	        itemList: itemList,
+        type: ActionTypes.BUDGETS_UPDATE,
+        payload: { 
+          itemList: itemList,
         }
       });
-    });   
-	};
+    });
+  };
 }
 
 export const search = payload => {
-	return {
-		type: ActionTypes.BUDGETS_SEARCH,
-		payload,
-	};
+  return {
+    type: ActionTypes.BUDGETS_SEARCH,
+    payload,
+  };
 }
 
 export const toggleColumn = payload => {
-	return {
-		type: ActionTypes.BUDGETS_TOGGLE_COL,
-		payload,
-	};
+  return {
+    type: ActionTypes.BUDGETS_TOGGLE_COL,
+    payload,
+  };
 }
 
 export const updateItem = payload => {
-	return dispatch => {
-		const itemRef =	ref.child(`items/${payload.updatedItem.id}`);		
+  return dispatch => {
+    const itemRef = ref.child(`items/${payload.updatedItem.id}`);
 
-		itemRef.update(payload.updatedItem);
+    itemRef.update(payload.updatedItem);
 
-		dispatch({
-			type: ActionTypes.BUDGETS_UPDATE_ITEM,
-			payload,	
-		});
-	};
+    dispatch({
+      type: ActionTypes.BUDGETS_UPDATE_ITEM,
+      payload,
+    });
+  };
 }
