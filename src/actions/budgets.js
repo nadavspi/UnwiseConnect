@@ -1,8 +1,8 @@
-import { ActionTypes } from '../config/constants';
+import { ActionTypes, ref } from '../config/constants';
 
 export const addItem = payload => {
   return dispatch => {
-    const itemRef = ref.child(`items/${payload.item.id}`);
+    const itemRef = ref.child(`budgets/items/${payload.item.id}`);
 
     itemRef.set( payload.item );
 
@@ -15,7 +15,7 @@ export const addItem = payload => {
 
 export const removeItem = payload => {
   return dispatch => {
-    const itemRef = ref.child(`items/${payload.itemId}`);
+    const itemRef = ref.child(`budgets/items/${payload.itemId}`);
 
     itemRef.remove();
 
@@ -111,12 +111,11 @@ export const subscribe = payload => {
           tags: "build",
         },
     ];
-      dispatch({
-        type: ActionTypes.BUDGETS_UPDATE,
-        payload: { 
-          itemList: itemList,
-        }
-      });
+    dispatch({
+      type: ActionTypes.BUDGETS_UPDATE,
+      payload: { 
+        itemList: itemList,
+      }
     });
   };
 }
@@ -137,7 +136,7 @@ export const toggleColumn = payload => {
 
 export const updateItem = payload => {
   return dispatch => {
-    const itemRef = ref.child(`items/${payload.updatedItem.id}`);
+    const itemRef = ref.child(`budgets/items/${payload.updatedItem.id}`);
 
     itemRef.update(payload.updatedItem);
 
