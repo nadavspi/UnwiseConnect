@@ -19,7 +19,7 @@ class Budgets extends Component {
         field: 'summary',
         value: '',
       },
-    };    
+    };
 
     this.filterItems = this.filterItems.bind(this);
     this.onAdd    = this.onAdd.bind(this);
