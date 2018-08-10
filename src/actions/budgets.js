@@ -69,7 +69,7 @@ export const updateItem = payload => {
 
     dispatch({
       type: ActionTypes.BUDGETS_UPDATE_ITEM,
-      payload,  
+      payload,
     });
   };
 }
