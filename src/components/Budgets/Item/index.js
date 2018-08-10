@@ -1,5 +1,6 @@
 import React from 'react';
-import ItemForm from './Form';
+import Form from './Form';
+import { connect } from 'react-redux';
 
 class Item extends React.Component {
   constructor(){
@@ -30,12 +31,18 @@ class Item extends React.Component {
   render() {
     const item = this.props.item;
 
+    let fixedBudget;
+    if(item.hasOwnProperty('t&m')) {
+      fixedBudget = item['t&m'].toString();
+    } 
+
     return (
       <div>
         <h3>Item/Task: {item.summary}</h3>
         <ul> 
           <li>Phase: {item.phase}</li>
           <li>Feature: {item.feature}</li>
+          <li>T&M: {fixedBudget}</li>
           <h3>Budget Hours</h3>
           <ul>
             <li>Column: {item.budgetHours.column}</li>
@@ -62,9 +69,8 @@ class Item extends React.Component {
           <li>Tags: {item.tags}</li>
         </ul>
         {this.state.isEditing && (
-          <ItemForm 
+          <Form 
             item={item}
-            fields={this.props.fields}
             isEditing={this.state.isEditing}
             onSubmit={this.onFormSubmit}
           />
@@ -84,6 +90,9 @@ Item.propTypes = {
   item: React.PropTypes.object.isRequired,
 }
 
+const mapStateToProps = state => ({
+  fields: state.budgets.fields,
+});
 
 
-export default Item;
+export default connect(mapStateToProps)(Item);

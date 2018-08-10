@@ -1,155 +1,265 @@
-import * as search from 'searchtabular';
-import flatten from 'flat';
-import jsonexport from 'jsonexport';
+import XLSX from 'xlsx';
 import React, { Component } from 'react';
-import { compose } from 'redux';
-import { multiInfix } from '../../helpers/utils';
+import { CSVLink } from 'react-csv';
+import { reformatColumns } from '../../helpers/reformat';
 
 class CSVExport extends Component {
   constructor(){
     super();
 
+    this.exportXlsx = this.exportXlsx.bind(this);
     this.exportFile = this.exportFile.bind(this);
   }
 
-  convertFileType(data){
-
-    const options = {
-      headers: this.props.columns.map((column) => (column.value)),
-      rename: this.props.columns.map((column) => (column.label)),
-    };
-    
-    jsonexport(data, options, (err,csv) => {
-      if(err) {
-        return console.log(err);
-      }
-      this.exportToBroswer(csv);
-    });
-
-  }
-
   exportFile() {
-    this.convertFileType(this.reformatColumns(this.filterItems(this.props.items, this.props.query)));
+    return reformatColumns(this.props.visibleItems);
   }
 
-  exportToBroswer(csv) {
-    console.log(csv);
-  }
-
-  filterItems(items, query) {
+  unravel(array){
+    let string = '';
     
-    const { rows } = this.props;
-    const columns = this.props.fields.map((field) => ({
-      property: field.name,      
-      header: {
-        label: field.label,
-      },
-      filterType:field.filterType,
-    }));
+    if(Array.isArray(array)) {  
+      array.map((element) => {
+        string += element + '\n';
+        return element;
+      });
+    } else {
+      string = array;
+    }
 
-    const searchExecutor = search.multipleColumns({ 
-      columns, 
-      query, 
-      strategy: multiInfix });
-    const visibleItems = compose(searchExecutor)(rows);
-
-    return visibleItems;
+    return string;
   }
 
-  reformatColumns(items) {
-    let reformattedList = {};
-
-    // reformattedList = {
-    //  ...reformattedList,
-    //  newItem = {
-    //    [flatItem['budgetHours.column']: existingItem[sameCol].value + flatItem['budgetHours.value'],
-    //    total: existingItem[total] + flatItem['budgetHours.value'],
-    //    description: existingItem.description + flatItem['descriptions.budget'],
-    //    'descriptions.assumptions': existingItem['description.assumptions'] + flatItem['descriptions.assumptions'],
-    //    'descriptions.exclusions': existingItem['description.exclusions'] + flatItem['descriptions.exclusions'],
-    //  }
-    // }
-
-    // reformattedList[item.feature] = existingItem
-
-    reformattedList = items.map((item) => {
-      
-      const flatItem = flatten(item, { maxDepth: 2 });
-
-      const reformattedItem = {
-        [flatItem['budgetHours.column']]: flatItem['budgetHours.value'],
-        total: flatItem['budgetHours.value'],
-        feature: flatItem.feature,
-        description: flatItem['descriptions.budget'],
-        'descriptions.assumptions': flatItem['descriptions.assumptions'],
-        'descriptions.exclusions': flatItem['descriptions.exclusions'],
+  exportXlsx() {
+    const items = reformatColumns(this.props.visibleItems);
+    
+    // reformat columns for xlsx
+    const rows = items.map((item) => {
+      const row = {
+        ...this.props.defaultRow, 
       };
 
-      return reformattedItem;
+      for (const property in item) {
+        if(item.hasOwnProperty(property)) {
+          const column = this.props.columns.find((element) => {
+            return element.key === property;
+          });
+          if(typeof column !== 'undefined') {
+            row[column.label] = (property.indexOf('descriptions.') > -1) ? this.unravel(item[property]) : item[property];
+          }
+        }
+      }
+
+      return row;
     });
 
-    console.log(reformattedList);
+    const bufferRows = new Array(15);
 
-    return reformattedList;
+    const header = this.props.columns.map((column) => (column.label));
+
+    const rowOffset = 5;
+
+    const footer = {
+      Feature: 'Estimated Total Hours',
+      Disc: {
+        function: 'SUM(C' + rowOffset + ':C' + (rowOffset + rows.length + bufferRows.length - 1) + ')',
+        col: 2,
+      },
+      Design: {
+        function: 'SUM(D' + rowOffset + ':D' + (rowOffset + rows.length + bufferRows.length - 1) + ')',
+        col: 3,
+      },
+      Dev: {
+        function: 'SUM(E' + rowOffset + ':E' + (rowOffset + rows.length + bufferRows.length - 1 ) + ')',
+        col: 4,
+      },
+      Testing: {
+        function: 'SUM(F' + rowOffset + ':F' + (rowOffset + rows.length + bufferRows.length - 1 ) + ')',
+        col: 5,
+      },
+      Remediation: {
+        function: 'SUM(G' + rowOffset + ':G' + (rowOffset + rows.length + bufferRows.length - 1 ) + ')',
+        col: 6,
+      },
+      Deploy: {
+        function: 'SUM(H' + rowOffset + ':H' + (rowOffset + rows.length + bufferRows.length - 1 ) + ')',
+        col: 7,
+      },
+      PM: {
+        function: 'SUM(I' + rowOffset + ':I' + (rowOffset + rows.length + bufferRows.length - 1 ) + ')',
+        col: 8,
+      },
+      Total: {
+        function: 'SUM(C' + (rowOffset + rows.length + bufferRows.length) + ':I' + (rowOffset + rows.length + bufferRows.length) + ')',
+        col: 9,
+      },
+    };
+    
+    // creates workbook
+    const wb = XLSX.utils.book_new();
+
+    // creates worksheet
+    const ws = XLSX.utils.json_to_sheet(
+      [
+        ...rows, 
+        ...bufferRows,
+        footer,
+      ],
+      { 
+        header:header,
+        origin: 'A4',
+      }
+    );
+
+    // adds functions to rows
+    for(let i = rowOffset; i < rows.length + rowOffset; i++){
+      for (const property in rows[i - rowOffset]) {
+        if(rows[i - rowOffset].hasOwnProperty(property)) {
+          const prop = rows[i - rowOffset][property];
+
+          if (typeof prop === 'object' && !Array.isArray(prop)) {
+            const formula = prop.function.replace(new RegExp('{row}', 'g'), (i));
+            
+            const cell = { f: formula, t:'n'};
+            const cell_ref = XLSX.utils.encode_cell({ c:prop.col, r:(i - 1) });
+            ws[cell_ref] = cell;  
+          }
+        }
+      }
+    }
+
+    // adds functions to footer
+    for (const property in footer) {
+      if(footer.hasOwnProperty(property)) {
+        const prop = footer[property];
+        if (typeof prop === 'object' && !Array.isArray(prop)) {
+          const formula = prop.function.replace(new RegExp('{row}', 'g'), (rowOffset + rows.length + bufferRows.length));
+          
+          const cell = { f: formula, t:'n'};
+          const cell_ref = XLSX.utils.encode_cell({ c:prop.col, r:(rowOffset + rows.length + bufferRows.length - 1) });
+          ws[cell_ref] = cell;  
+        }
+      }
+    }
+
+    // adds constants
+    this.props.constants.map((constant) => {
+      const cell = {v: constant.value, t: constant.type}
+      const cell_ref = XLSX.utils.encode_cell({c: constant.col, r: constant.row});
+      ws[cell_ref] = cell;  
+      return constant;
+    });
+    
+    XLSX.utils.book_append_sheet(wb,ws,'Budget');
+
+    XLSX.writeFile(wb, 'Budget.xlsx');
   }
 
   render() {
     return (
-      <button 
-        onClick={this.exportFile}
-        className="btn btn-primary">
-        Export
-      </button>
+      <div>
+        <button
+          onClick={this.exportXlsx}
+          className="btn btn-primary">
+          Export to Xlsx
+        </button>
+        <CSVLink
+          data={this.exportFile()}
+          headers={this.props.columns}
+          filename={'Budget.csv'}
+          className="btn btn-primary">
+          Export to CSV
+        </CSVLink>
+      </div>
     );
   }
 }
 
 CSVExport.defaultProps = {
-  columns: [{
-    value:'feature',
-    label:'Page/Feature',
-  },{
-    value:'t&m',
-    label:'T&M',
-  },{
-    value:'Discovery',
-    label:'Disc',
-  },{
-    value:'Design',
-    label:'Design',
-  },{
-    value:'Dev',
-    label:'Dev',
-  },{
-    value:'Testing',
-    label:'Testing',
-  },{
-    value:'Remediation',
-    label:'Remediation',
-  },{
-    value:'Deploy',
-    label:'Deploy',
-  },{
-    value:'PM',
-    label:'PM',
-  },{
-    value:'total',
-    label:'Total',
-  },{
-    value:'description',
-    label:'Description',
-  },{
-    value:'descriptions.assumptions',
-    label:'Assumptions',
-  },{
-    value:'descriptions.clientResponsibilities',
-    label:'Client Responsibilities',
-  },{
-    value:'descriptions.exclusions',
-    label:'Exclusions',
+  columns: [
+    {
+      key:'feature',  
+      label:'Feature',
+    },{
+      key:'t&m',
+      label:'T&M',
+    },{
+      key:'Discovery',
+      label:'Disc',
+    },{
+      key:'Design',
+      label:'Design',
+    },{
+      key:'Dev',
+      label:'Dev',
+    },{
+      key:'Testing',
+      label:'Testing',
+    },{
+      key:'Remediation',
+      label:'Remediation',
+    },{
+      key:'Deploy',
+      label:'Deploy',
+    },{
+      key:'PM',
+      label:'PM',
+    },{
+      key:'total',
+      label:'Total',
+    },{
+      key:'descriptions.budget',
+      label:'Description',
+    },{
+      key:'descriptions.assumptions',
+      label:'Assumptions',
+    },{
+      key:'descriptions.clientResponsibilities',
+      label:'Client Responsibilities',
+    },{
+      key:'descriptions.exclusions',
+      label:'Exclusions',
+    },
+  ],
+  defaultRow: {
+    Testing: {
+      function: 'SUM(E{row})*F$2',
+      col: 5,
+    },
+    Remediation: {
+      function: 'SUM(E{row})*G$2',
+      col: 6,
+    },
+    PM: {
+      function: 'SUM(C{row}:H{row})*I$2',
+      col: 8,
+    },
+    Total: {
+      function: 'SUM(C{row}:I{row})',
+      col: 9,
+    },
   },
-  ]  
+  constants: [
+    {
+      label: 'Testing',
+      value: 0.2,
+      type: 'n',
+      col: 5,
+      row: 1,
+    },{
+      label: 'Remediation',
+      value: 0.4,
+      type: 'n',
+      col: 6,
+      row: 1,
+    },{
+      label: 'PM',
+      value: 0.2,
+      type: 'n',
+      col: 8,
+      row: 1,
+    },
+  ],
 }
-
 
 export default CSVExport;

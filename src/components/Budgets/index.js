@@ -1,10 +1,14 @@
 import * as BudgetsActions from '../../actions/budgets';
 import Form from './Item/Form';
 import List from './List';
+import * as search from 'searchtabular';
 import React, { Component } from 'react';
 import Table from './Table';
 import { connect } from 'react-redux';
 import { Route, Link } from 'react-router-dom';
+import { compose } from 'redux';
+import { multiInfix } from '../../helpers/utils';
+import { convertToList } from '../../helpers/reformat';
 
 class Budgets extends Component {
   constructor(props) {
@@ -15,13 +19,13 @@ class Budgets extends Component {
         field: 'summary',
         value: '',
       },
-    };
+    };    
 
+    this.filterItems = this.filterItems.bind(this);
     this.onAdd    = this.onAdd.bind(this);
     this.onDelete = this.onDelete.bind(this);
     this.onEdit   = this.onEdit.bind(this);
     this.onFilter = this.onFilter.bind(this);
-    this.onFormSubmit = this.onFormSubmit.bind(this);
     this.renderList = this.renderList.bind(this);
     this.renderTable = this.renderTable.bind(this);
     this.search   = this.search.bind(this);
@@ -30,6 +34,25 @@ class Budgets extends Component {
 
   componentDidMount() {
     this.props.dispatch(BudgetsActions.subscribe());
+  }
+
+  filterItems(items, query) {
+    const rows = this.props.itemArray;
+    const columns = this.props.fields.map((field) => ({
+      property: field.name,      
+      header: {
+        label: field.label,
+      },
+      filterType:field.filterType,
+    }));
+
+    const searchExecutor = search.multipleColumns({ 
+      columns, 
+      query, 
+      strategy: multiInfix });
+    const visibleItems = compose(searchExecutor)(rows);
+
+    return visibleItems;
   }
 
   onFilter({ field = this.state.filter.field, value = this.state.filter.value }) {
@@ -45,11 +68,7 @@ class Budgets extends Component {
       [field]: value,
     };
 
-    this.props.dispatch(BudgetsActions.search({ query: newQuery })); 
-  }
-
-  onFormSubmit(item) {
-    this.onAdd(item);
+    this.props.dispatch(BudgetsActions.search({ query: newQuery, visibleItems:this.filterItems(this.props.itemArray, newQuery) })); 
   }
 
   onAdd(item) {
@@ -68,8 +87,9 @@ class Budgets extends Component {
 
      return (
        <List
-         items={this.props.items}
          filter={this.state.filter}
+         onFilter={this.onFilter}
+         onEdit={this.onEdit}
          onDelete={this.onDelete}
          onEdit={this.onEdit}
          onFilter={this.onFilter}
@@ -77,27 +97,23 @@ class Budgets extends Component {
      );
    }
 
-   renderTable() {
-
+  renderTable() {
     return (
       <Table 
-        onDelete={this.onDelete}
-        onEdit={this.onEdit}
         search={this.search}
         toggleColumn={this.toggleColumn}
-        userColumns={this.props.userColumns}
       /> 
     );
-   }
+  }
 
-   search(query) {
-     this.props.dispatch(BudgetsActions.search({ query }));
-   }
+  search(query) {
+    const visibleItems = this.filterItems(this.props.itemArray, query);
+    this.props.dispatch(BudgetsActions.search({ query, visibleItems }));
+  }
 
-   toggleColumn(payload){
-     this.props.dispatch(BudgetsActions.toggleColumn({ columnName: payload.columnName }));
-   }
-
+  toggleColumn(payload){
+    this.props.dispatch(BudgetsActions.toggleColumn({ columnName: payload.columnName }));
+  }
 
   render() {
 
@@ -111,8 +127,7 @@ class Budgets extends Component {
         <div className="row panel-body">
           <div className="panel-body projects__wrapper">
             <Form
-              onSubmit={this.onFormSubmit}
-              fields={this.props.fields}
+              onSubmit={this.onAdd}
             />
             <h3>View Selection</h3>
             <ul>
@@ -143,10 +158,11 @@ class Budgets extends Component {
 }
 
 const mapStateToProps = state => ({
-  items: state.budgets.items,
+  itemArray: convertToList(state.budgets.itemList),
   fields: state.budgets.fields,
   query: state.budgets.query,
   userColumns: state.budgets.userColumns,
-})
+  visibleItems: convertToList(state.budgets.visibleItems),
+});
 
 export default connect(mapStateToProps)(Budgets);

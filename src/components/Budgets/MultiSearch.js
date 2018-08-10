@@ -1,6 +1,6 @@
 import React from 'react';
 import Select from 'react-select';
-import { flattenArray } from '../../helpers/utils';
+import { connect } from 'react-redux';
 
 class Search extends React.Component {
   constructor(){
@@ -14,17 +14,21 @@ class Search extends React.Component {
   }
 
   createOptions() {
-    const tags = new Set(flattenArray(this.props.items.map(item => {
-      if (!item.tags) {
-        return '';
+    let values = [];
+    const itemList = this.props.itemList;
+
+    for (const item in itemList) {
+      if(itemList.hasOwnProperty(item) && typeof itemList[item][this.props.column] !== 'undefined') {
+        const currGroup = itemList[item][this.props.column].toString();
+        values = [...values, ...currGroup.split(' ')];
       }
+    }
 
-      return item.tags.split(' ');
-    }))); 
+    values = new Set(values);
 
-    const options = [...tags].map(tag => ({
-      value: tag,
-      label: tag,
+    const options = [...values].map(value => ({
+      value: value,
+      label: value,
     }));
     return options;
   }
@@ -34,11 +38,11 @@ class Search extends React.Component {
   }
   
   onFilter(){
-    const tagList = this.state.value.map((tag) => (tag.value));
+    const selected = this.state.value.map((option) => (option.value));
 
     const query = {
       ...this.props.query,
-      tags: (tagList.length !== 0) ? tagList : ''
+      [this.props.column]: (selected.length !== 0) ? selected : ''
     };
 
     this.props.onFilter(query);
@@ -56,7 +60,11 @@ class Search extends React.Component {
       />
     );
   }
-
 }
 
-export default Search;
+const mapStateToProps = state => ({
+  itemList: state.budgets.itemList,
+  query: state.budgets.query,
+});
+
+export default connect(mapStateToProps)(Search);
