@@ -1,4 +1,3 @@
-import memoize from 'memoize-one';
 import CSVExport from './CSVExport';
 import EditColumn from './EditColumn';
 import MultiSearch from './MultiSearch';
