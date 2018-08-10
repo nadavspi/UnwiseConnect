@@ -18,19 +18,11 @@ class EditColumn extends Component {
   }
 
   toggleEdit() {
-    const isEditing = true;
-    this.setState({
-      ...this.state,
-      isEditing,
-    });
+    this.setState({ isEditing: true });
   }
 
   onEdit(item) {
-    const isEditing = false;
-    this.setState({
-      ...this.state,
-      isEditing,
-    });
+    this.setState({ isEditing: false });
 
     this.props.onEdit(item);
   }
