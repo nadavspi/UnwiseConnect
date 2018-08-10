@@ -4,7 +4,6 @@ export function reformatColumns(items) {
 	const flatList = items.map((item) => flatten(item, { maxDepth: 2 }));
 		
 	const reformattedList = rotateOnTeam(flatList);
-	// const itemsByFeature = groupByFeature(reformattedList);
 	const concatObj = concatOnProperties(reformattedList);
 	const concatList = convertToList(concatObj);
 
@@ -21,19 +20,6 @@ function rotateOnTeam(list) {
 
   return rotatedList;
 }
-
-// function groupByFeature(reformattedList) {
-// 	const itemsByFeature = reformattedList.reduce((features, item) => {
-//     features[item.feature] = [
-//       ...features[item.feature] || [],
-//       item,
-//     ];
-
-//     return features;
-//   }, {});
-
-//   return itemsByFeature;
-// }
 
 function concatOnProperties(list) {
 	let concatObj = {};
