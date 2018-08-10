@@ -30,93 +30,20 @@ export const subscribe = payload => {
   return dispatch => {
 
     dispatch({
-      type: ActionTypes.BUDGETS_SUBSCRIBE,
+      type: ActionTypes.BUDGETS_SUBSCRIBE,  
     })
-      
-    const inputData = [
-        {
-          id: 1,
-          summary: "Klevu discovery & calls",
-          phase: "dev/Klevu",
-          feature: "Klevu",
-          budgetHours: { 
-            column: "Discovery",
-            value: 6,
-          },
-          descriptions: {
-            workplan: [
-              "Time for communication with Klevu.",
-            ],
-            budget: [],
-            assumptions: [
-              "Accounts for one onboarding call."
-            ],
-            exclusions: [],
-          },
-          tags: "klevu",
-        },
-        {
-          id: 2,
-          summary: "Install Klevu extension",
-          phase: "dev/Klevu",
-          feature: "Klevu",
-          budgetHours: { 
-            column: 'Dev',
-            value: 4,
-          },
-          descriptions: {
-            workplan: [
-              "Install Klevu extension using composer.",
-            ],
-            assumptions: [
-              "Install extension once using code provided by Klevu."
-            ],
-          },
-          tags: "klevu",
-        },
-        {
-          id: 3,
-          summary: "Configure Klevu flyout",
-          phase: "dev/Klevu",
-          feature: "Klevu",
-          budgetHours: { 
-            column: 'Dev',
-            value: 4,
-          },
-          descriptions: {
-            workplan: [
-              "Use Klevu control panel to choose between autocomplete and faceted.",
-            ],
-            assumptions: [
-              "Use one of out of box options provided by Klevu (autocomplete or faceted) without customization.",
-            ],
-          },
-          tags: "klevu",
-        },
-        {
-          id: 10,
-          summary: "Development meetings",
-          phase: "dev",
-          feature: "Build",
-          budgetHours: { 
-            column: "Dev",
-            value: 20,
-          },
-          descriptions: {
-            workplan: [],
-            budget: [],
-            assumptions: [],
-            exclusions: [],
-          },
-          tags: "build",
-        },
-    ];
-    dispatch({
-      type: ActionTypes.BUDGETS_UPDATE,
-      payload: { 
-        itemList: inputData,
-      }
-    });
+    
+    const itemsRef = ref.child(`budgets/items`);
+    itemsRef.on('value', snapshot => {
+      const itemList = snapshot.val();
+
+      dispatch({
+        type: ActionTypes.BUDGETS_UPDATE,
+        payload: { 
+          itemList: itemList,
+        }
+      });
+    });   
   };
 }
 
@@ -136,7 +63,7 @@ export const toggleColumn = payload => {
 
 export const updateItem = payload => {
   return dispatch => {
-    const itemRef = ref.child(`budgets/items/${payload.updatedItem.id}`);
+    const itemRef = ref.child(`budgets/items/${payload.updatedItem.id}`);   
 
     itemRef.update(payload.updatedItem);
 
