@@ -1,5 +1,6 @@
 import classnames from 'classnames';
 import Form from './Item/Form';
+import Modal from 'react-modal';
 import React, { Component } from 'react';
 
 class EditColumn extends Component {
@@ -11,6 +12,10 @@ class EditColumn extends Component {
     this.onDelete = this.onDelete.bind(this);
     this.onEdit = this.onEdit.bind(this);
     this.toggleEdit = this.toggleEdit.bind(this);
+  }
+  
+  componentWillMount() {
+    Modal.setAppElement('body');
   }
 
   onDelete() {
@@ -28,32 +33,30 @@ class EditColumn extends Component {
   }
 
   render() {
-    const editName = classnames('btn-group', { 
-      'open': this.state.isEditing,
-    });
-
     return (
       <div>
-        <div className={editName}>
-          <button
-            className="btn btn-primary"
-            onClick={this.toggleEdit}
-            type="button"
-          >
-            Edit
-          </button>
-          <div className="dropdown-menu toggle-description">
-            <Form
+        <Modal
+          contentLabel="Edit Item Modal"
+          isOpen={this.state.isEditing}
+          overlayClassName="modal-overlay"
+          onRequestClose={this.onEdit}
+          shouldCloseOnOverlayClick={true}
+        >
+          <Form
               item={this.props.row}
               onSubmit={this.onEdit}
               isEditing={this.state.isEditing}
             />
-          </div>
-        </div>
+        </Modal>
+        <button
+          className="btn btn-primary"
+          onClick={this.toggleEdit}
+        >
+          Edit
+        </button>
         <button
           className="btn btn-primary"
           onClick={this.onDelete}
-          type="button"
         >
           Delete
         </button>
