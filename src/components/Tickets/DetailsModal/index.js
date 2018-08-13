@@ -4,7 +4,7 @@ import ScheduleEntries from './ScheduleEntries';
 import TimeEntries from './TimeEntries';
 import Notes from './Notes';
 
-class IdModal extends Component {
+class DetailsModal extends Component {
   constructor() {
     super();
 
@@ -89,7 +89,7 @@ class IdModal extends Component {
   }
 }
 
-IdModal.defaultProps = {
+DetailsModal.defaultProps = {
   tabs: [
     {
       label: 'Notes',
@@ -106,7 +106,7 @@ IdModal.defaultProps = {
   ],
 }
 
-export default IdModal;
+export default DetailsModal;
 
 
 
