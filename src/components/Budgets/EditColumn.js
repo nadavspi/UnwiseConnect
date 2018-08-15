@@ -49,13 +49,13 @@ class EditColumn extends Component {
             />
         </Modal>
         <button
-          className="btn btn-primary"
+          className="btn btn-default"
           onClick={this.toggleEdit}
         >
           Edit
         </button>
         <button
-          className="btn btn-primary"
+          className="btn btn-default"
           onClick={this.onDelete}
         >
           Delete
