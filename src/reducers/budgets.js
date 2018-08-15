@@ -109,7 +109,7 @@ const initialState = {
     edit: true,
   },
   visibleItemList: {},
-  dispatchingPlan: {
+  creatingPlan: {
     inProgress: false,
     response: null,
   },
@@ -128,27 +128,27 @@ export default (state = initialState, action) => {
         },
       };
 
-    case ActionTypes.BUDGETS_DISPATCH_PLAN:
+    case ActionTypes.BUDGETS_REMOVE:
+      delete state[action.payload.elementType][action.payload.elementId];
+
+    case ActionTypes.BUDGETS_CREATE_PLAN:
       return {
         ...state,
-        dispatchingPlan: {
+        creatingPlan: {
           inProgress: true,
           response: null,
         }
       };
 
-    case ActionTypes.BUDGETS_DISPATCH_PLAN_SUCCESS:
+    case ActionTypes.BUDGETS_CREATE_PLAN_SUCCESS:
       return {
         ...state,
-        dispatchingPlan: {
+        creatingPlan: {
           inProgress: false,
           response: action.payload.result,
         }
       };
-
-    case ActionTypes.BUDGETS_REMOVE:
-      delete state[action.payload.elementType][action.payload.elementId];
-      
+     
       return state;
 
     case ActionTypes.BUDGETS_SEARCH:

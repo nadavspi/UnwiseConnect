@@ -1,5 +1,6 @@
 import * as BudgetsActions from '../../actions/budgets';
 import * as search from 'searchtabular';
+import CreatePlan from './CreatePlan';
 import Form from './Item/Form';
 import List from './List';
 import PresetBudgets from './PresetBudgets';
@@ -174,6 +175,7 @@ class Budgets extends Component {
                 search={this.search}
               />
             )}
+            <CreatePlan />
             <Route 
               exact path={this.props.match.url} 
               render={this.renderTable}
