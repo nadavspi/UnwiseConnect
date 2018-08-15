@@ -20,6 +20,7 @@ class Budgets extends Component {
         value: '',
       },
       isFormExpanded: false,
+      isViewSwitcherExpanded: false,
     };
 
     this.filterItems = this.filterItems.bind(this);
@@ -128,26 +129,36 @@ class Budgets extends Component {
         <div className="row panel-body">
           <div className="panel-body projects__wrapper">
             <button 
-              className="btn btn-secondary"
+              className="btn btn-default"
               onClick={() => this.setState({ isFormExpanded: !this.state.isFormExpanded })}
               type="button"
             >
-              Add Items
+              Add Items {' '}
+              <span className="caret"></span>
             </button>
             {this.state.isFormExpanded && (
               <Form
                 onSubmit={this.onAdd}
               />
             )}
-            <h3>View Selection</h3>
-            <ul>
-              <li>
-                <Link to={this.props.match.url + '/list'}>List</Link>
-              </li>
-              <li>
-                <Link to={this.props.match.url + '/table'}>Table</Link>
-              </li>
-            </ul>
+            <button 
+              type="button"
+              className="btn btn-default"
+              onClick={() => this.setState({ isViewSwitcherExpanded: !this.state.isViewSwitcherExpanded })}
+            >
+              Switch View {' '}
+              <span className="caret"></span>
+            </button>
+            {this.state.isViewSwitcherExpanded && (
+              <ul>
+                <li>
+                  <Link to={this.props.match.url + '/list'}>List</Link>
+                </li>
+                <li>
+                  <Link to={this.props.match.url + '/table'}>Table</Link>
+                </li>
+              </ul>
+            )}
             <Route 
               exact path={this.props.match.url} 
               render={this.renderList}
