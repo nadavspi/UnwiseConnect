@@ -109,6 +109,10 @@ const initialState = {
     edit: true,
   },
   visibleItemList: {},
+  creatingPlan: {
+    inProgress: false,
+    response: null,
+  }
 };
 
 export default (state = initialState, action) => {
@@ -119,6 +123,24 @@ export default (state = initialState, action) => {
         itemList: {
           ...state.itemList,
           [action.payload.item.id]: action.payload.item,
+        }
+      };
+
+    case ActionTypes.BUDGETS_CREATE_PLAN:
+      return {
+        ...state,
+        creatingPlan: {
+          inProgress: true,
+          response: null,
+        }
+      };
+
+    case ActionTypes.BUDGETS_CREATE_PLAN_SUCCESS:
+      return {
+        ...state,
+        creatingPlan: {
+          inProgress: false,
+          response: action.payload.result,
         }
       };
 

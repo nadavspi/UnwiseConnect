@@ -1,4 +1,5 @@
 import * as BudgetsActions from '../../actions/budgets';
+import CreatePlan from './CreatePlan';
 import Form from './Item/Form';
 import List from './List';
 import * as search from 'searchtabular';
@@ -129,6 +130,7 @@ class Budgets extends Component {
             <Form
               onSubmit={this.onAdd}
             />
+            <CreatePlan />
             <h3>View Selection</h3>
             <ul>
               <li>
@@ -162,7 +164,7 @@ const mapStateToProps = state => ({
   fields: state.budgets.fields,
   query: state.budgets.query,
   userColumns: state.budgets.userColumns,
-  visibleItems: convertToList(state.budgets.visibleItems),
+  visibleItems: convertToList(state.budgets.visibleItemList),
 });
 
 export default connect(mapStateToProps)(Budgets);
