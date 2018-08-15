@@ -2,7 +2,7 @@ import { ActionTypes, ref } from '../config/constants';
 
 export const addItem = payload => {
   return dispatch => {
-    const itemRef = ref.child(`items/${payload.item.id}`);
+    const itemRef = ref.child(`budgets/items/${payload.item.id}`);
 
     itemRef.set( payload.item );
     dispatch({
