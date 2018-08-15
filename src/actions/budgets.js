@@ -1,5 +1,5 @@
 import { ActionTypes, ref } from '../config/constants';
-import { dispatchPlan } from '../helpers/cw';
+import { createWorkplan } from '../helpers/cw';
 
 export const addItem = payload => {
   return dispatch => {
@@ -17,13 +17,13 @@ export const addItem = payload => {
 export const createPlan = payload => {
   return dispatch => {
     dispatch ({
-      type: ActionTypes.BUDGETS_DISPATCH_PLAN,
+      type: ActionTypes.BUDGETS_CREATE_PLAN,
       payload,
     });
 
-    dispatchPlan(payload).then(response => {
+    createWorkplan(payload).then(response => {
       dispatch({
-        type: ActionTypes.BUDGETS_DISPATCH_PLAN_SUCCESS,
+        type: ActionTypes.BUDGETS_CREATE_PLAN_SUCCESS,
         payload: response,
       });
     });

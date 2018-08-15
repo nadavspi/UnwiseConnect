@@ -90,7 +90,7 @@ class CreatePlan extends Component {
   }
 
   render () {
-    const { inProgress } = this.props.dispatchingPlan;
+    const { inProgress } = this.props.creatingPlan;
     const fields = convertToList(this.props.flags).filter(flag => {
       return (!flag.hasParent || this.state.parents[flag.parentProperty])
     }).map(flag => {
@@ -101,8 +101,6 @@ class CreatePlan extends Component {
       }
       return newFlag;
     });
-
-    console.log(this.props.projects);
 
     return (
       <div>
@@ -185,7 +183,7 @@ CreatePlan.defaultProps = {
 };
 
 const mapPropsToState = state => ({
-  dispatchingPlan: state.budgets.dispatchingPlan,
+  creatingPlan: state.budgets.creatingPlan,
   query: state.budgets.query,
   projects: Object.keys(state.tickets.nested).map(projectId => ({
     value: projectId,

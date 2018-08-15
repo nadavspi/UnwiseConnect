@@ -23,8 +23,7 @@ export const dispatchTickets = params => {
   }).then(checkStatus).then(parseJSON);
 }
 
-export const dispatchPlan = params => {
-  console.log('dispatching......');
+export const createWorkplan = params => {
   const headers = {
     Authorization: `Basic ${process.env.REACT_APP_API_KEY}`,
     'Content-Type': 'application/json',
