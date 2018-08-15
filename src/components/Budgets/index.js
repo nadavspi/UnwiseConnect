@@ -181,7 +181,7 @@ class Budgets extends Component {
               onClick={() => this.setState({ isCreatePlanExpanded: !this.state.isCreatePlanExpanded })}
               type="button"
             >
-              Create Plan {' '}
+              Workplan {' '}
               <span className="caret"></span>
             </button>
             {this.state.isCreatePlanExpanded && (
