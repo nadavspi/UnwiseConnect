@@ -17,7 +17,7 @@ export const addItem = payload => {
 
 export const addPreset = payload => {
   return dispatch => {
-    const budgetRef = ref.child(`budgets/${payload.budget.id}`);
+    const budgetRef = ref.child(`budgets/presets/${payload.budget.id}`);
 
     budgetRef.set(payload.budget);
     dispatch({
@@ -57,7 +57,7 @@ export const removeItem = payload => {
 
 export const removePreset = payload => {
   return dispatch => {
-    const presetRef = ref.child(`budgets/${payload.elementId}`);
+    const presetRef = ref.child(`budgets/presets/${payload.elementId}`);
 
     presetRef.remove();
 
@@ -95,7 +95,7 @@ export const subscribe = payload => {
 
 export const subscribePresets = payload => {
   return dispatch => {
-    const budgetRef = ref.child(`budgets`);
+    const budgetRef = ref.child(`budgets/presets`);
     budgetRef.on('value', snapshot => {
       const presets = snapshot.val();
 
@@ -138,7 +138,7 @@ export const updateItem = payload => {
 
 export const updatePreset = payload => {
   return dispatch => {
-    const presetRef = ref.child(`budgets/${payload.preset.id}`);
+    const presetRef = ref.child(`budgets/presets/${payload.preset.id}`);
 
     presetRef.update(payload.preset);
 
