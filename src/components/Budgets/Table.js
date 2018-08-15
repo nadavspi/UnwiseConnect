@@ -1,4 +1,4 @@
-import CSVExport from './CSVExport';
+import ExportTable from './ExportTable';
 import EditColumn from './EditColumn';
 import MultiSearch from './MultiSearch';
 import React, { Component } from 'react';
@@ -91,7 +91,7 @@ class Table extends Component {
           userColumns={userColumns}
           columns={columns}
         />
-        <CSVExport 
+        <ExportTable 
           visibleItems={this.props.visibleItems}
         />
       </div> 

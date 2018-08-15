@@ -3,7 +3,7 @@ import React, { Component } from 'react';
 import { CSVLink } from 'react-csv';
 import { reformatColumns } from '../../helpers/reformat';
 
-class CSVExport extends Component {
+class ExportTable extends Component {
   constructor(){
     super();
 
@@ -134,7 +134,7 @@ class CSVExport extends Component {
   }
 }
 
-CSVExport.defaultProps = {
+ExportTable.defaultProps = {
   columns: [
     {
       key:'feature',  
@@ -256,4 +256,4 @@ CSVExport.defaultProps = {
   },
 }
 
-export default CSVExport;
+export default ExportTable;
