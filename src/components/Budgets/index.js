@@ -19,6 +19,7 @@ class Budgets extends Component {
         field: 'summary',
         value: '',
       },
+      isFormExpanded: false,
     };
 
     this.filterItems = this.filterItems.bind(this);
@@ -126,9 +127,18 @@ class Budgets extends Component {
         </div>
         <div className="row panel-body">
           <div className="panel-body projects__wrapper">
-            <Form
-              onSubmit={this.onAdd}
-            />
+            <button 
+              className="btn btn-secondary"
+              onClick={() => this.setState({ isFormExpanded: !this.state.isFormExpanded })}
+              type="button"
+            >
+              Add Items
+            </button>
+            {this.state.isFormExpanded && (
+              <Form
+                onSubmit={this.onAdd}
+              />
+            )}
             <h3>View Selection</h3>
             <ul>
               <li>
