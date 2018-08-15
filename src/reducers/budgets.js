@@ -44,7 +44,7 @@ const initialState = {
     {
       filterType: 'textfield',
       name: 'budgetHours.column',
-      label: 'Team',
+      label: 'Column',
       type: 'text',
     },
     {
@@ -88,14 +88,14 @@ const initialState = {
       filterType: 'custom',
       name: 'tags',
       label: 'Tags',
-      type: 'text',
       required: true,
+      type: 'text',
     },
     {
       filterType: 'none',
+      isInteractive: true,
       name: 'edit',
       label: 'Edit',
-      isInteractive: true,
     },
   ],
   query: {},
@@ -109,21 +109,45 @@ const initialState = {
     edit: true,
   },
   visibleItemList: {},
+  dispatchingPlan: {
+    inProgress: false,
+    response: null,
+  },
+  presets: {},
 };
 
 export default (state = initialState, action) => {
   switch(action.type) {
-    case ActionTypes.BUDGETS_ADD_ITEM:
+    case ActionTypes.BUDGETS_ADD:
+      const payload = action.payload;
       return {
         ...state,
-        itemList: {
-          ...state.itemList,
-          [action.payload.item.id]: action.payload.item,
+        [payload.elementType]: {
+          ...state[payload.elementType],
+          [payload.element.id]: payload.element,
+        },
+      };
+
+    case ActionTypes.BUDGETS_DISPATCH_PLAN:
+      return {
+        ...state,
+        dispatchingPlan: {
+          inProgress: true,
+          response: null,
         }
       };
 
-    case ActionTypes.BUDGETS_REMOVE_ITEM:
-      delete state.itemList[action.payload.itemId];
+    case ActionTypes.BUDGETS_DISPATCH_PLAN_SUCCESS:
+      return {
+        ...state,
+        dispatchingPlan: {
+          inProgress: false,
+          response: action.payload.result,
+        }
+      };
+
+    case ActionTypes.BUDGETS_REMOVE:
+      delete state[action.payload.elementType][action.payload.elementId];
       
       return state;
 
@@ -156,8 +180,7 @@ export default (state = initialState, action) => {
     case ActionTypes.BUDGETS_UPDATE:
       return {
         ...state,
-        itemList: action.payload.itemList,
-        visibleItemList: action.payload.itemList,
+        ...action.payload,
       };
 
     case ActionTypes.BUDGETS_UPDATE_ITEM:

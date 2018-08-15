@@ -5,9 +5,35 @@ export const addItem = payload => {
     const itemRef = ref.child(`budgets/items/${payload.item.id}`);
 
     itemRef.set( payload.item );
-
     dispatch({
-      type: ActionTypes.BUDGETS_ADD_ITEM,
+      type: ActionTypes.BUDGETS_ADD,
+      payload: {
+        element: payload.item,
+        elementType: 'itemList',
+      },
+    });
+  };
+}
+
+export const addPreset = payload => {
+  return dispatch => {
+    const budgetRef = ref.child(`budgets/presets/${payload.budget.id}`);
+
+    budgetRef.set(payload.budget);
+    dispatch({
+      type: ActionTypes.BUDGETS_ADD,
+      payload: {
+        element: payload.budget,
+        elementType: 'presets',
+      },
+    });
+  };
+}
+
+export const createPlan = payload => {
+  return dispatch => {
+    dispatch ({
+      type: ActionTypes.BUDGETS_DISPATCH_PLAN,
       payload,
     });
   };
@@ -20,8 +46,27 @@ export const removeItem = payload => {
     itemRef.remove();
 
     dispatch({
-      type: ActionTypes.BUDGETS_REMOVE_ITEM,
-      payload,
+      type: ActionTypes.BUDGETS_REMOVE,
+      payload: {
+        elementId: payload.itemId,
+        elementType: 'itemList',
+      },
+    });
+  };
+}
+
+export const removePreset = payload => {
+  return dispatch => {
+    const presetRef = ref.child(`budgets/presets/${payload.elementId}`);
+
+    presetRef.remove();
+
+    dispatch({
+      type: ActionTypes.BUDGETS_REMOVE,
+      payload: {
+        elementId: payload.elementId,
+        elementType: 'presets',
+      },
     });
   };
 }
@@ -40,7 +85,24 @@ export const subscribe = payload => {
       dispatch({
         type: ActionTypes.BUDGETS_UPDATE,
         payload: { 
-          itemList: itemList,
+          itemList,
+          visibleItemList: itemList,
+        }
+      });
+    });   
+  };
+}
+
+export const subscribePresets = payload => {
+  return dispatch => {
+    const budgetRef = ref.child(`budgets/presets`);
+    budgetRef.on('value', snapshot => {
+      const presets = snapshot.val();
+
+      dispatch({
+        type: ActionTypes.BUDGETS_UPDATE,
+        payload: {
+          presets,
         }
       });
     });   
@@ -73,3 +135,20 @@ export const updateItem = payload => {
     });
   };
 }
+
+export const updatePreset = payload => {
+  return dispatch => {
+    const presetRef = ref.child(`budgets/presets/${payload.preset.id}`);
+
+    presetRef.update(payload.preset);
+
+    dispatch({
+      type: ActionTypes.BUDGETS_ADD,
+      payload: {
+        elementType: 'presets',
+        element: payload.preset,
+      },  
+    });
+  };
+}
+
