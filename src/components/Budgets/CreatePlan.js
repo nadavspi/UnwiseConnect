@@ -185,7 +185,7 @@ const mapPropsToState = state => ({
   query: state.budgets.query,
   projects: Object.keys(state.tickets.nested).map(projectId => ({
     value: projectId,
-    label: state.tickets.nested[projectId][0].project.name,
+    label: state.tickets.nested[projectId][0].company.name + ' - ' + state.tickets.nested[projectId][0].project.name,
   })),
 });
 
