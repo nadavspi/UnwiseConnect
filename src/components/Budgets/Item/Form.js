@@ -56,13 +56,13 @@ class Form extends Component {
   }
 
   inputFormat(field){
-    if(field.type === 'dropdown') {
+    if (field.type === 'dropdown') {
       return(
         <Select 
           name={field.name}
-          value={this.state.item[field.name]}
-          options={field.options}
           onChange={this.onChangeDropdown}
+          options={field.options}
+          value={this.state.item[field.name]}
         />
       );
     }
@@ -86,11 +86,12 @@ class Form extends Component {
     }
     return (
       <input 
-        ref={field.name}
+        className="form-control"
         onChange={e => this.onChange(field.name, e.target.value)}
+        ref={field.name}
+        required={field.required}
         type={field.type}
         value={this.state.item[field.name]}
-        required={field.required}
       />
     );
   }
@@ -99,13 +100,19 @@ class Form extends Component {
     const { fields } = this.props;
     const submitBtnLabel = this.props.isEditing ? 'Save Edit' : 'Add Item';
 
-		return (
-			<div>
-				<form onSubmit={this.onSubmit}>
-					<div>						
+    return (
+      <div>
+        <form 
+          onSubmit={this.onSubmit}
+          style={{maxWidth: '500px'}}
+        >
+          <div>
             {fields.map((field) => (
               !field.isInteractive && (
-                <div key={field.name} className="item-field" style={field.style}>
+                <div
+                  className="form-group"
+                  key={field.name}
+                >
                   <label htmlFor={field.name}>{field.label}</label>
                   {this.inputFormat(field)}
                 </div>

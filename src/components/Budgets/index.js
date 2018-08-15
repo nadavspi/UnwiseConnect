@@ -20,6 +20,8 @@ class Budgets extends Component {
         field: 'summary',
         value: '',
       },
+      isFormExpanded: false,
+      isViewSwitcherExpanded: false,
     };
 
     this.filterItems = this.filterItems.bind(this);
@@ -127,24 +129,40 @@ class Budgets extends Component {
         </div>
         <div className="row panel-body">
           <div className="panel-body projects__wrapper">
-            <Form
-              onSubmit={this.onAdd}
-            />
-            <h3>View Selection</h3>
-            <ul>
-              <li>
-                <Link to={this.props.match.url + '/list'}>List</Link>
-              </li>
-              <li>
-                <Link to={this.props.match.url + '/table'}>Table</Link>
-              </li>
-            </ul>
-            <PresetBudgets 
-              search={this.search}
-            />
+            <button 
+              className="btn btn-default"
+              onClick={() => this.setState({ isFormExpanded: !this.state.isFormExpanded })}
+              type="button"
+            >
+              Add Items {' '}
+              <span className="caret"></span>
+            </button>
+            {this.state.isFormExpanded && (
+              <Form
+                onSubmit={this.onAdd}
+              />
+            )}
+            <button 
+              type="button"
+              className="btn btn-default"
+              onClick={() => this.setState({ isViewSwitcherExpanded: !this.state.isViewSwitcherExpanded })}
+            >
+              Switch View {' '}
+              <span className="caret"></span>
+            </button>
+            {this.state.isViewSwitcherExpanded && (
+              <ul>
+                <li>
+                  <Link to={this.props.match.url + '/list'}>List</Link>
+                </li>
+                <li>
+                  <Link to={this.props.match.url + '/table'}>Table</Link>
+                </li>
+              </ul>
+            )}
             <Route 
               exact path={this.props.match.url} 
-              render={this.renderList}
+              render={this.renderTable}
             />
             <Route 
               path={this.props.match.url + '/list'} 
