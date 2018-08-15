@@ -32,11 +32,8 @@ function concatOnProperties(list) {
 		} else {
       // Add to existing feature
 			for (const property in item) {
-				if(Array.isArray(item[property])) {
-          concatObj[item.feature][property] = [
-            ...concatObj[item.feature][property],
-            ...item[property],
-          ];
+				if(property.indexOf('descriptions.') > -1) {
+          concatObj[item.feature][property] = concatObj[item.feature][property] + '\n' + item[property];
 				} else if(typeof item[property] === 'number') {
           // Sum the numbers
 					concatObj[item.feature][property] = concatObj[item.feature][property] + item[property] || item[property];
