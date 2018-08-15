@@ -25,7 +25,6 @@ class CreatePlan extends Component {
     if(field.isParent) {
       const value = !this.state.parents[field.property];
       this.setState({
-        ...this.state,
         parents: {
           ...this.state.parents,
           [field.property]: value,
@@ -35,7 +34,6 @@ class CreatePlan extends Component {
     }
 
     this.setState({
-      ...this.state,
       children: {
         ...this.state.children,
         [field.id]: e.target.value,
@@ -44,10 +42,7 @@ class CreatePlan extends Component {
   }
 
   onChangeProject(project) {
-    this.setState({
-      ...this.state,
-      project: project,
-    });
+    this.setState({ project: project });
   }
 
   onSubmit(event) {
@@ -94,12 +89,15 @@ class CreatePlan extends Component {
     const fields = convertToList(this.props.flags).filter(flag => {
       return (!flag.hasParent || this.state.parents[flag.parentProperty])
     }).map(flag => {
-      const newFlag = flag;
       // Prevents open children from being left blank
-      if(newFlag.hasParent) {
-        newFlag.required = true;
+      if(flag.hasParent) {
+        return {
+          ...flag,
+          required:true,
+        };
       }
-      return newFlag;
+
+      return flag;
     });
 
     return (
