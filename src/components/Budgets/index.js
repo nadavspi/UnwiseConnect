@@ -160,6 +160,9 @@ class Budgets extends Component {
                 </li>
               </ul>
             )}
+            <PresetBudgets 
+              search={this.search}
+            />
             <Route 
               exact path={this.props.match.url} 
               render={this.renderTable}
