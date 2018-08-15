@@ -22,6 +22,7 @@ class Budgets extends Component {
       },
       isFormExpanded: false,
       isViewSwitcherExpanded: false,
+      isSavedExpanded: false,
     };
 
     this.filterItems = this.filterItems.bind(this);
@@ -160,9 +161,19 @@ class Budgets extends Component {
                 </li>
               </ul>
             )}
-            <PresetBudgets 
-              search={this.search}
-            />
+            <button 
+              className="btn btn-default"
+              onClick={() => this.setState({ isSavedExpanded: !this.state.isSavedExpanded })}
+              type="button"
+            >
+              Saved Budgets {' '}
+              <span className="caret"></span>
+            </button>
+            {this.state.isSavedExpanded && (
+              <PresetBudgets 
+                search={this.search}
+              />
+            )}
             <Route 
               exact path={this.props.match.url} 
               render={this.renderTable}
