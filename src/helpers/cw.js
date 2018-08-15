@@ -22,3 +22,16 @@ export const dispatchTickets = params => {
     body: JSON.stringify(params),
   }).then(checkStatus).then(parseJSON);
 }
+
+export const createWorkplan = params => {
+  const headers = {
+    Authorization: `Basic ${process.env.REACT_APP_API_KEY}`,
+    'Content-Type': 'application/json',
+  };
+
+  return fetch(`${process.env.REACT_APP_API_URL}/v1/workplan`, {
+    headers, 
+    method: 'POST',
+    body: JSON.stringify(params),
+  }).then(checkStatus).then(parseJSON);
+}

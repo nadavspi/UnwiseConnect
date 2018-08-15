@@ -1,5 +1,6 @@
 import * as BudgetsActions from '../../actions/budgets';
 import * as search from 'searchtabular';
+import CreatePlan from './CreatePlan';
 import Form from './Item/Form';
 import List from './List';
 import PresetBudgets from './PresetBudgets';
@@ -20,9 +21,10 @@ class Budgets extends Component {
         field: 'summary',
         value: '',
       },
+      isCreatePlanExpanded: false,
       isFormExpanded: false,
-      isViewSwitcherExpanded: false,
       isSavedExpanded: false,
+      isViewSwitcherExpanded: false,
     };
 
     this.filterItems = this.filterItems.bind(this);
@@ -173,6 +175,17 @@ class Budgets extends Component {
               <PresetBudgets 
                 search={this.search}
               />
+            )}
+            <button 
+              className="btn btn-default"
+              onClick={() => this.setState({ isCreatePlanExpanded: !this.state.isCreatePlanExpanded })}
+              type="button"
+            >
+              Workplan {' '}
+              <span className="caret"></span>
+            </button>
+            {this.state.isCreatePlanExpanded && (
+              <CreatePlan />              
             )}
             <Route 
               exact path={this.props.match.url} 
