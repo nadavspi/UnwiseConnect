@@ -159,7 +159,6 @@ export default (state = initialState, action) => {
           return item;
       });
 
-      console.log('Search:', action.payload.query);
       return {
         ...state,
         query: action.payload.query,
