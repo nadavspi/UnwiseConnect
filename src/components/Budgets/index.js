@@ -21,9 +21,10 @@ class Budgets extends Component {
         field: 'summary',
         value: '',
       },
+      isCreatePlanExpanded: false,
       isFormExpanded: false,
-      isViewSwitcherExpanded: false,
       isSavedExpanded: false,
+      isViewSwitcherExpanded: false,
     };
 
     this.filterItems = this.filterItems.bind(this);
@@ -175,7 +176,17 @@ class Budgets extends Component {
                 search={this.search}
               />
             )}
-            <CreatePlan />
+            <button 
+              className="btn btn-default"
+              onClick={() => this.setState({ isCreatePlanExpanded: !this.state.isCreatePlanExpanded })}
+              type="button"
+            >
+              Create Plan {' '}
+              <span className="caret"></span>
+            </button>
+            {this.state.isCreatePlanExpanded && (
+              <CreatePlan />              
+            )}
             <Route 
               exact path={this.props.match.url} 
               render={this.renderTable}
