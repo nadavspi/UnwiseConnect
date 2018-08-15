@@ -1,4 +1,3 @@
-import 'bootstrap/dist/css/bootstrap.css';
 import flatten from 'flat';
 import nanoid from 'nanoid';
 import React, { Component } from 'react';
