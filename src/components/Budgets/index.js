@@ -161,7 +161,7 @@ class Budgets extends Component {
             )}
             <Route 
               exact path={this.props.match.url} 
-              render={this.renderList}
+              render={this.renderTable}
             />
             <Route 
               path={this.props.match.url + '/list'} 
