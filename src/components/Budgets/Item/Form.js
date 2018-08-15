@@ -71,11 +71,10 @@ class Form extends Component {
         <textarea 
           style={
             { 
-              minWidth: '145px', 
-              maxWidth: '145px',
               minHeight: '5em',
             }
           }
+          className="form-control"
           ref={field.name}
           onChange={e => this.onChange(field.name, e.target.value)}
           required={field.required}
