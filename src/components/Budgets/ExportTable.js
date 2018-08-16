@@ -3,7 +3,7 @@ import React, { Component } from 'react';
 import { CSVLink } from 'react-csv';
 import { reformatColumns } from '../../helpers/reformat';
 
-class CSVExport extends Component {
+class ExportTable extends Component {
   constructor(){
     super();
 
@@ -15,24 +15,8 @@ class CSVExport extends Component {
     return reformatColumns(this.props.visibleItems);
   }
 
-  unravel(array){
-    let string = '';
-    
-    if (Array.isArray(array)) { 
-      array.map((element) => {
-        string += element + '\n';
-        return element;
-      });
-    } else {
-      string = array;
-    }
-
-    return string;
-  }
-
   exportXlsx() {
     const items = reformatColumns(this.props.visibleItems);
-    
     // reformat columns for xlsx
     const rows = items.map((item) => {
       const row = {
@@ -45,7 +29,7 @@ class CSVExport extends Component {
             return element.key === property;
           });
           if (typeof column !== 'undefined') {
-            row[column.label] = (property.indexOf('descriptions.') > -1) ? this.unravel(item[property]) : item[property];
+            row[column.label] = item[property];
           }
         }
       }
@@ -150,7 +134,7 @@ class CSVExport extends Component {
   }
 }
 
-CSVExport.defaultProps = {
+ExportTable.defaultProps = {
   columns: [
     {
       key:'feature',  
@@ -272,4 +256,4 @@ CSVExport.defaultProps = {
   },
 }
 
-export default CSVExport;
+export default ExportTable;
