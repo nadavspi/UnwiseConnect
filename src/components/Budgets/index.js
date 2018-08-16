@@ -45,16 +45,16 @@ class Budgets extends Component {
   filterItems(items, query) {
     const rows = this.props.itemArray;
     const columns = this.props.fields.map((field) => ({
-      property: field.name,      
+      property: field.name,
       header: {
         label: field.label,
       },
       filterType:field.filterType,
     }));
 
-    const searchExecutor = search.multipleColumns({ 
-      columns, 
-      query, 
+    const searchExecutor = search.multipleColumns({
+      columns,
+      query,
       strategy: multiInfix });
     const visibleItems = compose(searchExecutor)(rows);
 
@@ -67,14 +67,14 @@ class Budgets extends Component {
         field,
         value,
       },
-    }); 
-    
+    });
+
     const newQuery = {
       ...this.props.query,
       [field]: value,
     };
 
-    this.props.dispatch(BudgetsActions.search({ query: newQuery, visibleItems:this.filterItems(this.props.itemArray, newQuery) })); 
+    this.props.dispatch(BudgetsActions.search({ query: newQuery, visibleItems:this.filterItems(this.props.itemArray, newQuery) }));
   }
 
   onAdd(item) {
@@ -103,12 +103,12 @@ class Budgets extends Component {
 
   renderTable() {
     return (
-      <Table 
+      <Table
         onDelete={this.onDelete}
         onEdit={this.onEdit}
         search={this.search}
         toggleColumn={this.toggleColumn}
-      /> 
+      />
     );
   }
 
@@ -129,76 +129,76 @@ class Budgets extends Component {
           <div className="panel-uc__heading panel-heading clearfix">
             <h4>Budget Tool</h4>
           </div>
-        </div>
-        <div className="row panel-body">
-          <div className="panel-body projects__wrapper">
-            <button 
-              className="btn btn-default"
-              onClick={() => this.setState({ isFormExpanded: !this.state.isFormExpanded })}
-              type="button"
-            >
-              Add Items {' '}
-              <span className="caret"></span>
-            </button>
-            {this.state.isFormExpanded && (
-              <Form
-                onSubmit={this.onAdd}
+          <div className="row panel-body">
+            <div className="panel-body projects__wrapper">
+              <button
+                className="btn btn-default"
+                onClick={() => this.setState({ isFormExpanded: !this.state.isFormExpanded })}
+                type="button"
+              >
+                Add Items {' '}
+                <span className="caret"></span>
+              </button>
+              {this.state.isFormExpanded && (
+                <Form
+                  onSubmit={this.onAdd}
+                />
+              )}
+              <button
+                type="button"
+                className="btn btn-default"
+                onClick={() => this.setState({ isViewSwitcherExpanded: !this.state.isViewSwitcherExpanded })}
+              >
+                Switch View {' '}
+                <span className="caret"></span>
+              </button>
+              {this.state.isViewSwitcherExpanded && (
+                <ul>
+                  <li>
+                    <Link to={this.props.match.url + '/list'}>List</Link>
+                  </li>
+                  <li>
+                    <Link to={this.props.match.url + '/table'}>Table</Link>
+                  </li>
+                </ul>
+              )}
+              <button
+                className="btn btn-default"
+                onClick={() => this.setState({ isSavedExpanded: !this.state.isSavedExpanded })}
+                type="button"
+              >
+                Saved Budgets {' '}
+                <span className="caret"></span>
+              </button>
+              {this.state.isSavedExpanded && (
+                <PresetBudgets
+                  search={this.search}
+                />
+              )}
+              <button
+                className="btn btn-default"
+                onClick={() => this.setState({ isCreatePlanExpanded: !this.state.isCreatePlanExpanded })}
+                type="button"
+              >
+                Workplan {' '}
+                <span className="caret"></span>
+              </button>
+              {this.state.isCreatePlanExpanded && (
+                <CreatePlan />
+              )}
+              <Route
+                exact path={this.props.match.url}
+                render={this.renderTable}
               />
-            )}
-            <button 
-              type="button"
-              className="btn btn-default"
-              onClick={() => this.setState({ isViewSwitcherExpanded: !this.state.isViewSwitcherExpanded })}
-            >
-              Switch View {' '}
-              <span className="caret"></span>
-            </button>
-            {this.state.isViewSwitcherExpanded && (
-              <ul>
-                <li>
-                  <Link to={this.props.match.url + '/list'}>List</Link>
-                </li>
-                <li>
-                  <Link to={this.props.match.url + '/table'}>Table</Link>
-                </li>
-              </ul>
-            )}
-            <button 
-              className="btn btn-default"
-              onClick={() => this.setState({ isSavedExpanded: !this.state.isSavedExpanded })}
-              type="button"
-            >
-              Saved Budgets {' '}
-              <span className="caret"></span>
-            </button>
-            {this.state.isSavedExpanded && (
-              <PresetBudgets 
-                search={this.search}
+              <Route
+                path={this.props.match.url + '/list'}
+                render={this.renderList}
               />
-            )}
-            <button 
-              className="btn btn-default"
-              onClick={() => this.setState({ isCreatePlanExpanded: !this.state.isCreatePlanExpanded })}
-              type="button"
-            >
-              Workplan {' '}
-              <span className="caret"></span>
-            </button>
-            {this.state.isCreatePlanExpanded && (
-              <CreatePlan />              
-            )}
-            <Route 
-              exact path={this.props.match.url} 
-              render={this.renderTable}
-            />
-            <Route 
-              path={this.props.match.url + '/list'} 
-              render={this.renderList}
-            />
-            <Route 
-              path={this.props.match.url + '/table'} 
-              render={this.renderTable}
-            />
+              <Route
+                path={this.props.match.url + '/table'}
+                render={this.renderTable}
+              />
+            </div>
           </div>
         </div>
       </div>
