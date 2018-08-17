@@ -257,12 +257,6 @@ td.col--budget:not(:empty)::after {
   border-top-width: 2px;
 }
 
-.item-field {
-  width: 100%;
-  min-width: 8em;
-  max-width: 10em; 
-}
-
 .modal-overlay {
   position: absolute;
   z-index: 10;
@@ -271,4 +265,13 @@ td.col--budget:not(:empty)::after {
   left: 0;
   right: 0;
   bottom: 0;
+}
+
+.select-bar {
+  max-width: 350px;
+}
+
+.item-field {
+  min-width: 11em;
+  max-width: 11em; 
 }
