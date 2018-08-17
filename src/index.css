@@ -30,6 +30,13 @@ body {
   animation: fadein-slide .5s ease-in;
 }
 
+@media screen and (min-width: 1200px) {
+  :root .container {
+    width: 100%;
+    max-width: 1300px;
+  }
+}
+
 .navbar.navbar-uc {
   margin-bottom: 0;
   border: 0;
@@ -268,4 +275,3 @@ td.col--budget:not(:empty)::after {
   min-width: 11em;
   max-width: 11em; 
 }
-
