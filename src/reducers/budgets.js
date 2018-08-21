@@ -18,6 +18,14 @@ const initialState = {
       required: true,
     },
     {
+      filterType: 'textfield',
+      name: 'project',
+      label: 'Project',
+      type: 'text',
+      required: false,
+      description: `If the ticket is specific to a particular project and won't be reused, you can use this field.`,
+    },
+    {
       filterType: 'custom',
       name: 't&m',
       label: 'T&M',

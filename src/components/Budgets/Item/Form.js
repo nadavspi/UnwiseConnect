@@ -114,6 +114,7 @@ class Form extends Component {
                 >
                   <label htmlFor={field.name}>{field.label}</label>
                   {this.inputFormat(field)}
+                  {field.description}
                 </div>
               )
             ))}
