@@ -15,14 +15,12 @@ const initialState = {
       name: 'phase',
       label: 'Phase',
       type: 'text',
-      required: true,
     },
     {
       filterType: 'textfield',
       name: 'project',
       label: 'Project',
       type: 'text',
-      required: false,
       description: `If the ticket is specific to a particular project and won't be reused, you can use this field.`,
     },
     {
@@ -66,7 +64,6 @@ const initialState = {
       name: 'descriptions.workplan',
       label: 'Workplan description',
       type: 'text',
-      required: true,
     },
     {
       filterType: 'none',
@@ -96,7 +93,6 @@ const initialState = {
       filterType: 'custom',
       name: 'tags',
       label: 'Tags',
-      required: true,
       type: 'text',
     },
     {
