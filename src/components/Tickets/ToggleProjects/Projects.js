@@ -1,20 +1,21 @@
 import React from 'react';
+import { formatRelative } from 'date-fns';
+import './Projects.css';
 
 const Projects = ({ projects, toggle, update }) => {
   return (
     <ul
-      className="list-unstyled"
-      style={{ marginBottom: '0' }}
+      className="ToggleProjects__list list-unstyled"
     >
       {projects.map(project => (
         <li
           key={project.id}
-          style={{ display: 'block' }}
+          className="ToggleProjects__project"
         >
-          <label style={{ fontWeight: 'normal' }}>
+          <label className="ToggleProjects__label">
             <input
               checked={project.selected}
-              style={{ marginRight: '10px' }}
+              className="ToggleProjects__checkbox"
               type="checkbox"
               onChange={toggle.bind(this, project.id)}
             />
@@ -27,6 +28,10 @@ const Projects = ({ projects, toggle, update }) => {
             >
               Update Tickets
             </button>
+
+            {project.lastUpdated ? (
+              <span className="ToggleProjects__updated">Updated {formatRelative(project.lastUpdated, new Date())}</span>
+            ) : null}
           </label>
         </li>
       ))}
