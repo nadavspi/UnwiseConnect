@@ -10,7 +10,7 @@
   display: block;
 }
 
-.ToggleProjects__checkbox {
+input.ToggleProjects__checkbox {
   margin-right: 10px;
 }
 
