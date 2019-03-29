@@ -179,7 +179,7 @@ body {
 }
 
 .column-filter-input[name="id"] {
-  max-width: 7em;
+  max-width: 8em;
 }
 
 .column-filter-input[name="actualHours"],
