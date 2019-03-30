@@ -53,13 +53,13 @@ const fields = [
   },
   {
     id: 'startDate',
-    value: formatDate(new Date(), 'YYYY-MM-DD'),
+    value: formatDate(new Date(), 'yyyy-MM-dd'),
     type: 'text',
     required: true,
   },
   {
     id: 'endDate',
-    value: formatDate(new Date(), 'YYYY-MM-DD'),
+    value: formatDate(new Date(), 'yyyy-MM-dd'),
     type: 'text',
     required: false,
   },
