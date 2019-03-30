@@ -38,6 +38,7 @@ class SearchColumns extends React.Component {
 
     return (
       <input
+        autoComplete="off"
         onChange={onQueryChange}
         className="column-filter-input"
         name={column.property}

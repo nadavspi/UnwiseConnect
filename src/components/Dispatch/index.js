@@ -67,7 +67,10 @@ const fields = [
     id: 'timezone',
     values: [
       'America/New_York',
+      'America/Phoenix',
       'America/Los_Angeles',
+      'Europe/Kiev',
+      'Asia/Kolkata',
     ],
     value: 'America/New_York',
     type: 'select',
