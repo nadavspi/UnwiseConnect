@@ -100,12 +100,12 @@ class PresetBudgets extends Component {
     let query = {...preset.value};
     let newQuery = {};
     
-    this.props.maintainDepth.map((property) => {
+    this.props.maintainDepth.forEach((property) => {
       query[property] = undefined;
     });
 
     newQuery = flatten(query);
-    this.props.maintainDepth.map((property, index) => {
+    this.props.maintainDepth.forEach((property, index) => {
       newQuery[property] = maintainedProps[index];
     });
 

@@ -33,8 +33,6 @@ class TimeEntries extends Component {
 
   entryCard(entry) {
     const startDate = new Date(entry.timeStart);
-    const endDate = new Date(entry.timeEnd);
-
     const date = startDate.getMonth() + '/' + startDate.getDate() + '/' + startDate.getFullYear();
     return(
       <div>
