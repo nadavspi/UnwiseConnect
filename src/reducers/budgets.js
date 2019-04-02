@@ -133,7 +133,9 @@ export default (state = initialState, action) => {
       };
 
     case ActionTypes.BUDGETS_REMOVE:
+      // TODO: Need to create a new object here?
       delete state[action.payload.elementType][action.payload.elementId];
+      return state;
 
     case ActionTypes.BUDGETS_CREATE_PLAN:
       return {
@@ -152,8 +154,6 @@ export default (state = initialState, action) => {
           response: action.payload.result,
         }
       };
-     
-      return state;
 
     case ActionTypes.BUDGETS_SEARCH:
       const visibleItemList = {};

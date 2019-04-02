@@ -61,7 +61,7 @@ class SearchColumns extends React.Component {
     const rowValues = this.props.rows.map(row => row[column.property]);
     const uniqueRowValues = [ ...new Set(rowValues) ];
     const extraOptions = (column.extraOptions || []).map(this.evaluateExtraOption.bind(this, column, uniqueRowValues));
-    const options = extraOptions.concat(uniqueRowValues.map(value => ({ value, label: value })));
+    const options = extraOptions.filter(opt => opt).concat(uniqueRowValues.map(value => ({ value, label: value })));
 
     return (
       <div className="column-filter-dropdown">
@@ -78,7 +78,8 @@ class SearchColumns extends React.Component {
 
   evaluateExtraOption(column, uniqueRowValues, option) {
     if (typeof option === 'function') {
-      return option(column, uniqueRowValues);
+      const currentValue = this.props.query[column.property] || [];
+      return option(column, uniqueRowValues, currentValue);
     }
     return option;
   }
