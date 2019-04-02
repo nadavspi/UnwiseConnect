@@ -27,6 +27,10 @@ function paginate({ page, perPage }) {
   };
 }
 
+function difference(arr1, arr2) {
+  return arr1.filter(val => !arr2.includes(val));
+}
+
 export default class TicketsTable extends React.Component {
   constructor(props) {
     super(props);
@@ -211,7 +215,46 @@ export default class TicketsTable extends React.Component {
   }
 }
 
-TicketsTable.closedTicketStatuses = [ 'Completed', 'Ready for QA', 'Canceled', 'Closed' ];
+TicketsTable.closedTicketStatuses = [
+  'Canceled',
+  'Client UAT',
+  'Closed',
+  'Completed',
+  'Passed Code Review',
+  'Pending Code Review',
+  'Ready for QA',
+  'Ready for QA/Review',
+];
+
+function makeUnselectedOption(option, currentValues) {
+  if (Array.isArray(currentValues)) {
+    // If there are no unselected values, skip the option.
+    if (!difference(option.value, currentValues).length) {
+      return null;
+    }
+  }
+
+  return option;
+}
+
+TicketsTable.makeAllOpenOption = (column, rowValues, currentValues) => {
+  const closedValues = TicketsTable.closedTicketStatuses;
+  const openValues = difference(rowValues, closedValues);
+
+  return makeUnselectedOption({
+    label: 'All Open',
+    value: openValues,
+  }, currentValues);
+};
+
+TicketsTable.makeAllCompleteOption = (column, rowValues, currentValues) => {
+  const closedValues = TicketsTable.closedTicketStatuses;
+
+  return makeUnselectedOption({
+    label: 'All Complete',
+    value: closedValues,
+  }, currentValues);
+};
 
 TicketsTable.defaultProps = {
   columns: [
@@ -316,18 +359,8 @@ TicketsTable.defaultProps = {
       },
       filterType: 'dropdown',
       extraOptions: [
-        (column, rowValues) => {
-          const closedValues = TicketsTable.closedTicketStatuses;
-          const openValues = rowValues.filter(item => !closedValues.includes(item));
-          return {
-            label: 'All Open',
-            value: openValues,
-          };
-        },
-        {
-          label: 'All Complete',
-          value: TicketsTable.closedTicketStatuses,
-        },
+        TicketsTable.makeAllOpenOption,
+        TicketsTable.makeAllCompleteOption,
       ],
     },
     {

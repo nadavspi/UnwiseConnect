@@ -245,18 +245,8 @@ class Dispatch extends Component {
         visible: true,
         filterType: 'dropdown',
         extraOptions: [
-          (column, rowValues) => {
-            const closedValues = Table.closedTicketStatuses;
-            const openValues = rowValues.filter(item => !closedValues.includes(item));
-            return {
-              label: 'All Open',
-              value: openValues,
-            };
-          },
-          {
-            label: 'All Complete',
-            value: Table.closedTicketStatuses,
-          },
+          Table.makeAllOpenOption,
+          Table.makeAllCompleteOption,
         ],
       },
     ] 
