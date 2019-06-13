@@ -1,14 +1,15 @@
 import * as Table from 'reactabular-table';
 import * as resolve from 'table-resolver';
 import * as search from 'searchtabular';
-import Pagination from './Pagination';
 import DetailsModal from './DetailsModal';
+import Pagination from './Pagination';
 import React from 'react';
 import SearchColumns from './SearchColumns';
 import StartTimer from './StartTimer';
 import TicketLink from './TicketLink';
 import VisibilityToggles from 'react-visibility-toggles';
 import { compose } from 'redux';
+import { customField } from '../../config/columns';
 import { multiInfix } from '../../helpers/utils';
 
 function paginate({ page, perPage }) {
@@ -338,27 +339,16 @@ TicketsTable.defaultProps = {
         label: 'Sprint',
       },
       cell: {
-        resolve: field => {
-          if (!field) {
-            return 'N/A';
-          }
-
-          const sprint = field.find(val => val.caption === 'Sprint');
-          if (sprint && sprint.value) {
-            return sprint.value;
-          }
-
-          return 'N/A';
-        },
-        formatters: [
-          (field, { rowData }) => {
-            if (field === 'N/A') {
-              return <div />;
-            }
-
-            return <div>{field}</div>;
-          }
-        ],
+        ...customField('Sprint'),
+      },
+    },
+    {
+      property: 'customFields',
+      header: {
+        label: 'Test',
+      },
+      cell: {
+        ...customField('Test'),
       },
     },
     {
