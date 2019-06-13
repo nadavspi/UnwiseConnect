@@ -1,17 +1,18 @@
 import './dispatch.css';
-import * as resolve from 'table-resolver';
 import * as UserActions from '../../actions/user';
+import * as resolve from 'table-resolver';
+import * as searchtabular from 'searchtabular';
 import Fields from './Fields';
 import JSONPretty from 'react-json-pretty';
 import Queue from './Queue';
 import React, { Component } from 'react';
 import Table from '../Tickets/Table';
-import * as searchtabular from 'searchtabular';
-import { connect } from 'react-redux';
 import { compose } from 'redux';
+import { connect } from 'react-redux';
+import { customField } from '../../config/columns';
 import { format as formatDate } from 'date-fns';
-import { search, dispatch as dispatchTickets } from '../../actions/tickets';
 import { multiInfix } from '../../helpers/utils';
+import { search, dispatch as dispatchTickets } from '../../actions/tickets';
 
 const fields = [
   {
@@ -228,6 +229,15 @@ class Dispatch extends Component {
               );
             }
           ]
+        },
+      },
+      {
+        property: 'customFields',
+        header: {
+          label: 'Sprint',
+        },
+        cell: {
+          ...customField('Sprint'),
         },
       },
       {

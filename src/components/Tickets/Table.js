@@ -1,14 +1,15 @@
 import * as Table from 'reactabular-table';
 import * as resolve from 'table-resolver';
 import * as search from 'searchtabular';
-import Pagination from './Pagination';
 import DetailsModal from './DetailsModal';
+import Pagination from './Pagination';
 import React from 'react';
 import SearchColumns from './SearchColumns';
 import StartTimer from './StartTimer';
 import TicketLink from './TicketLink';
 import VisibilityToggles from 'react-visibility-toggles';
 import { compose } from 'redux';
+import { customField } from '../../config/columns';
 import { multiInfix } from '../../helpers/utils';
 
 function paginate({ page, perPage }) {
@@ -330,6 +331,15 @@ TicketsTable.defaultProps = {
       property: 'summary',
       header: {
         label: 'Name',
+      },
+    },
+    {
+      property: 'customFields',
+      header: {
+        label: 'Sprint',
+      },
+      cell: {
+        ...customField('Sprint'),
       },
     },
     {

@@ -23,6 +23,7 @@ const Field = ({ field, onChange, tickets }) => {
             {field.id}
           </label>
           <input
+            className="form-control"
             id={field.id}
             onChange={onChange}
             required={field.required}
@@ -34,17 +35,16 @@ const Field = ({ field, onChange, tickets }) => {
 
     case 'boolean':
       return (
-        <span>
-          <input
-            checked={field.value}
-            id={field.id}
-            onChange={onChange}
-            type="checkbox"
-          />
-          {' '}
+        <span className="checkbox">
           <label
             htmlFor={field.id}
           >
+            <input
+              checked={field.value}
+              id={field.id}
+              onChange={onChange}
+              type="checkbox"
+            />
             {field.id}
           </label>
         </span>
@@ -61,6 +61,7 @@ const Field = ({ field, onChange, tickets }) => {
           </label>
 
           <select
+            className="form-control"
             id={field.id}
             onChange={onChange}
             required={field.required}
@@ -118,7 +119,10 @@ const Fields = props => {
   return (
     <div className="dispatch-fields">
       {props.fields.map(field => (
-        <div key={field.id}>
+        <div 
+          className="form-group"
+          key={field.id}
+        >
           <Field
             field={field}
             onChange={props.onChange.bind(null, field.id, field.type)}
