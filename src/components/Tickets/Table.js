@@ -343,15 +343,6 @@ TicketsTable.defaultProps = {
       },
     },
     {
-      property: 'customFields',
-      header: {
-        label: 'Test',
-      },
-      cell: {
-        ...customField('Test'),
-      },
-    },
-    {
       property: 'budgetHours',
       header: {
         label: 'Budget Hours',
