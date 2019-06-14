@@ -22,7 +22,7 @@ export default class Queue extends Component {
       return undefined;
     }
 
-    return parseInt(override.hours);
+    return parseInt(override.hours, 10);
   }
 
   totalBudget() {
