@@ -63,7 +63,7 @@ const fields = [
   {
     id: 'endDate',
     label: 'End date',
-    value: formatDate(new Date(), 'yyyy-MM-dd'),
+    value: '',
     type: 'text',
     required: false,
   },
