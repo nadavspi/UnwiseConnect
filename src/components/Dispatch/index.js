@@ -488,6 +488,7 @@ class Dispatch extends Component {
             </header>
             <Queue 
               onRemove={this.onTicketSelect}
+              overrideHours={this.state.fields.find(field => field.id === 'tickets').value}
               resetTickets={this.resetTickets}
               selectedTickets={this.selectedTickets()} 
               setTicketHours={this.setTicketHours}
