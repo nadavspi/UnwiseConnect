@@ -17,6 +17,7 @@ import { search, dispatch as dispatchTickets } from '../../actions/tickets';
 const fields = [
   {
     id: 'memberIdentifier',
+    label: 'Person to dispatch',
     value: '',
     values: (tickets, value) => {
       let resourcePopularity = {};
@@ -54,18 +55,21 @@ const fields = [
   },
   {
     id: 'startDate',
+    label: 'Start date',
     value: formatDate(new Date(), 'yyyy-MM-dd'),
     type: 'text',
     required: true,
   },
   {
     id: 'endDate',
+    label: 'End date',
     value: formatDate(new Date(), 'yyyy-MM-dd'),
     type: 'text',
     required: false,
   },
   {
     id: 'timezone',
+    label: 'Timezone',
     values: [
       'America/New_York',
       'America/Phoenix',
@@ -79,29 +83,34 @@ const fields = [
   },
   {
     id: 'startHour',
+    label: 'Start hour',
     value: 9,
     type: 'number',
     required: true,
   },
   {
     id: 'daily',
+    label: 'Maximum daily hours',
     value: 8,
     type: 'number',
     required: true,
   },
   {
     id: 'capTotalHours',
+    label: 'Total hours cap',
     value: undefined,
     type: 'number',
     required: false,
   },
   {
     id: 'skipByStatus',
+    label: 'Skip tickets by status',
     value: true,
     type: 'boolean',
   },
   {
     id: 'skipDuplicateMode',
+    label: 'Skip duplicate mode',
     value: 'subtract',
     values: [
       'ignore',
@@ -113,11 +122,13 @@ const fields = [
   },
   {
     id: 'setAssigned',
+    label: 'Set Assigned ticket status',
     value: true,
     type: 'boolean',
   },
   {
     id: 'dry',
+    label: 'Dry run',
     value: false,
     type: 'boolean',
   },

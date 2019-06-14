@@ -20,7 +20,7 @@ const Field = ({ field, onChange, tickets }) => {
             htmlFor={field.id}
             style={{ display: 'block' }}
           >
-            {field.id}
+            {field.label || field.id}
           </label>
           <input
             className="form-control"
@@ -45,7 +45,7 @@ const Field = ({ field, onChange, tickets }) => {
               onChange={onChange}
               type="checkbox"
             />
-            {field.id}
+            {field.label || field.id}
           </label>
         </span>
       );
@@ -57,7 +57,7 @@ const Field = ({ field, onChange, tickets }) => {
             htmlFor={field.id}
             style={{ display: 'block' }}
           >
-            {field.id}
+            {field.label || field.id}
           </label>
 
           <select
@@ -86,7 +86,7 @@ const Field = ({ field, onChange, tickets }) => {
             htmlFor={field.id}
             style={{ display: 'block' }}
           >
-            {field.id}
+            {field.label || field.id}
           </label>
 
           {field.allowCustom ? (
