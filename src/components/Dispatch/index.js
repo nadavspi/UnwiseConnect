@@ -54,6 +54,13 @@ const fields = [
     allowCustom: true,
   },
   {
+    id: 'Sprint',
+    label: 'Sprint',
+    type: 'text',
+    value: '',
+    isCustomField: true,
+  },
+  {
     id: 'startDate',
     label: 'Start date',
     value: formatDate(new Date(), 'yyyy-MM-dd'),
@@ -444,11 +451,28 @@ class Dispatch extends Component {
   }
 
   dispatch() {
-    const params = Object.assign(...this.state.fields.map(field => (
-      { [field.id]: field.value }
-    )));
+    const params = Object.assign(...this.state.fields.map(field => {
+      if (field.isCustomField) {
+        // We'll handle custom fields separately
+        return false;
+      }
 
-    this.props.dispatch(dispatchTickets({ params }));
+      return {
+        [field.id]: field.value,
+      };
+    }).filter(Boolean));
+
+    const customFields = this.state.fields.filter(field => field.isCustomField).map(field => ({
+      caption: field.id,
+      value: field.value,
+    }));
+
+    this.props.dispatch(dispatchTickets({ 
+      params: { 
+        ...params,
+        customFields,
+      },
+    }));
   }
 
   render() {
