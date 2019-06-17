@@ -30,6 +30,13 @@ body {
   animation: fadein-slide .5s ease-in;
 }
 
+@media screen and (min-width: 1200px) {
+  :root .container {
+    width: 100%;
+    max-width: 1300px;
+  }
+}
+
 .navbar.navbar-uc {
   margin-bottom: 0;
   border: 0;
@@ -172,7 +179,7 @@ body {
 }
 
 .column-filter-input[name="id"] {
-  max-width: 7em;
+  max-width: 8em;
 }
 
 .column-filter-input[name="actualHours"],
@@ -248,4 +255,23 @@ td.col--budget:not(:empty)::after {
 .table-bordered > tfoot.table-bordered__foot td {
   font-weight: bold;
   border-top-width: 2px;
+}
+
+.modal-overlay {
+  position: absolute;
+  z-index: 10;
+  box-sizing: border-box;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+}
+
+.select-bar {
+  max-width: 350px;
+}
+
+.item-field {
+  min-width: 11em;
+  max-width: 11em; 
 }

@@ -1,21 +1,23 @@
 import './dispatch.css';
-import * as resolve from 'table-resolver';
 import * as UserActions from '../../actions/user';
+import * as resolve from 'table-resolver';
+import * as searchtabular from 'searchtabular';
 import Fields from './Fields';
 import JSONPretty from 'react-json-pretty';
 import Queue from './Queue';
 import React, { Component } from 'react';
 import Table from '../Tickets/Table';
-import * as searchtabular from 'searchtabular';
-import { connect } from 'react-redux';
 import { compose } from 'redux';
+import { connect } from 'react-redux';
+import { customField } from '../../config/columns';
 import { format as formatDate } from 'date-fns';
-import { search, dispatch as dispatchTickets } from '../../actions/tickets';
 import { multiInfix } from '../../helpers/utils';
+import { search, dispatch as dispatchTickets } from '../../actions/tickets';
 
 const fields = [
   {
     id: 'memberIdentifier',
+    label: 'Person to dispatch',
     value: '',
     values: (tickets, value) => {
       let resourcePopularity = {};
@@ -52,22 +54,35 @@ const fields = [
     allowCustom: true,
   },
   {
+    id: 'Sprint',
+    label: 'Sprint',
+    type: 'text',
+    value: '',
+    isCustomField: true,
+  },
+  {
     id: 'startDate',
-    value: formatDate(new Date(), 'YYYY-MM-DD'),
+    label: 'Start date',
+    value: formatDate(new Date(), 'yyyy-MM-dd'),
     type: 'text',
     required: true,
   },
   {
     id: 'endDate',
-    value: formatDate(new Date(), 'YYYY-MM-DD'),
+    label: 'End date',
+    value: '',
     type: 'text',
     required: false,
   },
   {
     id: 'timezone',
+    label: 'Timezone',
     values: [
       'America/New_York',
+      'America/Phoenix',
       'America/Los_Angeles',
+      'Europe/Kiev',
+      'Asia/Kolkata',
     ],
     value: 'America/New_York',
     type: 'select',
@@ -75,29 +90,34 @@ const fields = [
   },
   {
     id: 'startHour',
+    label: 'Start hour',
     value: 9,
     type: 'number',
     required: true,
   },
   {
     id: 'daily',
+    label: 'Maximum daily hours',
     value: 8,
     type: 'number',
     required: true,
   },
   {
     id: 'capTotalHours',
+    label: 'Total hours cap',
     value: undefined,
     type: 'number',
     required: false,
   },
   {
     id: 'skipByStatus',
+    label: 'Skip tickets by status',
     value: true,
     type: 'boolean',
   },
   {
     id: 'skipDuplicateMode',
+    label: 'Skip duplicate mode',
     value: 'subtract',
     values: [
       'ignore',
@@ -109,11 +129,13 @@ const fields = [
   },
   {
     id: 'setAssigned',
+    label: 'Set Assigned ticket status',
     value: true,
     type: 'boolean',
   },
   {
     id: 'dry',
+    label: 'Dry run',
     value: false,
     type: 'boolean',
   },
@@ -228,6 +250,15 @@ class Dispatch extends Component {
         },
       },
       {
+        property: 'customFields',
+        header: {
+          label: 'Sprint',
+        },
+        cell: {
+          ...customField('Sprint'),
+        },
+      },
+      {
         property: 'summary',
         header: {
           label: 'Name',
@@ -242,18 +273,8 @@ class Dispatch extends Component {
         visible: true,
         filterType: 'dropdown',
         extraOptions: [
-          (column, rowValues) => {
-            const closedValues = Table.closedTicketStatuses;
-            const openValues = rowValues.filter(item => !closedValues.includes(item));
-            return {
-              label: 'All Open',
-              value: openValues,
-            };
-          },
-          {
-            label: 'All Complete',
-            value: Table.closedTicketStatuses,
-          },
+          Table.makeAllOpenOption,
+          Table.makeAllCompleteOption,
         ],
       },
     ] 
@@ -430,11 +451,28 @@ class Dispatch extends Component {
   }
 
   dispatch() {
-    const params = Object.assign(...this.state.fields.map(field => (
-      { [field.id]: field.value }
-    )));
+    const params = Object.assign(...this.state.fields.map(field => {
+      if (field.isCustomField) {
+        // We'll handle custom fields separately
+        return false;
+      }
 
-    this.props.dispatch(dispatchTickets({ params }));
+      return {
+        [field.id]: field.value,
+      };
+    }).filter(Boolean));
+
+    const customFields = this.state.fields.filter(field => field.isCustomField).map(field => ({
+      caption: field.id,
+      value: field.value,
+    }));
+
+    this.props.dispatch(dispatchTickets({ 
+      params: { 
+        ...params,
+        customFields,
+      },
+    }));
   }
 
   render() {
@@ -474,6 +512,7 @@ class Dispatch extends Component {
             </header>
             <Queue 
               onRemove={this.onTicketSelect}
+              overrideHours={this.state.fields.find(field => field.id === 'tickets').value}
               resetTickets={this.resetTickets}
               selectedTickets={this.selectedTickets()} 
               setTicketHours={this.setTicketHours}

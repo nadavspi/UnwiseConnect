@@ -20,9 +20,10 @@ const Field = ({ field, onChange, tickets }) => {
             htmlFor={field.id}
             style={{ display: 'block' }}
           >
-            {field.id}
+            {field.label || field.id}
           </label>
           <input
+            className="form-control"
             id={field.id}
             onChange={onChange}
             required={field.required}
@@ -34,18 +35,17 @@ const Field = ({ field, onChange, tickets }) => {
 
     case 'boolean':
       return (
-        <span>
-          <input
-            checked={field.value}
-            id={field.id}
-            onChange={onChange}
-            type="checkbox"
-          />
-          {' '}
+        <span className="checkbox">
           <label
             htmlFor={field.id}
           >
-            {field.id}
+            <input
+              checked={field.value}
+              id={field.id}
+              onChange={onChange}
+              type="checkbox"
+            />
+            {field.label || field.id}
           </label>
         </span>
       );
@@ -57,10 +57,11 @@ const Field = ({ field, onChange, tickets }) => {
             htmlFor={field.id}
             style={{ display: 'block' }}
           >
-            {field.id}
+            {field.label || field.id}
           </label>
 
           <select
+            className="form-control"
             id={field.id}
             onChange={onChange}
             required={field.required}
@@ -85,7 +86,7 @@ const Field = ({ field, onChange, tickets }) => {
             htmlFor={field.id}
             style={{ display: 'block' }}
           >
-            {field.id}
+            {field.label || field.id}
           </label>
 
           {field.allowCustom ? (
@@ -118,7 +119,10 @@ const Fields = props => {
   return (
     <div className="dispatch-fields">
       {props.fields.map(field => (
-        <div key={field.id}>
+        <div 
+          className="form-group"
+          key={field.id}
+        >
           <Field
             field={field}
             onChange={props.onChange.bind(null, field.id, field.type)}

@@ -1,0 +1,20 @@
+.ToggleProjects__list {
+  margin-bottom: 0;
+}
+
+.ToggleProjects__label {
+  font-weight: normal;
+}
+
+.ToggleProjects__project {
+  display: block;
+}
+
+input.ToggleProjects__checkbox {
+  margin-right: 10px;
+}
+
+.ToggleProjects__updated {
+	font-size: 10px;
+	color: #888;
+}

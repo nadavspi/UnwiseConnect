@@ -92,13 +92,15 @@ export const updateTickets = payload => {
           company: tickets[0].company.name,
           id: projectId,
           name: tickets[0].project.name,
+          lastUpdated: Date.now(),
         };
 
-        ref.child('projects').set([
-          ...projects,
-          project,
-        ]);
-      }
+      // To make updating easy, just remove any that already exists.
+      let otherProjects = projects.filter(project => project.id !== payload.projectId);
+      ref.child('projects').set([
+        ...otherProjects,
+        updatedProject,
+      ]);
     });
   };
 }

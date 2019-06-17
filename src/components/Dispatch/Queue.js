@@ -12,9 +12,27 @@ export default class Queue extends Component {
     return ticket.actualHours > ticket.budgetHours;
   }
 
+  overriddenHours(ticketId) {
+    const override = this.props.overrideHours.find(ticket => ticket.id === ticketId);
+    if (!override) {
+      return undefined;
+    }
+
+    if (!override.hours) {
+      return undefined;
+    }
+
+    return parseInt(override.hours, 10);
+  }
+
   totalBudget() {
     const { selectedTickets: tickets } = this.props;
     const totalHours = tickets.map(ticket => {
+      const override = this.overriddenHours(ticket.id);
+      if (override) {
+        return override;
+      }
+
       const remaining = (ticket.budgetHours || 0) - (ticket.actualHours || 0);
 
       if (remaining < 0) {
