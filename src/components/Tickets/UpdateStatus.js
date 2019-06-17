@@ -1,6 +1,6 @@
 import 'react-select/dist/react-select.css';
 import * as TicketsActions from '../../actions/tickets';
-import React from 'react';
+import React, { PureComponent } from 'react';
 import { connect } from 'react-redux';
 
 const Icon = ({ pending }) => {
@@ -23,36 +23,39 @@ const Icon = ({ pending }) => {
 };
 
 
-const UpdateStatus = ({ 
-  dispatch,
-  pending,
-  projectId,
-  statuses,
-  ticket,
-  value,
-}) => {   
-  const updateStatus = (status) => {
-    dispatch(TicketsActions.updateStatus({ params: { ticket, status, projectId }}));
-  };
+class UpdateStatus extends PureComponent {
+  render() {
+    const { 
+      dispatch,
+      pending,
+      projectId,
+      statuses,
+      ticket,
+      value,
+    } = this.props;
+    const updateStatus = (status) => {
+      dispatch(TicketsActions.updateStatus({ params: { ticket, status, projectId }}));
+    };
 
-  const isPending = pending.find(item => {
-    return item.params.ticket === ticket;
-  });
+    const isPending = pending.find(item => {
+      return item.params.ticket === ticket;
+    });
 
-  return (
-    <div style={{ display: 'flex' }}>
-      <select 
-        disabled={isPending && isPending.inProgress}
-        onChange={e => updateStatus(e.target.value)}
-        value={value}
-      >
-        {statuses.map(status => (
-          <option value={status} key={status}>{status}</option>
-        ))}
-      </select>
-      {isPending && <Icon pending={isPending} /> }
-    </div>
-  )
+    return (
+      <div style={{ display: 'flex' }}>
+        <select 
+          disabled={isPending && isPending.inProgress}
+          onChange={e => updateStatus(e.target.value)}
+          value={value}
+        >
+          {statuses.map(status => (
+            <option value={status} key={status}>{status}</option>
+          ))}
+        </select>
+        {isPending && <Icon pending={isPending} /> }
+      </div>
+    )
+  }
 };
 
 const mapStateToProps = state => ({
