@@ -88,19 +88,20 @@ export const updateTickets = payload => {
       // We're assuming the company or name of existing projects will never
       // need to change, which should mostly be correct.
       if (projects.map(project => project.id).indexOf(projectId) === -1) {
-        const project = {
+        const updatedProject = {
           company: tickets[0].company.name,
           id: projectId,
           name: tickets[0].project.name,
           lastUpdated: Date.now(),
         };
 
-      // To make updating easy, just remove any that already exists.
-      let otherProjects = projects.filter(project => project.id !== payload.projectId);
-      ref.child('projects').set([
-        ...otherProjects,
-        updatedProject,
-      ]);
+        // To make updating easy, just remove any that already exists.
+        let otherProjects = projects.filter(project => project.id !== payload.projectId);
+        ref.child('projects').set([
+          ...otherProjects,
+          updatedProject,
+        ]);
+      };
     });
   };
 }
