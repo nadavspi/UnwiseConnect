@@ -24,6 +24,26 @@ const Icon = ({ pending }) => {
 
 
 class UpdateStatus extends PureComponent {
+  state = {
+    status: undefined,
+  }
+
+  componentDidUpdate(prevProps) {
+    const { ticket } = this.props;
+    const isPending = this.props.pending.find(item => {
+      return item.params.ticket === ticket;
+    });
+
+    if (!isPending || !isPending.response) {
+      return;
+    }
+
+    if (this.state.status && isPending.response.status === 400) {
+      // The request failed. Let's reset our optimism.
+      this.setState({ status: undefined });
+    }
+  }
+
   render() {
     const { 
       dispatch,
@@ -35,6 +55,8 @@ class UpdateStatus extends PureComponent {
     } = this.props;
     const updateStatus = (status) => {
       dispatch(TicketsActions.updateStatus({ params: { ticket, status, projectId }}));
+      // Optimistically update the status in the UI
+      this.setState({ status });
     };
 
     const isPending = pending.find(item => {
@@ -46,7 +68,7 @@ class UpdateStatus extends PureComponent {
         <select 
           disabled={isPending && isPending.inProgress}
           onChange={e => updateStatus(e.target.value)}
-          value={value}
+          value={this.state.status || value}
         >
           {statuses.map(status => (
             <option value={status} key={status}>{status}</option>
