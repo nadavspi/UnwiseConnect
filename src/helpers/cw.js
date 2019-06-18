@@ -2,11 +2,12 @@ import fetch from 'isomorphic-fetch';
 import { checkStatus, parseJSON } from './utils';
 require('es6-promise').polyfill();
 
-export const fetchTickets = projectId => {
-  const headers = {
-    Authorization: `Basic ${process.env.REACT_APP_API_KEY}`,
-  };
+const headers = {
+  Authorization: `Basic ${process.env.REACT_APP_API_KEY}`,
+  'Content-Type': 'application/json',
+};
 
+export const fetchTickets = projectId => {
   return fetch(`${process.env.REACT_APP_API_URL}/v1/tickets/${projectId}`, { headers }).then(checkStatus).then(parseJSON);
 }
 
@@ -46,17 +47,20 @@ export const fetchTimeEntryById = entryId => {
 }
 
 export const dispatchTickets = params => {
-  const headers = {
-    Authorization: `Basic ${process.env.REACT_APP_API_KEY}`,
-    'Content-Type': 'application/json'
-  };
-
   return fetch(`${process.env.REACT_APP_API_URL}/v1/dispatch`, {
     headers,
     method: 'POST',
     body: JSON.stringify(params),
   }).then(checkStatus).then(parseJSON);
-}
+};
+
+export const updateTicketStatus = params => {
+  return fetch(`${process.env.REACT_APP_API_URL}/v1/ticketStatus`, {
+    headers,
+    method: 'POST',
+    body: JSON.stringify(params),
+  }).then(checkStatus).then(parseJSON);
+};
 
 export const createWorkplan = params => {
   const headers = {

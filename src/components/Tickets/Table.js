@@ -7,6 +7,7 @@ import React from 'react';
 import SearchColumns from './SearchColumns';
 import StartTimer from './StartTimer';
 import TicketLink from './TicketLink';
+import UpdateStatus from './UpdateStatus';
 import VisibilityToggles from 'react-visibility-toggles';
 import { compose } from 'redux';
 import { customField } from '../../config/columns';
@@ -57,12 +58,9 @@ export default class TicketsTable extends React.Component {
   }
 
   componentWillReceiveProps(nextProps) {
-    const lengthChanged = this.props.tickets.length !== nextProps.tickets.length;
     // Using a string compare to reduce re-rendering.
     let selectedChanged = (this.props.selectedTicketIds || []).join(',') !== (nextProps.selectedTicketIds || []).join(',');
-    if (lengthChanged) {
-      this.prepareRows(nextProps.tickets);
-    } else if (selectedChanged) {
+    if (selectedChanged) {
       let rows = this.state.rows.map(row => {
         return {
           ...row,
@@ -73,6 +71,8 @@ export default class TicketsTable extends React.Component {
       this.setState({
         rows,
       });
+    } else {
+      this.prepareRows(nextProps.tickets);
     }
   }
 
@@ -372,6 +372,19 @@ TicketsTable.defaultProps = {
         TicketsTable.makeAllOpenOption,
         TicketsTable.makeAllCompleteOption,
       ],
+      cell: {
+        formatters: [
+          (value, { rowData }) => {
+            return (
+              <UpdateStatus 
+                projectId={rowData.project.id}
+                ticket={rowData.id} 
+                value={value}
+              />
+            );
+          }
+        ],
+      },
     },
     {
       property: 'billTime',

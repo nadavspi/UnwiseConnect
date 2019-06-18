@@ -4,6 +4,7 @@ const initialState = {
   flattened: [],
   loading: false,
   nested: {},
+  pending: [],
   query: {},
   dispatching: {
     inProgress: false,
@@ -68,6 +69,44 @@ export default (state = initialState, action) => {
           inProgress: false,
           response: action.payload,
         },
+      };
+
+    case ActionTypes.TICKET_UPDATE:
+      return {
+        ...state,
+        pending: [
+          ...state.pending.filter(pending => (
+            // Remove any stale requests of the same ticket
+            pending.params.ticket !== action.payload.params.ticket
+          )),
+          {
+            ...action.payload,
+            inProgress: true,
+          }
+        ],
+      };
+
+    case ActionTypes.TICKET_UPDATE_CLEAR:
+      return {
+        ...state,
+        pending: [
+          ...state.pending.filter(pending => (
+            // Remove any stale requests of the same ticket
+            pending.params.ticket !== action.payload.params.ticket
+          )),
+        ],
+      };
+
+    case ActionTypes.TICKET_UPDATE_SUCCESS:
+      return {
+        ...state,
+        pending: state.pending.map(item => {
+          if (item.params.ticket === action.payload.params.ticket) {
+            return action.payload;
+          }
+
+          return item;
+        }),
       };
 
     default:

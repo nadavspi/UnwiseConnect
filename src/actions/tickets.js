@@ -1,5 +1,5 @@
 import { ActionTypes } from '../config/constants';
-import { fetchTickets, dispatchTickets } from '../helpers/cw';
+import { fetchTickets, dispatchTickets, updateTicketStatus } from '../helpers/cw';
 import { ref } from '../config/constants';
 
 export const subscribe = ({ projectId }) => {
@@ -31,12 +31,13 @@ export const subscribe = ({ projectId }) => {
         return 0;
       });
 
+
       dispatch({
         type: ActionTypes.TICKETS_UPDATE,
         payload: {
-          projectId,
           flattened,
           nested,
+          projectId,
         },
       });
     });
@@ -70,8 +71,11 @@ export const updateTickets = payload => {
       throw new Error('Missing project id.');
     }
 
-    fetchTickets(payload.projectId).then(tickets => {
-      ref.child(`tickets/${payload.projectId}`)
+    // Make sure it's a string because that's what CW uses
+    const projectId = payload.projectId.toString();
+
+    fetchTickets(projectId).then(tickets => {
+      ref.child(`tickets/${projectId}`)
         .set(tickets);
 
       const { projects } = getState();
@@ -82,7 +86,7 @@ export const updateTickets = payload => {
 
       const updatedProject = {
         company: tickets[0].company.name,
-        id: payload.projectId,
+        id: projectId,
         name: tickets[0].project.name,
         lastUpdated: Date.now(),
       };
@@ -110,5 +114,47 @@ export const dispatch = payload => {
         payload: response,
       });
     });
+  };
+}
+
+export const updateStatus = payload => {
+  return (dispatch, getState) => {
+    dispatch({
+      type: ActionTypes.TICKET_UPDATE,
+      payload,
+    });
+
+    updateTicketStatus(payload.params).then(response => {
+      dispatch({
+        type: ActionTypes.TICKET_UPDATE_SUCCESS,
+        payload: {
+          params: payload.params,
+          response,
+        }
+      });
+
+      if (response.status === 200) {
+        dispatch(updateTickets({ projectId: payload.params.projectId }));
+
+        setTimeout(() => {
+          dispatch({
+            type: ActionTypes.TICKET_UPDATE_CLEAR,
+            payload,
+          });
+        }, 10000);
+      }
+    }).catch(error => {
+      dispatch({
+        type: ActionTypes.TICKET_UPDATE_SUCCESS,
+        payload: {
+          params: payload.params,
+          response: {
+            status: 400,
+            error,
+          },
+        }
+      });
+    });
+
   };
 }
