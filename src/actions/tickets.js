@@ -140,6 +140,13 @@ export const updateStatus = payload => {
 
       if (response.status === 200) {
         dispatch(updateTickets({ projectId: payload.params.projectId }));
+
+        setTimeout(() => {
+          dispatch({
+            type: ActionTypes.TICKET_UPDATE_CLEAR,
+            payload,
+          });
+        }, 10000);
       }
     });
 

@@ -86,6 +86,17 @@ export default (state = initialState, action) => {
         ],
       };
 
+    case ActionTypes.TICKET_UPDATE_CLEAR:
+      return {
+        ...state,
+        pending: [
+          ...state.pending.filter(pending => (
+            // Remove any stale requests of the same ticket
+            pending.params.ticket !== action.payload.params.ticket
+          )),
+        ],
+      };
+
     case ActionTypes.TICKET_UPDATE_SUCCESS:
       return {
         ...state,
