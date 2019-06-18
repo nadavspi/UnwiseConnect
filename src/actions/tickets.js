@@ -143,6 +143,17 @@ export const updateStatus = payload => {
           });
         }, 10000);
       }
+    }).catch(error => {
+      dispatch({
+        type: ActionTypes.TICKET_UPDATE_SUCCESS,
+        payload: {
+          params: payload.params,
+          response: {
+            status: 400,
+            error,
+          },
+        }
+      });
     });
 
   };
