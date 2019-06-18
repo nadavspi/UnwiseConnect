@@ -83,7 +83,7 @@ class UpdateStatus extends PureComponent {
 
 const mapStateToProps = state => ({
   pending: state.tickets.pending,
-  statuses: [...new Set(state.tickets.flattened.map(ticket => ticket.status.name))],
+  statuses: [...new Set(state.tickets.flattened.map(ticket => ticket.status.name).sort())],
 });
 
 export default connect(mapStateToProps)(UpdateStatus);
