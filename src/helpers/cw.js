@@ -55,7 +55,6 @@ export const dispatchTickets = params => {
 };
 
 export const updateTicketStatus = params => {
-  console.log(params);
   return fetch(`${process.env.REACT_APP_API_URL}/v1/ticketStatus`, {
     headers,
     method: 'POST',
