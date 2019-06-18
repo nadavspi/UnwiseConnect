@@ -6,16 +6,16 @@ import { connect } from 'react-redux';
 const Icon = ({ pending }) => {
   // No response yet
   if (pending.inProgress) {
-    return <span className="glyphicon glyphicon-refresh" aria-hidden="true"></span>;
+    return <div className="glyphicon glyphicon-refresh text-info" aria-hidden="true"></div>;
   }
 
   if (pending.response) {
     if (pending.response.status === 200) {
-      return <span className="glyphicon glyphicon-ok" aria-hidden="true"></span>;
+      return <div className="glyphicon glyphicon-ok" aria-hidden="true"></div>;
     }
 
     if (pending.response.status === 400) {
-      return <span className="glyphicon glyphicon-remove" aria-hidden="true"></span>;
+      return <div className="glyphicon glyphicon-remove text-danger" aria-hidden="true"></div>;
     }
   }
 
@@ -64,7 +64,7 @@ class UpdateStatus extends PureComponent {
     });
 
     return (
-      <div style={{ display: 'flex' }}>
+      <div>
         <select 
           disabled={isPending && isPending.inProgress}
           onChange={e => updateStatus(e.target.value)}
