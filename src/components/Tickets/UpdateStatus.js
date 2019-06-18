@@ -66,6 +66,7 @@ class UpdateStatus extends PureComponent {
     return (
       <div>
         <select 
+          className="form-control"
           disabled={isPending && isPending.inProgress}
           onChange={e => updateStatus(e.target.value)}
           value={this.state.status || value}
