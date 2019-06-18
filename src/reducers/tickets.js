@@ -75,7 +75,10 @@ export default (state = initialState, action) => {
       return {
         ...state,
         pending: [
-          ...state.pending,
+          ...state.pending.filter(pending => (
+            // Remove any stale requests of the same ticket
+            pending.params.ticket !== action.payload.params.ticket
+          )),
           {
             ...action.payload,
             inProgress: true,
