@@ -37,7 +37,7 @@ class Notes extends Component {
       <div>
         <h3>Notes</h3>
         {this.state.notes.map(message => 
-          <div key={message.id}>
+          <div key={message.id} className="ticket-notes">
             <p>{message.text}</p>
             <p>- {message.createdBy}<br />{message.dateCreated}</p>
           </div>
