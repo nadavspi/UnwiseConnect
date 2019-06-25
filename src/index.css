@@ -275,3 +275,7 @@ td.col--budget:not(:empty)::after {
   min-width: 11em;
   max-width: 11em; 
 }
+
+.ticket-notes {
+  white-space: pre-wrap;
+}
