@@ -47,6 +47,9 @@ export default class Queue extends Component {
     return totalHours.toFixed(2).replace(/\.?0+$/, '');
   }
 
+  onDragEnd = (e) => {
+  }
+
   render() {
     return (
       <div>
@@ -69,21 +72,21 @@ export default class Queue extends Component {
                 Reset
               </button>
             )}
-            <DragDropContext onDragEnd={(e) => console.log(e)}>
+            <DragDropContext onDragEnd={this.onDragEnd}>
               <Droppable droppableId="queue">
                 {(provided, snapshot) => (
                   <ul ref={provided.innerRef} {...provided.droppableProps}>
                     {this.props.selectedTickets.map((ticket, index) => (
                       <Draggable
-                        id={ticket.id}
+                        draggableId={ticket.id}
                         index={index}
+                        key={ticket.id}
                       >
                         {(provided, snapshot) => (
                           <li 
                             ref={provided.innerRef}
                             {...provided.draggableProps}
                             {...provided.dragHandleProps}
-                            key={ticket.id}
                             style={ this.isOverBudget(ticket) ? { color: 'darkred' } : {} }
                           >
                             {ticket.id} — {ticket.company.name} — {ticket.summary} {' '}
@@ -105,6 +108,7 @@ export default class Queue extends Component {
                         )}
                       </Draggable>
                     ))}
+                    {provided.placeholder}
                   </ul>
                 )}
               </Droppable>
