@@ -1,4 +1,6 @@
 import React, { Component } from 'react';
+import { DragDropContext, Droppable, Draggable } from 'react-beautiful-dnd';
+
 export default class Queue extends Component {
   constructor() {
     super();
@@ -67,30 +69,46 @@ export default class Queue extends Component {
                 Reset
               </button>
             )}
-            <ul>
-              {this.props.selectedTickets.map(ticket => (
-                <li 
-                  key={ticket.id}
-                  style={ this.isOverBudget(ticket) ? { color: 'darkred' } : {} }
-                >
-                  {ticket.id} — {ticket.company.name} — {ticket.summary} {' '}
-                  ({ticket.actualHours || 0} / {ticket.budgetHours || 0}) {' '}
-                  <input
-                    style={{ width: '45px', marginLeft: '10px' }}
-                    type="number"
-                    value={ticket.hours} 
-                    onChange={(e) => this.props.setTicketHours(ticket.id, e.target.value)}
-                  />
-                  <button 
-                    className="btn btn-link"
-                    onClick={() => this.props.onRemove(ticket.id)}
-                    type="button"
-                  >
-                    Remove
-                  </button>
-                </li>
-              ))}
-            </ul>
+            <DragDropContext onDragEnd={(e) => console.log(e)}>
+              <Droppable droppableId="queue">
+                {(provided, snapshot) => (
+                  <ul ref={provided.innerRef} {...provided.droppableProps}>
+                    {this.props.selectedTickets.map((ticket, index) => (
+                      <Draggable
+                        id={ticket.id}
+                        index={index}
+                      >
+                        {(provided, snapshot) => (
+                          <li 
+                            ref={provided.innerRef}
+                            {...provided.draggableProps}
+                            {...provided.dragHandleProps}
+                            key={ticket.id}
+                            style={ this.isOverBudget(ticket) ? { color: 'darkred' } : {} }
+                          >
+                            {ticket.id} — {ticket.company.name} — {ticket.summary} {' '}
+                            ({ticket.actualHours || 0} / {ticket.budgetHours || 0}) {' '}
+                            <input
+                              style={{ width: '45px', marginLeft: '10px' }}
+                              type="number"
+                              value={ticket.hours} 
+                              onChange={(e) => this.props.setTicketHours(ticket.id, e.target.value)}
+                            />
+                            <button 
+                              className="btn btn-link"
+                              onClick={() => this.props.onRemove(ticket.id)}
+                              type="button"
+                            >
+                              Remove
+                            </button>
+                          </li>
+                        )}
+                      </Draggable>
+                    ))}
+                  </ul>
+                )}
+              </Droppable>
+            </DragDropContext>
           </div>
         )}
       </div>
