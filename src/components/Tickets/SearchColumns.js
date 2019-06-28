@@ -1,3 +1,4 @@
+import PropTypes from 'prop-types';
 import React from 'react';
 import Select from 'react-select';
 import 'react-select/dist/react-select.css';
@@ -86,10 +87,10 @@ class SearchColumns extends React.Component {
 }
 
 SearchColumns.propTypes = {
-  columns: React.PropTypes.arrayOf(React.PropTypes.object).isRequired,
-  onChange: React.PropTypes.func.isRequired,
-  query: React.PropTypes.object,
-  rows: React.PropTypes.arrayOf(React.PropTypes.object),
+  columns: PropTypes.arrayOf(PropTypes.object).isRequired,
+  onChange: PropTypes.func.isRequired,
+  query: PropTypes.object,
+  rows: PropTypes.arrayOf(PropTypes.object),
 };
 SearchColumns.defaultProps = {
   query: {},
