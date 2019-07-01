@@ -1,6 +1,6 @@
 import React from 'react';
-import { Creatable, Select } from 'react-select';
-import 'react-select/dist/react-select.css';
+import Select from 'react-select';
+import Creatable from 'react-select/creatable';
 
 function valuesAsArray(values, tickets, value) {
   if (Array.isArray(values)) {
