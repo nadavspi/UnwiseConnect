@@ -80,6 +80,7 @@ const Field = ({ field, onChange, tickets }) => {
       );
 
     case 'react-select':
+      const Element = field.allowCustom ? Creatable : Select;
       return (
         <span>
           <label
@@ -89,24 +90,13 @@ const Field = ({ field, onChange, tickets }) => {
             {field.label || field.id}
           </label>
 
-          {field.allowCustom ? (
-            <Creatable
-              name={field.id}
-              value={field.value}
-              onChange={selected => onChange({ target: (selected || { value: '' }) })}
-              options={valuesAsArray(field.values, tickets, field.value).map(value => ({ value, label: value }))}
-              promptTextCreator={label => 'Custom: ' + label}
-            />
-            ) : (
-            <Select
-              name={field.id}
-              value={field.value}
-              onChange={selected => onChange({ target: (selected || { value: '' }) })}
-              options={valuesAsArray(field.values, tickets, field.value).map(value => ({ value, label: value }))}
-              promptTextCreator={label => 'Custom: ' + label}
-            />
-            )
-          }
+          <Element
+            name={field.id}
+            value={{ value: field.value, label: field.value }}
+            onChange={selected => onChange({ target: (selected || { value: '' }) })}
+            options={valuesAsArray(field.values, tickets, field.value).map(value => ({ value, label: value }))}
+            promptTextCreator={label => 'Custom: ' + label}
+          />
         </span>
       );
 
