@@ -1,3 +1,4 @@
+import PropTypes from 'prop-types';
 import React from 'react';
 import Form from './Form';
 import { connect } from 'react-redux';
@@ -87,7 +88,7 @@ class Item extends React.Component {
 }
 
 Item.propTypes = {
-  item: React.PropTypes.object.isRequired,
+  item: PropTypes.object.isRequired,
 }
 
 const mapStateToProps = state => ({

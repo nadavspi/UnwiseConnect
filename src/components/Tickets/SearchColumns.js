@@ -1,6 +1,6 @@
+import PropTypes from 'prop-types';
 import React from 'react';
 import Select from 'react-select';
-import 'react-select/dist/react-select.css';
 
 class SearchColumns extends React.Component {
   render() {
@@ -62,13 +62,15 @@ class SearchColumns extends React.Component {
     const uniqueRowValues = [ ...new Set(rowValues) ];
     const extraOptions = (column.extraOptions || []).map(this.evaluateExtraOption.bind(this, column, uniqueRowValues));
     const options = extraOptions.filter(opt => opt).concat(uniqueRowValues.map(value => ({ value, label: value })));
+    const query = this.props.query[column.property];
+    const value = query ? query.map(value => ({ value, label: value })) : [];
 
     return (
       <div className="column-filter-dropdown">
         <Select
-          multi={true}
+          isMulti={true}
           name={column.property}
-          value={this.props.query[column.property] || []}
+          value={value}
           onChange={onQueryChange}
           options={options}
         />
@@ -86,10 +88,10 @@ class SearchColumns extends React.Component {
 }
 
 SearchColumns.propTypes = {
-  columns: React.PropTypes.arrayOf(React.PropTypes.object).isRequired,
-  onChange: React.PropTypes.func.isRequired,
-  query: React.PropTypes.object,
-  rows: React.PropTypes.arrayOf(React.PropTypes.object),
+  columns: PropTypes.arrayOf(PropTypes.object).isRequired,
+  onChange: PropTypes.func.isRequired,
+  query: PropTypes.object,
+  rows: PropTypes.arrayOf(PropTypes.object),
 };
 SearchColumns.defaultProps = {
   query: {},

@@ -1,4 +1,3 @@
-import 'react-select/dist/react-select.css';
 import * as TicketsActions from '../../actions/tickets';
 import React, { PureComponent } from 'react';
 import { connect } from 'react-redux';

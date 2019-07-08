@@ -7,6 +7,7 @@ import JSONPretty from 'react-json-pretty';
 import Queue from './Queue';
 import React, { Component } from 'react';
 import Table from '../Tickets/Table';
+import arrayMove from 'array-move';
 import { compose } from 'redux';
 import { connect } from 'react-redux';
 import { customField } from '../../config/columns';
@@ -363,6 +364,21 @@ class Dispatch extends Component {
     }
   }
 
+  moveTicket = (ticketId, prevIndex, nextIndex) => {
+    this.setState({
+      fields: this.state.fields.map(field => {
+        if (field.id === 'tickets') {
+          return {
+            ...field,
+            value: arrayMove(field.value, prevIndex, nextIndex),
+          };
+        }
+
+        return field;
+      }),
+    });
+  }
+
   addFiltered(e) {
     const columns = this.columns(this.onTicketSelect);
     const { query } = this.props.tickets;
@@ -511,6 +527,7 @@ class Dispatch extends Component {
               )}
             </header>
             <Queue 
+              moveTicket={this.moveTicket}
               onRemove={this.onTicketSelect}
               overrideHours={this.state.fields.find(field => field.id === 'tickets').value}
               resetTickets={this.resetTickets}

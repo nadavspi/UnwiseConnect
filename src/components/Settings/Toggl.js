@@ -1,3 +1,4 @@
+import PropTypes from 'prop-types';
 import React, { Component } from 'react';
 
 export default class Toggl extends Component {
@@ -62,6 +63,6 @@ export default class Toggl extends Component {
 }
 
 Toggl.propTypes = {
-  apiKey: React.PropTypes.string,
-  onSubmit: React.PropTypes.func.isRequired,
+  apiKey: PropTypes.string,
+  onSubmit: PropTypes.func.isRequired,
 }

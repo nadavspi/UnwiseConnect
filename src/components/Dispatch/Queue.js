@@ -1,4 +1,6 @@
 import React, { Component } from 'react';
+import { DragDropContext, Droppable, Draggable } from 'react-beautiful-dnd';
+
 export default class Queue extends Component {
   constructor() {
     super();
@@ -45,6 +47,16 @@ export default class Queue extends Component {
     return totalHours.toFixed(2).replace(/\.?0+$/, '');
   }
 
+  onDragEnd = (e) => {
+    if (!e.destination) {
+      return null;
+    }
+    const { draggableId: ticketId } = e;
+    const prevIndex = e.source.index;
+    const nextIndex = e.destination.index;
+    this.props.moveTicket(ticketId, prevIndex, nextIndex);
+  }
+
   render() {
     return (
       <div>
@@ -67,30 +79,63 @@ export default class Queue extends Component {
                 Reset
               </button>
             )}
-            <ul>
-              {this.props.selectedTickets.map(ticket => (
-                <li 
-                  key={ticket.id}
-                  style={ this.isOverBudget(ticket) ? { color: 'darkred' } : {} }
-                >
-                  {ticket.id} — {ticket.company.name} — {ticket.summary} {' '}
-                  ({ticket.actualHours || 0} / {ticket.budgetHours || 0}) {' '}
-                  <input
-                    style={{ width: '45px', marginLeft: '10px' }}
-                    type="number"
-                    value={ticket.hours} 
-                    onChange={(e) => this.props.setTicketHours(ticket.id, e.target.value)}
-                  />
-                  <button 
-                    className="btn btn-link"
-                    onClick={() => this.props.onRemove(ticket.id)}
-                    type="button"
+            <DragDropContext onDragEnd={this.onDragEnd}>
+              <Droppable droppableId="queue">
+                {(provided, snapshot) => (
+                  <ol 
+                    ref={provided.innerRef} 
+                    style={snapshot.isDraggingOver ? { listStyleType: 'none' } : {} }
+                    {...provided.droppableProps}
                   >
-                    Remove
-                  </button>
-                </li>
-              ))}
-            </ul>
+                    {this.props.selectedTickets.map((ticket, index) => (
+                      <Draggable
+                        draggableId={ticket.id}
+                        index={index}
+                        key={ticket.id}
+                      >
+                        {(provided, snapshot) => {
+                          const active = {
+                            border: '1px solid rebeccapurple',
+                            padding: '5px',
+                            color: 'rebeccapurple',
+                            ...provided.draggableProps.style,
+                          }
+
+                          return (
+                            <li 
+                              style={ this.isOverBudget(ticket) ? { color: 'darkred' } : {} }
+                            >
+                              <div
+                                ref={provided.innerRef}
+                                {...provided.draggableProps}
+                                {...provided.dragHandleProps}
+                                style={snapshot.isDragging ? active : provided.draggableProps.style}
+                              >
+                                {ticket.id} — {ticket.company.name} — {ticket.summary} {' '}
+                                ({ticket.actualHours || 0} / {ticket.budgetHours || 0}) {' '}
+                                <input
+                                  style={{ width: '45px', marginLeft: '10px' }}
+                                  type="number"
+                                  value={ticket.hours} 
+                                  onChange={(e) => this.props.setTicketHours(ticket.id, e.target.value)}
+                                />
+                                <button 
+                                  className="btn btn-link"
+                                  onClick={() => this.props.onRemove(ticket.id)}
+                                  type="button"
+                                >
+                                  Remove
+                                </button>
+                              </div>
+                            </li>
+                          )}}
+                      </Draggable>
+                    ))}
+                    {provided.placeholder}
+                  </ol>
+                )}
+              </Droppable>
+            </DragDropContext>
           </div>
         )}
       </div>
