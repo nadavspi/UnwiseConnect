@@ -47,44 +47,46 @@ class DetailsModal extends Component {
         <Modal
           contentLabel="Notes Modal"
           isOpen={this.state.expanded}
-          overlayClassName="modal-overlay"
+          overlayClassName="modal-backdrop"
           onRequestClose={this.expand}
           shouldCloseOnOverlayClick={true}
-        > 
-          <nav className="navbar navbar-static-top">
-            <div className="container">
-              <ul className="nav nav-settings">
+        >
+          <div class="modal-header">
+            <nav className="navbar navbar-static-top">
+              <ul className="nav nav-pills nav-settings">
                 {this.props.tabs.map((tab,index) => (
                   <div key={index}>
                     <li>
-                      <button 
-                        className="btn btn-default"
+                      <a
+                        href="#"
                         onClick={e => this.show(tab.property)}
                         style={{borderColor: 'transparent'}}>
                         {tab.label}
-                      </button>    
+                      </a>
                     </li>
                   </div>
                 ))}
               </ul>
-            </div>
-          </nav>
-          {this.state.currTab === 'notes' && (
-            <Notes ticketNumber={this.props.ticketNumber} />
-          )}
-          {this.state.currTab === 'scheduleEntries' && (
-            <ScheduleEntries ticketNumber={this.props.ticketNumber} />
-          )}
-          {this.state.currTab === 'timeEntries' && (
-            <TimeEntries ticketNumber={this.props.ticketNumber} />
-          )}
-          <button
-            className="btn btn-default"
-            onClick={this.expand}>
-            close
-          </button>
+            </nav>
+            <button
+              className="close"
+              onClick={this.expand}>
+              &times;
+            </button>
+          </div>
+          <div className="modal-body">
+            {this.state.currTab === 'notes' && (
+              <Notes ticketNumber={this.props.ticketNumber} />
+            )}
+            {this.state.currTab === 'scheduleEntries' && (
+              <ScheduleEntries ticketNumber={this.props.ticketNumber} />
+            )}
+            {this.state.currTab === 'timeEntries' && (
+              <TimeEntries ticketNumber={this.props.ticketNumber} />
+            )}
+          </div>
         </Modal>
-      </div>        
+      </div>
     );
   }
 }

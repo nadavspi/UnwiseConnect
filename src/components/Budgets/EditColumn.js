@@ -40,6 +40,8 @@ class EditColumn extends Component {
           overlayClassName="modal-overlay"
           onRequestClose={this.onEdit}
           shouldCloseOnOverlayClick={true}
+          bodyOpenClassName="modal-open"
+          className="ReactModal__Content modal-content"
         >
           <Form
               item={this.props.row}
