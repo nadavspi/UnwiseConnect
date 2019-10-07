@@ -65,14 +65,14 @@ const fields = [
     id: 'startDate',
     label: 'Start date',
     value: formatDate(new Date(), 'yyyy-MM-dd'),
-    type: 'text',
+    type: 'date',
     required: true,
   },
   {
     id: 'endDate',
     label: 'End date',
     value: '',
-    type: 'text',
+    type: 'date',
     required: false,
   },
   {
