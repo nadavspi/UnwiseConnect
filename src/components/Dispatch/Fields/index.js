@@ -14,6 +14,7 @@ const Field = ({ field, onChange, tickets }) => {
   switch (field.type) {
     case 'text':
     case 'number':
+    case 'date':
       return (
         <span>
           <label
