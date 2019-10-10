@@ -288,6 +288,11 @@ TicketsTable.defaultProps = {
           }
         ]
       },
+      props: {
+        style: {
+          width: 115,
+        },
+      },
     },
     {
       // Using a random property because it's easier than adding a new one
@@ -305,6 +310,11 @@ TicketsTable.defaultProps = {
             );
           }
         ]
+      },
+      props: {
+        style: {
+          width: 60,
+        },
       },
       filterType: 'none',
     },
@@ -332,6 +342,11 @@ TicketsTable.defaultProps = {
       header: {
         label: 'Name',
       },
+      props: {
+        style: {
+          width: 300,
+        },
+      },
     },
     {
       property: 'customFields',
@@ -340,6 +355,11 @@ TicketsTable.defaultProps = {
       },
       cell: {
         ...customField('Sprint'),
+      },
+      props: {
+        style: {
+          width: 100,
+        },
       },
     },
     {
@@ -350,6 +370,12 @@ TicketsTable.defaultProps = {
       props: {
         className: 'col--budget',
       },
+      props: {
+        style: {
+          width: 75,
+          textAlign: 'right',
+        },
+      },
       showTotals: true,
     },
     {
@@ -359,6 +385,12 @@ TicketsTable.defaultProps = {
       },
       props: {
         className: 'col--budget',
+      },
+      props: {
+        style: {
+          width: 75,
+          textAlign: 'right',
+        },
       },
       showTotals: true,
     },
