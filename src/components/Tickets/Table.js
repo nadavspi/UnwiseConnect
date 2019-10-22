@@ -369,8 +369,6 @@ TicketsTable.defaultProps = {
       },
       props: {
         className: 'col--budget',
-      },
-      props: {
         style: {
           width: 75,
           textAlign: 'right',
@@ -385,8 +383,6 @@ TicketsTable.defaultProps = {
       },
       props: {
         className: 'col--budget',
-      },
-      props: {
         style: {
           width: 75,
           textAlign: 'right',
