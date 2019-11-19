@@ -4,7 +4,6 @@ import Home from './Home';
 import React, { Component } from 'react';
 import Settings from './Settings';
 import Tickets from './Tickets';
-import Budgets from './Budgets';
 import { Route, BrowserRouter, Link, Redirect, Switch } from 'react-router-dom';
 import { connect } from 'react-redux';
 import { subscribe, unsubscribe } from '../actions/auth'
@@ -55,9 +54,6 @@ class App extends Component {
                   </li>
                   <li>
                     <Link to="/dispatch">Dispatch</Link>
-                  </li>
-                  <li>
-                    <Link to="/budgets">Budgets</Link>
                   </li>
                   <li>
                     <Link
