@@ -53,11 +53,9 @@ class App extends Component {
                   <li>
                     <Link to="/tickets">Tickets</Link>
                   </li>
-                  {this.props.capabilities.dispatch && (
-                    <li>
-                      <Link to="/dispatch">Dispatch</Link>
-                    </li>
-                  )}
+                  <li>
+                    <Link to="/dispatch">Dispatch</Link>
+                  </li>
                   <li>
                     <Link to="/budgets">Budgets</Link>
                   </li>
@@ -96,7 +94,6 @@ class App extends Component {
 
 const mapStateToProps = state => ({
   authed: state.user.authed,
-  capabilities: state.user.capabilities,
   error: state.app.error,
   loading: state.app.loading,
 });
