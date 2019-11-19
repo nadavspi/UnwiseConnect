@@ -4,7 +4,6 @@ import Home from './Home';
 import React, { Component } from 'react';
 import Settings from './Settings';
 import Tickets from './Tickets';
-import Budgets from './Budgets';
 import { Route, BrowserRouter, Link, Redirect, Switch } from 'react-router-dom';
 import { connect } from 'react-redux';
 import { subscribe, unsubscribe } from '../actions/auth'
@@ -53,13 +52,8 @@ class App extends Component {
                   <li>
                     <Link to="/tickets">Tickets</Link>
                   </li>
-                  {this.props.capabilities.dispatch && (
-                    <li>
-                      <Link to="/dispatch">Dispatch</Link>
-                    </li>
-                  )}
                   <li>
-                    <Link to="/budgets">Budgets</Link>
+                    <Link to="/dispatch">Dispatch</Link>
                   </li>
                   <li>
                     <Link
@@ -96,7 +90,6 @@ class App extends Component {
 
 const mapStateToProps = state => ({
   authed: state.user.authed,
-  capabilities: state.user.capabilities,
   error: state.app.error,
   loading: state.app.loading,
 });

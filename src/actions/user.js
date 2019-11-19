@@ -30,27 +30,6 @@ const subscribeProjects = uid => {
   }
 }
 
-export const subscribeCapabilities = uid => {
-  return (dispatch, getState) => {
-    const capabilitiesRef = ref.child(`users/${uid}/capabilities`);
-    capabilitiesRef.on('value', snapshot => {
-      const capabilities = snapshot.val();
-
-      // They don't have any capabilities
-      if (!capabilities) {
-        return;
-      }
-
-      dispatch({
-        type: ActionTypes.USER_UPDATE,
-        payload: {
-          capabilities,
-        },
-      });
-    });
-  }
-}
-
 const subscribeColumns = uid => {
   return (dispatch, getState) => {
     const columnsRef = ref.child(`users/${uid}/columns`);
@@ -79,7 +58,6 @@ export const subscribe = (maybeUid) => {
       throw new Error(`No UID. That's not supposed to happen.`);
     }
 
-    dispatch(subscribeCapabilities(uid));
     dispatch(subscribeColumns(uid));
     dispatch(subscribeProjects(uid));
   }
