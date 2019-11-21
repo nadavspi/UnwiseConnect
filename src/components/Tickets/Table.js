@@ -363,6 +363,22 @@ TicketsTable.defaultProps = {
       },
     },
     {
+      // Using a random property because it's easier than adding a new one
+      // to all the rows
+      property: 'impact',
+      header: {
+        label: 'Fixer',
+      },
+      cell: {
+        ...customField('Fixer'),
+      },
+      props: {
+        style: {
+          width: 100,
+        },
+      },
+    },
+    {
       property: 'budgetHours',
       header: {
         label: 'Budget Hours',

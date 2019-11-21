@@ -260,6 +260,15 @@ class Dispatch extends Component {
         },
       },
       {
+        property: 'impact',
+        header: {
+          label: 'Fixer',
+        },
+        cell: {
+          ...customField('Fixer'),
+        },
+      },
+      {
         property: 'summary',
         header: {
           label: 'Name',

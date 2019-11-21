@@ -2,14 +2,15 @@ import React from 'react';
 
 export const customField = caption => {
   return {
-    resolve: field => {
-      if (!field) {
+    resolve: (row, { rowData }) => {
+      const fields = rowData.customFields;
+      if (!fields) {
         return 'N/A';
       }
 
-      const sprint = field.find(val => val.caption === caption);
-      if (sprint && sprint.value) {
-        return sprint.value;
+      const field = fields.find(val => val.caption === caption);
+      if (field && field.value) {
+        return field.value;
       }
 
       return 'N/A';
