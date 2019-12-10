@@ -73,13 +73,15 @@ class ToggleProjects extends Component {
           className="dropdown-menu dropdown-menu-right"
           style={{ width: '700px', height: 'auto', maxHeight: '60vh', overflowY: 'auto' }}
         >
-          <input
-            className="column-filter-input"
-            type="text"
-            placeholder="Project Search"
-            value={searchTerm}
-            onChange={this.handleSearchChange}
-          />
+          <div className="form-group">
+            <input
+              className="form-control"
+              type="text"
+              placeholder="Project Search"
+              value={searchTerm}
+              onChange={this.handleSearchChange}
+            />
+          </div>
           <Projects
             projects={projects.filter(project => project.selected)}
             toggle={this.toggle}
