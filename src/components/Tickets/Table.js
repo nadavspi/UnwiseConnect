@@ -342,6 +342,29 @@ TicketsTable.defaultProps = {
       header: {
         label: 'Name',
       },
+      cell: {
+        formatters: [
+          (value, { rowData }) => {
+            const dd = value.match(/^DD(\d+)-(\d+)/);
+            if (dd) {
+              return (
+                <span>
+                  <a 
+                    href={`https://sd.mydonedone.com/issuetracker/projects/${dd[1]}/issues/${dd[2]}`}
+                    rel="noopener noreferrer"
+                    target="_blank" 
+                  >
+                    {dd[0]}
+                  </a>
+                  {value.slice(dd[0].length)}
+                </span>
+              );
+            }
+
+            return value;
+          }
+        ],
+      },
       props: {
         style: {
           width: 300,
