@@ -71,9 +71,9 @@ class ToggleProjects extends Component {
         </button>
         <div
           className="dropdown-menu dropdown-menu-right"
-          style={{ width: '700px', height: 'auto', maxHeight: '60vh', overflowY: 'auto' }}
+          style={{ width: '700px', height: 'auto', maxHeight: '60vh', overflowY: 'auto', paddingTop: '0' }}
         >
-          <div className="form-group">
+          <div className="form-group project-search">
             <input
               className="form-control"
               type="text"
