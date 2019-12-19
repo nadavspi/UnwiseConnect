@@ -171,11 +171,22 @@ body {
 .panel-uc__heading {
   display: flex;
   align-items: center;
-  box-shadow: inset 0 1px #fcfcfc, 0 1px 5px -2px #ddd
+  box-shadow: inset 0 1px #fcfcfc, 0 1px 5px -2px #ddd;
 }
 
 .panel-uc__manage {
   margin-left: auto;
+}
+
+.project-search {
+  padding-top: 15px;
+  padding-bottom: 15px;
+  margin-left: -15px;
+  margin-right: -15px;
+  position: sticky;
+  top: 0;
+  background-color: white;
+  border-bottom: solid 1px #eee;
 }
 
 #table-search-tickets table {
@@ -228,7 +239,7 @@ body {
 .col--budget {
   text-align: right;
 }
-  
+
 td.col--budget:not(:empty)::after {
   content: ' hrs';
 }
