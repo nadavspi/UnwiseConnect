@@ -179,8 +179,7 @@ body {
 }
 
 .project-search {
-  padding-top: 15px;
-  padding-bottom: 15px;
+  padding: 15px;
   margin-left: -15px;
   margin-right: -15px;
   position: sticky;
