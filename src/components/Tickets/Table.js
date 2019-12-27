@@ -434,6 +434,11 @@ TicketsTable.defaultProps = {
       header: {
         label: 'Status',
       },
+      props: {
+        style: {
+          width: 200,
+        },
+      },
       filterType: 'dropdown',
       extraOptions: [
         TicketsTable.makeAllOpenOption,
