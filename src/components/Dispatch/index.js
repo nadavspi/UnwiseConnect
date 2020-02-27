@@ -82,6 +82,7 @@ const fields = [
       'America/New_York',
       'America/Phoenix',
       'America/Los_Angeles',
+      'America/Chicago',
       'Europe/Kiev',
       'Asia/Kolkata',
     ],
