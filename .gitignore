@@ -13,5 +13,4 @@ build
 .DS_Store
 .idea/*
 .env
-docker-compose.yml
 npm-debug.log
