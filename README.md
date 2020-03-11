@@ -12,6 +12,5 @@ A web app to help do things with ConnectWise.
 
 Assumes repo is cloned and docker daemon is running.
 
-1. Duplicate `docker-compose.yml.sample` to `docker-compose.yml`
-1. Replace environment variables prefixed with `REACT_APP`
+0. Create your .env file as described above.
 1. `docker-compose up`
