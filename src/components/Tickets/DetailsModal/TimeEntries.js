@@ -32,35 +32,41 @@ class TimeEntries extends Component {
   }
 
   entryCard(entry) {
-    const startDate = new Date(entry.timeStart);
-    const date = startDate.getMonth() + '/' + startDate.getDate() + '/' + startDate.getFullYear();
+    const date = (new Date(entry.timeStart)).toLocaleDateString() + ' ' + (new Date(entry.timeStart)).toLocaleTimeString();
     return(
-      <div>
-        <p>
-          User: {entry.member.name} 
-          <br />
-          Actual Hours: {entry.actualHours} | {date}
-          <br />
-          Notes:
-          <br />
-          {entry.notes}
-        </p>
-      </div>
+      <React.Fragment>
+        <td>{entry.member.name}</td>
+        <td>{entry.notes}</td>
+        <td>{entry.actualHours}</td>
+        <td>{date}</td>
+      </React.Fragment>
     );
   }
 
   render() {
     return (
       <div>
-          <h3>Time Entries</h3>
+          <h4>Time Entries</h4>
           {(this.state.isLoading) && (
             <p style={{textAlign: 'center'}}>Loading . . . </p>
           )}
-          {this.state.entries.map(entry => 
-            <div key={entry.id}>
-              {this.entryCard(entry)}
-            </div>
-          )}
+          <table className="table table-striped table-bordered">
+            <thead>
+              <tr>
+                <th>Member Name</th>
+                <th>Notes</th>
+                <th>Actual Hours</th>
+                <th>Entry Date</th>
+              </tr>
+            </thead>
+            <tbody>
+            {this.state.entries.map(entry =>
+              <tr key={entry.id}>
+                {this.entryCard(entry)}
+              </tr>
+            )}
+            </tbody>
+          </table>
       </div>
     );
   }
