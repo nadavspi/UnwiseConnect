@@ -9,7 +9,7 @@ class DetailsModal extends Component {
     super();
 
     this.state = { 
-      expanded: false, 
+        expanded: false,
       currTab: 'notes',
     };
 
@@ -39,35 +39,39 @@ class DetailsModal extends Component {
   render () {
     return (
       <div>
-        <button 
-          className="btn btn-default"
+        <a
+          className="glyphicon glyphicon-new-window"
           onClick={this.expand}>
-          Details
-        </button>
+        </a>
         <Modal
           contentLabel="Notes Modal"
           isOpen={this.state.expanded}
           overlayClassName="modal-overlay"
           onRequestClose={this.expand}
           shouldCloseOnOverlayClick={true}
-        > 
+        >
           <nav className="navbar navbar-static-top">
-            <div className="container">
-              <ul className="nav nav-settings">
-                {this.props.tabs.map((tab,index) => (
-                  <div key={index}>
-                    <li>
-                      <button 
-                        className="btn btn-default"
-                        onClick={e => this.show(tab.property)}
-                        style={{borderColor: 'transparent'}}>
-                        {tab.label}
-                      </button>    
-                    </li>
-                  </div>
-                ))}
-              </ul>
-            </div>
+            <ul className="nav nav-settings">
+              {this.props.tabs.map((tab,index) => (
+                <div key={index}>
+                  <li>
+                    <a
+                      className="btn btn-modal-nav"
+                      onClick={e => this.show(tab.property)}
+                      style={{borderColor: 'transparent'}}>
+                      {tab.label}
+                    </a>
+                  </li>
+                </div>
+              ))}
+
+              <li>
+                <a
+                  className="glyphicon glyphicon-remove-circle"
+                  onClick={this.expand}>
+                </a>
+              </li>
+            </ul>
           </nav>
           {this.state.currTab === 'notes' && (
             <Notes ticketNumber={this.props.ticketNumber} />
@@ -78,11 +82,6 @@ class DetailsModal extends Component {
           {this.state.currTab === 'timeEntries' && (
             <TimeEntries ticketNumber={this.props.ticketNumber} />
           )}
-          <button
-            className="btn btn-default"
-            onClick={this.expand}>
-            close
-          </button>
         </Modal>
       </div>        
     );

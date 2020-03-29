@@ -269,7 +269,16 @@ td.col--budget:not(:empty)::after {
   color: #5cb85c;
 }
 
+.glyphicon-new-window {
+    color: #333;
+}
+
 /* Table Styling Adjustments */
+.table.bordered th,
+.table-bordered td {
+    overflow-wrap: break-word;
+}
+.table-bordered >
 .table-bordered > tfoot.table-bordered__foot td {
   font-weight: bold;
   border-top-width: 2px;
@@ -295,5 +304,8 @@ td.col--budget:not(:empty)::after {
 }
 
 .ticket-notes {
+  padding: 5px 10px;
+  border: solid 1px #ddd;
+  background-color: #f3f3f3;
   white-space: pre-wrap;
 }
