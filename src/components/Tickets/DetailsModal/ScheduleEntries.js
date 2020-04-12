@@ -20,7 +20,6 @@ class ScheduleEntries extends Component {
   displayEntries() {
     fetchTicketScheduleEntryIds(this.props.ticketNumber).then(results => {
       return Promise.all(results.map(result => {
-        console.log(result);
         return fetchScheduleEntryById(result);
       }));
     }).then(entries => {

@@ -9,7 +9,7 @@ class DetailsModal extends Component {
     super();
 
     this.state = { 
-        expanded: false,
+      expanded: false,
       currTab: 'notes',
     };
 
@@ -39,10 +39,11 @@ class DetailsModal extends Component {
   render () {
     return (
       <div>
-        <a
-          className="glyphicon glyphicon-new-window"
+        <button
+          className="btn btn-default glyphicon glyphicon-new-window"
+          title="Ticket Details"
           onClick={this.expand}>
-        </a>
+        </button>
         <Modal
           contentLabel="Notes Modal"
           isOpen={this.state.expanded}
@@ -51,25 +52,24 @@ class DetailsModal extends Component {
           shouldCloseOnOverlayClick={true}
         >
           <nav className="navbar navbar-static-top">
-            <ul className="nav nav-settings">
+            <ul className="nav modal-navbar-settings">
               {this.props.tabs.map((tab,index) => (
-                <div key={index}>
-                  <li>
-                    <a
-                      className="btn btn-modal-nav"
-                      onClick={e => this.show(tab.property)}
-                      style={{borderColor: 'transparent'}}>
-                      {tab.label}
-                    </a>
-                  </li>
-                </div>
+                <li key={index}>
+                  <button
+                    className="btn btn-modal-nav"
+                    title={tab.label}
+                    onClick={e => this.show(tab.property)}>
+                    {tab.label}
+                  </button>
+                </li>
               ))}
 
               <li>
-                <a
-                  className="glyphicon glyphicon-remove-circle"
+                <button
+                  className="btn btn-modal-nav glyphicon glyphicon-remove-circle"
+                  title="Close"
                   onClick={this.expand}>
-                </a>
+                </button>
               </li>
             </ul>
           </nav>
