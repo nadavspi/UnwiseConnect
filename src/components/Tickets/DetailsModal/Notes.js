@@ -2,8 +2,8 @@ import React, { Component } from 'react';
 import { fetchTicketNotes } from '../../../helpers/cw';
 
 class Notes extends Component {
-  constructor() {
-    super();
+  constructor(props) {
+    super(props);
 
     this.state = { 
       notes: [],
@@ -20,7 +20,7 @@ class Notes extends Component {
     fetchTicketNotes(this.props.ticketNumber).then(results => {
       const notes = results.map(note => ({
         createdBy: note.member.name,
-        dateCreated: note.dateCreated,
+        dateCreated: (new Date(note.dateCreated)).toLocaleDateString() + ' ' + (new Date(note.dateCreated)).toLocaleTimeString(),
         id: note.id,
         text: note.text,
       }));
@@ -35,13 +35,15 @@ class Notes extends Component {
   render() {
     return (
       <div>
-        <h3>Notes</h3>
+        <h4>Notes</h4>
+        <div className="ticket-notes">
         {this.state.notes.map(message => 
-          <div key={message.id} className="ticket-notes">
+          <div key={message.id}>
             <p>{message.text}</p>
-            <p>- {message.createdBy}<br />{message.dateCreated}</p>
+            <p><strong>{message.createdBy}, {message.dateCreated}</strong></p>
           </div>
         )}
+        </div>
       </div>
     );
   }
