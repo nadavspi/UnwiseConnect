@@ -40,7 +40,7 @@ class DetailsModal extends Component {
     return (
       <div>
         <button
-          className="btn btn-default glyphicon glyphicon-new-window"
+          className="btn btn-default glyphicon glyphicon-info-sign"
           title="Ticket Details"
           onClick={this.expand}>
         </button>
