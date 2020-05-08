@@ -83,6 +83,7 @@ const fields = [
       'America/Phoenix',
       'America/Los_Angeles',
       'Europe/Kiev',
+      'Europe/Moscow',
       'Asia/Kolkata',
     ],
     value: 'America/New_York',
