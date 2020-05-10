@@ -12,10 +12,12 @@ class ToggleProjects extends Component {
 
     this.state = {
       expanded: '',
-    }
+      searchTerm: ''
+    };
 
     this.toggle = this.toggle.bind(this);
     this.updateTickets = this.updateTickets.bind(this);
+    this.handleSearchChange = this.handleSearchChange.bind(this);
   }
 
   toggle(projectId, e) {
@@ -30,7 +32,12 @@ class ToggleProjects extends Component {
     this.props.dispatch(TicketsActions.updateTickets({ projectId }));
   }
 
+  handleSearchChange(event) {
+    this.setState({searchTerm: event.target.value});
+  }
+
   render() {
+    const {expanded, searchTerm} = this.state;
     const userProjects = this.props.userProjects || [];
     const projects = this.props.projects.map(project => {
       return {
@@ -39,23 +46,42 @@ class ToggleProjects extends Component {
       };
     });
     const className = classnames('dropdown', {
-      'open': this.state.expanded,
+      'open': expanded,
     });
+
+    const projectSearchResult = projects.filter((project, index, self) => (
+      // Remove any duplicate projects from array and match search term
+      index === self.findIndex(p => (project.id === p.id))
+      && !project.selected
+      && (
+        project.company.toLowerCase().includes(searchTerm.toLowerCase())
+        || project.name.toLowerCase().includes(searchTerm.toLowerCase())
+      )
+    ));
 
     return (
       <span className={className}>
         <button
           className="btn btn-default btn-lg dropdown-toggle"
           type="button"
-          onClick={e => this.setState({ expanded: !this.state.expanded})}
+          onClick={e => this.setState({ expanded: !expanded})}
         >
           Select Projects {' '}
           <span className="caret"></span>
         </button>
         <div
           className="dropdown-menu dropdown-menu-right"
-          style={{ width: '700px', height: 'auto', maxHeight: '60vh', overflowY: 'auto' }}
+          style={{ width: '700px', height: 'auto', maxHeight: '60vh', overflowY: 'auto', paddingTop: '0' }}
         >
+          <div className="form-group project-search">
+            <input
+              className="form-control"
+              type="text"
+              placeholder="Project Search"
+              value={searchTerm}
+              onChange={this.handleSearchChange}
+            />
+          </div>
           <Projects
             projects={projects.filter(project => project.selected)}
             toggle={this.toggle}
@@ -65,7 +91,7 @@ class ToggleProjects extends Component {
             <hr />
           : '')}
           <Projects
-            projects={projects.filter(project => !project.selected)}
+            projects={projectSearchResult}
             toggle={this.toggle}
             update={this.updateTickets}
           />

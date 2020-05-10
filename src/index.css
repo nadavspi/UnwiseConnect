@@ -89,6 +89,7 @@ body {
 }
 
 .open > .dropdown-menu {
+  margin-top: 10px;
   padding: 15px;
 }
 
@@ -171,11 +172,21 @@ body {
 .panel-uc__heading {
   display: flex;
   align-items: center;
-  box-shadow: inset 0 1px #fcfcfc, 0 1px 5px -2px #ddd
+  box-shadow: inset 0 1px #fcfcfc, 0 1px 5px -2px #ddd;
 }
 
 .panel-uc__manage {
   margin-left: auto;
+}
+
+.project-search {
+  padding: 15px;
+  margin-left: -15px;
+  margin-right: -15px;
+  position: sticky;
+  top: 0;
+  background-color: white;
+  border-bottom: solid 1px #eee;
 }
 
 #table-search-tickets table {
@@ -228,7 +239,7 @@ body {
 .col--budget {
   text-align: right;
 }
-  
+
 td.col--budget:not(:empty)::after {
   content: ' hrs';
 }
@@ -259,6 +270,10 @@ td.col--budget:not(:empty)::after {
   color: #5cb85c;
 }
 
+.glyphicon-new-window {
+    color: #333;
+}
+
 /* Table Styling Adjustments */
 .table-bordered > tfoot.table-bordered__foot td {
   font-weight: bold;
@@ -269,7 +284,7 @@ td.col--budget:not(:empty)::after {
   position: absolute;
   z-index: 10;
   box-sizing: border-box;
-  top: 0;
+  top: 10px;
   left: 0;
   right: 0;
   bottom: 0;
@@ -285,5 +300,27 @@ td.col--budget:not(:empty)::after {
 }
 
 .ticket-notes {
+  padding: 5px 10px;
+  border: solid 1px #ddd;
+  background-color: #f3f3f3;
   white-space: pre-wrap;
+}
+
+.modal-navbar-settings {
+  display: flex;
+  padding: 10px;
+  border: solid 1px #f5f5f5;
+}
+
+.btn-modal-nav {
+  margin-right: 5px;
+  border: solid 1px #f3f3f3;
+  color: #337ab7;
+}
+
+@media screen and (min-width: 1200px) {
+  .table-bordered th,
+  .table-bordered td {
+    overflow-wrap: break-word;
+  }
 }
