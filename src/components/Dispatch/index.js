@@ -14,6 +14,7 @@ import { customField } from '../../config/columns';
 import { format as formatDate } from 'date-fns';
 import { multiInfix } from '../../helpers/utils';
 import { search, dispatch as dispatchTickets } from '../../actions/tickets';
+import Summary from "../shared/Summary";
 
 const fields = [
   {
@@ -272,6 +273,12 @@ class Dispatch extends Component {
         property: 'summary',
         header: {
           label: 'Name',
+        },
+        cell: {
+          resolve: value => value,
+          formatters: [
+            (value, { rowData }) => (<Summary company={rowData.company} summary={rowData.summary} />)
+          ]
         },
         visible: true,
       },

@@ -12,6 +12,7 @@ import VisibilityToggles from 'react-visibility-toggles';
 import { compose } from 'redux';
 import { customField } from '../../config/columns';
 import { multiInfix } from '../../helpers/utils';
+import Summary from "../shared/Summary";
 
 function paginate({ page, perPage }) {
   return (rows = []) => {
@@ -346,6 +347,12 @@ TicketsTable.defaultProps = {
         style: {
           width: 300,
         },
+      },
+      cell: {
+        resolve: value => value,
+        formatters: [
+          (value, { rowData }) => (<Summary {...rowData} />)
+        ]
       },
     },
     {
