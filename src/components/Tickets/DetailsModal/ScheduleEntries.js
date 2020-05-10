@@ -1,37 +1,28 @@
-import React, { Component } from 'react';
+import React from 'react';
 import { fetchScheduleEntryById, fetchTicketScheduleEntryIds } from '../../../helpers/cw';
 
-class ScheduleEntries extends Component {
-  constructor() {
-    super();
+const ScheduleEntries = ({ ticketNumber }) =>  {
 
-    this.state = { 
-      entries: [],
-      isLoading: false,
-    };
+  const [entries, setEntries] = React.useState([]);
+  const [isLoading, setIsLoading] = React.useState(false);
 
-    this.displayEntries = this.displayEntries.bind(this);
-  }
+  React.useEffect(() =>  {
+      displayEntries();
+  }, []);
 
-  componentWillMount() {
-    this.displayEntries();
-  }
-
-  displayEntries() {
-    fetchTicketScheduleEntryIds(this.props.ticketNumber).then(results => {
+  const displayEntries = () => {
+    setIsLoading(true);
+    fetchTicketScheduleEntryIds(ticketNumber).then(results => {
       return Promise.all(results.map(result => {
         return fetchScheduleEntryById(result);
       }));
     }).then(entries => {
-      this.setState({
-        ...this.state,
-        entries: entries,
-        isLoading: false,
-      });
+      setEntries(entries);
+      setIsLoading(false);
     });
   }
 
-  entryCard(entry) {
+  const entryCard = entry => {
     let startDate = entry.dateStart;
     let endDate = entry.dateEnd;
 
@@ -51,40 +42,36 @@ class ScheduleEntries extends Component {
         <td>{startDate}</td>
         <td>{endDate}</td>
         <td>{entry.hours}</td>
-        <td>{(entry.doneFlag) ? <div class="glyphicon glyphicon-ok" aria-hidden="true"></div> : ''}</td>
+        <td>{(entry.doneFlag) ? <div className="glyphicon glyphicon-ok" aria-hidden="true" /> : ''}</td>
       </React.Fragment>
     );
   }
 
-  render() {
-    return (
-      <div>
-          <h4>Schedule Entries</h4>
-          {(this.state.isLoading) && (
-            <p style={{textAlign: 'center'}}>Loading . . . </p>
-          )}
-          <table className="table table-striped table-bordered">
-            <thead>
-              <tr>
-                <th>Member Name</th>
-                <th>Start Date</th>
-                <th>End Date</th>
-                <th>Hours</th>
-                <th>Done</th>
-              </tr>
-            </thead>
+  return (
+    <div>
+        <h4>Schedule Entries</h4>
+        {isLoading && (<p style={{textAlign: 'center'}}>Loading &hellip;</p>)}
+        <table className="table table-striped table-bordered">
+          <thead>
+            <tr>
+              <th>Member Name</th>
+              <th>Start Date</th>
+              <th>End Date</th>
+              <th>Hours</th>
+              <th>Done</th>
+            </tr>
+          </thead>
 
-            <tbody>
-              {this.state.entries.map(entry =>
-                <tr key={entry.id}>
-                  {this.entryCard(entry)}
-                </tr>
-              )}
-            </tbody>
-          </table>
-      </div>
-    );
-  }
+          <tbody>
+            {entries.map(entry =>
+              <tr key={entry.id}>
+                {entryCard(entry)}
+              </tr>
+            )}
+          </tbody>
+        </table>
+    </div>
+  );
 }
 
 export default ScheduleEntries;
