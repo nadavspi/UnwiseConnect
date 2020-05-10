@@ -351,7 +351,7 @@ TicketsTable.defaultProps = {
       cell: {
         resolve: value => value,
         formatters: [
-          (value, { rowData }) => (<Summary {...rowData} />)
+          (value, { rowData }) => (<Summary summary={rowData.summary} company={rowData.company} />)
         ]
       },
     },
