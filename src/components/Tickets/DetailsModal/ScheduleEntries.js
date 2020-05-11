@@ -63,7 +63,9 @@ const ScheduleEntries = ({ ticketNumber }) =>  {
           </thead>
 
           <tbody>
-            {entries.map(entry =>
+            {entries
+              .sort((a, b) => a.dateStart > b.dateStart ? -1 : a.dateStart < b.dateStart ? 1 : 0)
+              .map(entry =>
               <tr key={entry.id}>
                 {entryCard(entry)}
               </tr>
