@@ -74,6 +74,11 @@ export const updateTickets = payload => {
     // Make sure it's a string because that's what CW uses
     const projectId = payload.projectId.toString();
 
+    dispatch({
+      type: ActionTypes.PROJECT_TICKETS_UPDATE,
+      projectId,
+    });
+
     fetchTickets(projectId).then(tickets => {
       ref.child(`tickets/${projectId}`)
         .set(tickets);
@@ -83,6 +88,11 @@ export const updateTickets = payload => {
         console.warn(`Uh oh. Can't update the projects list. Inform the authorities.`);
         return;
       }
+
+      dispatch({
+        type: ActionTypes.PROJECT_TICKETS_UPDATE_SUCCESS,
+        projectId,
+      });
 
       const updatedProject = {
         company: tickets[0].company.name,
