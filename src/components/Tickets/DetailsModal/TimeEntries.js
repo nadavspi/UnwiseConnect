@@ -1,37 +1,29 @@
-import React, { Component } from 'react';
+import React from 'react';
 import { fetchTimeEntryById, fetchTicketTimeEntryIds } from '../../../helpers/cw';
 
-class TimeEntries extends Component {
-  constructor() {
-    super();
+const TimeEntries = ({ticketNumber}) => {
 
-    this.state = { 
-      entries: [],
-      isLoading: false,
-    };
+  const [entries, setEntries] = React.useState([]);
+  const [isLoading, setIsLoading] = React.useState(false);
 
-    this.displayEntries = this.displayEntries.bind(this);
-  }
+  const displayEntries = () => {
+    setIsLoading(true);
 
-  componentWillMount() {
-    this.displayEntries();
-  }
-
-  displayEntries() {
-    fetchTicketTimeEntryIds(this.props.ticketNumber).then(results => {
+    fetchTicketTimeEntryIds(ticketNumber).then(results => {
       return Promise.all(results.map(result => {
         return fetchTimeEntryById(result);
       }));
     }).then(entries => {
-      this.setState({
-        ...this.state,
-        entries: entries,
-        isLoading: false,
-      });
+      setIsLoading(false);
+      setEntries(entries);
     });
-  }
+  };
 
-  entryCard(entry) {
+  React.useEffect(() => {
+    displayEntries();
+  }, []);
+
+  const entryCard = (entry) => {
     const date = (new Date(entry.timeStart)).toLocaleDateString() + ' ' + (new Date(entry.timeStart)).toLocaleTimeString();
     return(
       <React.Fragment>
@@ -41,35 +33,31 @@ class TimeEntries extends Component {
         <td>{date}</td>
       </React.Fragment>
     );
-  }
+  };
 
-  render() {
-    return (
-      <div>
-          <h4>Time Entries</h4>
-          {(this.state.isLoading) && (
-            <p style={{textAlign: 'center'}}>Loading . . . </p>
+  return (
+    <div>
+        <h4>Time Entries</h4>
+        {isLoading && (<p style={{textAlign: 'center'}}>Loading &hellip;</p>)}
+        <table className="table table-striped table-bordered">
+          <thead>
+            <tr>
+              <th>Member Name</th>
+              <th>Notes</th>
+              <th>Actual Hours</th>
+              <th>Entry Date</th>
+            </tr>
+          </thead>
+          <tbody>
+          {entries.map(entry =>
+            <tr key={entry.id}>
+              {entryCard(entry)}
+            </tr>
           )}
-          <table className="table table-striped table-bordered">
-            <thead>
-              <tr>
-                <th>Member Name</th>
-                <th>Notes</th>
-                <th>Actual Hours</th>
-                <th>Entry Date</th>
-              </tr>
-            </thead>
-            <tbody>
-            {this.state.entries.map(entry =>
-              <tr key={entry.id}>
-                {this.entryCard(entry)}
-              </tr>
-            )}
-            </tbody>
-          </table>
-      </div>
-    );
-  }
-}
+          </tbody>
+        </table>
+    </div>
+  );
+};
 
 export default TimeEntries;
