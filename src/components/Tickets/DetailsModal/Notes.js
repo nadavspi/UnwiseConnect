@@ -1,14 +1,10 @@
-import React, { Component } from 'react';
+import React from 'react';
 import { fetchTicketNotes } from '../../../helpers/cw';
 
 const Notes = ({ ticketNumber }) => {
 
   const [notes, setNotes] = React.useState([]);
   const [isLoading, setIsLoading] = React.useState(false);
-
-  React.useEffect(() => {
-      displayNotes();
-  }, []);
 
   const displayNotes = () => {
     setIsLoading(true);
@@ -23,26 +19,30 @@ const Notes = ({ ticketNumber }) => {
       setIsLoading(false);
       setNotes(notes);
     });
-  }
+  };
 
-    return (
-      <div>
-        <h4>Notes</h4>
-        {isLoading && (<p style={{textAlign: 'center'}}>Loading &hellip;</p>)}
+  React.useEffect(() => {
+    displayNotes();
+  }, []);
 
-        {notes.length
-          ? <div className="ticket-notes">
-            {notes.map(message =>
-              <div key={message.id}>
-                <p>{message.text}</p>
-                <p><strong>{message.createdBy}, {message.dateCreated}</strong></p>
-              </div>
-            )}
-          </div>
-          : !isLoading ? 'No ticket notes found' : null
-        }
-      </div>
-    );
-}
+  return (
+    <div>
+      <h4>Notes</h4>
+      {isLoading && (<p style={{textAlign: 'center'}}>Loading &hellip;</p>)}
+
+      {notes.length
+        ? <div className="ticket-notes">
+          {notes.map(message =>
+            <div key={message.id}>
+              <p>{message.text}</p>
+              <p><strong>{message.createdBy}, {message.dateCreated}</strong></p>
+            </div>
+          )}
+        </div>
+        : !isLoading ? 'No ticket notes found' : null
+      }
+    </div>
+  );
+};
 
 export default Notes;
