@@ -6,10 +6,6 @@ const ScheduleEntries = ({ ticketNumber }) =>  {
   const [entries, setEntries] = React.useState([]);
   const [isLoading, setIsLoading] = React.useState(false);
 
-  React.useEffect(() =>  {
-      displayEntries();
-  }, []);
-
   const displayEntries = () => {
     setIsLoading(true);
     fetchTicketScheduleEntryIds(ticketNumber).then(results => {
@@ -20,7 +16,11 @@ const ScheduleEntries = ({ ticketNumber }) =>  {
       setEntries(entries);
       setIsLoading(false);
     });
-  }
+  };
+
+  React.useEffect(() =>  {
+      displayEntries();
+  }, []);
 
   const entryCard = entry => {
     let startDate = entry.dateStart;
@@ -45,7 +45,7 @@ const ScheduleEntries = ({ ticketNumber }) =>  {
         <td>{(entry.doneFlag) ? <div className="glyphicon glyphicon-ok" aria-hidden="true" /> : ''}</td>
       </React.Fragment>
     );
-  }
+  };
 
   return (
     <div>
@@ -72,6 +72,6 @@ const ScheduleEntries = ({ ticketNumber }) =>  {
         </table>
     </div>
   );
-}
+};
 
 export default ScheduleEntries;
