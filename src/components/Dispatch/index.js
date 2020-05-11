@@ -279,7 +279,7 @@ class Dispatch extends Component {
         cell: {
           resolve: value => value,
           formatters: [
-            (value, { rowData }) => (<Summary company={rowData.company} summary={rowData.summary} />)
+            (value, { rowData }) => (<Summary company={rowData.company} summary={rowData.summary} value={value}/>)
           ]
         },
         visible: true,
