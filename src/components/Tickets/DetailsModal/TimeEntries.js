@@ -17,11 +17,11 @@ const TimeEntries = ({ticketNumber}) => {
       setIsLoading(false);
       setEntries(entries);
     });
-  }
+  };
 
   React.useEffect(() => {
     displayEntries();
-  }, [])
+  }, []);
 
   const entryCard = (entry) => {
     const date = (new Date(entry.timeStart)).toLocaleDateString() + ' ' + (new Date(entry.timeStart)).toLocaleTimeString();
@@ -33,7 +33,7 @@ const TimeEntries = ({ticketNumber}) => {
         <td>{date}</td>
       </React.Fragment>
     );
-  }
+  };
 
   return (
     <div>
@@ -58,6 +58,6 @@ const TimeEntries = ({ticketNumber}) => {
         </table>
     </div>
   );
-}
+};
 
 export default TimeEntries;
