@@ -49,7 +49,9 @@ const TimeEntries = ({ticketNumber}) => {
             </tr>
           </thead>
           <tbody>
-          {entries.map(entry =>
+          {entries
+            .sort((a, b) => a.timeStart > b.timeStart ? -1 : a.timeStart < b.timeStart ? 1 : 0)
+            .map(entry =>
             <tr key={entry.id}>
               {entryCard(entry)}
             </tr>
