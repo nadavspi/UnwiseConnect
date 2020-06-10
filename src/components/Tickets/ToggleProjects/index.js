@@ -66,7 +66,7 @@ class ToggleProjects extends Component {
           type="button"
           onClick={e => this.setState({ expanded: !expanded})}
         >
-          Select Projects {' '}
+          My Projects {' '}
           <span className="caret"></span>
         </button>
         <div
