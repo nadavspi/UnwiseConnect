@@ -318,6 +318,11 @@ td.col--budget:not(:empty)::after {
   color: #337ab7;
 }
 
+.table-bordered th,
+.table-bordered td {
+  hyphens: auto;
+}
+
 @media screen and (min-width: 1200px) {
   .table-bordered th,
   .table-bordered td {
