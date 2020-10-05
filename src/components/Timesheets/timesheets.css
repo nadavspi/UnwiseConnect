@@ -1,0 +1,8 @@
+#entries-table {
+	margin-top: 2em;
+}
+
+.entries-table__notes {
+	white-space: pre-wrap;
+	width: 30%;
+}
