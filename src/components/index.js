@@ -4,6 +4,7 @@ import Home from './Home';
 import React, { Component } from 'react';
 import Settings from './Settings';
 import Tickets from './Tickets';
+import Timesheets from './Timesheets';
 import { Route, BrowserRouter, Link, Redirect, Switch } from 'react-router-dom';
 import { connect } from 'react-redux';
 import { subscribe, unsubscribe } from '../actions/auth'
@@ -56,6 +57,9 @@ class App extends Component {
                     <Link to="/dispatch">Dispatch</Link>
                   </li>
                   <li>
+                    <Link to="/timesheets">Timesheets</Link>
+                  </li>
+                  <li>
                     <Link
                       to="/settings"
                       className="btn btn-default btn-sm btn-settings"
@@ -76,6 +80,7 @@ class App extends Component {
                 <PublicRoute path='/' authed={this.props.authed} exact component={Home} />
                 <PrivateRoute authed={this.props.authed} path='/tickets' component={Tickets} />
                 <PrivateRoute authed={this.props.authed} path='/dispatch' component={Dispatch} />
+                <PrivateRoute authed={this.props.authed} path='/timesheets' component={Timesheets} />
                 <PrivateRoute authed={this.props.authed} path='/settings' component={Settings} />
                 <Route render={() => <h2>No Match</h2>} />
               </Switch>

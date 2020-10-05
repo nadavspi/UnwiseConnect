@@ -43,8 +43,8 @@ export const fetchTimeEntryById = entryId => {
   const headers = {
     Authorization: `Basic ${process.env.REACT_APP_API_KEY}`,
   };
-  return fetch(`${process.env.REACT_APP_API_URL}/v1/time/entries/${entryId}`, { headers }).then(checkStatus).then(parseJSON);  
-}
+  return fetch(`${process.env.REACT_APP_API_URL}/v1/time/entries/${entryId}`, { headers }).then(checkStatus).then(parseJSON);
+};
 
 export const dispatchTickets = params => {
   return fetch(`${process.env.REACT_APP_API_URL}/v1/dispatch`, {
@@ -69,8 +69,15 @@ export const createWorkplan = params => {
   };
 
   return fetch(`${process.env.REACT_APP_API_URL}/v1/workplan`, {
-    headers, 
+    headers,
     method: 'POST',
     body: JSON.stringify(params),
   }).then(checkStatus).then(parseJSON);
-}
+};
+
+export const searchTimesheets = params => {
+  return fetch(`${process.env.REACT_APP_API_URL}/v1/timesheets/${params.members}`, {
+    headers,
+    method: 'GET',
+  }).then(checkStatus).then(parseJSON);
+};

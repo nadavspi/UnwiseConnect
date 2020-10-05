@@ -62,8 +62,8 @@ export const search = (payload) => {
   return {
     type: ActionTypes.TICKETS_SEARCH,
     payload,
-  }
-}
+  };
+};
 
 export const updateTickets = payload => {
   return (dispatch, getState) => {
@@ -125,7 +125,7 @@ export const dispatch = payload => {
       });
     });
   };
-}
+};
 
 export const updateStatus = payload => {
   return (dispatch, getState) => {
