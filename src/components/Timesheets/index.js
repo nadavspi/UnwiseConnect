@@ -12,8 +12,9 @@ class Timesheets extends Component {
     };
   }
 
-  findEntries() {
+  findEntries(e) {
     this.props.dispatch(search({ members: this.state.members }));
+    e.preventDefault();
   }
 
   render() {
@@ -27,7 +28,7 @@ class Timesheets extends Component {
           </div>
           <div className="panel-body">
             <header className="dispatch-header">
-              <form>
+              <form onSubmit={this.findEntries.bind(this)}>
                 <div className="dispatch-fields">
                   <div className="form-group">
                     <span>
@@ -49,8 +50,7 @@ class Timesheets extends Component {
                 <button
                     className="btn btn-primary"
                     disabled={inProgress}
-                    onClick={this.findEntries.bind(this)}
-                    type="button"
+                    type="submit"
                 >
                   {inProgress ? 'Searching…' : 'Search'}
                 </button>
