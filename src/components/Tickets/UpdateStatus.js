@@ -1,6 +1,7 @@
 import * as TicketsActions from '../../actions/tickets';
 import React, { PureComponent } from 'react';
 import { connect } from 'react-redux';
+import memoize from 'memoizee';
 
 const Icon = ({ pending }) => {
   // No response yet
@@ -80,9 +81,13 @@ class UpdateStatus extends PureComponent {
   }
 };
 
+const uniqueStatuses = memoize((flattened) => {
+  return [...new Set(flattened.map(ticket => ticket.status.name).sort())];
+}, { max: 2 });
+
 const mapStateToProps = state => ({
   pending: state.tickets.pending,
-  statuses: [...new Set(state.tickets.flattened.map(ticket => ticket.status.name).sort())],
+  statuses: uniqueStatuses(state.tickets.flattened),
 });
 
 export default connect(mapStateToProps)(UpdateStatus);
