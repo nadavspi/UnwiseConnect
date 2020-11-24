@@ -25,7 +25,6 @@ const Projects = ({ projects, toggle, update }) => {
               className="btn-link btn-sm"
               onClick={update.bind(this, project.id)}
               type="button"
-              disabled={project.updating}
             >
               {!project.updating ? 'Update Tickets' : 'Updating Tickets...'}
             </button>
