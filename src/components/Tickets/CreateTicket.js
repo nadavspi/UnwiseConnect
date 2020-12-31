@@ -159,7 +159,13 @@ class CreateTicket extends PureComponent {
                   {this.state.hasBudgetHours && (
                     <div>
                       <label htmlFor="description">Description</label>
-                      <textarea id="description" onChange={() => this.setState({ hasDescription: true })}></textarea>
+                      <textarea id="description" 
+                        onChange={(e) => {
+                          if (e.target.value.length && e.target.value.length > 5) {
+                            this.setState({ hasDescription: true })
+                          }
+                        }}>
+                      </textarea>
                     </div>
                   )}
                   {(this.state.hasSelectedProject && this.state.hasSelectedPhase && this.state.hasSummary && this.state.hasBudgetHours && this.state.hasDescription) && (
