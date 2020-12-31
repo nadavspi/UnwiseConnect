@@ -7,7 +7,7 @@ class CreateTicket extends PureComponent {
 
   expandAddTicketForm = () => {
     this.setState({
-      expanded: true
+      expanded: !this.state.expanded
     })
   }
 
@@ -21,7 +21,7 @@ class CreateTicket extends PureComponent {
           aria-label="add"
           onClick={() => this.expandAddTicketForm()}
         >
-          ＋ Create Ticket
+          {this.state.expanded ? '—' : '＋'} Create Ticket
         </button>
         {this.state.expanded && (
           <form>
