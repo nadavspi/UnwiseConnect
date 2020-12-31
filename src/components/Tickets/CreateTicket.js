@@ -7,7 +7,9 @@ class CreateTicket extends PureComponent {
     ticketType: 'default',
     phases: [],
     projects: [],
-    value: ''
+    value: '',
+    hasSelectedProject: false,
+    hasSelectedPhase: false
   }
 
   componentDidMount = () => {
@@ -79,22 +81,54 @@ class CreateTicket extends PureComponent {
               <option value="service">Service Ticket</option>
             </select>
             {this.state.ticketType === 'project' ? (
-              <Autocomplete
-                items={this.state.projects}
-                shouldItemRender={(item, value) => item.name.toLowerCase().indexOf(value.toLowerCase()) > -1}
-                getItemValue={item => item.name}
-                renderItem={(item, highlighted) =>
-                  <div
-                    key={item.id}
-                    style={{ backgroundColor: highlighted ? '#eee' : 'transparent'}}
-                  >
-                    {item.name}
-                  </div>
-                }
-                value={this.state.value}
-                onChange={e => this.setState({ value: e.target.value })}
-                onSelect={value => this.setState({ value })}
-              />
+              <React.Fragment>
+                <div>
+                  <Autocomplete
+                    items={this.state.projects}
+                    shouldItemRender={(item, value) => item.name.toLowerCase().indexOf(value.toLowerCase()) > -1}
+                    getItemValue={item => item.name}
+                    renderItem={(item, highlighted) =>
+                      <div
+                        key={item.id}
+                        style={{ backgroundColor: highlighted ? '#eee' : 'transparent'}}
+                      >
+                        {item.name}
+                      </div>
+                    }
+                    value={this.state.projectValue}
+                    onChange={e => this.setState({ projectValue: e.target.value })}
+                    onSelect={value => {
+                      this.setState({
+                        projectValue: value,
+                        hasSelectedProject: true
+                      })
+                    }}
+                  />
+                </div>
+                <div>
+                  <Autocomplete
+                    items={this.state.phases}
+                    shouldItemRender={(item, value) => item.path.toLowerCase().indexOf(value.toLowerCase()) > -1}
+                    getItemValue={item => item.phase}
+                    renderItem={(item, highlighted) =>
+                      <div
+                        key={item.id}
+                        style={{ backgroundColor: highlighted ? '#eee' : 'transparent'}}
+                      >
+                        {item.path}
+                      </div>
+                    }
+                    value={this.state.phaseValue}
+                    onChange={e => this.setState({ phaseValue: e.target.value })}
+                    onSelect={value => {
+                      this.setState({
+                        phaseValue: value,
+                        hasSelectedPhase: true
+                      })
+                    }}
+                  />
+                </div>
+              </React.Fragment>
             ) : (
               console.log('service')
             )}
