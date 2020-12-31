@@ -11,7 +11,12 @@ class CreateTicket extends PureComponent {
     phaseValue: '',
     projectValue: '',
     hasSelectedProject: false,
-    hasSelectedPhase: false
+    hasSelectedPhase: false,
+    hasSummary: false,
+    hasBudgetHours: false,
+    hasDescription: false,
+    summary: '',
+    budget: '',
   }
 
   componentDidMount = () => {
@@ -92,7 +97,9 @@ class CreateTicket extends PureComponent {
             {this.state.ticketType === 'project' ? (
               <React.Fragment>
                 <div>
+                  <label htmlFor="projects">Project</label>
                   <Autocomplete
+                    id="projects"
                     items={this.state.projects}
                     getItemValue={item => item.name}
                     shouldItemRender={(item, value) => item.name.toLowerCase().indexOf(value.toLowerCase()) > -1}
@@ -113,26 +120,48 @@ class CreateTicket extends PureComponent {
                 </div>
                 <div>
                   {this.state.hasSelectedProject && (
-                    <Autocomplete
-                      items={this.state.phases}
-                      getItemValue={item => item.path}
-                      shouldItemRender={(item, value) => item.path.toLowerCase().indexOf(value.toLowerCase()) > -1}
-                      renderItem={(item, highlighted) =>
-                        <div key={item.id} style={{ backgroundColor: highlighted ? '#eee' : 'transparent'}}>
-                          {item.path}
-                        </div>
-                      }
-                      value={this.state.phaseValue}
-                      onChange={e => this.setState({ phaseValue: e.target.value })}
-                      onSelect={value => {
-                        this.setState({
-                          phaseValue: value,
-                          hasSelectedPhase: true
-                        })
-                      }}
-                    />
+                    <React.Fragment>
+                      <label htmlFor="phases">Phase</label>
+                      <Autocomplete
+                        id="phases"
+                        items={this.state.phases}
+                        getItemValue={item => item.path}
+                        shouldItemRender={(item, value) => item.path.toLowerCase().indexOf(value.toLowerCase()) > -1}
+                        renderItem={(item, highlighted) =>
+                          <div key={item.id} style={{ backgroundColor: highlighted ? '#eee' : 'transparent'}}>
+                            {item.path}
+                          </div>
+                        }
+                        value={this.state.phaseValue}
+                        onChange={e => this.setState({ phaseValue: e.target.value })}
+                        onSelect={value => {
+                          this.setState({
+                            phaseValue: value,
+                            hasSelectedPhase: true
+                          })
+                        }}
+                      />
+                    </React.Fragment>
                   )}
                 </div>
+                  {this.state.hasSelectedPhase && (
+                    <div>
+                      <label htmlFor="summary">Summary</label>
+                      <input type="text" id="summary" onChange={() => this.setState({ hasSummary: true })}></input>
+                    </div>
+                  )}
+                  {this.state.hasSummary && (
+                    <div>
+                      <label htmlFor="budget-hours">Budget Hours</label>
+                      <input type="number" id="budget-hours" onChange={() => this.setState({ hasBudgetHours: true })}></input>
+                    </div>
+                  )}
+                  {this.state.hasBudgetHours && (
+                    <div>
+                      <label htmlFor="description">Description</label>
+                      <textarea id="description" onChange={() => this.setState({ hasDescription: true })}></textarea>
+                    </div>
+                  )}
               </React.Fragment>
             ) : (
               console.log('service')
