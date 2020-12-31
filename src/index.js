@@ -41,3 +41,8 @@ ReactDOM.render(
   </Provider>,
   document.getElementById('root')
 );
+
+// Enable React Dev Tools on local envs
+if (typeof window !== 'undefined') {
+  window.React = React;
+}
