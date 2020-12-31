@@ -17,6 +17,8 @@ class CreateTicket extends PureComponent {
     hasDescription: false,
     summary: '',
     budget: '',
+    newTicketDetails: '',
+    hasCompletedTicket: false,
   }
 
   componentDidMount = () => {
@@ -75,7 +77,6 @@ class CreateTicket extends PureComponent {
   }
 
   render() {
-    
     return (
       <div className="create-ticket-form">
         <button
@@ -169,8 +170,18 @@ class CreateTicket extends PureComponent {
                     </div>
                   )}
                   {(this.state.hasSelectedProject && this.state.hasSelectedPhase && this.state.hasSummary && this.state.hasBudgetHours && this.state.hasDescription) && (
-                    <button type="submit">Create Ticket</button>
+                    <button type="button" onClick={() => this.setState({ hasCompletedTicket: true })}>Create Ticket</button>
                   )}
+                  {(this.state.hasCompletedTicket && (
+                    <div>
+                      <p>You've created a new <strong>{`${this.state.ticketType}`}</strong> ticket</p>
+                      <p>{`Project: ${this.state.projectValue}`}</p>
+                      <p>{`Phase: ${this.state.phaseValue}`}</p>
+                      <p>{`Budget: ${this.state.budget}`}</p>
+                      <p>{`Summary: ${this.state.summary}`}</p>
+                      <p>Ticket <strong>{`${'ticketNumber'}`}</strong></p>
+                    </div>
+                  ))}
               </React.Fragment>
             ) : (
               console.log('service')
