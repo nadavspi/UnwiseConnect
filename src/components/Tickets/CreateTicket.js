@@ -90,7 +90,7 @@ class CreateTicket extends PureComponent {
           <form>
             <label htmlFor="type">Type</label>
             <select className="form-control" id="type" name="type" defaultValue={this.state.ticketType} onChange={this.selectTicketType}>
-              <option disabled value="default">Select Ticket Type</option>
+              <option disabled value="default"> - Select Ticket Type - </option>
               <option value="project">Project Ticket</option>
               <option value="service">Service Ticket</option>
             </select>
