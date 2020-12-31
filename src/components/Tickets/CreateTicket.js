@@ -97,7 +97,7 @@ class CreateTicket extends PureComponent {
             {this.state.ticketType === 'project' ? (
               <React.Fragment>
                 <div>
-                  <label htmlFor="projects">Project</label>
+                  <label htmlFor="projects">Project</label><br></br>
                   <Autocomplete
                     id="projects"
                     items={this.state.projects}
@@ -108,6 +108,7 @@ class CreateTicket extends PureComponent {
                         {item.name}
                       </div>
                     }
+                    inputProps={{ className: "btn btn-default" }}
                     value={this.state.projectValue}
                     onChange={e => this.setState({ projectValue: e.target.value })}
                     onSelect={value => {
@@ -121,7 +122,7 @@ class CreateTicket extends PureComponent {
                 <div>
                   {this.state.hasSelectedProject && (
                     <React.Fragment>
-                      <label htmlFor="phases">Phase</label>
+                      <label htmlFor="phases">Phase</label><br></br>
                       <Autocomplete
                         id="phases"
                         items={this.state.phases}
@@ -133,6 +134,7 @@ class CreateTicket extends PureComponent {
                           </div>
                         }
                         value={this.state.phaseValue}
+                        inputProps={{ className: "btn btn-default" }}
                         onChange={e => this.setState({ phaseValue: e.target.value })}
                         onSelect={value => {
                           this.setState({
