@@ -27,8 +27,8 @@ class CreateTicket extends PureComponent {
           <form>
             <label for="type">Type</label>
             <select className="form-control" id="type" name="type">
-              <option value="volvo">Project Ticket</option>
-              <option value="saab">Service Ticket</option>
+              <option value="project" selected="selected">Project Ticket</option>
+              <option value="service">Service Ticket</option>
             </select>
           </form>
         )}
