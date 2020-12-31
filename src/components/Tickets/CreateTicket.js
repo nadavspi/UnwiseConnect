@@ -13,7 +13,6 @@ class CreateTicket extends PureComponent {
     hasSelectedProject: false,
     hasSelectedPhase: false,
     hasSummary: false,
-    hasBudgetHours: false,
     hasDescription: false,
     summary: '',
     budget: '',
@@ -154,10 +153,16 @@ class CreateTicket extends PureComponent {
                   {this.state.hasSummary && (
                     <div>
                       <label htmlFor="budget-hours">Budget Hours</label>
-                      <input type="number" id="budget-hours" onChange={() => this.setState({ hasBudgetHours: true })}></input>
+                      <input
+                        type="number"
+                        id="budget-hours"
+                        onChange={(e) => this.setState({ budget: e.target.value })}
+                      >
+                      </input>
+                      {this.state.budget > 10 && (<p>Warning: This is a higher than normal budget</p>)}
                     </div>
                   )}
-                  {this.state.hasBudgetHours && (
+                  {this.state.budget > 0 && (
                     <div>
                       <label htmlFor="description">Description</label>
                       <textarea id="description" 
