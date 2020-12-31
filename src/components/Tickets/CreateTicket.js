@@ -6,11 +6,13 @@ class CreateTicket extends PureComponent {
     expanded: false,
     ticketType: 'default',
     phases: [],
+    projects: [],
     value: ''
   }
 
   componentDidMount = () => {
     this.getPhases();
+    this.getProjects();
   }
   
 
@@ -41,6 +43,21 @@ class CreateTicket extends PureComponent {
     });
   }
 
+  getProjects = () => {
+    let projects = [];
+
+    this.props.projects.map(project => {
+      projects.push({
+        name: project.company.name,
+        id: project.company.id
+      });
+    });
+    
+    this.setState({
+      projects
+    });
+  }
+
   render() {
     
     return (
@@ -63,15 +80,15 @@ class CreateTicket extends PureComponent {
             </select>
             {this.state.ticketType === 'project' ? (
               <Autocomplete
-                items={this.state.phases}
-                shouldItemRender={(item, value) => item.path.toLowerCase().indexOf(value.toLowerCase()) > -1}
-                getItemValue={item => item.path}
+                items={this.state.projects}
+                shouldItemRender={(item, value) => item.name.toLowerCase().indexOf(value.toLowerCase()) > -1}
+                getItemValue={item => item.name}
                 renderItem={(item, highlighted) =>
                   <div
                     key={item.id}
                     style={{ backgroundColor: highlighted ? '#eee' : 'transparent'}}
                   >
-                    {item.path}
+                    {item.name}
                   </div>
                 }
                 value={this.state.value}
