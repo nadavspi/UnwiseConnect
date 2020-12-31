@@ -88,10 +88,7 @@ class CreateTicket extends PureComponent {
                     shouldItemRender={(item, value) => item.name.toLowerCase().indexOf(value.toLowerCase()) > -1}
                     getItemValue={item => item.name}
                     renderItem={(item, highlighted) =>
-                      <div
-                        key={item.id}
-                        style={{ backgroundColor: highlighted ? '#eee' : 'transparent'}}
-                      >
+                      <div key={item.id} style={{ backgroundColor: highlighted ? '#eee' : 'transparent'}}>
                         {item.name}
                       </div>
                     }
@@ -111,10 +108,7 @@ class CreateTicket extends PureComponent {
                     shouldItemRender={(item, value) => item.path.toLowerCase().indexOf(value.toLowerCase()) > -1}
                     getItemValue={item => item.phase}
                     renderItem={(item, highlighted) =>
-                      <div
-                        key={item.id}
-                        style={{ backgroundColor: highlighted ? '#eee' : 'transparent'}}
-                      >
+                      <div key={item.id} style={{ backgroundColor: highlighted ? '#eee' : 'transparent'}}>
                         {item.path}
                       </div>
                     }
