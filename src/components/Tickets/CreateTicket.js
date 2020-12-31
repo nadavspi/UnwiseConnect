@@ -104,7 +104,7 @@ class CreateTicket extends PureComponent {
                     getItemValue={item => item.name}
                     shouldItemRender={(item, value) => item.name.toLowerCase().indexOf(value.toLowerCase()) > -1}
                     renderItem={(item, highlighted) =>
-                      <div key={item.id} style={{ backgroundColor: highlighted ? '#eee' : 'transparent'}}>
+                      <div key={item.id} style={{ backgroundColor: highlighted ? '#f5f5f5' : 'transparent'}}>
                         {item.name}
                       </div>
                     }
@@ -128,7 +128,7 @@ class CreateTicket extends PureComponent {
                         getItemValue={item => item.path}
                         shouldItemRender={(item, value) => item.path.toLowerCase().indexOf(value.toLowerCase()) > -1}
                         renderItem={(item, highlighted) =>
-                          <div key={item.id} style={{ backgroundColor: highlighted ? '#eee' : 'transparent'}}>
+                          <div key={item.id} style={{ backgroundColor: highlighted ? '#f5f5f5' : 'transparent'}}>
                             {item.path}
                           </div>
                         }
@@ -147,7 +147,12 @@ class CreateTicket extends PureComponent {
                   {this.state.hasSelectedPhase && (
                     <div>
                       <label htmlFor="summary">Summary</label>
-                      <input type="text" id="summary" onChange={() => this.setState({ hasSummary: true })}></input>
+                      <input
+                        className="form-control"
+                        type="text"
+                        id="summary"
+                        onChange={() => this.setState({ hasSummary: true })}
+                      ></input>
                     </div>
                   )}
                   {this.state.hasSummary && (
@@ -156,6 +161,7 @@ class CreateTicket extends PureComponent {
                       <input
                         type="number"
                         id="budget-hours"
+                        className="form-control"
                         onChange={(e) => this.setState({ budget: e.target.value })}
                       >
                       </input>
@@ -165,7 +171,11 @@ class CreateTicket extends PureComponent {
                   {this.state.budget > 0 && (
                     <div>
                       <label htmlFor="description">Description</label>
-                      <textarea id="description" 
+                      <textarea
+                        id="description"
+                        rows="4"
+                        cols="50"
+                        className="form-control"
                         onChange={(e) => {
                           if (e.target.value.length && e.target.value.length > 5) {
                             this.setState({ hasDescription: true })
@@ -174,8 +184,14 @@ class CreateTicket extends PureComponent {
                       </textarea>
                     </div>
                   )}
-                  {(this.state.hasSelectedProject && this.state.hasSelectedPhase && this.state.hasSummary && this.state.hasBudgetHours && this.state.hasDescription) && (
-                    <button type="button" onClick={() => this.setState({ hasCompletedTicket: true })}>Create Ticket</button>
+                  {(this.state.hasSelectedProject && this.state.hasSelectedPhase && this.state.hasSummary && this.state.budget && this.state.hasDescription) && (
+                    <button
+                      type="button"
+                      onClick={() => this.setState({ hasCompletedTicket: true })}
+                      className="btn btn-default"
+                    >
+                      Create Ticket
+                    </button>
                   )}
                   {(this.state.hasCompletedTicket && (
                     <div>
