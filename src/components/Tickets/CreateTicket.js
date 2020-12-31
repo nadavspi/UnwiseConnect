@@ -1,13 +1,21 @@
 import React, { PureComponent } from 'react';
+import Select from 'react-select';
 
 class CreateTicket extends PureComponent {
   state = {
     expanded: false,
+    ticketType: 'project'
   }
 
   expandAddTicketForm = () => {
     this.setState({
       expanded: !this.state.expanded
+    })
+  }
+
+  selectTicketType = event => {
+    this.setState({
+      ticketType: event.target.value
     })
   }
 
@@ -25,11 +33,16 @@ class CreateTicket extends PureComponent {
         </button>
         {this.state.expanded && (
           <form>
-            <label for="type">Type</label>
-            <select className="form-control" id="type" name="type">
-              <option value="project" selected="selected">Project Ticket</option>
+            <label htmlFor="type">Type</label>
+            <select className="form-control" id="type" name="type" defaultValue={this.state.ticketType} onChange={this.selectTicketType}>
+              <option value="project">Project Ticket</option>
               <option value="service">Service Ticket</option>
             </select>
+            {this.state.ticketType === 'project' ? (
+              console.log('project')
+            ) : (
+              console.log('service')
+            )}
           </form>
         )}
       </div>
