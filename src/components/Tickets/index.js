@@ -9,6 +9,7 @@ import classnames from 'classnames';
 import sortBy from 'sort-by';
 import { connect } from 'react-redux';
 import { search } from '../../actions/tickets';
+import CreateTicket from './CreateTicket';
 
 class Tickets extends Component {
   constructor() {
@@ -119,6 +120,7 @@ class Tickets extends Component {
                 }, true)}
               />
             </div>
+            <CreateTicket />
             {this.props.tickets.flattened.length > 0 && (
               <Table
                 id="table-search-tickets"
