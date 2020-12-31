@@ -35,9 +35,9 @@ const store = createStore(
 const load = storage.createLoader(engine);
 load(store);
 
- ReactDOM.render(
-   <Provider store={store}>
-     <App />
-   </Provider>,
+ReactDOM.render(
+  <Provider store={store}>
+    <App />
+  </Provider>,
   document.getElementById('root')
 );
