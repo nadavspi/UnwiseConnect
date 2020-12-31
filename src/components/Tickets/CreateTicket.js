@@ -162,6 +162,9 @@ class CreateTicket extends PureComponent {
                       <textarea id="description" onChange={() => this.setState({ hasDescription: true })}></textarea>
                     </div>
                   )}
+                  {(this.state.hasSelectedProject && this.state.hasSelectedPhase && this.state.hasSummary && this.state.hasBudgetHours && this.state.hasDescription) && (
+                    <button type="submit">Create Ticket</button>
+                  )}
               </React.Fragment>
             ) : (
               console.log('service')
