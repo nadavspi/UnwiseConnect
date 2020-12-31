@@ -26,9 +26,17 @@ class CreateTicket extends PureComponent {
   }
 
   getPhases = () => {
+    let phases = [];
+
     const deduplicatedTickets = this.props.tickets.filter((ticket, index, tix) => {
       return tix.findIndex(t => (t.id === ticket.id)) === index;
     });
+
+    if (deduplicatedTickets.length) {
+      deduplicatedTickets.map(ticket => {
+        phases.push(ticket.phase.path);
+      });
+    }
     
     this.setState({
       phases
