@@ -1,11 +1,12 @@
 import React, { PureComponent } from 'react';
-import Select from 'react-select';
+import Autocomplete from 'react-autocomplete';
 
 class CreateTicket extends PureComponent {
   state = {
     expanded: false,
     ticketType: 'default',
-    phases: []
+    phases: [],
+    value: ''
   }
 
   componentDidMount = () => {
@@ -28,15 +29,12 @@ class CreateTicket extends PureComponent {
   getPhases = () => {
     let phases = [];
 
-    const deduplicatedTickets = this.props.tickets.filter((ticket, index, tix) => {
-      return tix.findIndex(t => (t.id === ticket.id)) === index;
-    });
-
-    if (deduplicatedTickets.length) {
-      deduplicatedTickets.map(ticket => {
-        phases.push(ticket.phase.path);
+    this.props.tickets.map(ticket => {
+      phases.push({
+        path: ticket.phase.path,
+        id: ticket.id
       });
-    }
+    });
     
     this.setState({
       phases
@@ -64,7 +62,22 @@ class CreateTicket extends PureComponent {
               <option value="service">Service Ticket</option>
             </select>
             {this.state.ticketType === 'project' ? (
-              console.log('project')
+              <Autocomplete
+                items={this.state.phases}
+                shouldItemRender={(item, value) => item.path.toLowerCase().indexOf(value.toLowerCase()) > -1}
+                getItemValue={item => item.path}
+                renderItem={(item, highlighted) =>
+                  <div
+                    key={item.id}
+                    style={{ backgroundColor: highlighted ? '#eee' : 'transparent'}}
+                  >
+                    {item.path}
+                  </div>
+                }
+                value={this.state.value}
+                onChange={e => this.setState({ value: e.target.value })}
+                onSelect={value => this.setState({ value })}
+              />
             ) : (
               console.log('service')
             )}
