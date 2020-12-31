@@ -120,7 +120,10 @@ class Tickets extends Component {
                 }, true)}
               />
             </div>
-            <CreateTicket />
+            <CreateTicket
+              projects={this.projects()}
+              tickets={this.props.tickets.flattened}
+            />
             {this.props.tickets.flattened.length > 0 && (
               <Table
                 id="table-search-tickets"

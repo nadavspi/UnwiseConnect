@@ -4,8 +4,14 @@ import Select from 'react-select';
 class CreateTicket extends PureComponent {
   state = {
     expanded: false,
-    ticketType: 'project'
+    ticketType: 'default',
+    phases: []
   }
+
+  componentDidMount = () => {
+    this.getPhases();
+  }
+  
 
   expandAddTicketForm = () => {
     this.setState({
@@ -17,6 +23,16 @@ class CreateTicket extends PureComponent {
     this.setState({
       ticketType: event.target.value
     })
+  }
+
+  getPhases = () => {
+    const deduplicatedTickets = this.props.tickets.filter((ticket, index, tix) => {
+      return tix.findIndex(t => (t.id === ticket.id)) === index;
+    });
+    
+    this.setState({
+      phases
+    });
   }
 
   render() {
@@ -35,6 +51,7 @@ class CreateTicket extends PureComponent {
           <form>
             <label htmlFor="type">Type</label>
             <select className="form-control" id="type" name="type" defaultValue={this.state.ticketType} onChange={this.selectTicketType}>
+              <option disabled value="default">Select Ticket Type</option>
               <option value="project">Project Ticket</option>
               <option value="service">Service Ticket</option>
             </select>
