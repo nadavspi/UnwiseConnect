@@ -348,7 +348,7 @@ td.col--budget:not(:empty)::after {
 }
 
 .dark * {
-  transition: all .4s;
+  transition: background-color .4s;
 }
 
 .dark a {
@@ -381,6 +381,16 @@ td.col--budget:not(:empty)::after {
 
 .dark.btn-dark-mode svg {
   fill: #C8D1D9;
+}
+
+.dark .btn-settings {
+  background-color: #333333;
+  border: none;
+  margin-right: 5px;
+}
+
+.dark .btn-settings span {
+  color: #C8D1D9;
 }
 
 .dark.btn-dark-mode,
@@ -421,6 +431,10 @@ td.col--budget:not(:empty)::after {
   border-radius: 5px;
 }
 
+.dark .projects.list-group:hover {
+  border: none;
+}
+
 .dark .btn.dropdown-toggle,
 .dark .btn.dropdown-toggle {
   height: 42px;
@@ -430,6 +444,8 @@ td.col--budget:not(:empty)::after {
 }
 
 .dark .projects.list-group button:hover,
+.dark .projects.list-group button:focus,
+.dark .projects.list-group button:active,
 .dark .btn.dropdown-toggle:hover,
 .dark .btn.dropdown-toggle:focus,
 .dark .btn.dropdown-toggle:active,
@@ -562,6 +578,12 @@ td.col--budget:not(:empty)::after {
   border-color: #30363C;
 }
 
-.dark .pagination .active a {
+.dark .pagination .active a,
+.dark label[for="toggl-api"] {
   color: #C8D1D9;
+}
+
+.dark .visibility-label {
+  display: flex;
+  align-items: center;
 }
