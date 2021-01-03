@@ -106,6 +106,7 @@ class App extends Component {
                       type="button"
                       className={darkModeBtnClasses}
                       onClick={() => this.toggleTheme()}
+                      aria-label="Toggle Dark Mode"
                     >
                       {darkModeIcon}
                     </button>
