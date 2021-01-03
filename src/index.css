@@ -336,6 +336,13 @@ td.col--budget:not(:empty)::after {
   height: 41px;
 }
 
+.nav-settings .btn.btn-dark-mode:focus,
+.nav-settings .btn.btn-dark-mode:hover,
+.nav-settings .btn.btn-dark-mode:active {
+  outline: none;
+  border: none;
+}
+
 .btn-dark-mode svg {
   width: 18px;
   height: 21px;
@@ -401,6 +408,10 @@ td.col--budget:not(:empty)::after {
   box-shadow: none;
 }
 
+.dark .panel-default > .panel-heading h4 small {
+  margin-left: 10px;
+}
+
 .dark .row.panel-body {
   border-radius: 5px;
 }
@@ -428,7 +439,7 @@ td.col--budget:not(:empty)::after {
 }
 
 .dark .projects.list-group:hover {
-  border: none;
+  border-color: transparent;
 }
 
 .dark .btn.dropdown-toggle,
@@ -447,7 +458,8 @@ td.col--budget:not(:empty)::after {
 .dark .btn.dropdown-toggle:active,
 .dark .btn.dropdown-toggle:hover,
 .dark .btn.dropdown-toggle:focus,
-.dark .btn.dropdown-toggle:active {
+.dark .btn.dropdown-toggle:active,
+.dark .open > .btn.dropdown-toggle {
   background-color: #151a23 !important;
   color: #C8D1D9 !important;
   text-decoration: none;
@@ -507,9 +519,9 @@ td.col--budget:not(:empty)::after {
 }
 
 .dark .form-group.project-search,
-.dark .dispatch-fields .form-group div,
 .dark .pagination > li > a,
-.dark .pagination > li > span {
+.dark .pagination > li > span,
+.dark .dispatch-fields .form-group div {
   background-color: #151a23;
   border-color: #30363C;
   z-index: 2;
@@ -539,6 +551,11 @@ td.col--budget:not(:empty)::after {
   margin-left: 10px;
 }
 
+.dark .ToggleProjects__label small a:hover,
+.dark .ToggleProjects__label small a:focus {
+  color: #57A6FF;
+}
+
 .dark .ToggleProjects__checkbox[type="checkbox"] {
   margin: 0;
   margin-right: 15px;
@@ -547,6 +564,13 @@ td.col--budget:not(:empty)::after {
 .dark .ToggleProjects__label .btn-link {
   position: absolute;
   right: 20px;
+}
+
+.dark .ToggleProjects__label .btn-link:hover,
+.dark .ToggleProjects__label .btn-link:focus {
+  color: #57A6FF;
+  text-decoration: none;
+  border: 1px solid #30363C;
 }
 
 .dark button.ticket-copy {
@@ -575,4 +599,15 @@ td.col--budget:not(:empty)::after {
 .dark .dispatch-fields .form-group label {
   display: flex;
   align-items: center;
+}
+
+.dark .nav > li > a {
+  margin-right: 5px;
+}
+
+.dark .nav > li > a:hover,
+.dark .nav > li > a:focus {
+  background-color: #30363C;
+  border-radius: 5px;
+  color: #57A6FF;
 }
