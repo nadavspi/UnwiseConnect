@@ -329,3 +329,239 @@ td.col--budget:not(:empty)::after {
     overflow-wrap: break-word;
   }
 }
+
+/* Dark Mode */
+.btn-dark-mode {
+  width: 50px;
+  height: 41px;
+}
+
+.btn-dark-mode svg {
+  width: 18px;
+  height: 21px;
+  background-color: transparent;
+  fill: #333333;
+}
+
+.dark {
+  background-color: #07090F;
+}
+
+.dark * {
+  transition: all .4s;
+}
+
+.dark a {
+  color: #57A6FF;
+}
+
+.dark p,
+.dark span,
+.dark strong,
+.dark h1,
+.dark h2,
+.dark h3,
+.dark h4,
+.dark h5 {
+  color: #C8D1D9;
+}
+
+.dark button,
+.dark select,
+.dark input {
+  background-color: #090E13;
+  color: #C8D1D9;
+  border: 1px solid #30363C;
+}
+
+.dark input {
+  border-radius: 5px;
+  height: 33px;
+}
+
+.dark.btn-dark-mode svg {
+  fill: #C8D1D9;
+}
+
+.dark.btn-dark-mode,
+.dark.btn-dark-mode:hover,
+.dark.btn-dark-mode:focus,
+.dark.btn-dark-mode:active {
+  background-color: #333333;
+}
+
+.dark .panel-default > .panel-heading {
+  border: none;
+  box-shadow: none;
+}
+
+.dark .row.panel-body {
+  border-radius: 5px;
+}
+
+.dark .navbar,
+.dark .panel-body {
+  background-color: #161B22;
+  border-color: #30363C;
+  box-shadow: none;
+}
+
+.dark .panel-uc__heading.panel-heading {
+  background-color: #0E1117;
+}
+
+.dark .panel-uc.panel.panel-default,
+.dark .panel-body {
+  border: none;
+}
+
+.dark .projects.list-group {
+  background-color: transparent;
+  border-color: #30363C;
+  border-radius: 5px;
+}
+
+.dark .btn.dropdown-toggle,
+.dark .btn.dropdown-toggle {
+  height: 42px;
+  font-size: 14px;
+  margin: 0 5px;
+  border-radius: 5px;
+}
+
+.dark .projects.list-group button:hover,
+.dark .btn.dropdown-toggle:hover,
+.dark .btn.dropdown-toggle:focus,
+.dark .btn.dropdown-toggle:active,
+.dark .btn.dropdown-toggle:hover,
+.dark .btn.dropdown-toggle:focus,
+.dark .btn.dropdown-toggle:active {
+  background-color: #151a23 !important;
+  color: #C8D1D9 !important;
+  text-decoration: none;
+  border-color: #30363C;
+  transition: .3s;
+}
+
+.dark .dropdown-menu {
+  top: calc(100% + 20px);
+}
+
+.dark .projects.list-group button,
+.dark .column-filter,
+.dark .table-bordered th {
+  border-color: #30363C !important;
+}
+
+.dark .table-bordered,
+.dark .table-bordered tr,
+.dark .table-bordered td {
+  border-color: #30363C !important;
+  transition: .3s;
+}
+
+.dark .table-striped {
+  color: #C8D1D9;
+}
+
+.dark .table-striped > tbody > tr:nth-of-type(even) {
+  background-color: #0E1117;
+}
+
+.dark .table-striped > tbody > tr:nth-of-type(odd) {
+  background-color: #151a23;
+}
+
+.dark .column-filter-dropdown div {
+  font-size: 14px;
+  background-color: #151a23;
+  color: #C8D1D9;
+  border-color: #30363C;
+}
+
+.dark .column-filter-dropdown div:hover {
+  border-color: #30363C;
+  cursor: pointer;
+}
+
+.dark .dropdown-menu.dropdown-menu-right {
+  border-color: #30363C !important;
+  background-color: #0E1117;
+}
+
+.dark .form-group.project-search,
+.dark .dispatch-fields .form-group div,
+.dark .pagination > li > a,
+.dark .pagination > li > span {
+  background-color: #151a23;
+  border-color: #30363C;
+  z-index: 2;
+}
+
+.dark .dispatch-fields .form-group * {
+  color: #C8D1D9;
+}
+
+.dark .ToggleProjects__project {
+  border-bottom: 1px solid #30363C !important;
+  background-color: #0E1117;
+}
+
+.dark .ToggleProjects__project:hover {
+  background-color: #151a23;
+}
+
+.dark .ToggleProjects__label {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  padding-right: 130px;
+  padding-left: 5px;
+  margin: 5px 0;
+  cursor: pointer;
+}
+
+.dark .ToggleProjects__label small,
+.dark .ToggleProjects__updated {
+  margin-left: 10px;
+}
+
+.dark .ToggleProjects__checkbox[type="checkbox"] {
+  margin: 0;
+  margin-right: 15px;
+}
+
+.dark .ToggleProjects__label .btn-link {
+  position: absolute;
+  right: 20px;
+}
+
+.dark button.ticket-copy {
+  border: none;
+  background-color: transparent;
+  margin-left: 5px;
+}
+
+.dark .ticket-copy span {
+  color: #C8D1D9;
+}
+
+.dark .ticket--overbudget .col--budget,
+.dark .ticket--nearbudget .col--budget {
+  color: #0E1117;
+}
+
+.dark .dropdown-menu hr {
+  border-color: transparent;
+  margin-bottom: 30px;
+}
+
+.dark .pagination > li > a:hover ,
+.dark .pagination > li > span:hover {
+  background-color: #0E1117;
+  border-color: #30363C;
+}
+
+.dark .pagination .active a {
+  color: #C8D1D9;
+}

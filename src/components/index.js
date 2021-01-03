@@ -38,10 +38,10 @@ class App extends Component {
     theme: localStorage.getItem('theme') || 'light'
   }
 
-   toggleTheme = () => {
+  toggleTheme = () => {
     const theme = this.state.theme == 'dark' ? 'light' : 'dark';
 
-     this.setState({
+    this.setState({
       theme
     }, () => {
       localStorage.setItem('theme', this.state.theme);
