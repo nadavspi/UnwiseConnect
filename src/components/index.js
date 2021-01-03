@@ -7,7 +7,9 @@ import Tickets from './Tickets';
 import Timesheets from './Timesheets';
 import { Route, BrowserRouter, Link, Redirect, Switch } from 'react-router-dom';
 import { connect } from 'react-redux';
-import { subscribe, unsubscribe } from '../actions/auth'
+import { subscribe, unsubscribe } from '../actions/auth';
+import { darkModeIcon } from '../helpers/svgs';
+import classnames from 'classnames';
 
 function PrivateRoute ({component: Component, authed, ...rest}) {
   return (
@@ -32,17 +34,45 @@ function PublicRoute ({component: Component, authed, ...rest}) {
 }
 
 class App extends Component {
-  componentDidMount () {
-    this.props.dispatch(subscribe());
+  state = {
+    theme: localStorage.getItem('theme') || 'light'
   }
+
+   toggleTheme = () => {
+    const theme = this.state.theme == 'dark' ? 'light' : 'dark';
+
+     this.setState({
+      theme
+    }, () => {
+      localStorage.setItem('theme', this.state.theme);
+    });
+  }
+
+  componentDidMount() {
+    if ('theme' in localStorage) {
+      if (localStorage.getItem('theme') === 'dark') {
+        this.setState({ theme: 'dark' });
+      } else {
+        this.setState({ theme: 'light' });
+      }
+    } else {
+      localStorage.setItem('theme', 'light');
+    }
+  }
+     
   componentWillUnmount () {
     this.props.dispatch(unsubscribe());
   }
+
   render() {
+    const darkModeBtnClasses = classnames({
+      'btn btn-default btn-dark-mode': true,
+      'dark': this.state.theme === 'dark',
+    });
     const isAuthed = this.props.authed;
     return this.props.loading === true ? <span className="loading"></span> : (
       <BrowserRouter>
-        <div className="page">
+        <div className={`page ${this.state.theme}`}>
           {isAuthed &&
             <nav className="navbar navbar-uc navbar-static-top">
               <div className="container">
@@ -69,6 +99,15 @@ class App extends Component {
                         aria-hidden="true"></span>
                       <span className="sr-only">Settings</span>
                     </Link>
+                  </li>
+                  <li>
+                    <button
+                      type="button"
+                      className={darkModeBtnClasses}
+                      onClick={() => this.toggleTheme()}
+                    >
+                      {darkModeIcon}
+                    </button>
                   </li>
                 </ul>
               </div>
