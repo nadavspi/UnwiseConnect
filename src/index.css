@@ -389,10 +389,6 @@ td.col--budget:not(:empty)::after {
   margin-right: 5px;
 }
 
-.dark .btn-settings span {
-  color: #C8D1D9;
-}
-
 .dark.btn-dark-mode,
 .dark.btn-dark-mode:hover,
 .dark.btn-dark-mode:focus,
@@ -476,7 +472,12 @@ td.col--budget:not(:empty)::after {
   transition: .3s;
 }
 
-.dark .table-striped {
+.dark .table-striped,
+.dark .btn-settings span,
+.dark .dispatch-fields .form-group *,
+.dark .ticket-copy span,
+.dark .pagination .active a,
+.dark label[for="toggl-api"] {
   color: #C8D1D9;
 }
 
@@ -512,10 +513,6 @@ td.col--budget:not(:empty)::after {
   background-color: #151a23;
   border-color: #30363C;
   z-index: 2;
-}
-
-.dark .dispatch-fields .form-group * {
-  color: #C8D1D9;
 }
 
 .dark .ToggleProjects__project {
@@ -558,10 +555,6 @@ td.col--budget:not(:empty)::after {
   margin-left: 5px;
 }
 
-.dark .ticket-copy span {
-  color: #C8D1D9;
-}
-
 .dark .ticket--overbudget .col--budget,
 .dark .ticket--nearbudget .col--budget {
   color: #0E1117;
@@ -578,12 +571,8 @@ td.col--budget:not(:empty)::after {
   border-color: #30363C;
 }
 
-.dark .pagination .active a,
-.dark label[for="toggl-api"] {
-  color: #C8D1D9;
-}
-
-.dark .visibility-label {
+.dark .visibility-label,
+.dark .dispatch-fields .form-group label {
   display: flex;
   align-items: center;
 }
