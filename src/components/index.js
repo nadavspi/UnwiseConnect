@@ -58,6 +58,7 @@ class App extends Component {
     } else {
       localStorage.setItem('theme', 'light');
     }
+    this.props.dispatch(subscribe());
   }
      
   componentWillUnmount () {
