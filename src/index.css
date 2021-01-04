@@ -386,6 +386,22 @@ td.col--budget:not(:empty)::after {
   height: 33px;
 }
 
+.dark .json-string {
+  color: #FD971F;
+}
+
+.dark .json-key {
+  color: #F92672;
+}
+
+.dark .json-boolean {
+  color: #AC81FE;
+}
+
+.dark .json-pretty {
+  background-color: #0E1117;
+}
+
 .dark.btn-dark-mode svg {
   fill: #C8D1D9;
 }
