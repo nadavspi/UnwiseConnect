@@ -8,6 +8,7 @@ class CreateTicket extends PureComponent {
     description: '',
     expanded: false,
     hasCompletedTicket: false,
+    initialDescription: '',
     phases: [],
     phaseValue: '',
     projects: [],
@@ -40,7 +41,7 @@ class CreateTicket extends PureComponent {
       project: { id: this.state.selectedProject[0].id },
       phase: { id: this.state.selectedPhase[0].id },
       budgetHours: this.state.budget,
-      initialDescription: '',
+      initialDescription: this.state.initialDescription,
     })
 
     // @todo allow service ticket creation
@@ -50,7 +51,7 @@ class CreateTicket extends PureComponent {
       company: { id: this.state.selectedProject[0].companyId },
       agreement: '', // where is this?
       budgetHours: this.state.budget,
-      initialDescription: '',
+      initialDescription: this.state.initialDescription,
     })
     
     if (this.state.ticketType === 'project') {
@@ -209,18 +210,19 @@ class CreateTicket extends PureComponent {
                   )}
                   {this.state.budget > 0 && (
                     <div>
-                      <label htmlFor="description">Description</label>
+                      <label htmlFor="initial-description">Description</label>
                       <textarea
-                        id="description"
+                        id="initial-description"
                         rows="4"
                         cols="50"
                         className="form-control"
-                        onChange={(e) => e.target.value.length > 5 && this.setState({ description: true })}
+                        placeholder="This is optional"
+                        onChange={(e) => e.target.value.length > 5 && this.setState({ initialDescription: e.target.value })}
                       >
                       </textarea>
                     </div>
                   )}
-                  {(this.state.summary && this.state.budget && this.state.description) && (
+                  {(this.state.summary && this.state.budget) && (
                     <button
                       type="button"
                       onClick={() => {
