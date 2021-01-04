@@ -150,6 +150,7 @@ class CreateTicket extends PureComponent {
                     }
                     inputProps={{ className: "autocomplete-input" }}
                     value={this.state.projectValue}
+                    onChange={e => this.setState({ projectValue: e.target.value })}
                     onSelect={value => {
                       this.setState({
                         projectValue: value,
@@ -174,6 +175,7 @@ class CreateTicket extends PureComponent {
                         }
                         value={this.state.phaseValue}
                         inputProps={{ className: "autocomplete-input" }}
+                        onChange={e => this.setState({ phaseValue: e.target.value })}
                         onSelect={value => {
                           this.setState({
                             phaseValue: value,
