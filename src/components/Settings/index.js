@@ -6,17 +6,11 @@ import { connect } from 'react-redux';
 import { logout } from '../../actions/auth'
 
 class Settings extends Component {
-  constructor() {
-    super();
-
-    this.saveToggl = this.saveToggl.bind(this);
-  }
-
-  saveToggl(apiKey) {
+  saveToggl = (apiKey) => {
     this.props.dispatch(togglActions.saveKey(apiKey));
   }
 
-  startTimer() {
+  startTimer = () => {
     this.props.dispatch(togglActions.startTimer({
       description: 'Test by UnwiseConnect',
     }));

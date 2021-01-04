@@ -17,7 +17,7 @@ class SearchColumns extends React.Component {
     );
   }
 
-  renderFilter(column) {
+  renderFilter = (column) => {
     if (column.filterType === 'dropdown') {
       return this.renderDropdownFilter(column);
     } else if (column.filterType === 'none') {
@@ -28,7 +28,7 @@ class SearchColumns extends React.Component {
     return this.renderTextFilter(column);
   }
 
-  renderTextFilter(column) {
+  renderTextFilter = (column) => {
     const onQueryChange = (event) => {
       this.props.onChange({
         ...this.props.query,

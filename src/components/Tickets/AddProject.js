@@ -1,17 +1,11 @@
 import React, { Component } from 'react';
 
 export default class AddProject extends Component {
-  constructor() {
-    super();
+  state = {
+    projectId: '',
+  };
 
-    this.state = {
-      projectId: '',
-    };
-
-    this.submit = this.submit.bind(this);
-  }
-
-  submit(e) {
+  submit = (e) => {
     e.preventDefault();
     this.props.onAdd(this.state.projectId);
   }

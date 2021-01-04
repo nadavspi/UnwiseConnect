@@ -2,27 +2,21 @@ import PropTypes from 'prop-types';
 import React, { Component } from 'react';
 
 export default class Toggl extends Component {
-  constructor() {
-    super();
+  state = {
+    apiKey: '',
+  };
 
-    this.state = {
-      apiKey: '',
-    };
-
-    this.submit = this.submit.bind(this);
-  }
-
-  componentDidMount() {
+  componentDidMount = () => {
     this.setState({ apiKey: this.props.apiKey || '' });
   }
 
-  componentWillReceiveProps(nextProps) {
+  componentWillReceiveProps = (nextProps) => {
     if (this.props.apiKey !== nextProps.apiKey) {
       this.setState({ apiKey: nextProps.apiKey });
     }
   }
 
-  submit(e) {
+  submit = (e) => {
     e.preventDefault();
     this.props.onSubmit(this.state.apiKey);
   }

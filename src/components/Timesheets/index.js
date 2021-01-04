@@ -4,15 +4,11 @@ import { connect } from 'react-redux';
 import { search } from '../../actions/timesheets';
 
 class Timesheets extends Component {
-  constructor() {
-    super();
+  state = {
+    members: '',
+  };
 
-    this.state = {
-      members: '',
-    };
-  }
-
-  findEntries(e) {
+  findEntries = (e) => {
     this.props.dispatch(search({ members: this.state.members }));
     e.preventDefault();
   }

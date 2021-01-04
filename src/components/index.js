@@ -34,34 +34,11 @@ function PublicRoute ({component: Component, authed, ...rest}) {
 }
 
 class App extends Component {
-  state = {
-    theme: localStorage.getItem('theme') || 'light'
-  }
-
-  toggleTheme = () => {
-    const theme = this.state.theme == 'dark' ? 'light' : 'dark';
-
-    this.setState({
-      theme
-    }, () => {
-      localStorage.setItem('theme', this.state.theme);
-    });
-  }
-
-  componentDidMount() {
-    if ('theme' in localStorage) {
-      if (localStorage.getItem('theme') === 'dark') {
-        this.setState({ theme: 'dark' });
-      } else {
-        this.setState({ theme: 'light' });
-      }
-    } else {
-      localStorage.setItem('theme', 'light');
-    }
+  componentDidMount = () => {
     this.props.dispatch(subscribe());
   }
-     
-  componentWillUnmount () {
+
+  componentWillUnmount = () => {
     this.props.dispatch(unsubscribe());
   }
 
