@@ -110,7 +110,7 @@ class Tickets extends Component {
           </div>
           <div className="row panel-body">
             <div className="panel-body projects__wrapper">
-              <h2>{`Active Projects (${this.projects().length})`}</h2>
+              <h2>Active Projects ({this.projects().length})</h2>
               <Projects
                 projects={this.projects()}
                 searchProject={({ company, project }) => this.search({
