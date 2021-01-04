@@ -657,3 +657,32 @@ td.col--budget:not(:empty)::after {
   border-radius: 5px;
   color: #57A6FF;
 }
+
+.dark .glyphicon-info-sign:hover,
+.dark .glyphicon-info-sign:focus {
+  background-color: #151a23;
+  color: #C8D1D9;
+  border-color: #30363C;
+}
+
+.dark-modal .ReactModal__Content {
+  background-color: #161B22 !important;
+  border-color: #30363C !important;
+}
+
+.dark-modal .ReactModal__Content * {
+  color: #C8D1D9 !important;
+}
+
+.dark-modal .modal-navbar-settings {
+  border: none;
+}
+
+.dark-modal .btn-modal-nav {
+  background-color: transparent;
+  color: #57A6FF !important;
+}
+
+.dark-modal .table-striped > tbody > tr:nth-of-type(odd) {
+  background-color: #0E1117;
+}

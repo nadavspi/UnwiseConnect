@@ -106,3 +106,12 @@ export const toggleColumn = payload => {
     });
   };
 }
+
+export const setTheme = (theme) => {
+  return (dispatch) => {
+    dispatch({
+      type: ActionTypes.THEME,
+      payload: theme,
+    });
+  };
+}
