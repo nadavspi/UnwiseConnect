@@ -61,7 +61,7 @@ export default class Queue extends Component {
     return (
       <div>
         <button 
-          className="btn btn-default"
+          className="btn btn-default btn-queue"
           onClick={() => this.setState({ expanded: !this.state.expanded })}
           style={{ marginTop: '20px', marginBottom: '20px' }}
           type="button"
@@ -85,6 +85,7 @@ export default class Queue extends Component {
                   <ol 
                     ref={provided.innerRef} 
                     style={snapshot.isDraggingOver ? { listStyleType: 'none' } : {} }
+                    className="queue-list"
                     {...provided.droppableProps}
                   >
                     {this.props.selectedTickets.map((ticket, index) => (

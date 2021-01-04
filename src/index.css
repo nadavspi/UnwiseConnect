@@ -621,6 +621,32 @@ td.col--budget:not(:empty)::after {
   align-items: center;
 }
 
+.dark .btn-queue:hover,
+.dark .btn-queue:focus {
+  background-color: #161B22;
+}
+
+.dark .queue-list * {
+  color: #C8D1D9;
+}
+
+.dark .queue-list li div {
+  margin-bottom: 10px;
+}
+
+.dark .queue-list .btn-link {
+  margin-left: 5px;
+  margin-top: -3px;
+  border-radius: 4px;
+  height: 33px;
+}
+
+.dark .queue-list .btn-link:hover,
+.dark .queue-list .btn-link:focus {
+  border: 1px solid #30363C;
+  text-decoration: none;
+}
+
 .dark .nav > li > a {
   margin-right: 5px;
 }
