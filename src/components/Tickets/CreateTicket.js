@@ -1,37 +1,50 @@
 import React, { PureComponent } from 'react';
 import Autocomplete from 'react-autocomplete';
+import { createTicket } from '../../helpers/cw';
 
 class CreateTicket extends PureComponent {
-  state = {
-    expanded: false,
-    ticketType: 'default',
-    phases: [],
-    projects: [],
-    value: '',
-    phaseValue: '',
-    projectValue: '',
-    hasSelectedProject: false,
-    hasSelectedPhase: false,
-    hasSummary: false,
-    hasDescription: false,
-    summary: '',
+  emptyTicketState = {
     budget: '',
-    newTicketDetails: '',
+    description: '',
+    expanded: false,
     hasCompletedTicket: false,
+    phases: [],
+    phaseValue: '',
+    projects: [],
+    projectValue: '',
+    selectedPhase: {},
+    selectedProject: {},
+    summary: '',
+    ticketType: 'default',
+  }
+
+  state = {
+    ...this.emptyTicketState
   }
 
   componentDidMount = () => {
-    this.getPhases();
     this.getProjects();
   }
 
   componentDidUpdate = (prevProps) => {
     if (prevProps.projects !== this.props.projects) {
-      this.getPhases();
       this.getProjects();      
     }
   }
-  
+
+  createNewTicket = () => {
+    const ticketDetails = ({
+      summary: this.state.summary,
+      recordType: 'ProjectTicket',
+      company: { id: this.state.selectedProject[0].companyId },
+      project: { id: this.state.selectedProject[0].id },
+      phase: { id: this.state.selectedPhase[0].id },
+      budgetHours: this.state.budget,
+      initialDescription: '',
+    })
+
+    createTicket(ticketDetails);
+  }
 
   expandAddTicketForm = () => {
     this.setState({
@@ -45,16 +58,18 @@ class CreateTicket extends PureComponent {
     })
   }
 
-  getPhases = () => {
+  getPhases = (selectedProject) => {
     let phases = [];
 
     this.props.tickets.map(ticket => {
-      phases.push({
-        path: ticket.phase.path,
-        id: ticket.id
-      });
+      if (selectedProject[0].id === ticket.project.id) {
+        phases.push({
+          path: ticket.phase.path,
+          id: ticket.phase.id
+        });
+      }
     });
-    
+
     this.setState({
       phases
     });
@@ -65,13 +80,21 @@ class CreateTicket extends PureComponent {
 
     this.props.projects.map(project => {
       projects.push({
-        name: project.company.name,
-        id: project.company.id
+        name: `${project.company.name} — ${project.project.name}`,
+        id: project.project.id,
+        companyId: project.company.id
       });
     });
-    
+
     this.setState({
       projects
+    });
+  }
+
+  resetTicketDetails = () => {
+    this.setState({
+      ...this.emptyTicketState,
+      expanded: true
     });
   }
 
@@ -110,17 +133,16 @@ class CreateTicket extends PureComponent {
                     }
                     inputProps={{ className: "btn btn-default" }}
                     value={this.state.projectValue}
-                    onChange={e => this.setState({ projectValue: e.target.value })}
                     onSelect={value => {
                       this.setState({
                         projectValue: value,
-                        hasSelectedProject: true
-                      })
+                        selectedProject: this.state.projects.filter(project => project.name === value),
+                      }, this.getPhases(this.state.projects.filter(project => project.name === value)))
                     }}
                   />
                 </div>
                 <div>
-                  {this.state.hasSelectedProject && (
+                  {this.state.projectValue && (
                     <React.Fragment>
                       <label htmlFor="phases">Phase</label><br></br>
                       <Autocomplete
@@ -135,29 +157,28 @@ class CreateTicket extends PureComponent {
                         }
                         value={this.state.phaseValue}
                         inputProps={{ className: "btn btn-default" }}
-                        onChange={e => this.setState({ phaseValue: e.target.value })}
                         onSelect={value => {
                           this.setState({
                             phaseValue: value,
-                            hasSelectedPhase: true
+                            selectedPhase: this.state.phases.filter(phase => phase.path === value),
                           })
                         }}
                       />
                     </React.Fragment>
                   )}
                 </div>
-                  {this.state.hasSelectedPhase && (
+                  {this.state.phaseValue && (
                     <div>
                       <label htmlFor="summary">Summary</label>
                       <input
                         className="form-control"
                         type="text"
                         id="summary"
-                        onChange={() => this.setState({ hasSummary: true })}
+                        onChange={(e) => this.setState({ summary: e.target.value })}
                       ></input>
                     </div>
                   )}
-                  {this.state.hasSummary && (
+                  {this.state.summary && (
                     <div>
                       <label htmlFor="budget-hours">Budget Hours</label>
                       <input
@@ -178,18 +199,18 @@ class CreateTicket extends PureComponent {
                         rows="4"
                         cols="50"
                         className="form-control"
-                        onChange={(e) => {
-                          if (e.target.value.length && e.target.value.length > 5) {
-                            this.setState({ hasDescription: true })
-                          }
-                        }}>
+                        onChange={(e) => e.target.value.length > 5 && this.setState({ description: true })}
+                      >
                       </textarea>
                     </div>
                   )}
-                  {(this.state.hasSelectedProject && this.state.hasSelectedPhase && this.state.hasSummary && this.state.budget && this.state.hasDescription) && (
+                  {(this.state.summary && this.state.budget && this.state.description) && (
                     <button
                       type="button"
-                      onClick={() => this.setState({ hasCompletedTicket: true })}
+                      onClick={() => {
+                        this.setState({ hasCompletedTicket: true })
+                        this.createNewTicket();
+                      }}
                       className="btn btn-default"
                     >
                       Create Ticket
@@ -197,12 +218,12 @@ class CreateTicket extends PureComponent {
                   )}
                   {(this.state.hasCompletedTicket && (
                     <div>
-                      <p>You've created a new <strong>{`${this.state.ticketType}`}</strong> ticket</p>
+                      <p>You've created a new <strong>{`${this.state.ticketType}`}</strong> ticket: {'ticketNumber'}</p>
                       <p>{`Project: ${this.state.projectValue}`}</p>
                       <p>{`Phase: ${this.state.phaseValue}`}</p>
-                      <p>{`Budget: ${this.state.budget}`}</p>
+                      <p>{`Budget: ${this.state.budget} hours`}</p>
                       <p>{`Summary: ${this.state.summary}`}</p>
-                      <p>Ticket <strong>{`${'ticketNumber'}`}</strong></p>
+                      <button type="button" onClick={() => this.resetTicketDetails()}>Create another ticket</button>
                     </div>
                   ))}
               </React.Fragment>
