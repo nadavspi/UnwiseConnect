@@ -595,9 +595,13 @@ td.col--budget:not(:empty)::after {
   margin-left: 5px;
 }
 
-.dark .ticket--overbudget .col--budget,
+.dark .ticket--overbudget .col--budget {
+  background-color: #551e32;
+}
+
 .dark .ticket--nearbudget .col--budget {
   color: #0E1117;
+  background-color: #f6c44d;
 }
 
 .dark .dropdown-menu hr {
