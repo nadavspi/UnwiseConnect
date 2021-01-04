@@ -33,7 +33,7 @@ class CreateTicket extends PureComponent {
   }
 
   createNewTicket = () => {
-    const ticketDetails = ({
+    const projectTicketDetails = ({
       summary: this.state.summary,
       recordType: 'ProjectTicket',
       company: { id: this.state.selectedProject[0].companyId },
@@ -43,8 +43,23 @@ class CreateTicket extends PureComponent {
       initialDescription: '',
     })
 
-    createTicket(ticketDetails);
-  }
+    const serviceTicketDetails = ({
+      summary: this.state.summary,
+      recordType: 'ServiceTicket',
+      company: { id: this.state.selectedProject[0].companyId },
+      agreement: { id: this.state.selectedProject[0].id },
+      budgetHours: this.state.budget,
+      initialDescription: '',
+    })
+    
+    if (this.state.ticketType === 'project') {
+      createTicket(projectTicketDetails);
+    }
+
+    if (this.state.ticketType === 'service') {
+      createTicket(serviceTicketDetails);
+    }
+  };
 
   expandAddTicketForm = () => {
     this.setState({
