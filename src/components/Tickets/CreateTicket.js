@@ -9,6 +9,7 @@ class CreateTicket extends PureComponent {
     expanded: false,
     hasCompletedTicket: false,
     initialDescription: '',
+    newTicketId: '',
     phases: [],
     phaseValue: '',
     projects: [],
@@ -55,7 +56,11 @@ class CreateTicket extends PureComponent {
     })
     
     if (this.state.ticketType === 'project') {
-      createTicket(projectTicketDetails);
+      createTicket(projectTicketDetails).then(res => {
+        this.setState({
+          newTicketId: res.result.id
+        })
+      })
     }
 
     if (this.state.ticketType === 'service') {
@@ -241,7 +246,15 @@ class CreateTicket extends PureComponent {
                   )}
                   {(this.state.hasCompletedTicket && (
                     <div>
-                      <p>You've created a new <strong>{`${this.state.ticketType}`}</strong> ticket: {'ticketNumber'}</p>
+                      <p>You've created a new {`${this.state.ticketType}`} ticket:
+                       <a
+                        href={process.env.REACT_APP_CONNECTWISE_SERVER_URL + `/services/system_io/Service/fv_sr100_request.rails?service_recid=&${this.state.newTicketId}companyName=sd`}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                      >
+                        {` #${this.state.newTicketId}`}
+                        </a>
+                      </p>
                       <p>{`Project: ${this.state.projectValue}`}</p>
                       <p>{`Phase: ${this.state.phaseValue}`}</p>
                       <p>{`Budget: ${this.state.budget} hours`}</p>
