@@ -45,12 +45,11 @@ class App extends Component {
   render() {
     const darkModeBtnClasses = classnames({
       'btn btn-default btn-dark-mode': true,
-      'dark': this.state.theme === 'dark',
     });
     const isAuthed = this.props.authed;
     return this.props.loading === true ? <span className="loading"></span> : (
       <BrowserRouter>
-        <div className={`page ${this.state.theme}`}>
+        <div className="page">
           {isAuthed &&
             <nav className="navbar navbar-uc navbar-static-top">
               <div className="container">
@@ -82,7 +81,6 @@ class App extends Component {
                     <button
                       type="button"
                       className={darkModeBtnClasses}
-                      onClick={() => this.toggleTheme()}
                       aria-label="Toggle Dark Mode"
                     >
                       {darkModeIcon}
