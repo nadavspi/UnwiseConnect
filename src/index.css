@@ -343,14 +343,20 @@ td.col--budget:not(:empty)::after {
 .create-ticket-form input,
 .create-ticket-form select {
   height: 40px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
 }
 
 .create-ticket-form label {
-  margin-top: 10px;
+  margin-top: 15px;
 }
 
 .create-ticket-form input[type="number"] {
   max-width: 80px;
+}
+
+.create-ticket-form .btn-submit {
+  margin-top: 15px;
 }
 
 .autocomplete-field div {
@@ -360,6 +366,11 @@ td.col--budget:not(:empty)::after {
 
 .autocomplete-field div input {
   width: 100%;
+  padding-left: 15px;
+  padding-right: 10px;
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
 }
 
 .autocomplete-field input[aria-expanded="true"] + div {
@@ -379,4 +390,3 @@ td.col--budget:not(:empty)::after {
 .autocomplete-field input[aria-expanded="true"] + div div:focus {
   background-color: #f5f5f5 !important;
 }
-

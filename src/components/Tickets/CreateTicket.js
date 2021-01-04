@@ -144,7 +144,7 @@ class CreateTicket extends PureComponent {
                     getItemValue={item => item.name}
                     shouldItemRender={(item, value) => item.name.toLowerCase().indexOf(value.toLowerCase()) > -1}
                     renderItem={(item, highlighted) =>
-                      <div key={`${item.id}-${item.name}`} style={{ backgroundColor: highlighted ? '#f5f5f5' : 'transparent'}}>
+                      <div key={`${item.id}-${item.name}`}>
                         {item.name}
                       </div>
                     }
@@ -168,7 +168,7 @@ class CreateTicket extends PureComponent {
                         getItemValue={item => item.path}
                         shouldItemRender={(item, value) => item.path.toLowerCase().indexOf(value.toLowerCase()) > -1}
                         renderItem={(item, highlighted) =>
-                          <div key={`${item.id}-${item.name}`} style={{ backgroundColor: highlighted ? '#f5f5f5' : 'transparent'}}>
+                          <div key={`${item.id}-${item.name}`}>
                             {item.path}
                           </div>
                         }
@@ -192,6 +192,7 @@ class CreateTicket extends PureComponent {
                         type="text"
                         id="summary"
                         onChange={(e) => this.setState({ summary: e.target.value })}
+                        required
                       ></input>
                     </div>
                   )}
@@ -203,6 +204,7 @@ class CreateTicket extends PureComponent {
                         id="budget-hours"
                         className="form-control"
                         onChange={(e) => this.setState({ budget: e.target.value })}
+                        required
                       >
                       </input>
                       {this.state.budget > 10 && (<p>Warning: This is a higher than normal budget</p>)}
@@ -229,7 +231,7 @@ class CreateTicket extends PureComponent {
                         this.setState({ hasCompletedTicket: true })
                         this.createNewTicket();
                       }}
-                      className="btn btn-default"
+                      className="btn btn-submit"
                     >
                       Create Ticket
                     </button>
