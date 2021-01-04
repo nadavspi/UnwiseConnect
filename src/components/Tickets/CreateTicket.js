@@ -43,11 +43,12 @@ class CreateTicket extends PureComponent {
       initialDescription: '',
     })
 
+    // @todo allow service ticket creation
     const serviceTicketDetails = ({
       summary: this.state.summary,
       recordType: 'ServiceTicket',
       company: { id: this.state.selectedProject[0].companyId },
-      agreement: { id: this.state.selectedProject[0].id },
+      agreement: '', // where is this?
       budgetHours: this.state.budget,
       initialDescription: '',
     })
@@ -134,7 +135,7 @@ class CreateTicket extends PureComponent {
             </select>
             {this.state.ticketType === 'project' ? (
               <React.Fragment>
-                <div>
+                <div className="autocomplete-field">
                   <label htmlFor="projects">Project</label><br></br>
                   <Autocomplete
                     id="projects"
@@ -146,7 +147,7 @@ class CreateTicket extends PureComponent {
                         {item.name}
                       </div>
                     }
-                    inputProps={{ className: "btn btn-default" }}
+                    inputProps={{ className: "autocomplete-input" }}
                     value={this.state.projectValue}
                     onSelect={value => {
                       this.setState({
@@ -156,7 +157,7 @@ class CreateTicket extends PureComponent {
                     }}
                   />
                 </div>
-                <div>
+                <div className="autocomplete-field">
                   {this.state.projectValue && (
                     <React.Fragment>
                       <label htmlFor="phases">Phase</label><br></br>
@@ -171,7 +172,7 @@ class CreateTicket extends PureComponent {
                           </div>
                         }
                         value={this.state.phaseValue}
-                        inputProps={{ className: "btn btn-default" }}
+                        inputProps={{ className: "autocomplete-input" }}
                         onSelect={value => {
                           this.setState({
                             phaseValue: value,
