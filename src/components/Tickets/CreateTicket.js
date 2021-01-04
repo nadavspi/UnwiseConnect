@@ -39,7 +39,7 @@ class CreateTicket extends PureComponent {
       recordType: 'ProjectTicket',
       company: { id: this.state.selectedProject[0].companyId },
       project: { id: this.state.selectedProject[0].id },
-      phase: { id: this.state.selectedPhase[0].id },
+      phase: { id: this.state.selectedPhase[0].phaseId },
       budgetHours: this.state.budget,
       initialDescription: this.state.initialDescription,
     })
@@ -82,7 +82,8 @@ class CreateTicket extends PureComponent {
       if (selectedProject[0].id === ticket.project.id) {
         phases.push({
           path: ticket.phase.path,
-          id: ticket.phase.id
+          phaseId: ticket.phase.id,
+          ticketId: ticket.id
         });
       }
     });
@@ -169,7 +170,7 @@ class CreateTicket extends PureComponent {
                         getItemValue={item => item.path}
                         shouldItemRender={(item, value) => item.path.toLowerCase().indexOf(value.toLowerCase()) > -1}
                         renderItem={(item, highlighted) =>
-                          <div key={`${item.id}-${item.name}`}>
+                          <div key={`${item.phaseId}-${item.ticketId}`}>
                             {item.path}
                           </div>
                         }
