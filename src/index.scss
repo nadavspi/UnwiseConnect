@@ -1,4 +1,9 @@
 $ease-out-circ: cubic-bezier(0.075, 0.820, 0.165, 1.000);
+$dark__text-color: #C8D1D9;
+$dark__primary-color: #090E13;
+$dark__border-color: #30363C;
+$dark__secondary-color: #161B22;
+$dark__link-color: #57A6FF;
 
 @keyframes spin {
   from {
@@ -363,25 +368,25 @@ td.col--budget {
   h3,
   h4,
   h5 {
-    color: #C8D1D9;
+    color: $dark__text-color;
   }
 
   button {
-    background-color: #090E13;
-    color: #C8D1D9;
-    border: 1px solid #30363C;
+    background-color: $dark__primary-color;
+    color: $dark__text-color;
+    border: 1px solid $dark__border-color;
   }
 
   select {
-    background-color: #090E13;
-    color: #C8D1D9;
-    border: 1px solid #30363C;
+    background-color: $dark__primary-color;
+    color: $dark__text-color;
+    border: 1px solid $dark__border-color;
   }
 
   input {
-    background-color: #090E13;
-    color: #C8D1D9;
-    border: 1px solid #30363C;
+    background-color: $dark__primary-color;
+    color: $dark__text-color;
+    border: 1px solid $dark__border-color;
     border-radius: 5px;
     height: 33px;
   }
@@ -408,7 +413,7 @@ td.col--budget {
     margin-right: 5px;
 
     span {
-      color: #C8D1D9;
+      color: $dark__text-color;
     }
   }
 
@@ -430,14 +435,14 @@ td.col--budget {
   }
 
   .navbar {
-    background-color: #161B22;
-    border-color: #30363C;
+    background-color: $dark__secondary-color;
+    border-color: $dark__border-color;
     box-shadow: none;
   }
 
   .panel-body {
-    background-color: #161B22;
-    border-color: #30363C;
+    background-color: $dark__secondary-color;
+    border-color: $dark__border-color;
     box-shadow: none;
     border: none;
   }
@@ -452,7 +457,7 @@ td.col--budget {
 
   .projects.list-group {
     background-color: transparent;
-    border-color: #30363C;
+    border-color: $dark__border-color;
     border-radius: 5px;
 
     &:hover {
@@ -460,15 +465,15 @@ td.col--budget {
     }
 
     button {
-      border-color: #30363C !important;
+      border-color: $dark__border-color !important;
 
       &:hover,
       &:focus,
       &:active {
         background-color: #151a23 !important;
-        color: #C8D1D9 !important;
+        color: $dark__text-color !important;
         text-decoration: none;
-        border-color: #30363C;
+        border-color: $dark__border-color;
         transition: .3s;
       }
     }
@@ -484,9 +489,9 @@ td.col--budget {
     &:focus,
     &:active {
       background-color: #151a23 !important;
-      color: #C8D1D9 !important;
+      color: $dark__text-color !important;
       text-decoration: none;
-      border-color: #30363C;
+      border-color: $dark__border-color;
       transition: .3s;
     }
   }
@@ -494,9 +499,9 @@ td.col--budget {
   .open {
     > .btn.dropdown-toggle {
       background-color: #151a23 !important;
-      color: #C8D1D9 !important;
+      color: $dark__text-color !important;
       text-decoration: none;
-      border-color: #30363C;
+      border-color: $dark__border-color;
       transition: .3s;
     }
   }
@@ -511,22 +516,22 @@ td.col--budget {
   }
 
   .column-filter {
-    border-color: #30363C !important;
+    border-color: $dark__border-color !important;
   }
 
   .table-bordered {
-    border-color: #30363C !important;
+    border-color: $dark__border-color !important;
     transition: .3s;
 
     th,
     tr,
     td {
-      border-color: #30363C !important;
+      border-color: $dark__border-color !important;
     }
   }
 
   .table-striped {
-    color: #C8D1D9;
+    color: $dark__text-color;
 
     > tbody {
       > tr {
@@ -544,12 +549,12 @@ td.col--budget {
   .dispatch-fields {
     .form-group {
       * {
-        color: #C8D1D9;
+        color: $dark__text-color;
       }
 
       div {
         background-color: #151a23;
-        border-color: #30363C;
+        border-color: $dark__border-color;
         z-index: 2;
       }
 
@@ -562,73 +567,73 @@ td.col--budget {
 
   .ticket-copy {
     span {
-      color: #C8D1D9;
+      color: $dark__text-color;
     }
   }
 
   .pagination {
     .active {
       a {
-        color: #C8D1D9;
+        color: $dark__text-color;
       }
     }
 
     > li {
       > a {
         background-color: #151a23;
-        border-color: #30363C;
+        border-color: $dark__border-color;
         z-index: 2;
 
         &:hover {
           background-color: #0E1117;
-          border-color: #30363C;
+          border-color: $dark__border-color;
         }
       }
 
       > span {
         background-color: #151a23;
-        border-color: #30363C;
+        border-color: $dark__border-color;
         z-index: 2;
 
         &:hover {
           background-color: #0E1117;
-          border-color: #30363C;
+          border-color: $dark__border-color;
         }
       }
     }
   }
 
   label[for="toggl-api"] {
-    color: #C8D1D9;
+    color: $dark__text-color;
   }
 
   .column-filter-dropdown {
     div {
       font-size: 14px;
       background-color: #151a23;
-      color: #C8D1D9;
-      border-color: #30363C;
+      color: $dark__text-color;
+      border-color: $dark__border-color;
 
       &:hover {
-        border-color: #30363C;
+        border-color: $dark__border-color;
         cursor: pointer;
       }
     }
   }
 
   .dropdown-menu.dropdown-menu-right {
-    border-color: #30363C !important;
+    border-color: $dark__border-color !important;
     background-color: #0E1117;
   }
 
   .form-group.project-search {
     background-color: #151a23;
-    border-color: #30363C;
+    border-color: $dark__border-color;
     z-index: 2;
   }
 
   .ToggleProjects__project {
-    border-bottom: 1px solid #30363C !important;
+    border-bottom: 1px solid $dark__border-color !important;
     background-color: #0E1117;
 
     &:hover {
@@ -651,7 +656,7 @@ td.col--budget {
       a {
         &:hover,
         &:focus {
-          color: #57A6FF;
+          color: $dark__link-color;
         }
       }
     }
@@ -662,9 +667,9 @@ td.col--budget {
 
       &:hover,
       &:focus {
-        color: #57A6FF;
+        color: $dark__link-color;
         text-decoration: none;
-        border: 1px solid #30363C;
+        border: 1px solid $dark__border-color;
       }
     }
   }
@@ -689,7 +694,7 @@ td.col--budget {
 
       &:hover,
       &:focus {
-        color: #57A6FF;
+        color: $dark__link-color;
       }
     }
   }
@@ -716,13 +721,13 @@ td.col--budget {
 
     &:hover,
     &:focus {
-      background-color: #161B22;
+      background-color: $dark__secondary-color;
     }
   }
 
   .queue-list {
     * {
-      color: #C8D1D9;
+      color: $dark__text-color;
     }
 
     li {
@@ -739,7 +744,7 @@ td.col--budget {
 
       &:hover,
       &:focus {
-        border: 1px solid #30363C;
+        border: 1px solid $dark__border-color;
         text-decoration: none;
       }
     }
@@ -752,9 +757,9 @@ td.col--budget {
 
         &:hover,
         &:focus {
-          background-color: #30363C;
+          background-color: $dark__border-color;
           border-radius: 5px;
-          color: #57A6FF;
+          color: $dark__link-color;
         }
       }
     }
@@ -765,8 +770,8 @@ td.col--budget {
     &:hover,
     &:focus {
       background-color: #151a23;
-      color: #C8D1D9;
-      border-color: #30363C;
+      color: $dark__text-color;
+      border-color: $dark__border-color;
     }
   }
 }
@@ -775,7 +780,7 @@ td.col--budget {
   background-color: #333333;
 
   svg {
-    fill: #C8D1D9;
+    fill: $dark__text-color;
   }
 
   &:hover,
@@ -787,11 +792,11 @@ td.col--budget {
 
 .dark-modal {
   .ReactModal__Content {
-    background-color: #161B22 !important;
-    border-color: #30363C !important;
+    background-color: $dark__secondary-color !important;
+    border-color: $dark__border-color !important;
 
     * {
-      color: #C8D1D9 !important;
+      color: $dark__text-color !important;
     }
   }
 
@@ -801,7 +806,7 @@ td.col--budget {
 
   .btn-modal-nav {
     background-color: transparent;
-    color: #57A6FF !important;
+    color: $dark__link-color !important;
   }
 
   .table-striped {
