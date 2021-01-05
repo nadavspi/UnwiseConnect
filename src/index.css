@@ -330,6 +330,12 @@ td.col--budget:not(:empty)::after {
   }
 }
 
+.btn-expand {
+  position: absolute;
+  top: 100px;
+  right: 30px;
+}
+
 .ticket-modal input,
 .ticket-modal select {
   height: 40px;
