@@ -17,7 +17,7 @@ class CreateTicket extends PureComponent {
     selectedPhase: {},
     selectedProject: {},
     summary: '',
-    ticketType: 'default',
+    ticketType: 'project',
   }
 
   state = {
@@ -134,13 +134,6 @@ class CreateTicket extends PureComponent {
         </button>
         {this.state.expanded && (
           <form>
-            <label htmlFor="type">Type</label>
-            <select className="form-control" id="type" name="type" defaultValue={this.state.ticketType} onChange={this.selectTicketType}>
-              <option disabled value="default"> - Select Ticket Type - </option>
-              <option value="project">Project Ticket</option>
-              <option value="service">Service Ticket</option>
-            </select>
-            {this.state.ticketType === 'project' ? (
               <React.Fragment>
                 <div className="autocomplete-field">
                   <label htmlFor="projects">Project</label><br></br>
@@ -246,7 +239,7 @@ class CreateTicket extends PureComponent {
                   )}
                   {(this.state.hasCompletedTicket && (
                     <div>
-                      <p>You've created a new {`${this.state.ticketType}`} ticket:
+                      <p>You've created a new ticket:
                        <a
                         href={process.env.REACT_APP_CONNECTWISE_SERVER_URL + `/services/system_io/Service/fv_sr100_request.rails?service_recid=&${this.state.newTicketId}companyName=sd`}
                         target="_blank"
@@ -263,9 +256,6 @@ class CreateTicket extends PureComponent {
                     </div>
                   ))}
               </React.Fragment>
-            ) : (
-              console.log('service')
-            )}
           </form>
         )}
       </div>
