@@ -1,6 +1,7 @@
 $ease-out-circ: cubic-bezier(0.075, 0.820, 0.165, 1.000);
 $dark__text-color: #C8D1D9;
 $dark__primary-color: #090E13;
+$dark__hover__background-color: #151A23;
 $dark__border-color: #30363C;
 $dark__secondary-color: #161B22;
 $dark__link-color: #57A6FF;
@@ -470,7 +471,7 @@ td.col--budget {
       border-color: $dark__border-color !important;
 
       @include allPseudoClasses {
-        background-color: #151a23 !important;
+        background-color: $dark__hover__background-color !important;
         color: $dark__text-color !important;
         text-decoration: none;
         border-color: $dark__border-color;
@@ -486,7 +487,7 @@ td.col--budget {
     border-radius: 5px;
 
     @include allPseudoClasses {
-      background-color: #151a23 !important;
+      background-color: $dark__hover__background-color !important;
       color: $dark__text-color !important;
       text-decoration: none;
       border-color: $dark__border-color;
@@ -496,7 +497,7 @@ td.col--budget {
 
   .open {
     > .btn.dropdown-toggle {
-      background-color: #151a23 !important;
+      background-color: $dark__hover__background-color !important;
       color: $dark__text-color !important;
       text-decoration: none;
       border-color: $dark__border-color;
@@ -538,7 +539,7 @@ td.col--budget {
         }
 
         &:nth-of-type(odd) {
-          background-color: #151a23;
+          background-color: $dark__hover__background-color;
         }
       }
     }
@@ -551,7 +552,7 @@ td.col--budget {
       }
 
       div {
-        background-color: #151a23;
+        background-color: $dark__hover__background-color;
         border-color: $dark__border-color;
         z-index: 2;
       }
@@ -577,7 +578,7 @@ td.col--budget {
     > li {
       > a,
       > span {
-        background-color: #151a23;
+        background-color: $dark__hover__background-color;
         border-color: $dark__border-color;
         z-index: 2;
 
@@ -596,7 +597,7 @@ td.col--budget {
   .column-filter-dropdown {
     div {
       font-size: 14px;
-      background-color: #151a23;
+      background-color: $dark__hover__background-color;
       color: $dark__text-color;
       border-color: $dark__border-color;
 
@@ -613,7 +614,7 @@ td.col--budget {
   }
 
   .form-group.project-search {
-    background-color: #151a23;
+    background-color: $dark__hover__background-color;
     border-color: $dark__border-color;
     z-index: 2;
   }
@@ -623,7 +624,7 @@ td.col--budget {
     background-color: #0E1117;
 
     &:hover {
-      background-color: #151a23;
+      background-color: $dark__hover__background-color;
     }
   }
 
@@ -743,7 +744,7 @@ td.col--budget {
 
   .glyphicon-info-sign {
     @include hover {
-      background-color: #151a23;
+      background-color: $dark__hover__background-color;
       color: $dark__text-color;
       border-color: $dark__border-color;
     }
