@@ -255,13 +255,15 @@ class CreateTicket extends PureComponent {
                   {(this.state.hasCompletedTicket && (
                     <div>
                       <p>You've created a new ticket:
-                      <a
-                        href={process.env.REACT_APP_CONNECTWISE_SERVER_URL + `/services/system_io/Service/fv_sr100_request.rails?service_recid=&${this.state.newTicketId}companyName=sd`}
-                        target="_blank"
-                        rel="noopener noreferrer"
-                      >
-                        {` #${this.state.newTicketId}`}
-                        </a>
+                        {this.state.newTicketId && (
+                          <a
+                            href={process.env.REACT_APP_CONNECTWISE_SERVER_URL + `/services/system_io/Service/fv_sr100_request.rails?service_recid=&${this.state.newTicketId}companyName=sd`}
+                            target="_blank"
+                            rel="noopener noreferrer"
+                          >
+                            {` #${this.state.newTicketId}`}
+                          </a>
+                        )}
                       </p>
                       <p>{`Project: ${this.state.projectValue}`}</p>
                       <p>{`Phase: ${this.state.phaseValue}`}</p>
