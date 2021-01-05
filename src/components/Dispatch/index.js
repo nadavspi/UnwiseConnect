@@ -1,4 +1,4 @@
-import './dispatch.css';
+import './dispatch.scss';
 import * as UserActions from '../../actions/user';
 import * as resolve from 'table-resolver';
 import * as searchtabular from 'searchtabular';
