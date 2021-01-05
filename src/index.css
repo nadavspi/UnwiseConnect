@@ -672,11 +672,13 @@ td.col--budget:not(:empty)::after {
 }
 
 .dark-modal .ReactModal__Content {
+  /* override react-modal inline styling */
   background-color: #161B22 !important;
   border-color: #30363C !important;
 }
 
 .dark-modal .ReactModal__Content * {
+  /* override react-modal inline styling */
   color: #C8D1D9 !important;
 }
 
@@ -686,6 +688,7 @@ td.col--budget:not(:empty)::after {
 
 .dark-modal .btn-modal-nav {
   background-color: transparent;
+  /* override react-modal inline styling */
   color: #57A6FF !important;
 }
 
