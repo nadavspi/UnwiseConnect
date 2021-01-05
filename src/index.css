@@ -687,3 +687,8 @@ td.col--budget:not(:empty)::after {
 .dark-modal .table-striped > tbody > tr:nth-of-type(odd) {
   background-color: #0E1117;
 }
+
+.dark-modal .ticket-notes {
+  background-color: transparent;
+  border: none;
+}
