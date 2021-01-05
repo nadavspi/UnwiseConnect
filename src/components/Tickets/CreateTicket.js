@@ -206,6 +206,10 @@ class CreateTicket extends PureComponent {
                         className="form-control"
                         onChange={(e) => this.setState({ budget: e.target.value })}
                         required
+                        required
+                        min="0"
+                        step="0.25"
+                        placeholder="1"
                       >
                       </input>
                       {this.state.budget > 10 && (<p>Warning: This is a higher than normal budget</p>)}
