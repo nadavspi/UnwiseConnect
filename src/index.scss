@@ -369,22 +369,15 @@ td.col--budget {
     color: $dark__text-color;
   }
 
-  button {
-    background-color: $dark__primary-color;
-    color: $dark__text-color;
-    border: 1px solid $dark__border-color;
-  }
-
-  select {
+  button,
+  select,
+  input {
     background-color: $dark__primary-color;
     color: $dark__text-color;
     border: 1px solid $dark__border-color;
   }
 
   input {
-    background-color: $dark__primary-color;
-    color: $dark__text-color;
-    border: 1px solid $dark__border-color;
     border-radius: 5px;
     height: 33px;
   }
@@ -420,10 +413,8 @@ td.col--budget {
       border: none;
       box-shadow: none;
 
-      h4 {
-        small {
-          margin-left: 10px;
-        }
+      h4 small {
+        margin-left: 10px;
       }
     }
   }
@@ -570,24 +561,12 @@ td.col--budget {
   }
 
   .pagination {
-    .active {
-      a {
-        color: $dark__text-color;
-      }
+    .active a {
+      color: $dark__text-color;
     }
 
     > li {
-      > a {
-        background-color: #151a23;
-        border-color: $dark__border-color;
-        z-index: 2;
-
-        &:hover {
-          background-color: #0E1117;
-          border-color: $dark__border-color;
-        }
-      }
-
+      > a,
       > span {
         background-color: #151a23;
         border-color: $dark__border-color;
@@ -689,7 +668,6 @@ td.col--budget {
 
   .ticket-link {
     a {
-
       &:hover,
       &:focus {
         color: $dark__link-color;
@@ -716,7 +694,6 @@ td.col--budget {
   }
 
   .btn-queue {
-
     &:hover,
     &:focus {
       background-color: $dark__secondary-color;
@@ -728,10 +705,8 @@ td.col--budget {
       color: $dark__text-color;
     }
 
-    li {
-      div {
-        margin-bottom: 10px;
-      }
+    li div {
+      margin-bottom: 10px;
     }
 
     .btn-link {
@@ -764,7 +739,6 @@ td.col--budget {
   }
 
   .glyphicon-info-sign {
-
     &:hover,
     &:focus {
       background-color: #151a23;
