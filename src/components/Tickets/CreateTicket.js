@@ -194,6 +194,7 @@ class CreateTicket extends PureComponent {
                         id="summary"
                         onChange={(e) => this.setState({ summary: e.target.value })}
                         required
+                        autoComplete="off"
                       ></input>
                     </div>
                   )}
@@ -210,6 +211,7 @@ class CreateTicket extends PureComponent {
                         min="0"
                         step="0.25"
                         placeholder="1"
+                        autoComplete="off"
                       >
                       </input>
                       {this.state.budget > 10 && (<p>Warning: This is a higher than normal budget</p>)}
