@@ -353,19 +353,31 @@ td.col--budget:not(:empty)::after {
 
 .ticket-modal .btn-submit {
   margin-top: 15px;
+  margin-bottom: 20px;
 }
 
 .ticket-modal {
   max-width: 700px;
   width: 100%;
   left: 50%;
-  height: 700px;
-  transform: translateX(-50%);
+  height: 850px;
+  transform: translate(-50%, -30px);
+}
+
+.ticket-modal .ReactModal__Content {
+  box-shadow: 0 6px 12px rgba(0, 0, 0, .175);
 }
 
 .ticket-modal input,
 .autocomplete-field div {
   width: 100%;
+}
+
+.autocomplete-field > div > div {
+  /* override react-autocomplete */
+  left: 50% !important;
+  transform: translate(-50%, 20px) !important;
+  max-width: 500px;
 }
 
 .autocomplete-field div input {
