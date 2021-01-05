@@ -6,6 +6,21 @@ $dark__secondary-color: #161B22;
 $dark__link-color: #57A6FF;
 $c-dark-gray: #333333;
 
+@mixin hover {
+  &:hover,
+  &:focus {
+    @content;
+  }
+}
+
+@mixin allPseudoClasses {
+  &:hover,
+  &:focus,
+  &:active {
+    @content;
+  }
+}
+
 @keyframes spin {
   from {
     transform: rotate(0deg);
@@ -80,9 +95,7 @@ body {
   display: flex;
 
   .btn.btn-dark-mode {
-    &:focus,
-    &:hover,
-    &:active {
+    @include allPseudoClasses {
       outline: none;
       border: none;
     }
@@ -456,9 +469,7 @@ td.col--budget {
     button {
       border-color: $dark__border-color !important;
 
-      &:hover,
-      &:focus,
-      &:active {
+      @include allPseudoClasses {
         background-color: #151a23 !important;
         color: $dark__text-color !important;
         text-decoration: none;
@@ -474,9 +485,7 @@ td.col--budget {
     margin: 0 5px;
     border-radius: 5px;
 
-    &:hover,
-    &:focus,
-    &:active {
+    @include allPseudoClasses {
       background-color: #151a23 !important;
       color: $dark__text-color !important;
       text-decoration: none;
@@ -631,8 +640,7 @@ td.col--budget {
       margin-left: 10px;
 
       a {
-        &:hover,
-        &:focus {
+        @include hover {
           color: $dark__link-color;
         }
       }
@@ -642,8 +650,7 @@ td.col--budget {
       position: absolute;
       right: 20px;
 
-      &:hover,
-      &:focus {
+      @include hover {
         color: $dark__link-color;
         text-decoration: none;
         border: 1px solid $dark__border-color;
@@ -668,8 +675,7 @@ td.col--budget {
 
   .ticket-link {
     a {
-      &:hover,
-      &:focus {
+      @include hover {
         color: $dark__link-color;
       }
     }
@@ -694,8 +700,7 @@ td.col--budget {
   }
 
   .btn-queue {
-    &:hover,
-    &:focus {
+    @include hover {
       background-color: $dark__secondary-color;
     }
   }
@@ -715,8 +720,7 @@ td.col--budget {
       border-radius: 4px;
       height: 33px;
 
-      &:hover,
-      &:focus {
+      @include hover {
         border: 1px solid $dark__border-color;
         text-decoration: none;
       }
@@ -728,8 +732,7 @@ td.col--budget {
       > a {
         margin-right: 5px;
 
-        &:hover,
-        &:focus {
+        @include hover {
           background-color: $dark__border-color;
           border-radius: 5px;
           color: $dark__link-color;
@@ -739,8 +742,7 @@ td.col--budget {
   }
 
   .glyphicon-info-sign {
-    &:hover,
-    &:focus {
+    @include hover {
       background-color: #151a23;
       color: $dark__text-color;
       border-color: $dark__border-color;
@@ -755,9 +757,7 @@ td.col--budget {
     fill: $dark__text-color;
   }
 
-  &:hover,
-  &:focus,
-  &:active {
+  @include allPseudoClasses {
     background-color: $c-dark-gray;
   }
 }
