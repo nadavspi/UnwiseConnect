@@ -32,6 +32,23 @@ class CreateTicket extends PureComponent {
     if (prevProps.projects !== this.props.projects) {
       this.getProjects();      
     }
+
+    if (prevProps.selectedProject !== this.props.selectedProject) {
+      const { selectedProject } = this.props;
+      if (this.props.selectedProject['project.name']) {
+        this.resetTicketDetails();
+        this.getPhases(this.state.projects.filter(project => (
+          project.name === selectedProject['project.name'] &&
+          project.company.name === selectedProject['project.company']
+        )));
+
+        this.setState({
+          selectedProject: this.state.projects.filter(project => (
+            project.name === `${this.props.selectedProject['company.name']} — ${this.props.selectedProject['project.name']}`)
+          )
+        });
+      }
+    }
   }
 
   createNewTicket = () => {
@@ -80,11 +97,12 @@ class CreateTicket extends PureComponent {
     })
   }
 
-  getPhases = (selectedProject) => {
+  getPhases = () => {
     let phases = [];
+    const { selectedProject } = this.props;
 
     this.props.tickets.map(ticket => {
-      if (selectedProject[0].id === ticket.project.id) {
+      if (selectedProject['project.name'] === ticket.project.name && selectedProject['company.name'] === ticket.company.name) {
         phases.push({
           path: ticket.phase.path,
           phaseId: ticket.phase.id,
@@ -139,25 +157,11 @@ class CreateTicket extends PureComponent {
               <React.Fragment>
                 <div className="autocomplete-field">
                   <label htmlFor="projects">Project</label><br></br>
-                  <Autocomplete
+                  <input
                     id="projects"
-                    items={this.state.projects}
-                    getItemValue={item => item.name}
-                    shouldItemRender={(item, value) => item.name.toLowerCase().indexOf(value.toLowerCase()) > -1}
-                    renderItem={(item, highlighted) =>
-                      <div key={`${item.id}-${item.name}`}>
-                        {item.name}
-                      </div>
-                    }
-                    inputProps={{ className: "autocomplete-input" }}
+                    className="form-control"
+                    disabled="disabled"
                     value={`${this.props.selectedProject['company.name']} — ${this.props.selectedProject['project.name']}`}
-                    onChange={e => this.setState({ projectValue: e.target.value })}
-                    onSelect={value => {
-                      this.setState({
-                        projectValue: value,
-                        selectedProject: this.state.projects.filter(project => project.name === value),
-                      }, this.getPhases(this.state.projects.filter(project => project.name === value)))
-                    }}
                   />
                 </div>
                 <div className="autocomplete-field">
