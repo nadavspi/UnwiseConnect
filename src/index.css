@@ -330,38 +330,36 @@ td.col--budget:not(:empty)::after {
   }
 }
 
-.create-ticket-form {
-  max-width: 400px;
-  margin: 0 0 40px 15px;
-}
-
-.create-ticket-form button {
-  margin-bottom: 20px;
-  font-size: 16px;
-}
-
-.create-ticket-form input,
-.create-ticket-form select {
+.ticket-modal input,
+.ticket-modal select {
   height: 40px;
   border: 1px solid #ccc;
   border-radius: 4px;
 }
 
-.create-ticket-form label {
+.ticket-modal label {
   margin-top: 15px;
 }
 
-.create-ticket-form input[type="number"] {
+.ticket-modal input[type="number"] {
   max-width: 80px;
 }
 
-.create-ticket-form .btn-submit {
+.ticket-modal .btn-submit {
   margin-top: 15px;
 }
 
+.ticket-modal {
+  max-width: 700px;
+  width: 100%;
+  left: 50%;
+  height: 700px;
+  transform: translateX(-50%);
+}
+
+.ticket-modal input,
 .autocomplete-field div {
   width: 100%;
-  max-width: 400px;
 }
 
 .autocomplete-field div input {

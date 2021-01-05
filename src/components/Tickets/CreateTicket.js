@@ -1,3 +1,4 @@
+import Modal from 'react-modal';
 import React, { PureComponent } from 'react';
 import Autocomplete from 'react-autocomplete';
 import { createTicket } from '../../helpers/cw';
@@ -135,7 +136,6 @@ class CreateTicket extends PureComponent {
   resetTicketDetails = () => {
     this.setState({
       ...this.emptyTicketState,
-      expanded: true
     });
   }
 
@@ -152,7 +152,13 @@ class CreateTicket extends PureComponent {
             {this.state.expanded ? '—' : '＋'} Create Ticket
           </button>
         )}
-        {this.state.expanded && (
+        <Modal
+          contentLabel="Create Ticket Modal"
+          isOpen={this.state.expanded}
+          overlayClassName="modal-overlay ticket-modal"
+          onRequestClose={this.expandAddTicketForm}
+          shouldCloseOnOverlayClick={true}
+        >
           <form>
               <React.Fragment>
                 <div className="autocomplete-field">
@@ -178,7 +184,7 @@ class CreateTicket extends PureComponent {
                           </div>
                         }
                         value={this.state.phaseValue}
-                        inputProps={{ className: "autocomplete-input" }}
+                        inputProps={{ className: "autocomplete-input form-control" }}
                         onChange={e => this.setState({ phaseValue: e.target.value })}
                         onSelect={value => {
                           this.setState({
@@ -210,7 +216,6 @@ class CreateTicket extends PureComponent {
                         id="budget-hours"
                         className="form-control"
                         onChange={(e) => this.setState({ budget: e.target.value })}
-                        required
                         required
                         min="0"
                         step="0.25"
@@ -250,7 +255,7 @@ class CreateTicket extends PureComponent {
                   {(this.state.hasCompletedTicket && (
                     <div>
                       <p>You've created a new ticket:
-                       <a
+                      <a
                         href={process.env.REACT_APP_CONNECTWISE_SERVER_URL + `/services/system_io/Service/fv_sr100_request.rails?service_recid=&${this.state.newTicketId}companyName=sd`}
                         target="_blank"
                         rel="noopener noreferrer"
@@ -267,7 +272,7 @@ class CreateTicket extends PureComponent {
                   ))}
               </React.Fragment>
           </form>
-        )}
+        </Modal>
       </div>
     )
   }
