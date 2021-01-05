@@ -265,10 +265,6 @@ class CreateTicket extends PureComponent {
                           </a>
                         )}
                       </p>
-                      <p>{`Project: ${this.state.projectValue}`}</p>
-                      <p>{`Phase: ${this.state.phaseValue}`}</p>
-                      <p>{`Budget: ${this.state.budget} hours`}</p>
-                      <p>{`Summary: ${this.state.summary}`}</p>
                       <button type="button" onClick={() => this.resetTicketDetails()}>Create another ticket</button>
                     </div>
                   ))}
