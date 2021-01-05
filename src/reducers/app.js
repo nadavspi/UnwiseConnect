@@ -1,8 +1,17 @@
 import { ActionTypes } from '../config/constants';
 
+const getThemeFromLocalStorage = () => {
+  try {
+    return localStorage.getItem('theme');
+  } catch(e) {
+    return 'light';
+  }
+}
+
 const initialState = {
   error: undefined,
   loading: true,
+  theme: getThemeFromLocalStorage()
 };
 
 export default (state = initialState, action) => {
@@ -24,6 +33,12 @@ export default (state = initialState, action) => {
       return {
         ...state,
         error: action.payload,
+      };
+
+    case ActionTypes.THEME:
+      return {
+        ...state,
+        theme: action.payload,
       };
 
     default: 
