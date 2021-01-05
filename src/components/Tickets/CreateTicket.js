@@ -14,9 +14,9 @@ class CreateTicket extends PureComponent {
   render() {
     
     return (
-      <React.Fragment>
+      <div className="create-ticket-form">
         <button
-          className="btn btn-default btn-lg"
+          className="btn btn-default btn-lg expand"
           type="button"
           aria-label="add"
           onClick={() => this.expandAddTicketForm()}
@@ -32,7 +32,7 @@ class CreateTicket extends PureComponent {
             </select>
           </form>
         )}
-      </React.Fragment>
+      </div>
     )
   }
 }

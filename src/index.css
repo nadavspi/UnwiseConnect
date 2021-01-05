@@ -329,3 +329,13 @@ td.col--budget:not(:empty)::after {
     overflow-wrap: break-word;
   }
 }
+
+.create-ticket-form {
+  max-width: 400px;
+  margin: 0 0 40px 15px;
+}
+
+.create-ticket-form button {
+  margin-bottom: 20px;
+  font-size: 16px;
+}
