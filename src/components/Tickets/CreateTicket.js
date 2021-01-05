@@ -124,14 +124,16 @@ class CreateTicket extends PureComponent {
   render() {
     return (
       <div className="create-ticket-form">
-        <button
-          className="btn btn-default btn-lg expand"
-          type="button"
-          aria-label="add"
-          onClick={() => this.expandAddTicketForm()}
-        >
-          {this.state.expanded ? '—' : '＋'} Create Ticket
-        </button>
+        {this.props.selectedProject['company.name'] && (
+          <button
+            className="btn btn-default btn-lg expand"
+            type="button"
+            aria-label="add"
+            onClick={() => this.expandAddTicketForm()}
+          >
+            {this.state.expanded ? '—' : '＋'} Create Ticket
+          </button>
+        )}
         {this.state.expanded && (
           <form>
               <React.Fragment>
@@ -148,7 +150,7 @@ class CreateTicket extends PureComponent {
                       </div>
                     }
                     inputProps={{ className: "autocomplete-input" }}
-                    value={this.state.projectValue}
+                    value={`${this.props.selectedProject['company.name']} — ${this.props.selectedProject['project.name']}`}
                     onChange={e => this.setState({ projectValue: e.target.value })}
                     onSelect={value => {
                       this.setState({
@@ -159,7 +161,6 @@ class CreateTicket extends PureComponent {
                   />
                 </div>
                 <div className="autocomplete-field">
-                  {this.state.projectValue && (
                     <React.Fragment>
                       <label htmlFor="phases">Phase</label><br></br>
                       <Autocomplete
@@ -183,7 +184,6 @@ class CreateTicket extends PureComponent {
                         }}
                       />
                     </React.Fragment>
-                  )}
                 </div>
                   {this.state.phaseValue && (
                     <div>

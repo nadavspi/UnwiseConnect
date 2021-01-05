@@ -17,6 +17,7 @@ class Tickets extends Component {
 
     this.state = {
       expanded: '',
+      selectedProject: {}
     }
 
     this.addProject = this.addProject.bind(this);
@@ -64,6 +65,12 @@ class Tickets extends Component {
     this.props.dispatch(search(nextQuery));
   }
 
+  componentDidUpdate = (prevProps) => {
+    if (prevProps.tickets.query !== this.props.tickets.query) {
+      this.setSelectedProject();
+    }
+  }
+
   expand(id) {
     const isExpanded = this.state.expanded === id;
     let nextState = id;
@@ -72,6 +79,14 @@ class Tickets extends Component {
     }
 
     this.setState({ expanded: nextState });
+  }
+
+  setSelectedProject = () => {
+    const selectedProject = this.props.tickets.query;
+
+    this.setState({
+      selectedProject
+    });
   }
 
   render() {
@@ -120,10 +135,11 @@ class Tickets extends Component {
                 }, true)}
               />
             </div>
-            <CreateTicket
-              projects={this.projects()}
-              tickets={this.props.tickets.flattened}
-            />
+              <CreateTicket
+                projects={this.projects()}
+                tickets={this.props.tickets.flattened}
+                selectedProject={this.state.selectedProject}
+              />
             {this.props.tickets.flattened.length > 0 && (
               <Table
                 id="table-search-tickets"
