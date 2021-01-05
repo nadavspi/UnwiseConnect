@@ -4,6 +4,7 @@ $dark__primary-color: #090E13;
 $dark__border-color: #30363C;
 $dark__secondary-color: #161B22;
 $dark__link-color: #57A6FF;
+$c-dark-gray: #333333;
 
 @keyframes spin {
   from {
@@ -276,11 +277,11 @@ td.col--budget {
 }
 
 .glyphicon-new-window {
-  color: #333;
+  color: $c-dark-gray;
 }
 
 .table-bordered {
-  >tfoot.table-bordered__foot {
+  > tfoot.table-bordered__foot {
     td {
       font-weight: bold;
       border-top-width: 2px;
@@ -342,7 +343,7 @@ td.col--budget {
     width: 18px;
     height: 21px;
     background-color: transparent;
-    fill: #333333;
+    fill: $c-dark-gray;
   }
 }
 
@@ -405,7 +406,7 @@ td.col--budget {
   }
 
   .btn-settings {
-    background-color: #333333;
+    background-color: $c-dark-gray;
     border: none;
     margin-right: 5px;
 
@@ -774,7 +775,7 @@ td.col--budget {
 }
 
 .dark.btn-dark-mode {
-  background-color: #333333;
+  background-color: $c-dark-gray;
 
   svg {
     fill: $dark__text-color;
@@ -783,7 +784,7 @@ td.col--budget {
   &:hover,
   &:focus,
   &:active {
-    background-color: #333333;
+    background-color: $c-dark-gray;
   }
 }
 
