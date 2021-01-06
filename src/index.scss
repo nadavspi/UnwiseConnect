@@ -5,6 +5,8 @@ $dark__hover__background-color: #151A23;
 $dark__border-color: #30363C;
 $dark__secondary-color: #161B22;
 $dark__link-color: #57A6FF;
+$button__hover__text-decoration: none;
+$element__border-radius: 5px;
 $c-dark-gray: #333333;
 
 @mixin hover {
@@ -371,7 +373,7 @@ td.col--budget:not(:empty)::after {
   }
 
   input {
-    border-radius: 5px;
+    border-radius: $element__border-radius;
     height: 33px;
   }
 
@@ -411,7 +413,7 @@ td.col--budget:not(:empty)::after {
   }
 
   .row.panel-body {
-    border-radius: 5px;
+    border-radius: $element__border-radius;
   }
 
   .navbar {
@@ -438,7 +440,7 @@ td.col--budget:not(:empty)::after {
   .projects.list-group {
     background-color: transparent;
     border-color: $dark__border-color;
-    border-radius: 5px;
+    border-radius: $element__border-radius;
 
     @include hover {
       border-color: transparent;
@@ -450,7 +452,7 @@ td.col--budget:not(:empty)::after {
       @include allPseudoClasses {
         background-color: $dark__hover__background-color !important;
         color: $dark__text-color !important;
-        text-decoration: none;
+        text-decoration: $button__hover__text-decoration;
         border-color: $dark__border-color;
         transition: .3s;
       }
@@ -461,7 +463,7 @@ td.col--budget:not(:empty)::after {
     height: 42px;
     font-size: 14px;
     margin: 0 5px;
-    border-radius: 5px;
+    border-radius: $element__border-radius;
   }
 
   .open > .btn.dropdown-toggle,
@@ -470,7 +472,7 @@ td.col--budget:not(:empty)::after {
   .btn.dropdown-toggle:focus {
     background-color: $dark__hover__background-color !important;
     color: $dark__text-color !important;
-    text-decoration: none;
+    text-decoration: $button__hover__text-decoration;
     border-color: $dark__border-color;
     transition: .3s;
   }
@@ -615,7 +617,7 @@ td.col--budget:not(:empty)::after {
 
       @include hover {
         color: $dark__link-color;
-        text-decoration: none;
+        text-decoration: $button__hover__text-decoration;
         border: 1px solid $dark__border-color;
       }
     }
@@ -679,7 +681,7 @@ td.col--budget:not(:empty)::after {
 
       @include hover {
         border: 1px solid $dark__border-color;
-        text-decoration: none;
+        text-decoration: $button__hover__text-decoration;
       }
     }
   }
@@ -689,7 +691,7 @@ td.col--budget:not(:empty)::after {
 
     @include hover {
       background-color: $dark__border-color;
-      border-radius: 5px;
+      border-radius: $element__border-radius;
       color: $dark__link-color;
     }
   }
