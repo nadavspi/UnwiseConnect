@@ -130,6 +130,12 @@ class CreateTicket extends PureComponent {
       })
     }
 
+    resetTicketDetails = () => {
+      this.setState({
+        ...this.emptyTicketState,
+      });
+    }
+
     return (
       <div>
 
