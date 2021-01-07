@@ -156,7 +156,15 @@ class CreateTicket extends PureComponent {
           shouldCloseOnOverlayClick={true}
         >
           <form>
-            
+            <div>
+              <label htmlFor="projects">Project</label><br></br>
+              <input
+                id="projects"
+                className="form-control"
+                disabled="disabled"
+                value={`${this.props.selectedProject['company.name']} — ${this.props.selectedProject['project.name']}`}
+              />
+            </div>
           </form>
         </Modal>
       </div>
