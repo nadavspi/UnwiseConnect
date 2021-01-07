@@ -84,6 +84,52 @@ class CreateTicket extends PureComponent {
       });
     }
 
+    createNewTicket = () => {
+      const projectTicketDetails = ({
+        summary: this.state.summary,
+        recordType: 'ProjectTicket',
+        company: { id: this.state.selectedProject[0].companyId },
+        project: { id: this.state.selectedProject[0].id },
+        phase: { id: this.state.selectedPhase[0].phaseId },
+        budgetHours: this.state.budget,
+        initialDescription: this.state.initialDescription,
+      })
+
+      // @todo allow service ticket creation
+      const serviceTicketDetails = ({
+        summary: this.state.summary,
+        recordType: 'ServiceTicket',
+        company: { id: this.state.selectedProject[0].companyId },
+        agreement: '', // where is this?
+        budgetHours: this.state.budget,
+        initialDescription: this.state.initialDescription,
+      })
+
+      if (this.state.ticketType === 'project') {
+        createTicket(projectTicketDetails).then(res => {
+          this.setState({
+            newTicketId: res.result.id
+          })
+        })
+      }
+
+      if (this.state.ticketType === 'service') {
+        createTicket(serviceTicketDetails);
+      }
+    };
+
+    expandAddTicketForm = () => {
+      this.setState({
+        expanded: !this.state.expanded
+      })
+    }
+
+    selectTicketType = event => {
+      this.setState({
+        ticketType: event.target.value
+      })
+    }
+
     return (
       <div>
 
