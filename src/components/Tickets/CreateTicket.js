@@ -246,6 +246,22 @@ class CreateTicket extends PureComponent {
                 Create Ticket
               </button>
             )}
+            {(this.state.hasCompletedTicket && (
+              <div>
+                <p>You created a new ticket:
+                  {this.state.newTicketId && (
+                    <a
+                      href={process.env.REACT_APP_CONNECTWISE_SERVER_URL + `/services/system_io/Service/fv_sr100_request.rails?service_recid=&${this.state.newTicketId}companyName=sd`}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                    >
+                      {` #${this.state.newTicketId}`}
+                    </a>
+                  )}
+                </p>
+                <button type="button" className="btn btn-default btn-md" onClick={() => this.resetTicketDetails()}>Create another ticket</button>
+              </div>
+            ))}
           </form>
         </Modal>
       </div>
