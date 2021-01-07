@@ -28,7 +28,7 @@ class UpdateStatus extends PureComponent {
     status: undefined,
   }
 
-  componentDidUpdate(prevProps) {
+  componentDidUpdate = (prevProps) => {
     const { ticket } = this.props;
     const isPending = this.props.pending.find(item => {
       return item.params.ticket === ticket;

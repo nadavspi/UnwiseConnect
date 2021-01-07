@@ -8,20 +8,12 @@ import sortBy from 'sort-by';
 import { connect } from 'react-redux';
 
 class ToggleProjects extends Component {
-  constructor() {
-    super();
+  state = {
+    expanded: '',
+    searchTerm: ''
+  };
 
-    this.state = {
-      expanded: '',
-      searchTerm: ''
-    };
-
-    this.toggle = this.toggle.bind(this);
-    this.updateTickets = this.updateTickets.bind(this);
-    this.handleSearchChange = this.handleSearchChange.bind(this);
-  }
-
-  toggle(projectId, e) {
+  toggle = (projectId, e) => {
     const { checked } = e.target;
     this.props.dispatch(UserActions.toggleProject({
       add: checked,
@@ -29,11 +21,11 @@ class ToggleProjects extends Component {
     }));
   }
 
-  updateTickets(projectId) {
+  updateTickets = (projectId) => {
     this.props.dispatch(TicketsActions.updateTickets({ projectId }));
   }
 
-  handleSearchChange(event) {
+  handleSearchChange = (event) => {
     this.setState({searchTerm: event.target.value});
   }
 

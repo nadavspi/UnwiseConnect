@@ -2,7 +2,6 @@ import React from 'react';
 import { fetchTicketNotes } from '../../../helpers/cw';
 
 const Notes = ({ ticketNumber }) => {
-
   const [notes, setNotes] = React.useState([]);
   const [isLoading, setIsLoading] = React.useState(false);
 

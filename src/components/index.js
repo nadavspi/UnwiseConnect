@@ -35,11 +35,11 @@ function PublicRoute ({component: Component, authed, ...rest}) {
 }
 
 class App extends Component {
-  componentDidMount() {
+  componentDidMount = () => {
     this.props.dispatch(subscribe());
   }
-     
-  componentWillUnmount () {
+
+  componentWillUnmount = () => {
     this.props.dispatch(unsubscribe());
   }
 
@@ -94,8 +94,8 @@ class App extends Component {
                     <button
                       type="button"
                       className={darkModeBtnClasses}
-                      onClick={() => this.toggleTheme()}
                       aria-label="Toggle Dark Mode"
+                      onClick={() => this.toggleTheme()}
                     >
                       {darkModeIcon}
                     </button>

@@ -2,7 +2,6 @@ import React from 'react';
 import { fetchScheduleEntryById, fetchTicketScheduleEntryIds } from '../../../helpers/cw';
 
 const ScheduleEntries = ({ ticketNumber }) =>  {
-
   const [entries, setEntries] = React.useState([]);
   const [isLoading, setIsLoading] = React.useState(false);
 
@@ -18,8 +17,8 @@ const ScheduleEntries = ({ ticketNumber }) =>  {
     });
   };
 
-  React.useEffect(() =>  {
-      displayEntries();
+  React.useEffect(() => {
+    displayEntries();
   }, []);
 
   const entryCard = entry => {

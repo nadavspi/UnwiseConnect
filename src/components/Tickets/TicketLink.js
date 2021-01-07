@@ -2,17 +2,11 @@ import React, { Component } from 'react';
 
 
 class TicketLink extends Component {
-  constructor(props) {
-    super(props);
-
-    this.state = {
-      copySuccess: false
-    }
-
-    this.copyToClipboard = this.copyToClipboard.bind(this);
+  state = {
+    copySuccess: false
   }
 
-  copyToClipboard(e) {
+  copyToClipboard = (e) => {
     let textField = document.createElement('textarea');
     textField.innerText = this.props.ticketNumber;
     document.body.appendChild(textField);
