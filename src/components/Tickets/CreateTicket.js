@@ -234,6 +234,18 @@ class CreateTicket extends PureComponent {
                 </textarea>
               </div>
             )}
+            {(this.state.summary && this.state.budget) && (
+              <button
+                type="button"
+                onClick={() => {
+                  this.setState({ hasCompletedTicket: true });
+                  this.createNewTicket();
+                }}
+                className="btn btn-submit btn-primary"
+              >
+                Create Ticket
+              </button>
+            )}
           </form>
         </Modal>
       </div>
