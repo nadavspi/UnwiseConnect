@@ -17,6 +17,7 @@ class Tickets extends Component {
 
     this.state = {
       expanded: '',
+      selectedProject: {}
     }
 
     this.addProject = this.addProject.bind(this);
@@ -25,6 +26,20 @@ class Tickets extends Component {
     this.search = this.search.bind(this);
     this.toggleColumn = this.toggleColumn.bind(this);
     this.toggleProject = this.toggleProject.bind(this);
+  }
+
+  componentDidUpdate = (prevProps) => {
+    if (prevProps.tickets.query !== this.props.tickets.query) {
+      this.setSelectedProject();
+    }
+  }
+
+  setSelectedProject = () => {
+    const selectedProject = this.props.tickets.query;
+
+    this.setState({
+      selectedProject
+    });
   }
 
   projects() {
@@ -120,7 +135,11 @@ class Tickets extends Component {
                 }, true)}
               />
             </div>
-            <CreateTicket />
+            <CreateTicket
+              projects={this.projects()}
+              selectedProject={this.state.selectedProject}
+              tickets={this.props.tickets.flattened}
+            />
             {this.props.tickets.flattened.length > 0 && (
               <Table
                 id="table-search-tickets"
