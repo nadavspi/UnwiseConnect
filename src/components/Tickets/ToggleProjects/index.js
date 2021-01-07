@@ -3,6 +3,7 @@ import * as TicketsActions from '../../../actions/tickets';
 import Projects from './Projects';
 import React, { Component } from 'react';
 import classnames from 'classnames';
+import enhanceWithClickOutside from 'react-click-outside';
 import sortBy from 'sort-by';
 import { connect } from 'react-redux';
 
@@ -34,6 +35,12 @@ class ToggleProjects extends Component {
 
   handleSearchChange(event) {
     this.setState({searchTerm: event.target.value});
+  }
+
+  handleClickOutside() {
+    this.setState({
+      expanded: false,
+    })
   }
 
   render() {
@@ -105,4 +112,4 @@ const mapStateToProps = state => ({
   projects: state.projects.sort(sortBy('company', 'name')),
   userProjects: state.user.projects,
 });
-export default connect(mapStateToProps)(ToggleProjects);
+export default connect(mapStateToProps)(enhanceWithClickOutside(ToggleProjects));

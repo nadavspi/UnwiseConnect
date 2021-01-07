@@ -7,7 +7,10 @@ import Tickets from './Tickets';
 import Timesheets from './Timesheets';
 import { Route, BrowserRouter, Link, Redirect, Switch } from 'react-router-dom';
 import { connect } from 'react-redux';
-import { subscribe, unsubscribe } from '../actions/auth'
+import { subscribe, unsubscribe } from '../actions/auth';
+import { darkModeIcon } from '../helpers/svgs';
+import { setTheme } from '../actions/user';
+import classnames from 'classnames';
 
 function PrivateRoute ({component: Component, authed, ...rest}) {
   return (
@@ -32,17 +35,34 @@ function PublicRoute ({component: Component, authed, ...rest}) {
 }
 
 class App extends Component {
-  componentDidMount () {
+  componentDidMount() {
     this.props.dispatch(subscribe());
   }
+     
   componentWillUnmount () {
     this.props.dispatch(unsubscribe());
   }
+
+  toggleTheme = () => {
+    const theme = this.props.theme == 'dark' ? 'light' : 'dark';
+    this.props.dispatch(setTheme(theme));
+
+    try {
+      localStorage.setItem('theme', theme);
+    } catch(e) {
+      console.log('There was an issue accessing localStorage');
+    }
+  }
+
   render() {
+    const darkModeBtnClasses = classnames({
+      'btn btn-default btn-dark-mode': true,
+      'dark': this.props.theme === 'dark',
+    });
     const isAuthed = this.props.authed;
     return this.props.loading === true ? <span className="loading"></span> : (
       <BrowserRouter>
-        <div className="page">
+        <div className={`page ${this.props.theme}`}>
           {isAuthed &&
             <nav className="navbar navbar-uc navbar-static-top">
               <div className="container">
@@ -70,6 +90,16 @@ class App extends Component {
                       <span className="sr-only">Settings</span>
                     </Link>
                   </li>
+                  <li>
+                    <button
+                      type="button"
+                      className={darkModeBtnClasses}
+                      onClick={() => this.toggleTheme()}
+                      aria-label="Toggle Dark Mode"
+                    >
+                      {darkModeIcon}
+                    </button>
+                  </li>
                 </ul>
               </div>
             </nav>
@@ -96,6 +126,7 @@ const mapStateToProps = state => ({
   authed: state.user.authed,
   error: state.app.error,
   loading: state.app.loading,
+  theme: state.app.theme
 });
 
 export default connect(mapStateToProps)(App);

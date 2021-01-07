@@ -3,6 +3,7 @@ import React, { Component } from 'react';
 import ScheduleEntries from './ScheduleEntries';
 import TimeEntries from './TimeEntries';
 import Notes from './Notes';
+import { connect } from 'react-redux';
 
 class DetailsModal extends Component {
   constructor() {
@@ -47,7 +48,7 @@ class DetailsModal extends Component {
         <Modal
           contentLabel="Notes Modal"
           isOpen={this.state.expanded}
-          overlayClassName="modal-overlay"
+          overlayClassName={`modal-overlay ${this.props.theme}-modal`}
           onRequestClose={this.expand}
           shouldCloseOnOverlayClick={true}
         >
@@ -105,7 +106,11 @@ DetailsModal.defaultProps = {
   ],
 }
 
-export default DetailsModal;
+const mapStateToProps = state => ({
+  theme: state.app.theme
+});
+
+export default connect(mapStateToProps)(DetailsModal);
 
 
 
