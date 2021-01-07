@@ -137,8 +137,16 @@ class CreateTicket extends PureComponent {
     }
 
     return (
-      <div>
-
+      <div className="create-ticket-form">
+        {this.props.selectedProject['company.name'] && (
+          <button
+            className="btn btn-default btn-md btn-expand"
+            type="button"
+            onClick={() => this.expandAddTicketForm()}
+          >
+            {this.state.expanded ? '—' : '＋'} Create Ticket
+          </button>
+        )}
       </div>
     )
   }
