@@ -36,6 +36,7 @@ class CreateTicket extends PureComponent {
 
     if (prevProps.selectedProject !== this.props.selectedProject) {
       const { selectedProject } = this.props;
+
       if (selectedProject['project.name']) {
         this.getPhases(this.state.projects.filter(project => (
           project.name === selectedProject['project.name'] &&
@@ -95,7 +96,7 @@ class CreateTicket extends PureComponent {
       phase: { id: this.state.selectedPhase[0].phaseId },
       budgetHours: this.state.budget,
       initialDescription: this.state.initialDescription,
-    })
+    });
 
     // @todo allow service ticket creation
     const serviceTicketDetails = ({
@@ -105,14 +106,14 @@ class CreateTicket extends PureComponent {
       agreement: '', // where is this?
       budgetHours: this.state.budget,
       initialDescription: this.state.initialDescription,
-    })
+    });
 
     if (this.state.ticketType === 'project') {
       createTicket(projectTicketDetails).then(res => {
         this.setState({
           newTicketId: res.result.id
-        })
-      })
+        });
+      });
     }
 
     if (this.state.ticketType === 'service') {
@@ -120,16 +121,16 @@ class CreateTicket extends PureComponent {
     }
   };
 
-  expandAddTicketForm = () => {
+  toggleCreateTicketForm = () => {
     this.setState({
       expanded: !this.state.expanded
-    })
+    });
   }
 
   selectTicketType = event => {
     this.setState({
       ticketType: event.target.value
-    })
+    });
   }
 
   resetTicketDetails = () => {
@@ -145,7 +146,7 @@ class CreateTicket extends PureComponent {
           <button
             className="btn btn-default btn-md btn-expand"
             type="button"
-            onClick={() => this.expandAddTicketForm()}
+            onClick={() => this.toggleCreateTicketForm()}
           >
             {this.state.expanded ? '—' : '＋'} Create Ticket
           </button>
@@ -153,8 +154,8 @@ class CreateTicket extends PureComponent {
         <Modal
           contentLabel="Create Ticket Modal"
           isOpen={this.state.expanded}
+          onRequestClose={this.toggleCreateTicketForm}
           overlayClassName="modal-overlay ticket-modal"
-          onRequestClose={this.expandAddTicketForm}
           shouldCloseOnOverlayClick={true}
         >
           <form>
@@ -216,8 +217,7 @@ class CreateTicket extends PureComponent {
                   step="0.25"
                   placeholder="1"
                   autoComplete="off"
-                >
-                </input>
+                ></input>
                 {this.state.budget > 10 && (<p>Warning: This is a higher than normal budget</p>)}
               </div>
             )}
@@ -231,18 +231,17 @@ class CreateTicket extends PureComponent {
                   className="form-control"
                   placeholder="This is optional"
                   onChange={(e) => e.target.value.length > 5 && this.setState({ initialDescription: e.target.value })}
-                >
-                </textarea>
+                ></textarea>
               </div>
             )}
             {(this.state.summary && this.state.budget) && (
               <button
                 type="button"
+                className="btn btn-submit btn-primary"
                 onClick={() => {
                   this.setState({ hasCompletedTicket: true });
                   this.createNewTicket();
                 }}
-                className="btn btn-submit btn-primary"
               >
                 Create Ticket
               </button>
