@@ -27,9 +27,25 @@ class CreateTicket extends PureComponent {
       this.getProjects();
     }
 
-    componentDidUpdate = (prevProps) => {
+	  componentDidUpdate = (prevProps) => {
       if (prevProps.projects !== this.props.projects) {
         this.getProjects();      
+      }
+
+      if (prevProps.selectedProject !== this.props.selectedProject) {
+        const { selectedProject } = this.props;
+        if (selectedProject['project.name']) {
+          this.getPhases(this.state.projects.filter(project => (
+            project.name === selectedProject['project.name'] &&
+            project.company.name === selectedProject['project.company']
+          )));
+
+          this.setState({
+            selectedProject: this.state.projects.filter(project => (
+              project.name === `${selectedProject['company.name']} — ${selectedProject['project.name']}`)
+            )
+          });
+        }
       }
     }
 
