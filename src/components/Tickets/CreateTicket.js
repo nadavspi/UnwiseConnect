@@ -1,3 +1,4 @@
+import Modal from 'react-modal';
 import React, { PureComponent } from 'react';
 
 class CreateTicket extends PureComponent {
@@ -147,6 +148,17 @@ class CreateTicket extends PureComponent {
             {this.state.expanded ? '—' : '＋'} Create Ticket
           </button>
         )}
+        <Modal
+          contentLabel="Create Ticket Modal"
+          isOpen={this.state.expanded}
+          overlayClassName="modal-overlay ticket-modal"
+          onRequestClose={this.expandAddTicketForm}
+          shouldCloseOnOverlayClick={true}
+        >
+          <form>
+            
+          </form>
+        </Modal>
       </div>
     )
   }
