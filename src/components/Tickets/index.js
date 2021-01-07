@@ -1,6 +1,7 @@
 import * as TicketsActions from '../../actions/tickets';
 import * as UserActions from '../../actions/user';
 import AddProject from './AddProject';
+import CreateTicket from './CreateTicket';
 import Projects from './Projects';
 import React, { Component } from 'react';
 import Table from './Table';
@@ -119,6 +120,7 @@ class Tickets extends Component {
                 }, true)}
               />
             </div>
+            <CreateTicket />
             {this.props.tickets.flattened.length > 0 && (
               <Table
                 id="table-search-tickets"
