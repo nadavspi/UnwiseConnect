@@ -1,5 +1,6 @@
-import Modal from 'react-modal';
 import React, { PureComponent } from 'react';
+import Autocomplete from 'react-autocomplete';
+import Modal from 'react-modal';
 
 class CreateTicket extends PureComponent {
   render() {
@@ -163,6 +164,29 @@ class CreateTicket extends PureComponent {
                 className="form-control"
                 disabled="disabled"
                 value={`${this.props.selectedProject['company.name']} — ${this.props.selectedProject['project.name']}`}
+              />
+            </div>
+            <div className="autocomplete-field">
+              <label htmlFor="phases">Phase</label><br></br>
+              <Autocomplete
+                id="phases"
+                items={this.state.phases}
+                getItemValue={item => item.path}
+                shouldItemRender={(item, value) => item.path.toLowerCase().indexOf(value.toLowerCase()) > -1}
+                renderItem={item => (
+                  <div key={`${item.phaseId}-${item.ticketId}`}>
+                    {item.path}
+                  </div>
+                )}
+                value={this.state.phaseValue}
+                inputProps={{ className: "autocomplete-input form-control" }}
+                onChange={e => this.setState({ phaseValue: e.target.value })}
+                onSelect={value => {
+                  this.setState({
+                    phaseValue: value,
+                    selectedPhase: this.state.phases.filter(phase => phase.path === value),
+                  })
+                }}
               />
             </div>
           </form>
