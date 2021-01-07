@@ -1,7 +1,7 @@
 import React, { PureComponent } from 'react';
 import Autocomplete from 'react-autocomplete';
-import Modal from 'react-modal';
-import { createTicket } from '../../helpers/cw';
+import { createTicket } from '../../../helpers/cw';
+import CreateTicketModal from './Modal';
 
 class CreateTicket extends PureComponent {
   emptyTicketState = {
@@ -151,12 +151,10 @@ class CreateTicket extends PureComponent {
             {this.state.expanded ? '—' : '＋'} Create Ticket
           </button>
         )}
-        <Modal
+        <CreateTicketModal
           contentLabel="Create Ticket Modal"
-          isOpen={this.state.expanded}
-          onRequestClose={this.toggleCreateTicketForm}
-          overlayClassName="modal-overlay ticket-modal"
-          shouldCloseOnOverlayClick={true}
+          expanded={this.state.expanded}
+          toggleCreateTicketForm={this.toggleCreateTicketForm}
         >
           <form>
             <div>
@@ -263,7 +261,7 @@ class CreateTicket extends PureComponent {
               </div>
             ))}
           </form>
-        </Modal>
+        </CreateTicketModal>
       </div>
     )
   }

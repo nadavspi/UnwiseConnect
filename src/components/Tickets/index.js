@@ -1,7 +1,7 @@
 import * as TicketsActions from '../../actions/tickets';
 import * as UserActions from '../../actions/user';
 import AddProject from './AddProject';
-import CreateTicket from './CreateTicket';
+import CreateTicket from './CreateTicketModal/CreateTicket';
 import Projects from './Projects';
 import React, { Component } from 'react';
 import Table from './Table';
