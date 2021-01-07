@@ -189,6 +189,51 @@ class CreateTicket extends PureComponent {
                 }}
               />
             </div>
+            {this.state.phaseValue && (
+              <div>
+                <label htmlFor="summary">Summary</label>
+                <input
+                  className="form-control"
+                  type="text"
+                  id="summary"
+                  onChange={(e) => this.setState({ summary: e.target.value })}
+                  required
+                  autoComplete="off"
+                ></input>
+              </div>
+            )}
+            {this.state.summary && (
+              <div>
+                <label htmlFor="budget-hours">Budget Hours</label>
+                <input
+                  type="number"
+                  id="budget-hours"
+                  className="form-control"
+                  onChange={(e) => this.setState({ budget: e.target.value })}
+                  required
+                  min="0"
+                  step="0.25"
+                  placeholder="1"
+                  autoComplete="off"
+                >
+                </input>
+                {this.state.budget > 10 && (<p>Warning: This is a higher than normal budget</p>)}
+              </div>
+            )}
+            {this.state.budget > 0 && (
+              <div>
+                <label htmlFor="initial-description">Description</label>
+                <textarea
+                  id="initial-description"
+                  rows="4"
+                  cols="50"
+                  className="form-control"
+                  placeholder="This is optional"
+                  onChange={(e) => e.target.value.length > 5 && this.setState({ initialDescription: e.target.value })}
+                >
+                </textarea>
+              </div>
+            )}
           </form>
         </Modal>
       </div>
