@@ -157,6 +157,7 @@ class CreateTicket extends PureComponent {
           toggleCreateTicketForm={this.toggleCreateTicketForm}
         >
           <form>
+            <button type="button" className="close-btn btn" aria-label="close" onClick={() => this.toggleCreateTicketForm()}>✕</button>
             <div>
               <label htmlFor="projects">Project</label>
               <input
