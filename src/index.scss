@@ -906,7 +906,7 @@ td.col--budget:not(:empty)::after {
     border: 1px solid $dark__border-color;
   }
 
-  .btn.ticket-create {
+  .btn-ticket-create {
     color: $dark__primary-color !important // override react-modal
   }
 
