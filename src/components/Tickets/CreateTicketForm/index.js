@@ -66,8 +66,15 @@ class CreateTicketForm extends PureComponent {
       }
     });
 
+    const deduplicatedPhases = phases.reduce((uniquePhases, currentPhase) => {
+      if (!uniquePhases.some(phase => phase.path === currentPhase.path)) {
+        uniquePhases.push(currentPhase);
+      }
+      return uniquePhases;
+    }, []);
+
     this.setState({
-      phases
+      phases: deduplicatedPhases
     });
   }
 
