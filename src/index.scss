@@ -729,7 +729,7 @@ td.col--budget:not(:empty)::after {
     border-color: $dark__border-color !important;
 
     * {
-      color: $dark__text-color !important;
+      color: $dark__text-color;
     }
   }
 
@@ -865,6 +865,23 @@ td.col--budget:not(:empty)::after {
     font-size: 20px;
   }
 
+  .new-ticket-message p {
+    display: flex;
+    font-size: 16px;
+    margin-top: 15px;
+    font-weight: bold;
+
+    .ticket-link {
+      margin-left: 10px;
+      text-decoration: underline;
+      transform: translateY(-1px);
+
+      a {
+        color: $dark__link-color;
+      }
+    }
+  }
+
   .autocomplete-field {
     div,
     input {
@@ -905,7 +922,8 @@ td.col--budget:not(:empty)::after {
 
 .dark-modal.ticket-modal {
   input,
-  textarea {
+  textarea,
+  .btn-create-ticket {
     border-radius: 5px;
     background-color: $dark__primary-color;
     color: $dark__text-color;
@@ -913,8 +931,11 @@ td.col--budget:not(:empty)::after {
   }
 
   .btn-create-ticket {
-    margin-top: 25px;
-    color: $dark__primary-color !important; // override react-modal
+    margin-top: 20px;
+
+    @include hover {
+      background-color: $dark__hover__background-color;
+    }
   }
 
   .new-ticket {
