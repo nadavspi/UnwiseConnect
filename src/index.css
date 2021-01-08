@@ -764,6 +764,7 @@ td.col--budget:not(:empty)::after {
 }
 
 .dark-modal .autocomplete-field input[aria-expanded="true"] + div {
+  /* override react-autocomplete */
   background-color: #090E13 !important;
   color: #C8D1D9 !important;
   border-color: #30363C !important;
@@ -801,5 +802,6 @@ td.col--budget:not(:empty)::after {
 
 .dark-modal .autocomplete-field input[aria-expanded="true"] + div div:hover,
 .dark-modal .autocomplete-field input[aria-expanded="true"] + div div:focus {
+  /* override react-autocomplete */
   background-color: #151a23 !important;
 }
