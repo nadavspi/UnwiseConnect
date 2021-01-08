@@ -403,6 +403,12 @@ td.col--budget:not(:empty)::after {
     }
   }
 
+  .alert-warning {
+    color: #0E1117;
+    background-color: #f6c44d;
+    border: $dark__border-color;
+  }
+
   .panel-default > .panel-heading {
     border: none;
     box-shadow: none;
