@@ -4,31 +4,23 @@ import { connect } from 'react-redux';
 import { startTimer } from '../../actions/toggl';
 
 class StartTimer extends Component {
-  constructor() {
-    super();
+  state = {
+    expanded: false,
+    description: '',
+  };
 
-    this.state = {
-      expanded: false,
-      description: '',
-    };
-
-    this.startCustomTimer = this.startCustomTimer.bind(this);
-    this.startTimer = this.startTimer.bind(this);
-    this.toggle = this.toggle.bind(this);
-  }
-
-  startTimer(summary = this.props.ticket.summary, id = this.props.ticket.id) {
+  startTimer = (summary = this.props.ticket.summary, id = this.props.ticket.id) => {
     const description = `${summary} (#${id})`;
     this.props.dispatch(startTimer({ description }));
   }
 
-  startCustomTimer(e) {
+  startCustomTimer = (e) => {
     e.preventDefault();
     this.startTimer(this.state.description);
     this.setState({ expanded: false });
   }
 
-  toggle() {
+  toggle = () => {
     const willExpand = !this.state.expanded;
 
     this.setState({

@@ -12,20 +12,9 @@ import { connect } from 'react-redux';
 import { search } from '../../actions/tickets';
 
 class Tickets extends Component {
-  constructor() {
-    super();
-
-    this.state = {
-      expanded: '',
-      selectedProject: {}
-    }
-
-    this.addProject = this.addProject.bind(this);
-    this.expand = this.expand.bind(this);
-    this.projects = this.projects.bind(this);
-    this.search = this.search.bind(this);
-    this.toggleColumn = this.toggleColumn.bind(this);
-    this.toggleProject = this.toggleProject.bind(this);
+  state = {
+    expanded: '',
+    selectedProject: {}
   }
 
   componentDidUpdate = (prevProps) => {
@@ -42,7 +31,7 @@ class Tickets extends Component {
     });
   }
 
-  projects() {
+  projects = () => {
     // We can use the first ticket from each project to get the project's metadata
     const projects = Object.keys(this.props.tickets.nested).map(projectId => {
       return this.props.tickets.nested[projectId][0];
@@ -51,23 +40,23 @@ class Tickets extends Component {
     return projects.sort(sortBy('company.name', 'project.name'));
   }
 
-  addProject(projectId) {
+  addProject = (projectId) => {
     this.props.dispatch(TicketsActions.updateTickets({ projectId }));
     this.toggleProject(projectId, true);
   }
 
-  toggleProject(projectId, checked) {
+  toggleProject = (projectId, checked) => {
     this.props.dispatch(UserActions.toggleProject({
       add: checked,
       projectId,
     }));
   }
 
-  toggleColumn(payload) {
+  toggleColumn = (payload) => {
     this.props.dispatch(UserActions.toggleColumn(payload));
   }
 
-  search(query, incremental) {
+  search = (query, incremental) => {
     let nextQuery = query;
     if (incremental) {
       nextQuery = {
@@ -79,7 +68,7 @@ class Tickets extends Component {
     this.props.dispatch(search(nextQuery));
   }
 
-  expand(id) {
+  expand = (id) => {
     const isExpanded = this.state.expanded === id;
     let nextState = id;
     if (isExpanded) {

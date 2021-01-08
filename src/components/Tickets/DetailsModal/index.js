@@ -6,23 +6,16 @@ import Notes from './Notes';
 import { connect } from 'react-redux';
 
 class DetailsModal extends Component {
-  constructor() {
-    super();
+  state = { 
+    expanded: false,
+    currTab: 'notes',
+  };
 
-    this.state = { 
-      expanded: false,
-      currTab: 'notes',
-    };
-
-    this.expand = this.expand.bind(this);
-    this.show = this.show.bind(this);
-  }
-
-  componentWillMount() {
+  componentWillMount = () => {
     Modal.setAppElement('body');
   }
 
-  expand() {
+  expand = () => {
     const willExpand = !this.state.expanded;
     this.setState({
       ...this.state,
@@ -30,7 +23,7 @@ class DetailsModal extends Component {
     });
   }
 
-  show(tabName) {
+  show = (tabName) => {
     this.setState({
       ...this.state,
       currTab: tabName,

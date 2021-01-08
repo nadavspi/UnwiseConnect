@@ -2,19 +2,15 @@ import React, { Component } from 'react';
 import { DragDropContext, Droppable, Draggable } from 'react-beautiful-dnd';
 
 export default class Queue extends Component {
-  constructor() {
-    super();
-
-    this.state = {
-      expanded: false,
-    }
+  state = {
+    expanded: false,
   }
 
-  isOverBudget(ticket) {
+  isOverBudget = (ticket) => {
     return ticket.actualHours > ticket.budgetHours;
   }
 
-  overriddenHours(ticketId) {
+  overriddenHours = (ticketId) => {
     const override = this.props.overrideHours.find(ticket => ticket.id === ticketId);
     if (!override) {
       return undefined;
@@ -27,7 +23,7 @@ export default class Queue extends Component {
     return Number(override.hours);
   }
 
-  totalBudget() {
+  totalBudget = () => {
     const { selectedTickets: tickets } = this.props;
     const totalHours = tickets.map(ticket => {
       const override = this.overriddenHours(ticket.id);

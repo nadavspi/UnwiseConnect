@@ -2,7 +2,6 @@ import React from 'react';
 import { fetchTimeEntryById, fetchTicketTimeEntryIds } from '../../../helpers/cw';
 
 const TimeEntries = ({ticketNumber}) => {
-
   const [entries, setEntries] = React.useState([]);
   const [isLoading, setIsLoading] = React.useState(false);
 
