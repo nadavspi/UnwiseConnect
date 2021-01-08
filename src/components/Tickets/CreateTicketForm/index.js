@@ -243,7 +243,7 @@ class CreateTicketForm extends PureComponent {
                 <p>You created a new ticket:
                   {this.state.newTicketId && (
                     <a
-                      href={process.env.REACT_APP_CONNECTWISE_SERVER_URL + `/services/system_io/Service/fv_sr100_request.rails?service_recid=&${this.state.newTicketId}companyName=sd`}
+                      href={process.env.REACT_APP_CONNECTWISE_SERVER_URL + `/services/system_io/Service/fv_sr100_request.rails?service_recid=${this.state.newTicketId}`} target="_blank" rel="noopener"
                       target="_blank"
                       rel="noopener noreferrer"
                     >
