@@ -1,6 +1,7 @@
 import * as TicketsActions from '../../actions/tickets';
 import * as UserActions from '../../actions/user';
 import AddProject from './AddProject';
+import CreateTicketForm from './CreateTicketForm';
 import Projects from './Projects';
 import React, { Component } from 'react';
 import Table from './Table';
@@ -13,6 +14,21 @@ import { search } from '../../actions/tickets';
 class Tickets extends Component {
   state = {
     expanded: '',
+    selectedProject: {}
+  }
+
+  componentDidUpdate = (prevProps) => {
+    if (prevProps.tickets.query !== this.props.tickets.query) {
+      this.setSelectedProject();
+    }
+  }
+
+  setSelectedProject = () => {
+    const selectedProject = this.props.tickets.query;
+
+    this.setState({
+      selectedProject
+    });
   }
 
   projects = () => {
@@ -108,6 +124,11 @@ class Tickets extends Component {
                 }, true)}
               />
             </div>
+            <CreateTicketForm
+              projects={this.projects()}
+              selectedProject={this.state.selectedProject}
+              tickets={this.props.tickets.flattened}
+            />
             {this.props.tickets.flattened.length > 0 && (
               <Table
                 id="table-search-tickets"

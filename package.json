@@ -22,6 +22,7 @@
     "prettier": "^0.20.0",
     "prop-types": "^15.7.2",
     "react": "^16.8.6",
+    "react-autocomplete": "^1.8.1",
     "react-beautiful-dnd": "^11.0.4",
     "react-click-outside": "^3.0.1",
     "react-csv": "^1.0.14",
