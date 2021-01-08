@@ -16,13 +16,13 @@ class CreateTicketForm extends PureComponent {
     projects: [],
     projectValue: '',
     selectedPhase: {},
-    selectedProject: {},
     summary: '',
     ticketType: 'project',
   }
 
   state = {
-    ...this.emptyTicketState
+    ...this.emptyTicketState,
+    selectedProject: {},
   }
 
   componentDidMount = () => {
@@ -143,7 +143,10 @@ class CreateTicketForm extends PureComponent {
   resetTicketDetails = () => {
     this.setState({
       ...this.emptyTicketState,
+      expanded: true,
     });
+
+    this.getPhases();
   }
 
   render() {
@@ -205,6 +208,7 @@ class CreateTicketForm extends PureComponent {
                 id="summary"
                 onChange={(e) => this.setState({ summary: e.target.value })}
                 required
+                value={this.state.summary}
                 autoComplete="off"
               ></input>
             </div>
@@ -220,6 +224,7 @@ class CreateTicketForm extends PureComponent {
                 step="0.25"
                 placeholder="1"
                 autoComplete="off"
+                value={this.state.budget}
               ></input>
               {this.state.budget > 10 && (<p>Warning: This is a higher than normal budget</p>)}
             </div>
@@ -231,7 +236,8 @@ class CreateTicketForm extends PureComponent {
                 cols="50"
                 className="form-control"
                 placeholder="This is optional"
-                onChange={(e) => e.target.value.length > 5 && this.setState({ initialDescription: e.target.value })}
+                value={this.state.initialDescription}
+                onChange={(e) => this.setState({ initialDescription: e.target.value })}
               ></textarea>
             </div>
             <button
