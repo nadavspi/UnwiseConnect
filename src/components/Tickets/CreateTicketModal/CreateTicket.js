@@ -158,7 +158,7 @@ class CreateTicket extends PureComponent {
         >
           <form>
             <div>
-              <label htmlFor="projects">Project</label><br></br>
+              <label htmlFor="projects">Project</label>
               <input
                 id="projects"
                 className="form-control"
@@ -167,72 +167,66 @@ class CreateTicket extends PureComponent {
               />
             </div>
             <div className="autocomplete-field">
-              <label htmlFor="phases">Phase</label><br></br>
-              <Autocomplete
-                id="phases"
-                items={this.state.phases}
-                getItemValue={item => item.path}
-                shouldItemRender={(item, value) => item.path.toLowerCase().indexOf(value.toLowerCase()) > -1}
-                renderItem={item => (
-                  <div key={`${item.phaseId}-${item.ticketId}`}>
-                    {item.path}
-                  </div>
-                )}
-                value={this.state.phaseValue}
-                inputProps={{ className: "autocomplete-input form-control" }}
-                onChange={e => this.setState({ phaseValue: e.target.value })}
-                onSelect={value => {
-                  this.setState({
-                    phaseValue: value,
-                    selectedPhase: this.state.phases.filter(phase => phase.path === value),
-                  })
-                }}
-              />
+              <label htmlFor="phases">Phase</label>
+                <Autocomplete
+                  id="phases"
+                  items={this.state.phases}
+                  getItemValue={item => item.path}
+                  shouldItemRender={(item, value) => item.path.toLowerCase().indexOf(value.toLowerCase()) > -1}
+                  renderItem={item => (
+                    <div key={`${item.phaseId}-${item.ticketId}`}>
+                      {item.path}
+                    </div>
+                  )}
+                  value={this.state.phaseValue}
+                  inputProps={{ className: "autocomplete-input form-control" }}
+                  onChange={e => this.setState({ phaseValue: e.target.value })}
+                  onSelect={value => {
+                    this.setState({
+                      phaseValue: value,
+                      selectedPhase: this.state.phases.filter(phase => phase.path === value),
+                    })
+                  }}
+                />
             </div>
-            {this.state.phaseValue && (
-              <div>
-                <label htmlFor="summary">Summary</label>
-                <input
-                  className="form-control"
-                  type="text"
-                  id="summary"
-                  onChange={(e) => this.setState({ summary: e.target.value })}
-                  required
-                  autoComplete="off"
-                ></input>
-              </div>
-            )}
-            {this.state.summary && (
-              <div>
-                <label htmlFor="budget-hours">Budget Hours</label>
-                <input
-                  type="number"
-                  id="budget-hours"
-                  className="form-control"
-                  onChange={(e) => this.setState({ budget: e.target.value })}
-                  required
-                  min="0"
-                  step="0.25"
-                  placeholder="1"
-                  autoComplete="off"
-                ></input>
-                {this.state.budget > 10 && (<p>Warning: This is a higher than normal budget</p>)}
-              </div>
-            )}
-            {this.state.budget > 0 && (
-              <div>
-                <label htmlFor="initial-description">Description</label>
-                <textarea
-                  id="initial-description"
-                  rows="4"
-                  cols="50"
-                  className="form-control"
-                  placeholder="This is optional"
-                  onChange={(e) => e.target.value.length > 5 && this.setState({ initialDescription: e.target.value })}
-                ></textarea>
-              </div>
-            )}
-            {(this.state.summary && this.state.budget) && (
+            <div>
+              <label htmlFor="summary">Summary</label>
+              <input
+                className="form-control"
+                type="text"
+                id="summary"
+                onChange={(e) => this.setState({ summary: e.target.value })}
+                required
+                autoComplete="off"
+              ></input>
+            </div>
+            <div>
+              <label htmlFor="budget-hours">Budget Hours</label>
+              <input
+                type="number"
+                id="budget-hours"
+                className="form-control"
+                onChange={(e) => this.setState({ budget: e.target.value })}
+                required
+                min="0"
+                step="0.25"
+                placeholder="1"
+                autoComplete="off"
+              ></input>
+              {this.state.budget > 10 && (<p>Warning: This is a higher than normal budget</p>)}
+            </div>
+            <div>
+              <label htmlFor="initial-description">Description</label>
+              <textarea
+                id="initial-description"
+                rows="4"
+                cols="50"
+                className="form-control"
+                placeholder="This is optional"
+                onChange={(e) => e.target.value.length > 5 && this.setState({ initialDescription: e.target.value })}
+              ></textarea>
+            </div>
+            {(this.state.summary && this.state.budget && this.state.phaseValue) && (
               <button
                 type="button"
                 className="btn btn-submit btn-primary"
