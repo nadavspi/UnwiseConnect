@@ -18,6 +18,7 @@
     "lodash.clonedeep": "^4.5.0",
     "memoizee": "^0.4.14",
     "nanoid": "^1.0.4",
+    "node-sass": "4.14.1",
     "prettier": "^0.20.0",
     "prop-types": "^15.7.2",
     "react": "^16.8.6",
