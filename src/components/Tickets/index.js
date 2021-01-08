@@ -1,7 +1,7 @@
 import * as TicketsActions from '../../actions/tickets';
 import * as UserActions from '../../actions/user';
 import AddProject from './AddProject';
-import CreateTicket from './CreateTicketModal/CreateTicket';
+import CreateTicketForm from './CreateTicketForm';
 import Projects from './Projects';
 import React, { Component } from 'react';
 import Table from './Table';
@@ -124,7 +124,7 @@ class Tickets extends Component {
                 }, true)}
               />
             </div>
-            <CreateTicket
+            <CreateTicketForm
               projects={this.projects()}
               selectedProject={this.state.selectedProject}
               tickets={this.props.tickets.flattened}

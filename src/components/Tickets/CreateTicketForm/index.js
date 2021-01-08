@@ -1,9 +1,9 @@
 import React, { PureComponent } from 'react';
 import Autocomplete from 'react-autocomplete';
 import { createTicket } from '../../../helpers/cw';
-import CreateTicketModal from './Modal';
+import CreateTicketModal from './CreateTicketModal';
 
-class CreateTicket extends PureComponent {
+class CreateTicketForm extends PureComponent {
   emptyTicketState = {
     budget: '',
     description: '',
@@ -261,4 +261,4 @@ class CreateTicket extends PureComponent {
   }
 }
 
-export default CreateTicket;
+export default CreateTicketForm;
