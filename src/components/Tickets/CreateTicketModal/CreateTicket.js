@@ -168,26 +168,26 @@ class CreateTicket extends PureComponent {
             </div>
             <div className="autocomplete-field">
               <label htmlFor="phases">Phase</label>
-                <Autocomplete
-                  id="phases"
-                  items={this.state.phases}
-                  getItemValue={item => item.path}
-                  shouldItemRender={(item, value) => item.path.toLowerCase().indexOf(value.toLowerCase()) > -1}
-                  renderItem={item => (
-                    <div key={`${item.phaseId}-${item.ticketId}`}>
-                      {item.path}
-                    </div>
-                  )}
-                  value={this.state.phaseValue}
-                  inputProps={{ className: "autocomplete-input form-control" }}
-                  onChange={e => this.setState({ phaseValue: e.target.value })}
-                  onSelect={value => {
-                    this.setState({
-                      phaseValue: value,
-                      selectedPhase: this.state.phases.filter(phase => phase.path === value),
-                    })
-                  }}
-                />
+              <Autocomplete
+                id="phases"
+                items={this.state.phases}
+                getItemValue={item => item.path}
+                shouldItemRender={(item, value) => item.path.toLowerCase().indexOf(value.toLowerCase()) > -1}
+                renderItem={item => (
+                  <div key={`${item.phaseId}-${item.ticketId}`}>
+                    {item.path}
+                  </div>
+                )}
+                value={this.state.phaseValue}
+                inputProps={{ className: "autocomplete-input form-control" }}
+                onChange={e => this.setState({ phaseValue: e.target.value })}
+                onSelect={value => {
+                  this.setState({
+                    phaseValue: value,
+                    selectedPhase: this.state.phases.filter(phase => phase.path === value),
+                  })
+                }}
+              />
             </div>
             <div>
               <label htmlFor="summary">Summary</label>
