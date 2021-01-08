@@ -7,6 +7,7 @@ class TicketLink extends Component {
   }
 
   copyToClipboard = (e) => {
+    e.preventDefault();
     let textField = document.createElement('textarea');
     textField.innerText = this.props.ticketNumber;
     document.body.appendChild(textField);

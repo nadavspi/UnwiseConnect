@@ -1,6 +1,7 @@
 import React, { PureComponent } from 'react';
 import Autocomplete from 'react-autocomplete';
 import { createTicket } from '../../../helpers/cw';
+import TicketLink from '../TicketLink';
 import CreateTicketModal from './CreateTicketModal';
 
 class CreateTicketForm extends PureComponent {
@@ -252,17 +253,10 @@ class CreateTicketForm extends PureComponent {
               Create Ticket
             </button>
             {(this.state.hasCompletedTicket && (
-              <div>
+              <div className="new-ticket-message">
                 <p>You created a new ticket:
                   {this.state.newTicketId && (
-                    <a
-                      href={process.env.REACT_APP_CONNECTWISE_SERVER_URL + `/services/system_io/Service/fv_sr100_request.rails?service_recid=${this.state.newTicketId}`}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      className="new-ticket"
-                    >
-                      {` #${this.state.newTicketId}`}
-                    </a>
+                    <TicketLink ticketNumber={this.state.newTicketId}/>
                   )}
                 </p>
                 <button type="button" className="btn btn-default btn-md btn-create-ticket" onClick={() => this.resetTicketDetails()}>Create another ticket</button>
