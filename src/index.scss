@@ -729,7 +729,7 @@ td.col--budget:not(:empty)::after {
     border-color: $dark__border-color !important;
 
     * {
-      color: $dark__text-color !important;
+      color: $dark__text-color;
     }
   }
 
@@ -863,6 +863,22 @@ td.col--budget:not(:empty)::after {
     right: 10px;
     top: 0;
     font-size: 20px;
+  }
+
+  .new-ticket-message p {
+    display: flex;
+    font-size: 16px;
+    margin-top: 15px;
+    font-weight: bold;
+
+    .ticket-link {
+      margin-left: 10px;
+      text-decoration: underline;
+
+      a {
+        color: $dark__link-color;
+      }
+    }
   }
 
   .autocomplete-field {

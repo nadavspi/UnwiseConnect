@@ -253,14 +253,16 @@ class CreateTicketForm extends PureComponent {
               Create Ticket
             </button>
             {(this.state.hasCompletedTicket && (
-              <div className="new-ticket-message">
-                <p>You created a new ticket:
-                  {this.state.newTicketId && (
-                    <TicketLink ticketNumber={this.state.newTicketId}/>
-                  )}
-                </p>
+              <React.Fragment>
+                <div className="new-ticket-message">
+                  <p>You created a new ticket:
+                    {this.state.newTicketId && (
+                      <TicketLink ticketNumber={this.state.newTicketId}/>
+                    )}
+                  </p>
+                </div>
                 <button type="button" className="btn btn-default btn-md btn-create-ticket" onClick={() => this.resetTicketDetails()}>Create another ticket</button>
-              </div>
+              </React.Fragment>
             ))}
           </form>
         </CreateTicketModal>
