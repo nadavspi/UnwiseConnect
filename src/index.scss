@@ -906,6 +906,14 @@ td.col--budget:not(:empty)::after {
     border: 1px solid $dark__border-color;
   }
 
+  .btn-ticket-create {
+    color: $dark__primary-color !important // override react-modal
+  }
+
+  .new-ticket {
+    color: $dark__link-color;
+  }
+
   .autocomplete-field {
     input[aria-expanded="true"] + div {
       background-color: $dark__primary-color !important; // override react-autocomplete

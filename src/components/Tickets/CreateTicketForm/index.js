@@ -66,8 +66,15 @@ class CreateTicketForm extends PureComponent {
       }
     });
 
+    const deduplicatedPhases = phases.reduce((uniquePhases, currentPhase) => {
+      if (!uniquePhases.some(phase => phase.path === currentPhase.path)) {
+        uniquePhases.push(currentPhase);
+      }
+      return uniquePhases;
+    }, []);
+
     this.setState({
-      phases
+      phases: deduplicatedPhases
     });
   }
 
@@ -243,15 +250,16 @@ class CreateTicketForm extends PureComponent {
                 <p>You created a new ticket:
                   {this.state.newTicketId && (
                     <a
-                      href={process.env.REACT_APP_CONNECTWISE_SERVER_URL + `/services/system_io/Service/fv_sr100_request.rails?service_recid=&${this.state.newTicketId}companyName=sd`}
+                      href={process.env.REACT_APP_CONNECTWISE_SERVER_URL + `/services/system_io/Service/fv_sr100_request.rails?service_recid=${this.state.newTicketId}`}
                       target="_blank"
                       rel="noopener noreferrer"
+                      className="new-ticket"
                     >
                       {` #${this.state.newTicketId}`}
                     </a>
                   )}
                 </p>
-                <button type="button" className="btn btn-default btn-md" onClick={() => this.resetTicketDetails()}>Create another ticket</button>
+                <button type="button" className="btn btn-default btn-md btn-create-ticket" onClick={() => this.resetTicketDetails()}>Create another ticket</button>
               </div>
             ))}
           </form>
