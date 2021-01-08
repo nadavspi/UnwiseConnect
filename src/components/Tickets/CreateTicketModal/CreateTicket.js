@@ -226,18 +226,17 @@ class CreateTicket extends PureComponent {
                 onChange={(e) => e.target.value.length > 5 && this.setState({ initialDescription: e.target.value })}
               ></textarea>
             </div>
-            {(this.state.summary && this.state.budget && this.state.phaseValue) && (
-              <button
-                type="button"
-                className="btn btn-submit btn-primary"
-                onClick={() => {
-                  this.setState({ hasCompletedTicket: true });
-                  this.createNewTicket();
-                }}
-              >
-                Create Ticket
-              </button>
-            )}
+            <button
+              type="button"
+              className="btn btn-submit btn-primary"
+              disabled={!this.state.budget || !this.state.summary || !this.state.phaseValue}
+              onClick={() => {
+                this.setState({ hasCompletedTicket: true });
+                this.createNewTicket();
+              }}
+            >
+              Create Ticket
+            </button>
             {(this.state.hasCompletedTicket && (
               <div>
                 <p>You created a new ticket:
