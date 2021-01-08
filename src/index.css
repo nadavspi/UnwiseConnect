@@ -739,6 +739,18 @@ td.col--budget:not(:empty)::after {
   box-shadow: 0 6px 12px rgba(0, 0, 0, .175);
 }
 
+.dark-modal.ticket-modal input,
+.dark-modal.ticket-modal textarea {
+  border-radius: 5px;
+  background-color: #090E13;
+  color: #C8D1D9;
+  border: 1px solid #30363C;
+}
+
+.dark-modal.ticket-modal input {
+  height: 33px;
+}
+
 .ticket-modal input,
 .autocomplete-field div {
   width: 100%;
@@ -749,6 +761,12 @@ td.col--budget:not(:empty)::after {
   left: 50% !important;
   transform: translate(-50%, 20px) !important;
   max-width: 500px;
+}
+
+.dark-modal .autocomplete-field input[aria-expanded="true"] + div {
+  background-color: #090E13 !important;
+  color: #C8D1D9 !important;
+  border-color: #30363C !important;
 }
 
 .autocomplete-field div input {
@@ -779,4 +797,9 @@ td.col--budget:not(:empty)::after {
 .autocomplete-field input[aria-expanded="true"] + div div:focus {
   /* override react-autocomplete */
   background-color: #f5f5f5 !important;
+}
+
+.dark-modal .autocomplete-field input[aria-expanded="true"] + div div:hover,
+.dark-modal .autocomplete-field input[aria-expanded="true"] + div div:focus {
+  background-color: #151a23 !important;
 }
