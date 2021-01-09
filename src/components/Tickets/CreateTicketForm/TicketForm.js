@@ -71,15 +71,15 @@ const TicketForm = (props) => {
         )}
       </div>
       <div>
-        <label htmlFor="initial-description">Description</label>
+        <label htmlFor="description">Description</label>
         <textarea
-          id="initial-description"
+          id="description"
           rows="4"
           cols="50"
           className="form-control"
           placeholder="This is optional"
-          value={props.initialDescription}
-          onChange={(e) => props.setInitialDescription(e.target.value)}
+          value={props.description}
+          onChange={(e) => props.setDescription(e.target.value)}
         ></textarea>
       </div>
       <button

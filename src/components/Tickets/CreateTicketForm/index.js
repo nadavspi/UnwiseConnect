@@ -9,7 +9,6 @@ class CreateTicketForm extends PureComponent {
     description: '',
     expanded: false,
     hasCompletedTicket: false,
-    initialDescription: '',
     newTicketId: '',
     phases: [],
     phaseValue: '',
@@ -106,7 +105,7 @@ class CreateTicketForm extends PureComponent {
       project: { id: this.state.selectedProject[0].id },
       phase: { id: this.state.selectedPhase[0].phaseId },
       budgetHours: this.state.budget,
-      initialDescription: this.state.initialDescription,
+      initialDescription: this.state.description,
     });
 
     // @todo allow service ticket creation
@@ -116,7 +115,7 @@ class CreateTicketForm extends PureComponent {
       company: { id: this.state.selectedProject[0].companyId },
       agreement: '', // where is this?
       budgetHours: this.state.budget,
-      initialDescription: this.state.initialDescription,
+      initialDescription: this.state.description,
     });
 
     if (this.state.ticketType === 'project') {
@@ -147,8 +146,8 @@ class CreateTicketForm extends PureComponent {
     this.getPhases();
   }
 
-  setInitialDescription = initialDescription => {
-    this.setState({ initialDescription });
+  setDescription = description => {
+    this.setState({ description });
   }
 
   setPhaseValue = phaseValue => {
@@ -193,7 +192,6 @@ class CreateTicketForm extends PureComponent {
             description={this.state.description}
             expanded={this.state.expanded}
             hasCompletedTicket={this.state.hasCompletedTicket}
-            initialDescription={this.state.initialDescription}
             newTicketId={this.state.newTicketId}
             phases={this.state.phases}
             phaseValue={this.state.phaseValue}
@@ -203,7 +201,7 @@ class CreateTicketForm extends PureComponent {
             selectedPhase={this.state.selectedPhase}
             selectedProject={this.props.selectedProject}
             setBudget={this.setBudget}
-            setInitialDescription={this.setInitialDescription}
+            setDescription={this.setDescription}
             setPhaseValue={this.setPhaseValue}
             setSummary={this.setSummary}
             setTicketCompleted={this.setTicketCompleted}
