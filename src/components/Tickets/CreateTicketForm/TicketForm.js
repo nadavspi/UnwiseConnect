@@ -79,7 +79,7 @@ class TicketForm extends PureComponent {
           className="btn btn-submit btn-primary"
           disabled={!this.props.budget || !this.props.summary || !this.props.phaseValue}
           onClick={() => {
-            this.props.setTicketCompletionStatus(true);
+            this.props.setTicketCompleted(true);
             this.props.createNewTicket();
           }}
         >

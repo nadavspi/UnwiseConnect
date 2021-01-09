@@ -163,7 +163,7 @@ class CreateTicketForm extends PureComponent {
     this.setState({ budget });
   }
 
-  setTicketCompletionStatus = hasCompletedTicket => {
+  setTicketCompleted = hasCompletedTicket => {
     this.setState({ hasCompletedTicket });
   }
 
@@ -203,7 +203,7 @@ class CreateTicketForm extends PureComponent {
             setInitialDescription={this.setInitialDescription}
             setPhaseValue={this.setPhaseValue}
             setSummary={this.setSummary}
-            setTicketCompletionStatus={this.setTicketCompletionStatus}
+            setTicketCompleted={this.setTicketCompleted}
             summary={this.state.summary}
             ticketType={this.state.ticketType}
             toggleCreateTicketForm={this.toggleCreateTicketForm}
