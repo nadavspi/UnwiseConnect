@@ -210,8 +210,7 @@ class CreateTicketForm extends PureComponent {
             summary={this.state.summary}
             ticketType={this.state.ticketType}
             toggleCreateTicketForm={this.toggleCreateTicketForm}
-          >
-          </TicketForm>
+          />
         </TicketModal>
       </div>
     )

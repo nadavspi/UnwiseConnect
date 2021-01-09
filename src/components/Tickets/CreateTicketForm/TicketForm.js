@@ -5,7 +5,14 @@ import TicketLink from '../TicketLink';
 const TicketForm = (props) => {
   return (
     <form>
-      <button type="button" className="close-btn btn" aria-label="close" onClick={() => props.toggleCreateTicketForm()}>✕</button>
+      <button
+        type="button"
+        className="close-btn btn"
+        aria-label="close"
+        onClick={() => props.toggleCreateTicketForm()}
+      >
+        ✕
+      </button>
       <div>
         <label htmlFor="projects">Project</label>
         <input
@@ -59,7 +66,9 @@ const TicketForm = (props) => {
           autoComplete="off"
           value={props.budget}
         ></input>
-        {props.budget > 10 && (<p>Warning: This is a higher than normal budget</p>)}
+        {props.budget > 10 && (
+          <p>Warning: This is a higher than normal budget</p>
+        )}
       </div>
       <div>
         <label htmlFor="initial-description">Description</label>
@@ -93,7 +102,13 @@ const TicketForm = (props) => {
               )}
             </p>
           </div>
-          <button type="button" className="btn btn-default btn-md btn-create-ticket" onClick={() => props.resetTicketDetails()}>Create another ticket</button>
+          <button
+            type="button"
+            className="btn btn-default btn-md btn-create-ticket"
+            onClick={() => props.resetTicketDetails()}
+          >
+            Create another ticket
+          </button>
         </>
       ))}
     </form>
