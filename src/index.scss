@@ -596,6 +596,24 @@ td.col--budget:not(:empty)::after {
         display: flex;
         align-items: center;
       }
+
+      [class$="menu"] {
+        margin-top: 1px;
+        border: 1px solid $dark__border-color;
+      }
+
+      [class$="singleValue"] {
+        margin-left: 5px;
+      }
+
+      [id^=react-select] {
+        background-color: $dark__primary-color;
+
+        @include hover {
+          background-color: $dark__hover__background-color;
+          cursor: pointer;
+        }
+      }
     }
   }
 
