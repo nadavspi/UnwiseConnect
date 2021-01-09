@@ -190,6 +190,68 @@ body {
   border-bottom: solid 1px #eee;
 }
 
+.ToggleProjects__label {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  padding-right: 130px;
+  padding-left: 5px;
+  padding-top: 5px;
+  cursor: pointer;
+  min-height: 35px;
+
+  small {
+    margin-left: 10px;
+  }
+
+  .btn-link {
+    position: absolute;
+    right: 20px;
+
+    @include hover {
+      text-decoration: $button__hover__text-decoration;
+    }
+  }
+}
+
+.ToggleProjects__project {
+  border-bottom: 1px solid #ccc;
+  background-color: white;
+
+  @include hover {
+    background-color: #f5f5f5;
+  }
+}
+
+.ToggleProjects__updated {
+  margin-left: 10px;
+}
+
+.ToggleProjects__checkbox[type="checkbox"] {
+  margin: 0;
+  margin-right: 15px;
+}
+
+.form-group.project-search {
+  z-index: 2;
+}
+
+.btn.dropdown-toggle {
+  height: 42px;
+  font-size: 14px;
+  margin: 0 5px;
+  border-radius: $element__border-radius;
+}
+
+.dropdown-menu {
+  top: calc(100% + 20px);
+
+  hr {
+    border-color: transparent;
+    margin-bottom: 30px;
+  }
+}
+
 #table-search-tickets table {
   table-layout: fixed;
 }
@@ -465,14 +527,7 @@ td.col--budget:not(:empty)::after {
     }
   }
 
-  .btn.dropdown-toggle {
-    height: 42px;
-    font-size: 14px;
-    margin: 0 5px;
-    border-radius: $element__border-radius;
-  }
-
-  .open > .btn.dropdown-toggle,
+  .open>.btn.dropdown-toggle,
   .btn.dropdown-toggle:active,
   .btn.dropdown-toggle:hover,
   .btn.dropdown-toggle:focus {
@@ -586,7 +641,6 @@ td.col--budget:not(:empty)::after {
   .form-group.project-search {
     background-color: $dark__hover__background-color;
     border-color: $dark__border-color;
-    z-index: 2;
   }
 
   .ToggleProjects__project {
@@ -599,43 +653,18 @@ td.col--budget:not(:empty)::after {
   }
 
   .ToggleProjects__label {
-    display: flex;
-    align-items: center;
-    flex-wrap: wrap;
-    padding-right: 130px;
-    padding-left: 5px;
-    margin: 5px 0;
-    cursor: pointer;
-
-    small {
-      margin-left: 10px;
-
-      a {
-        @include hover {
-          color: $dark__link-color;
-        }
+    a {
+      @include hover {
+        color: $dark__link-color;
       }
     }
 
     .btn-link {
-      position: absolute;
-      right: 20px;
-
       @include hover {
         color: $dark__link-color;
-        text-decoration: $button__hover__text-decoration;
         border: 1px solid $dark__border-color;
       }
     }
-  }
-
-  .ToggleProjects__updated {
-    margin-left: 10px;
-  }
-
-  .ToggleProjects__checkbox[type="checkbox"] {
-    margin: 0;
-    margin-right: 15px;
   }
 
   button.ticket-copy {
@@ -823,7 +852,7 @@ td.col--budget:not(:empty)::after {
   max-width: 700px;
   width: 100%;
   left: 50%;
-  height: 850px;
+  height: 750px;
   transform: translate(-50%, -30px);
 
   input,
@@ -850,6 +879,10 @@ td.col--budget:not(:empty)::after {
     margin-bottom: 20px;
   }
 
+  .btn-create-ticket {
+    margin-top: 20px;
+  }
+
   .ReactModal__Content {
     box-shadow: 0 6px 12px rgba(0, 0, 0, .175);
   }
@@ -863,6 +896,11 @@ td.col--budget:not(:empty)::after {
     right: 10px;
     top: 0;
     font-size: 20px;
+
+    @include allPseudoClasses {
+      background-color: transparent;
+      box-shadow: none;
+    }
   }
 
   .new-ticket-message p {
@@ -931,8 +969,6 @@ td.col--budget:not(:empty)::after {
   }
 
   .btn-create-ticket {
-    margin-top: 20px;
-
     @include hover {
       background-color: $dark__hover__background-color;
     }
