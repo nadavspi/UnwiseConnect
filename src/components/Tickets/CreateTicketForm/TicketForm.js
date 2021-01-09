@@ -78,6 +78,7 @@ const TicketForm = (props) => {
           cols="50"
           className="form-control"
           placeholder="This is optional"
+          autoComplete="off"
           value={props.description}
           onChange={(e) => props.setDescription(e.target.value)}
         ></textarea>
