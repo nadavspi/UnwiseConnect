@@ -1,6 +1,6 @@
 import React, { PureComponent } from 'react';
 import { createTicket } from '../../../helpers/cw';
-import CreateTicketModal from './CreateTicketModal';
+import TicketModal from './TicketModal';
 import TicketForm from './TicketForm';
 
 class CreateTicketForm extends PureComponent {
@@ -184,7 +184,7 @@ class CreateTicketForm extends PureComponent {
             {this.state.expanded ? '—' : '＋'} Create Ticket
           </button>
         )}
-        <CreateTicketModal
+        <TicketModal
           contentLabel="Create Ticket Modal"
           expanded={this.state.expanded}
           toggleCreateTicketForm={this.toggleCreateTicketForm}
@@ -214,7 +214,7 @@ class CreateTicketForm extends PureComponent {
             toggleCreateTicketForm={this.toggleCreateTicketForm}
           >
           </TicketForm>
-        </CreateTicketModal>
+        </TicketModal>
       </div>
     )
   }
