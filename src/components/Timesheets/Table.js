@@ -2,7 +2,7 @@ import React from 'react';
 import * as Table from 'reactabular-table';
 import { compose } from 'redux';
 import * as resolve from 'table-resolver';
-import './timesheets.css';
+import './timesheets.scss';
 
 const columns = [
   {
