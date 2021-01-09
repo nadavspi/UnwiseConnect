@@ -36,7 +36,10 @@ class CreateTicketForm extends PureComponent {
 
     if (prevProps.selectedProject !== this.props.selectedProject) {
       const { selectedProject } = this.props;
-      this.resetTicketDetails();
+
+      if (this.state.expanded) {
+        this.resetTicketDetails();
+      }
 
       if (selectedProject['project.name']) {
         this.getPhases(this.state.projects.filter(project => (
