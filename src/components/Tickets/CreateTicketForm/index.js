@@ -1,8 +1,7 @@
 import React, { PureComponent } from 'react';
-import Autocomplete from 'react-autocomplete';
 import { createTicket } from '../../../helpers/cw';
-import TicketLink from '../TicketLink';
 import CreateTicketModal from './CreateTicketModal';
+import TicketForm from './TicketForm';
 
 class CreateTicketForm extends PureComponent {
   emptyTicketState = {
@@ -119,7 +118,7 @@ class CreateTicketForm extends PureComponent {
     if (this.state.ticketType === 'project') {
       createTicket(projectTicketDetails).then(res => {
         this.setState({
-          newTicketId: res.result.id
+          newTicketId: res.result.id,
         });
       });
     }
@@ -150,6 +149,29 @@ class CreateTicketForm extends PureComponent {
     this.getPhases();
   }
 
+  setInitialDescription = initialDescription => {
+    this.setState({ initialDescription });
+  }
+
+  setPhaseValue = phaseValue => {
+    this.setState({
+      phaseValue,
+      selectedPhase: this.state.phases.filter(phase => phase.path === phaseValue),
+    })
+  }
+  
+  setSummary = summary => {
+    this.setState({ summary });
+  }
+
+  setBudget = budget => {
+    this.setState({ budget });
+  }
+
+  setTicketCompletionStatus = hasCompletedTicket => {
+    this.setState({ hasCompletedTicket });
+  }
+
   render() {
     return (
       <div className="create-ticket-form">
@@ -167,104 +189,31 @@ class CreateTicketForm extends PureComponent {
           expanded={this.state.expanded}
           toggleCreateTicketForm={this.toggleCreateTicketForm}
         >
-          <form>
-            <button type="button" className="close-btn btn" aria-label="close" onClick={() => this.toggleCreateTicketForm()}>✕</button>
-            <div>
-              <label htmlFor="projects">Project</label>
-              <input
-                id="projects"
-                className="form-control"
-                disabled="disabled"
-                value={`${this.props.selectedProject['company.name']} — ${this.props.selectedProject['project.name']}`}
-              />
-            </div>
-            <div className="autocomplete-field">
-              <label htmlFor="phases">Phase</label>
-              <Autocomplete
-                id="phases"
-                items={this.state.phases}
-                getItemValue={item => item.path}
-                shouldItemRender={(item, value) => item.path.toLowerCase().indexOf(value.toLowerCase()) > -1}
-                renderItem={item => (
-                  <div key={`${item.phaseId}-${item.ticketId}`}>
-                    {item.path}
-                  </div>
-                )}
-                value={this.state.phaseValue}
-                inputProps={{ className: "autocomplete-input form-control" }}
-                onChange={e => this.setState({ phaseValue: e.target.value })}
-                onSelect={value => {
-                  this.setState({
-                    phaseValue: value,
-                    selectedPhase: this.state.phases.filter(phase => phase.path === value),
-                  })
-                }}
-              />
-            </div>
-            <div>
-              <label htmlFor="summary">Summary</label>
-              <input
-                className="form-control"
-                type="text"
-                id="summary"
-                onChange={(e) => this.setState({ summary: e.target.value })}
-                required
-                value={this.state.summary}
-                autoComplete="off"
-              ></input>
-            </div>
-            <div>
-              <label htmlFor="budget-hours">Budget Hours</label>
-              <input
-                type="number"
-                id="budget-hours"
-                className="form-control"
-                onChange={(e) => this.setState({ budget: e.target.value })}
-                required
-                min="0"
-                step="0.25"
-                placeholder="1"
-                autoComplete="off"
-                value={this.state.budget}
-              ></input>
-              {this.state.budget > 10 && (<p>Warning: This is a higher than normal budget</p>)}
-            </div>
-            <div>
-              <label htmlFor="initial-description">Description</label>
-              <textarea
-                id="initial-description"
-                rows="4"
-                cols="50"
-                className="form-control"
-                placeholder="This is optional"
-                value={this.state.initialDescription}
-                onChange={(e) => this.setState({ initialDescription: e.target.value })}
-              ></textarea>
-            </div>
-            <button
-              type="button"
-              className="btn btn-submit btn-primary"
-              disabled={!this.state.budget || !this.state.summary || !this.state.phaseValue}
-              onClick={() => {
-                this.setState({ hasCompletedTicket: true });
-                this.createNewTicket();
-              }}
-            >
-              Create Ticket
-            </button>
-            {(this.state.hasCompletedTicket && (
-              <React.Fragment>
-                <div className="new-ticket-message">
-                  <p>You created a new ticket:
-                    {this.state.newTicketId && (
-                      <TicketLink ticketNumber={this.state.newTicketId}/>
-                    )}
-                  </p>
-                </div>
-                <button type="button" className="btn btn-default btn-md btn-create-ticket" onClick={() => this.resetTicketDetails()}>Create another ticket</button>
-              </React.Fragment>
-            ))}
-          </form>
+          <TicketForm
+            budget={this.state.budget}
+            createNewTicket={this.createNewTicket}
+            description={this.state.description}
+            expanded={this.state.expanded}
+            hasCompletedTicket={this.state.hasCompletedTicket}
+            initialDescription={this.state.initialDescription}
+            newTicketId={this.state.newTicketId}
+            phases={this.state.phases}
+            phaseValue={this.state.phaseValue}
+            projects={this.state.projects}
+            projectValue={this.state.projectValue}
+            resetTicketDetails={this.resetTicketDetails}
+            selectedPhase={this.state.selectedPhase}
+            selectedProject={this.props.selectedProject}
+            setBudget={this.setBudget}
+            setInitialDescription={this.setInitialDescription}
+            setPhaseValue={this.setPhaseValue}
+            setSummary={this.setSummary}
+            setTicketCompletionStatus={this.setTicketCompletionStatus}
+            summary={this.state.summary}
+            ticketType={this.state.ticketType}
+            toggleCreateTicketForm={this.toggleCreateTicketForm}
+          >
+          </TicketForm>
         </CreateTicketModal>
       </div>
     )
