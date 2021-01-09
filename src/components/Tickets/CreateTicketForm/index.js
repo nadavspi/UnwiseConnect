@@ -134,12 +134,6 @@ class CreateTicketForm extends PureComponent {
     });
   }
 
-  selectTicketType = event => {
-    this.setState({
-      ticketType: event.target.value
-    });
-  }
-
   resetTicketDetails = () => {
     this.setState({
       ...this.emptyTicketState,
