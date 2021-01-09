@@ -86,7 +86,7 @@ class TicketForm extends PureComponent {
           Create Ticket
         </button>
         {(this.props.hasCompletedTicket && (
-          <React.Fragment>
+          <>
             <div className="new-ticket-message">
               <p>You created a new ticket:
                 {this.props.newTicketId && (
@@ -95,7 +95,7 @@ class TicketForm extends PureComponent {
               </p>
             </div>
             <button type="button" className="btn btn-default btn-md btn-create-ticket" onClick={() => this.props.resetTicketDetails()}>Create another ticket</button>
-          </React.Fragment>
+          </>
         ))}
       </form>
     );
