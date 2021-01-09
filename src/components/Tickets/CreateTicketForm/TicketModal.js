@@ -8,7 +8,7 @@ class TicketModal extends PureComponent {
       <Modal
         contentLabel="Create Ticket Modal"
         isOpen={this.props.expanded}
-        onRequestClose={this.props.toggleCreateTicketForm}
+        onRequestClose={this.props.toggleTicketModal}
         overlayClassName={`modal-overlay ticket-modal ${this.props.theme}-modal`}
         shouldCloseOnOverlayClick={true}
       >

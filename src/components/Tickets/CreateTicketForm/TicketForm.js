@@ -9,7 +9,7 @@ const TicketForm = (props) => {
         type="button"
         className="close-btn btn"
         aria-label="close"
-        onClick={() => props.toggleCreateTicketForm()}
+        onClick={() => props.toggleTicketModal()}
       >
         ✕
       </button>

@@ -132,7 +132,7 @@ class CreateTicketForm extends PureComponent {
     }
   };
 
-  toggleCreateTicketForm = () => {
+  toggleTicketModal = () => {
     this.setState({
       expanded: !this.state.expanded
     });
@@ -177,7 +177,7 @@ class CreateTicketForm extends PureComponent {
           <button
             className="btn btn-default btn-md btn-expand"
             type="button"
-            onClick={() => this.toggleCreateTicketForm()}
+            onClick={() => this.toggleTicketModal()}
           >
             {this.state.expanded ? '—' : '＋'} Create Ticket
           </button>
@@ -185,7 +185,7 @@ class CreateTicketForm extends PureComponent {
         <TicketModal
           contentLabel="Create Ticket Modal"
           expanded={this.state.expanded}
-          toggleCreateTicketForm={this.toggleCreateTicketForm}
+          toggleTicketModal={this.toggleTicketModal}
         >
           <TicketForm
             budget={this.state.budget}
@@ -209,7 +209,7 @@ class CreateTicketForm extends PureComponent {
             setTicketCompleted={this.setTicketCompleted}
             summary={this.state.summary}
             ticketType={this.state.ticketType}
-            toggleCreateTicketForm={this.toggleCreateTicketForm}
+            toggleTicketModal={this.toggleTicketModal}
           />
         </TicketModal>
       </div>
