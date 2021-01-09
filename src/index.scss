@@ -439,6 +439,12 @@ td.col--budget:not(:empty)::after {
     height: 33px;
   }
 
+  .navbar-brand {
+    @include hover {
+      color: $dark__link-color;
+    }
+  }
+
   .json-string {
     color: #FD971F;
   }
