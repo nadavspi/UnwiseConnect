@@ -85,7 +85,7 @@ const TicketForm = (props) => {
       <button
         type="button"
         className="btn btn-submit btn-primary"
-        disabled={!props.budget || !props.summary || !props.phaseValue}
+        disabled={!props.budget || !props.summary || !props.phaseValue || props.hasCompletedTicket}
         onClick={() => {
           props.setTicketCompleted(true);
           props.createNewTicket();
