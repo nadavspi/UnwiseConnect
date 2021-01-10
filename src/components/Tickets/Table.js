@@ -43,10 +43,33 @@ export default class TicketsTable extends React.Component {
     },
     rows: [],
     columns: this.props.columns,
+    showEmptyColumnsAlert: false,
   };
 
   componentDidMount = () => {
     this.prepareRows();
+
+    setTimeout(() => {
+      if (!this.props.userColumns.length) {
+        this.setState({
+          showEmptyColumnsAlert: true
+        });
+      }
+    }, 1000);
+  }
+
+  componentDidUpdate(prevProps) {
+    if (prevProps.userColumns.length && !this.props.userColumns.length) {
+      this.setState({
+        showEmptyColumnsAlert: true
+      });
+    }
+
+    if (!prevProps.userColumns.length && this.props.userColumns.length) {
+      this.setState({
+        showEmptyColumnsAlert: false
+      });
+    }
   }
 
   componentWillReceiveProps = (nextProps) => {
@@ -175,11 +198,9 @@ export default class TicketsTable extends React.Component {
           columns={columns}
           onToggleColumn={this.toggleColumn}
         />
-
-      {this.props.userColumns.length === 0 && (
-        <div className="alert alert-warning">You haven't selected any columns above. That's why you don't see any tickets.</div>
-      )}
-
+        {this.state.showEmptyColumnsAlert && (
+          <div className="alert alert-warning">You haven't selected any columns above. That's why you don't see any tickets.</div>
+        )}
         <Table.Provider
           className="table table-striped table-bordered"
           columns={visibleColumns}
