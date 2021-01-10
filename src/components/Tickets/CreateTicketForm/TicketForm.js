@@ -62,7 +62,6 @@ const TicketForm = (props) => {
           required
           min="0"
           step="0.25"
-          placeholder="1"
           autoComplete="off"
           value={props.budget}
         ></input>
