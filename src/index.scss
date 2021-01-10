@@ -98,9 +98,12 @@ body {
   display: flex;
 
   .btn.btn-dark-mode {
+    border-bottom-left-radius: 0;
+    border-bottom-right-radius: 0;
+    margin-left: 5px;
+
     @include allPseudoClasses {
       outline: none;
-      border: none;
     }
   }
 }
@@ -301,6 +304,15 @@ body {
   text-align: right;
 }
 
+#table-dispatch-tickets table button {
+  white-space: nowrap;
+  height: 35px;
+  padding: 0 15px;
+  border-radius: $element__border-radius;
+  border: 1px solid #ccc;
+  background-color: transparent;
+}
+
 td.col--budget:not(:empty)::after {
   content: ' hrs';
 }
@@ -407,9 +419,7 @@ td.col--budget:not(:empty)::after {
 .page.dark {
   background-color: #07090F;
   min-height: 100vh;
-}
 
-.dark {
   * {
     transition: background-color .4s;
   }
@@ -432,11 +442,32 @@ td.col--budget:not(:empty)::after {
     background-color: $dark__primary-color;
     color: $dark__text-color;
     border: 1px solid $dark__border-color;
+    border-radius: $element__border-radius;
   }
 
+  select,
   input {
-    border-radius: $element__border-radius;
-    height: 33px;
+    padding-left: 10px;
+  }
+
+  button {
+    @include allPseudoClasses {
+      background-color: $dark__hover__background-color;
+      color: $dark__text-color;
+      border-color: $dark__border-color;
+      text-decoration: none;
+    }
+  }
+
+  .column-filter-input,
+  .dispatch-fields .form-group:not(:first-of-type) input,
+  .dispatch-fields .form-group:not(:first-of-type) select {
+    height: 38px;
+  }
+
+  .dispatch-fields .form-group:first-of-type div *,
+  .column-filter .column-filter-dropdown div * {
+    background-color: $dark__primary-color;
   }
 
   .navbar-brand {
@@ -521,19 +552,18 @@ td.col--budget:not(:empty)::after {
     }
 
     button {
-      border-color: $dark__border-color !important;
+      border-color: $dark__border-color;
+      border-radius: 0;
+      color: #777;
 
       @include allPseudoClasses {
-        background-color: $dark__hover__background-color !important;
-        color: $dark__text-color !important;
-        text-decoration: $button__hover__text-decoration;
-        border-color: $dark__border-color;
+        background-color: $dark__hover__background-color;
         transition: .3s;
       }
     }
   }
 
-  .open>.btn.dropdown-toggle,
+  .open > .btn.dropdown-toggle,
   .btn.dropdown-toggle:active,
   .btn.dropdown-toggle:hover,
   .btn.dropdown-toggle:focus {
@@ -542,6 +572,20 @@ td.col--budget:not(:empty)::after {
     text-decoration: $button__hover__text-decoration;
     border-color: $dark__border-color;
     transition: .3s;
+  }
+
+  .open > .toggl-description {
+    background-color: $dark__primary-color;
+    border: 1px solid $dark__border-color;
+
+    .form-control {
+      background-color: $dark__secondary-color;
+      color: $dark__text-color;
+    }
+
+    button {
+      margin-right: 5px;
+    }
   }
 
   .dropdown-menu {
@@ -564,6 +608,10 @@ td.col--budget:not(:empty)::after {
     td {
       border-color: $dark__border-color !important;
     }
+  }
+
+  #table-dispatch-tickets table button {
+    border-color: $dark__border-color;
   }
 
   .table-striped {
@@ -717,19 +765,17 @@ td.col--budget:not(:empty)::after {
     align-items: center;
   }
 
-  .btn-queue {
-    @include hover {
-      background-color: $dark__secondary-color;
-    }
-  }
-
   .queue-list {
     * {
       color: $dark__text-color;
     }
 
-    li div {
-      margin-bottom: 10px;
+    li {
+      color: $dark__text-color !important; // override inline
+
+      div {
+        margin-bottom: 10px;
+      }
     }
 
     .btn-link {
@@ -737,11 +783,10 @@ td.col--budget:not(:empty)::after {
       margin-top: -3px;
       border-radius: 4px;
       height: 33px;
+    }
 
-      @include hover {
-        border: 1px solid $dark__border-color;
-        text-decoration: $button__hover__text-decoration;
-      }
+    input {
+      height: 33px;
     }
   }
 
@@ -756,7 +801,7 @@ td.col--budget:not(:empty)::after {
   }
 
   .glyphicon-info-sign {
-    @include hover {
+    @include allPseudoClasses {
       background-color: $dark__hover__background-color;
       color: $dark__text-color;
       border-color: $dark__border-color;
@@ -764,15 +809,16 @@ td.col--budget:not(:empty)::after {
   }
 }
 
-.dark.btn-dark-mode {
+button.dark.btn.btn-dark-mode {
   background-color: $c-dark-gray;
-
-  svg {
-    fill: $dark__text-color;
-  }
+  margin-left: 0;
 
   @include allPseudoClasses {
     background-color: $c-dark-gray;
+  }
+
+  svg {
+    fill: $dark__text-color;
   }
 }
 
@@ -784,6 +830,12 @@ td.col--budget:not(:empty)::after {
     * {
       color: $dark__text-color;
     }
+
+    .form-control {
+      background-color: $dark__primary-color;
+      border-color: $dark__border-color;
+      color: $dark__text-color;
+    }
   }
 
   .modal-navbar-settings {
@@ -793,6 +845,7 @@ td.col--budget:not(:empty)::after {
   .btn-modal-nav {
     background-color: transparent;
     color: $dark__link-color !important;
+    border: none;
   }
 
   .table-striped > tbody > tr:nth-of-type(odd) {
@@ -860,13 +913,6 @@ td.col--budget:not(:empty)::after {
 }
 
 .dark .btn.btn-expand {
-  @include allPseudoClasses{
-    background-color: $dark__hover__background-color;
-    color: $dark__text-color;
-    border-color: $dark__border-color;
-    outline: none;
-  }
-
   &:focus {
     box-shadow: inset 0 1px 1px rgba(0, 0, 0, .075), 0 0 8px rgba(102, 175, 233, .6);
   }
@@ -968,11 +1014,12 @@ td.col--budget:not(:empty)::after {
       z-index: 2;
 
       div {
-        height: 35px;
-        line-height: 35px;
+        min-height: 35px;
+        line-height: 30px;
         padding: 0 20px;
         cursor: pointer;
         font-size: 14px !important; // override react-autocomplete
+        border-bottom: 1px solid #ccc;
 
         @include hover {
           background-color: #f5f5f5;
@@ -987,14 +1034,17 @@ td.col--budget:not(:empty)::after {
   textarea,
   .btn-create-ticket {
     border-radius: 5px;
-    background-color: $dark__primary-color;
-    color: $dark__text-color;
-    border: 1px solid $dark__border-color;
   }
 
   .btn-create-ticket {
-    @include hover {
+    background-color: $dark__primary-color;
+    border-color: $dark__border-color;
+    color: $dark__text-color;
+    height: 38px;
+
+    @include allPseudoClasses {
       background-color: $dark__hover__background-color;
+      color: $dark__text-color;
     }
   }
 
@@ -1010,6 +1060,7 @@ td.col--budget:not(:empty)::after {
 
       div {
         color: $dark__text-color !important; // override react-autocomplete
+        border-color: $dark__border-color !important; // override react-autocomplete
 
         @include hover {
           background-color: $dark__hover__background-color !important; // override react-autocomplete
