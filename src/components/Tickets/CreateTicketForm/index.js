@@ -2,6 +2,7 @@ import React, { PureComponent } from 'react';
 import { createTicket } from '../../../helpers/cw';
 import TicketModal from './TicketModal';
 import TicketForm from './TicketForm';
+import sortBy from 'sort-by';
 
 class CreateTicketForm extends PureComponent {
   emptyTicketState = {
@@ -76,8 +77,10 @@ class CreateTicketForm extends PureComponent {
       return uniquePhases;
     }, []);
 
+    const sortedDeduplicatedPhases = deduplicatedPhases.sort(sortBy('path'));
+
     this.setState({
-      phases: deduplicatedPhases
+      phases: sortedDeduplicatedPhases
     });
   }
 
