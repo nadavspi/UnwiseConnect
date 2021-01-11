@@ -65,6 +65,13 @@ export const search = (payload) => {
   };
 };
 
+export const updateSingleTicket = (payload) => {
+  return {
+    type: ActionTypes.TICKET_UPDATE_SINGLE,
+    payload,
+  };
+};
+
 export const updateTickets = payload => {
   return (dispatch, getState) => {
     if (!payload.projectId) {

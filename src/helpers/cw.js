@@ -18,6 +18,13 @@ export const fetchTicketNotes = ticketId => {
   return fetch(`${process.env.REACT_APP_API_URL}/v1/ticket/${ticketId}/notes`, { headers }).then(checkStatus).then(parseJSON);  
 }
 
+export const fetchTicketById = ticketId => {
+  const headers = {
+    Authorization: `Basic ${process.env.REACT_APP_API_KEY}`,
+  };
+  return fetch(`${process.env.REACT_APP_API_URL}/v1/ticket/${ticketId}`, { headers }).then(checkStatus).then(parseJSON);  
+}
+
 export const fetchTicketScheduleEntryIds = ticketId => {
   const headers = {
     Authorization: `Basic ${process.env.REACT_APP_API_KEY}`,

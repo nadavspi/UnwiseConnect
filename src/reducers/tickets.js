@@ -86,6 +86,15 @@ export default (state = initialState, action) => {
         ],
       };
 
+    case ActionTypes.TICKET_UPDATE_SINGLE:
+      return {
+        ...state,
+        flattened: [
+          ...state.flattened,
+          action.payload.result
+        ],
+      };
+
     case ActionTypes.TICKET_UPDATE_CLEAR:
       return {
         ...state,
