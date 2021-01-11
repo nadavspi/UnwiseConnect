@@ -96,11 +96,13 @@ const TicketForm = (props) => {
       {(props.hasCompletedTicket && (
         <>
           <div className="new-ticket-message">
-            <p>You created a new ticket:
-              {props.newTicketId && (
+            {props.newTicketId ? (
+              <p>Created ticket:
                 <TicketLink ticketNumber={props.newTicketId}/>
-              )}
-            </p>
+              </p>
+            ) : (
+              <p>Creating ticket ...</p>
+            )}
           </div>
           <button
             type="button"
