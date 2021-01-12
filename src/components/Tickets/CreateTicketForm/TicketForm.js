@@ -28,7 +28,7 @@ const TicketForm = (props) => {
           id="phases"
           items={props.phases}
           getItemValue={item => item.path}
-          shouldItemRender={(item, value) => item.path.toLowerCase().indexOf(value.toLowerCase()) > -1}
+          shouldItemRender={(item, value) => item.path && item.path.toLowerCase().indexOf(value.toLowerCase()) > -1}
           renderItem={item => (
             <div key={`${item.phaseId}-${item.ticketId}`}>
               {item.path}
@@ -62,7 +62,6 @@ const TicketForm = (props) => {
           required
           min="0"
           step="0.25"
-          placeholder="1"
           autoComplete="off"
           value={props.budget}
         ></input>
@@ -97,11 +96,13 @@ const TicketForm = (props) => {
       {(props.hasCompletedTicket && (
         <>
           <div className="new-ticket-message">
-            <p>You created a new ticket:
-              {props.newTicketId && (
+            {props.newTicketId ? (
+              <p>Created ticket:
                 <TicketLink ticketNumber={props.newTicketId}/>
-              )}
-            </p>
+              </p>
+            ) : (
+              <p>Creating ticket ...</p>
+            )}
           </div>
           <button
             type="button"

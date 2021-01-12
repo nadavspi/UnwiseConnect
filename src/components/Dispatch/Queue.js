@@ -54,6 +54,9 @@ export default class Queue extends Component {
   }
 
   render() {
+    const selectedTicketCount = this.props.selectedTickets.length;
+    const ticketCountText = `${selectedTicketCount} ${selectedTicketCount === 1 ? 'ticket' : 'tickets'}`;
+
     return (
       <div>
         <button 
@@ -62,11 +65,11 @@ export default class Queue extends Component {
           style={{ marginTop: '20px', marginBottom: '20px' }}
           type="button"
         >
-          <h2 style={{ margin: 0 }}>Queue ({this.props.selectedTickets.length} tickets, {this.totalBudget()} hours)</h2>
+          <h2 style={{ margin: 0 }}>Queue ({ticketCountText}, {`${this.totalBudget()} ${this.totalBudget() == 1 ? 'hour' : 'hours'}`})</h2>
         </button>
         {this.state.expanded && (
           <div>
-            <p>{this.props.selectedTickets.length} tickets selected.</p>
+            <p>{ticketCountText} selected.</p>
             {this.props.selectedTickets.length > 0 && (
               <button
                 onClick={this.props.resetTickets}

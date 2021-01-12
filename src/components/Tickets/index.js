@@ -14,7 +14,7 @@ import { search } from '../../actions/tickets';
 class Tickets extends Component {
   state = {
     expanded: '',
-    selectedProject: {}
+    selectedProject: {},
   }
 
   componentDidUpdate = (prevProps) => {
@@ -66,6 +66,10 @@ class Tickets extends Component {
     }
 
     this.props.dispatch(search(nextQuery));
+  }
+
+  addNewTicketToColumns = payload => {
+    this.props.dispatch(TicketsActions.updateSingleTicket(payload));
   }
 
   expand = (id) => {
@@ -125,6 +129,7 @@ class Tickets extends Component {
               />
             </div>
             <CreateTicketForm
+              addNewTicketToColumns={this.addNewTicketToColumns}
               projects={this.projects()}
               selectedProject={this.state.selectedProject}
               tickets={this.props.tickets.flattened}
