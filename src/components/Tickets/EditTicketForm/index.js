@@ -2,6 +2,7 @@ import React, { PureComponent } from 'react';
 import { fetchTicketById, updateTicketDetails } from '../../../helpers/cw';
 import { getPhases } from '../helpers';
 import EditForm from './EditForm';
+import EditModal from './EditModal';
 
 class EditTicketForm extends PureComponent {
   state = {
@@ -104,21 +105,27 @@ class EditTicketForm extends PureComponent {
             ></input>
           </div>
         </div>
-        <EditForm
-          budget={this.state.budget}
-          description={this.state.description}
-          fullName={this.state.fullName}
-          phases={this.state.phases}
-          phaseValue={this.state.phaseValue}
-          setBudget={this.setBudget}
-          setDescription={this.setDescription}
-          setPhaseValue={this.setPhaseValue}
-          setSummary={this.setSummary}
-          summary={this.state.summary}
-          ticketDetails={this.state.ticketDetails}
+        <EditModal
+          contentLabel="Edit Ticket Modal"
+          expanded={this.state.expanded}
           toggleEditModal={this.toggleEditModal}
-          updateTicketDetails={this.updateTicketDetails}
-        />
+        >
+          <EditForm
+            budget={this.state.budget}
+            description={this.state.description}
+            fullName={this.state.fullName}
+            phases={this.state.phases}
+            phaseValue={this.state.phaseValue}
+            setBudget={this.setBudget}
+            setDescription={this.setDescription}
+            setPhaseValue={this.setPhaseValue}
+            setSummary={this.setSummary}
+            summary={this.state.summary}
+            ticketDetails={this.state.ticketDetails}
+            toggleEditModal={this.toggleEditModal}
+            updateTicketDetails={this.updateTicketDetails}
+          />
+        </EditModal>
       </div>
     )
   }
