@@ -46,6 +46,49 @@ class EditTicketForm extends PureComponent {
     })
   }
 
+  setTicketId = ticketId => {
+    this.setState({
+      ticketId
+    });
+  }
+
+  toggleEditModal = () => {
+    this.setState({
+      expanded: !this.state.expanded
+    });
+  }
+
+  setDescription = description => {
+    this.setState({
+      description
+    });
+  }
+
+  setPhaseValue = phaseValue => {
+    this.setState({
+      phaseValue,
+      selectedPhase: this.state.phases.filter(phase => phase.path === phaseValue),
+    })
+  }
+
+  setSummary = summary => {
+    this.setState({
+      summary
+    });
+  }
+
+  setBudget = budget => {
+    this.setState({
+      budget
+    });
+  }
+
+  setTicketCompleted = hasCompletedTicket => {
+    this.setState({
+      hasCompletedTicket
+    });
+  }
+
   render() {
     return (
       <div className="edit-ticket-form">
@@ -62,6 +105,21 @@ class EditTicketForm extends PureComponent {
             ></input>
           </div>
         </div>
+        <TicketForm
+          budget={this.state.budget}
+          description={this.state.description}
+          fullName={this.state.fullName}
+          phases={this.state.phases}
+          phaseValue={this.state.phaseValue}
+          setBudget={this.setBudget}
+          setDescription={this.setDescription}
+          setPhaseValue={this.setPhaseValue}
+          setSummary={this.setSummary}
+          summary={this.state.summary}
+          ticketDetails={this.state.ticketDetails}
+          toggleEditModal={this.toggleEditModal}
+          updateTicketDetails={this.updateTicketDetails}
+        />
       </div>
     )
   }
