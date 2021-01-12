@@ -1,5 +1,5 @@
 import React, { PureComponent } from 'react';
-import { fetchTicketById, updateTicketDetails } from '../../../helpers/cw';
+import { fetchTicketById, updateTicketDetails, fetchTicketNotes } from '../../../helpers/cw';
 import { getPhases } from '../helpers';
 import EditForm from './EditForm';
 import EditModal from './EditModal';
@@ -15,7 +15,8 @@ class EditTicketForm extends PureComponent {
     summary: '',
     ticketDetails: '',
     ticketId: '',
-    expanded: false
+    expanded: false,
+    notes: ''
   }
 
   getTicketDetails = () => {
@@ -28,7 +29,7 @@ class EditTicketForm extends PureComponent {
 
       this.setState({
         budget: res.budgetHours,
-        description: res.description,
+        description: this.state.notes,
         fullName: res.company.name + ' - ' + res.project.name,
         phaseValue: res.phase.name,
         summary: res.summary,
@@ -36,6 +37,8 @@ class EditTicketForm extends PureComponent {
         phases,
         expanded: true
       });
+
+      this.getDescription()
     });
   }
 
@@ -48,6 +51,14 @@ class EditTicketForm extends PureComponent {
       summary: this.state.summary,
       phaseId: this.state.phases.filter(phase => phase.path === this.state.phaseValue && phase.id)
     })
+  }
+
+  getDescription = () => {
+    fetchTicketNotes(this.state.ticketId).then(results => {
+      this.setState({
+        description: results[0].text
+      });
+    });
   }
 
   setTicketId = ticketId => {
