@@ -1,8 +1,7 @@
 import React, { PureComponent } from 'react';
 import { fetchTicketById, updateTicketDetails } from '../../../helpers/cw';
 import { getPhases } from '../helpers';
-import EditModal from './EditModal';
-import TicketForm from './EditForm';
+import EditForm from './EditForm';
 
 class EditTicketForm extends PureComponent {
   state = {
@@ -105,7 +104,7 @@ class EditTicketForm extends PureComponent {
             ></input>
           </div>
         </div>
-        <TicketForm
+        <EditForm
           budget={this.state.budget}
           description={this.state.description}
           fullName={this.state.fullName}
