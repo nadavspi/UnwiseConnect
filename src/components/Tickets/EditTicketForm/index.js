@@ -19,6 +19,10 @@ class EditTicketForm extends PureComponent {
   }
 
   getTicketDetails = () => {
+    if (!this.state.ticketId) {
+      return;
+    }
+
     fetchTicketById(this.state.ticketId).then(res => {
       const phases = getPhases(res, this.props.tickets)
 
