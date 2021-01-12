@@ -28,7 +28,7 @@ const TicketForm = (props) => {
           id="phases"
           items={props.phases}
           getItemValue={item => item.path}
-          shouldItemRender={(item, value) => item.path.toLowerCase().indexOf(value.toLowerCase()) > -1}
+          shouldItemRender={(item, value) => item.path && item.path.toLowerCase().indexOf(value.toLowerCase()) > -1}
           renderItem={item => (
             <div key={`${item.phaseId}-${item.ticketId}`}>
               {item.path}
