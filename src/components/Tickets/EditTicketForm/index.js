@@ -97,7 +97,6 @@ class EditTicketForm extends PureComponent {
     return (
       <div className="edit-ticket-form">
         <div className="edit-ticket-form-actions">
-          <button type="button" onClick={this.getTicketDetails}>Edit Ticket</button>
           <div className="edit-ticket-input">
             <label htmlFor="ticket-number">Ticket Number</label>
             <input
@@ -105,8 +104,10 @@ class EditTicketForm extends PureComponent {
               id="ticket-number"
               onChange={(e) => this.setTicketId(e.target.value)}
               type="number"
+              placeholder="123456"
               value={this.state.ticketId}
             ></input>
+            <button type="button" onClick={this.getTicketDetails}>Edit Ticket</button>
           </div>
         </div>
         <EditModal

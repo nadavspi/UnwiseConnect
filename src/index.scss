@@ -1069,3 +1069,14 @@ button.dark.btn.btn-dark-mode {
     }
   }
 }
+
+.edit-ticket-form {
+  .edit-ticket-form-actions {
+    width: 150px;
+
+    label {
+      color: $dark__text-color;
+      margin: 20px 0 10px 0;
+    }
+  }
+}
