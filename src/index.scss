@@ -138,6 +138,7 @@ body {
 
 .panel-body.projects__wrapper {
   min-height: 200px;
+  position: relative;
 }
 
 .projects {
@@ -1070,17 +1071,39 @@ button.dark.btn.btn-dark-mode {
   }
 }
 
+.edit-ticket-btn {
+  position: absolute;
+  top: 75px;
+  right: 30px;
+  width: 130px;
+  height: 34px;
+}
+
 .edit-ticket-form {
-  width: 150px;
+  width: 200px;
+  position: absolute;
+  right: 30px;
+  top: 200px;
+  background-color: #0E1117;
+  border: 1px solid $dark__border-color;
+  border-radius: 5px;
+  padding: 20px;
+  z-index: 2;
 
-  &-actions {
-    label {
-      margin: 20px 0 10px 0;
-    }
+  input {
+    width: 100px;
+  }
 
-    button {
-      margin: 10px 0;
-    }
+  button {
+    margin-left: 5px;
+  }
+
+  .edit-ticket-input {
+    display: flex;
+  }
+
+  &-actions label {
+    margin-bottom: 10px;
   }
 
   p.edit-ticket-warning {
@@ -1088,6 +1111,7 @@ button.dark.btn.btn-dark-mode {
     color: #0E1117;
     padding: 10px;
     border-radius: 5px;
+    margin-top: 10px;
   }
 }
 

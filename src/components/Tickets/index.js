@@ -135,8 +135,14 @@ class Tickets extends Component {
                   'project.name': project,
                 }, true)}
               />
+              <button
+                onClick={this.editTicket}
+                type="button"
+                className="btn btn-default edit-ticket-btn"
+              >
+                {this.state.isEditingTicket ? '— ' : '＋ '} Edit Ticket
+              </button>
             </div>
-            <button onClick={this.editTicket} type="button">Edit ticket</button>
             {this.state.isEditingTicket && (
               <EditTicketForm
                 selectedProject={this.state.selectedProject}
