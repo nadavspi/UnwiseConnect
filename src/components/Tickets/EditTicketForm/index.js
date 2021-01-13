@@ -63,6 +63,8 @@ class EditTicketForm extends PureComponent {
       phaseValue: this.state.phaseValue,
       summary: this.state.summary,
       phaseId: this.state.phases.filter(phase => phase.path === this.state.phaseValue && phase.id)
+    }).catch((e) => {
+      console.log(e);
     })
   }
 
