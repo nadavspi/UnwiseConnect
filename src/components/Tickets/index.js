@@ -15,6 +15,7 @@ import { search } from '../../actions/tickets';
 class Tickets extends Component {
   state = {
     expanded: '',
+    isEditingTicket: false,
     selectedProject: {},
   }
 
@@ -83,6 +84,12 @@ class Tickets extends Component {
     this.setState({ expanded: nextState });
   }
 
+  editTicket = () => {
+    this.setState({
+      isEditingTicket: !this.state.isEditingTicket
+    });
+  }
+
   render() {
     const { expanded } = this.state;
     const addClassnames = classnames('dropdown', {
@@ -129,10 +136,13 @@ class Tickets extends Component {
                 }, true)}
               />
             </div>
-            <EditTicketForm
-              tickets={this.props.tickets.flattened}
-              selectedProject={this.state.selectedProject}
-            />
+            <button onClick={this.editTicket} type="button">Edit ticket</button>
+            {this.state.isEditingTicket && (
+              <EditTicketForm
+                selectedProject={this.state.selectedProject}
+                tickets={this.props.tickets.flattened}
+              />
+            )}
             <CreateTicketForm
               addNewTicketToColumns={this.addNewTicketToColumns}
               projects={this.projects()}
