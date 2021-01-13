@@ -11,6 +11,7 @@ class EditTicketForm extends PureComponent {
     expanded: false,
     fullName: '',
     hasCompletedTicket: false,
+    hasSubmittedTicketId: false,
     notes: '',
     phases: [],
     phaseValue: '',
@@ -21,7 +22,11 @@ class EditTicketForm extends PureComponent {
   }
 
   getTicketDetails = () => {
-    if (!this.state.ticketId || this.state.ticketId.length !== 6) {
+    this.setState({
+      hasSubmittedTicketId: true
+    });
+
+    if (!this.state.ticketId) {
       return;
     }
 
@@ -71,6 +76,7 @@ class EditTicketForm extends PureComponent {
 
   setTicketId = ticketId => {
     this.setState({
+      hasSubmittedTicketId: false,
       ticketId
     });
   }
@@ -129,8 +135,12 @@ class EditTicketForm extends PureComponent {
             <button type="button" onClick={this.getTicketDetails}>Edit Ticket</button>
           </div>
         </div>
-        {this.state.ticketId.length === 6 && !this.state.ticketIdExists && (
-          <p>Cannot find ticket</p>
+        {!this.state.ticketIdExists && this.state.hasSubmittedTicketId && (
+          this.state.ticketId.length === 6 ? (
+            <p className="edit-ticket-warning">Cannot find ticket with id: <strong>{this.state.ticketId}</strong></p>
+          ) : (
+            <p className="edit-ticket-warning">Tickets are 6 digits</p>
+          )
         )}
         <EditModal
           contentLabel="Edit Ticket Modal"
