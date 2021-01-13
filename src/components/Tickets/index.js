@@ -84,12 +84,6 @@ class Tickets extends Component {
     this.setState({ expanded: nextState });
   }
 
-  editTicket = () => {
-    this.setState({
-      isEditingTicket: !this.state.isEditingTicket
-    });
-  }
-
   render() {
     const { expanded } = this.state;
     const addClassnames = classnames('dropdown', {
@@ -135,13 +129,6 @@ class Tickets extends Component {
                   'project.name': project,
                 }, true)}
               />
-              <button
-                onClick={this.editTicket}
-                type="button"
-                className="btn btn-default edit-ticket-btn"
-              >
-                {this.state.isEditingTicket ? '— ' : '＋ '} Edit Ticket
-              </button>
             </div>
             <CreateTicketForm
               addNewTicketToColumns={this.addNewTicketToColumns}
