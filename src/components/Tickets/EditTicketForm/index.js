@@ -132,7 +132,7 @@ class EditTicketForm extends PureComponent {
               placeholder="123456"
               value={this.state.ticketId}
             ></input>
-            <button type="button" onClick={this.getTicketDetails}>Edit Ticket</button>
+            <button type="button" className="btn btn-default" onClick={this.getTicketDetails}>Edit Ticket</button>
           </div>
         </div>
         {!this.state.ticketIdExists && this.state.hasSubmittedTicketId && (

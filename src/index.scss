@@ -1071,12 +1071,32 @@ button.dark.btn.btn-dark-mode {
 }
 
 .edit-ticket-form {
-  .edit-ticket-form-actions {
-    width: 150px;
+  width: 150px;
 
+  &-actions {
     label {
-      color: $dark__text-color;
       margin: 20px 0 10px 0;
     }
+
+    button {
+      margin: 10px 0;
+    }
+  }
+
+  p.edit-ticket-warning {
+    background-color: #f6c44d;
+    color: #0E1117;
+    padding: 10px;
+    border-radius: 5px;
+  }
+}
+
+.dark .edit-ticket-form {
+  &-actions label {
+    color: $dark__text-color;
+  }
+
+  p.edit-ticket-warning strong {
+    color: #0E1117;
   }
 }
