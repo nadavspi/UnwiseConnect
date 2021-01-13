@@ -56,6 +56,10 @@ class EditTicketForm extends PureComponent {
 
   getDescription = () => {
     fetchTicketNotes(this.props.ticketNumber).then(results => {
+      if (!results || !results[0] || !results[0].text) {
+        return;
+      }
+
       this.setState({
         description: results[0].text
       });
