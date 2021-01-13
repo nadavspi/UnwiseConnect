@@ -22,9 +22,11 @@ class EditTicketForm extends PureComponent {
   }
 
   getTicketDetails = () => {
-    this.setState({
-      hasSubmittedTicketId: true
-    });
+    setTimeout(() => {
+      this.setState({
+        hasSubmittedTicketId: true
+      });
+    }, 300);
 
     if (!this.state.ticketId) {
       return;
