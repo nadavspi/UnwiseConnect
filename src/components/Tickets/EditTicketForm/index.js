@@ -18,6 +18,7 @@ class EditTicketForm extends PureComponent {
     phaseValue: '',
     summary: '',
     ticketDetails: '',
+    updatingTicket: false,
   }
 
   getTicketDetails = () => {
@@ -42,6 +43,10 @@ class EditTicketForm extends PureComponent {
   }
 
   updateTicketDetails = () => {
+    this.setState({
+      updatingTicket: true,
+    });
+
     updateTicketDetails({
       ticketId: this.props.ticketNumber,
       budget: this.state.budget,
@@ -49,6 +54,11 @@ class EditTicketForm extends PureComponent {
       phaseValue: this.state.phaseValue,
       summary: this.state.summary,
       phaseId: this.state.phases.filter(phase => phase.path === this.state.phaseValue && phase.id)
+    }).then(() => {
+      this.setState({
+        updatingTicket: false,
+      });
+      this.setTicketCompleted();
     }).catch((e) => {
       console.log(e);
     })
@@ -99,9 +109,9 @@ class EditTicketForm extends PureComponent {
     });
   }
 
-  setTicketCompleted = hasCompletedTicket => {
+  setTicketCompleted = () => {
     this.setState({
-      hasCompletedTicket
+      hasCompletedTicket: true
     });
   }
 
@@ -120,6 +130,7 @@ class EditTicketForm extends PureComponent {
             budget={this.state.budget}
             description={this.state.description}
             fullName={this.state.fullName}
+            hasCompletedTicket={this.state.hasCompletedTicket}
             phases={this.state.phases}
             phaseValue={this.state.phaseValue}
             setBudget={this.setBudget}
@@ -130,6 +141,7 @@ class EditTicketForm extends PureComponent {
             ticketDetails={this.state.ticketDetails}
             toggleEditModal={this.toggleEditModal}
             updateTicketDetails={this.updateTicketDetails}
+            updatingTicket={this.state.updatingTicket}
           />
         </EditModal>
       </div>

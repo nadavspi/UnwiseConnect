@@ -80,7 +80,9 @@ const EditForm = (props) => {
           props.updateTicketDetails();
         }}
       >
-        Update Ticket
+        {!props.hasCompletedTicket ? 'Update ticket' : (
+          props.updatingTicket ? 'Updating ticket' : 'Updated ticket'
+        )}
       </button>
     </form>
   );
