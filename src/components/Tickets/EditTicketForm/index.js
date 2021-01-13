@@ -2,6 +2,7 @@ import { connect } from 'react-redux';
 import React, { PureComponent } from 'react';
 import { fetchTicketById, updateTicketDetails, fetchTicketNotes } from '../../../helpers/cw';
 import { getPhases } from '../helpers';
+import { editIcon } from '../../../helpers/svgs';
 import EditForm from './EditForm';
 import EditModal from './EditModal';
 
@@ -104,7 +105,7 @@ class EditTicketForm extends PureComponent {
     return (
       <div className="edit-ticket-form">
         <div className="edit-ticket-form-actions">
-          <button type="button" className="btn btn-default" onClick={this.getTicketDetails}>Edit</button>
+          <button type="button" className="btn btn-default" onClick={this.getTicketDetails}>{editIcon}</button>
         </div>
         <EditModal
           contentLabel="Edit Ticket Modal"

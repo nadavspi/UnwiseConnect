@@ -329,7 +329,7 @@ TicketsTable.defaultProps = {
       },
       props: {
         style: {
-          width: 150,
+          width: 120,
         },
       },
       filterType: 'none',

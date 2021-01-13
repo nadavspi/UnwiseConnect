@@ -1071,25 +1071,7 @@ button.dark.btn.btn-dark-mode {
   }
 }
 
-.edit-ticket-btn {
-  // position: absolute;
-  // top: 75px;
-  // right: 30px;
-  // width: 130px;
-  // height: 34px;
-}
-
 .edit-ticket-form {
-  // width: 200px;
-  // position: absolute;
-  // right: 30px;
-  // top: 200px;
-  // background-color: #0E1117;
-  // border: 1px solid $dark__border-color;
-  // border-radius: 5px;
-  // padding: 20px;
-  // z-index: 2;
-
   input {
     width: 100px;
   }
@@ -1115,16 +1097,26 @@ button.dark.btn.btn-dark-mode {
   }
 }
 
-.dark .edit-ticket-form {
-  &-actions label {
-    color: $dark__text-color;
-  }
-
-  p.edit-ticket-warning strong {
-    color: #0E1117;
-  }
+.dark .column-actions button svg {
+  fill: $dark__text-color;
 }
 
 .column-actions {
   display: flex;
+
+  div > button,
+  .btn-group > button {
+    width: 31px;
+    height: 30px;
+    padding: 0;
+  }
+
+  div:nth-of-type(2) {
+    transform: translateY(-1px);
+  }
+
+  svg {
+    width: 18px;
+    height: 18px;
+  }
 }
