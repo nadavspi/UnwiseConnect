@@ -310,31 +310,6 @@ TicketsTable.defaultProps = {
       },
     },
     {
-      property: 'mobileGuid',
-      header: {
-        label: 'Actions',
-      },
-      cell: {
-        formatters: [
-          (value, { rowData }) => {
-            return (
-              <div className="column-actions">
-                <StartTimer ticket={rowData} />
-                <DetailsModal ticketNumber={rowData.id} />
-                <EditTicketForm ticketNumber={rowData.id} />
-              </div>
-            );
-          }
-        ]
-      },
-      props: {
-        style: {
-          width: 120,
-        },
-      },
-      filterType: 'none',
-    },
-    {
       property: 'phase.path',
       header: {
         label: 'Phase',
@@ -467,6 +442,31 @@ TicketsTable.defaultProps = {
       header: {
         label: 'Assigned',
       },
+    },
+    {
+      property: 'mobileGuid',
+      header: {
+        label: 'Actions',
+      },
+      cell: {
+        formatters: [
+          (value, { rowData }) => {
+            return (
+              <div className="column-actions">
+                <StartTimer ticket={rowData} />
+                <DetailsModal ticketNumber={rowData.id} />
+                <EditTicketForm ticketNumber={rowData.id} />
+              </div>
+            );
+          }
+        ]
+      },
+      props: {
+        style: {
+          width: 120,
+        },
+      },
+      filterType: 'none',
     },
   ],
 };
