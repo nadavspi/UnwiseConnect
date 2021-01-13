@@ -250,6 +250,10 @@ body {
 .dropdown-menu {
   top: calc(100% + 20px);
 
+  &.toggl-description {
+    left: -275px;
+  }
+
   hr {
     border-color: transparent;
     margin-bottom: 30px;
@@ -594,7 +598,7 @@ td.col--budget:not(:empty)::after {
   }
 
   .dropdown-menu {
-    top: calc(100% + 20px);
+    top: 100%;
 
     hr {
       border-color: transparent;
