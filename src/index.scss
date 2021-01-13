@@ -493,6 +493,10 @@ td.col--budget:not(:empty)::after {
     background-color: #0E1117;
   }
 
+  .ticket-link a {
+    color: $dark__link-color;
+  }
+
   .btn-settings {
     background-color: $c-dark-gray;
     border: none;
