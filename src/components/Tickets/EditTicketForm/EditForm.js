@@ -59,7 +59,7 @@ const EditForm = (props) => {
           value={props.budget}
         ></input>
       </div>
-      <div>
+      {/* <div>
         <label htmlFor="description">Description</label>
         <textarea
           autoComplete="off"
@@ -71,7 +71,7 @@ const EditForm = (props) => {
           rows="4"
           value={props.description}
         />
-      </div>
+      </div> */}
       <button
         type="button"
         className="btn btn-submit btn-primary"
