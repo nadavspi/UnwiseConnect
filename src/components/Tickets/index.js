@@ -143,12 +143,6 @@ class Tickets extends Component {
                 {this.state.isEditingTicket ? '— ' : '＋ '} Edit Ticket
               </button>
             </div>
-            {this.state.isEditingTicket && (
-              <EditTicketForm
-                selectedProject={this.state.selectedProject}
-                tickets={this.props.tickets.flattened}
-              />
-            )}
             <CreateTicketForm
               addNewTicketToColumns={this.addNewTicketToColumns}
               projects={this.projects()}

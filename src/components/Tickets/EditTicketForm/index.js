@@ -1,3 +1,4 @@
+import { connect } from 'react-redux';
 import React, { PureComponent } from 'react';
 import { fetchTicketById, updateTicketDetails, fetchTicketNotes } from '../../../helpers/cw';
 import { getPhases } from '../helpers';
@@ -11,28 +12,15 @@ class EditTicketForm extends PureComponent {
     expanded: false,
     fullName: '',
     hasCompletedTicket: false,
-    hasSubmittedTicketId: false,
     notes: '',
     phases: [],
     phaseValue: '',
     summary: '',
     ticketDetails: '',
-    ticketId: '',
-    ticketIdExists: true,
   }
 
   getTicketDetails = () => {
-    setTimeout(() => {
-      this.setState({
-        hasSubmittedTicketId: true
-      });
-    }, 300);
-
-    if (!this.state.ticketId) {
-      return;
-    }
-
-    fetchTicketById(this.state.ticketId).then(res => {
+    fetchTicketById(this.props.ticketNumber).then(res => {
       const phases = getPhases(res, this.props.tickets)
 
       this.setState({
@@ -42,22 +30,19 @@ class EditTicketForm extends PureComponent {
         fullName: res.company.name + ' - ' + res.project.name,
         phaseValue: res.phase.name,
         summary: res.summary,
-        ticketIdExists: true,
         ticketDetails: res,
         phases,
       });
 
       this.getDescription()
-    }).catch(() => {
-      this.setState({
-        ticketIdExists: false
-      });
+    }).catch((e) => {
+      console.log(e)
     });
   }
 
   updateTicketDetails = () => {
     updateTicketDetails({
-      ticketId: this.state.ticketId,
+      ticketId: this.props.ticketNumber,
       budget: this.state.budget,
       initialDescription: this.state.description,
       phaseValue: this.state.phaseValue,
@@ -69,20 +54,13 @@ class EditTicketForm extends PureComponent {
   }
 
   getDescription = () => {
-    fetchTicketNotes(this.state.ticketId).then(results => {
+    fetchTicketNotes(this.props.ticketNumber).then(results => {
       this.setState({
         description: results[0].text
       });
     }).catch((e) => {
       console.log(e);
     })
-  }
-
-  setTicketId = ticketId => {
-    this.setState({
-      hasSubmittedTicketId: false,
-      ticketId
-    });
   }
 
   toggleEditModal = () => {
@@ -126,26 +104,8 @@ class EditTicketForm extends PureComponent {
     return (
       <div className="edit-ticket-form">
         <div className="edit-ticket-form-actions">
-            <label htmlFor="ticket-number">Ticket Number</label>
-            <div className="edit-ticket-input">
-            <input
-              className="form-control"
-              id="ticket-number"
-              onChange={(e) => this.setTicketId(e.target.value)}
-              type="number"
-              placeholder="123456"
-              value={this.state.ticketId}
-            ></input>
-            <button type="button" className="btn btn-default" onClick={this.getTicketDetails}>Edit</button>
-          </div>
+          <button type="button" className="btn btn-default" onClick={this.getTicketDetails}>Edit</button>
         </div>
-        {!this.state.ticketIdExists && this.state.hasSubmittedTicketId && (
-          this.state.ticketId.length === 6 ? (
-            <p className="edit-ticket-warning">Cannot find ticket with id: <strong>{this.state.ticketId}</strong></p>
-          ) : (
-            <p className="edit-ticket-warning">Tickets are 6 digits</p>
-          )
-        )}
         <EditModal
           contentLabel="Edit Ticket Modal"
           expanded={this.state.expanded}
@@ -173,4 +133,8 @@ class EditTicketForm extends PureComponent {
 }
 
 
-export default EditTicketForm;
+const mapStateToProps = state => ({
+  tickets: state.tickets.flattened,
+});
+
+export default connect(mapStateToProps)(EditTicketForm);

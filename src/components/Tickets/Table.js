@@ -13,6 +13,7 @@ import { compose } from 'redux';
 import { customField } from '../../config/columns';
 import { multiInfix } from '../../helpers/utils';
 import Summary from "../shared/Summary";
+import EditTicketForm from '../Tickets/EditTicketForm'
 
 function paginate({ page, perPage }) {
   return (rows = []) => {
@@ -297,7 +298,6 @@ TicketsTable.defaultProps = {
             return (
               <div>
                 <TicketLink ticketNumber={value} />
-                <DetailsModal ticketNumber={value} />
               </div>
             );
           }
@@ -310,25 +310,26 @@ TicketsTable.defaultProps = {
       },
     },
     {
-      // Using a random property because it's easier than adding a new one
-      // to all the rows
       property: 'mobileGuid',
       header: {
-        label: 'Toggl',
+        label: 'Actions',
       },
       cell: {
-        resolve: value => `(${value})`,
         formatters: [
           (value, { rowData }) => {
             return (
-              <StartTimer ticket={rowData} />
+              <div className="column-actions">
+                <StartTimer ticket={rowData} />
+                <DetailsModal ticketNumber={rowData.id} />
+                <EditTicketForm ticketNumber={rowData.id} />
+              </div>
             );
           }
         ]
       },
       props: {
         style: {
-          width: 60,
+          width: 150,
         },
       },
       filterType: 'none',
