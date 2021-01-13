@@ -8,19 +8,20 @@ class EditTicketForm extends PureComponent {
   state = {
     budget: '',
     description: '',
+    expanded: false,
     fullName: '',
     hasCompletedTicket: false,
+    notes: '',
     phases: [],
     phaseValue: '',
     summary: '',
     ticketDetails: '',
     ticketId: '',
-    expanded: false,
-    notes: ''
+    ticketIdExists: true,
   }
 
   getTicketDetails = () => {
-    if (!this.state.ticketId) {
+    if (!this.state.ticketId || this.state.ticketId.length !== 6) {
       return;
     }
 
@@ -29,16 +30,21 @@ class EditTicketForm extends PureComponent {
 
       this.setState({
         budget: res.budgetHours,
-        description: this.state.notes,
+        description: this.state.description,
+        expanded: true,
         fullName: res.company.name + ' - ' + res.project.name,
         phaseValue: res.phase.name,
         summary: res.summary,
+        ticketIdExists: true,
         ticketDetails: res,
         phases,
-        expanded: true
       });
 
       this.getDescription()
+    }).catch(() => {
+      this.setState({
+        ticketIdExists: false
+      });
     });
   }
 
@@ -46,7 +52,7 @@ class EditTicketForm extends PureComponent {
     updateTicketDetails({
       ticketId: this.state.ticketId,
       budget: this.state.budget,
-      description: this.state.description,
+      initialDescription: this.state.description,
       phaseValue: this.state.phaseValue,
       summary: this.state.summary,
       phaseId: this.state.phases.filter(phase => phase.path === this.state.phaseValue && phase.id)
@@ -58,7 +64,9 @@ class EditTicketForm extends PureComponent {
       this.setState({
         description: results[0].text
       });
-    });
+    }).catch((e) => {
+      console.log(e);
+    })
   }
 
   setTicketId = ticketId => {
@@ -121,6 +129,9 @@ class EditTicketForm extends PureComponent {
             <button type="button" onClick={this.getTicketDetails}>Edit Ticket</button>
           </div>
         </div>
+        {this.state.ticketId.length === 6 && !this.state.ticketIdExists && (
+          <p>Cannot find ticket</p>
+        )}
         <EditModal
           contentLabel="Edit Ticket Modal"
           expanded={this.state.expanded}
