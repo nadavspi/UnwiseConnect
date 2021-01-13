@@ -3,7 +3,6 @@ import { createTicket } from '../../../helpers/cw';
 import TicketModal from './TicketModal';
 import TicketForm from './TicketForm';
 import sortBy from 'sort-by';
-import { getPhases } from '../helpers'
 
 class CreateTicketForm extends PureComponent {
   emptyTicketState = {
@@ -43,14 +42,46 @@ class CreateTicketForm extends PureComponent {
       }
 
       if (selectedProject['project.name']) {
+        this.getPhases(this.state.projects.filter(project => (
+          project.name === selectedProject['project.name'] &&
+          project.company.name === selectedProject['project.company']
+        )));
+
         this.setState({
           selectedProject: this.state.projects.filter(project => (
             project.name === `${selectedProject['company.name']} — ${selectedProject['project.name']}`)
-          ),
-          phases: getPhases(this.props.selectedProject, this.props.tickets)
+          )
         });
       }
     }
+  }
+
+  getPhases = () => {
+    let phases = [];
+    const { selectedProject } = this.props;
+
+    this.props.tickets.map(ticket => {
+      if (selectedProject['project.name'] === ticket.project.name && selectedProject['company.name'] === ticket.company.name) {
+        phases.push({
+          path: ticket.phase.path,
+          phaseId: ticket.phase.id,
+          ticketId: ticket.id
+        });
+      }
+    });
+
+    const deduplicatedPhases = phases.reduce((uniquePhases, currentPhase) => {
+      if (!uniquePhases.some(phase => phase.path === currentPhase.path)) {
+        uniquePhases.push(currentPhase);
+      }
+      return uniquePhases;
+    }, []);
+
+    const sortedDeduplicatedPhases = deduplicatedPhases.sort(sortBy('path'));
+
+    this.setState({
+      phases: sortedDeduplicatedPhases
+    });
   }
 
   getProjects = () => {
@@ -114,8 +145,9 @@ class CreateTicketForm extends PureComponent {
     this.setState({
       ...this.emptyTicketState,
       expanded: true,
-      phases: getPhases(this.props.selectedProject, this.props.tickets)
     });
+
+    this.getPhases();
   }
 
   setDescription = description => {
