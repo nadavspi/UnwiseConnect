@@ -80,7 +80,8 @@ class EditTicketForm extends PureComponent {
 
   toggleEditModal = () => {
     this.setState({
-      expanded: !this.state.expanded
+      expanded: !this.state.expanded,
+      hasCompletedTicket: false,
     });
   }
 
