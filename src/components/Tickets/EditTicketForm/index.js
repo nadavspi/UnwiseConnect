@@ -47,6 +47,7 @@ class EditTicketForm extends PureComponent {
       updatingTicket: true,
     });
 
+    this.setTicketCompleted();
     updateTicketDetails({
       ticketId: this.props.ticketNumber,
       budget: this.state.budget,
@@ -58,7 +59,6 @@ class EditTicketForm extends PureComponent {
       this.setState({
         updatingTicket: false,
       });
-      this.setTicketCompleted();
     }).catch((e) => {
       console.log(e);
     })
