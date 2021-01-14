@@ -6,6 +6,7 @@ import Projects from './Projects';
 import React, { Component } from 'react';
 import Table from './Table';
 import ToggleProjects from './ToggleProjects';
+import EditTicketForm from './EditTicketForm';
 import classnames from 'classnames';
 import sortBy from 'sort-by';
 import { connect } from 'react-redux';
@@ -14,6 +15,7 @@ import { search } from '../../actions/tickets';
 class Tickets extends Component {
   state = {
     expanded: '',
+    isEditingTicket: false,
     selectedProject: {},
   }
 

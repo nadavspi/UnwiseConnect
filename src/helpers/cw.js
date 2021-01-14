@@ -69,6 +69,14 @@ export const updateTicketStatus = params => {
   }).then(checkStatus).then(parseJSON);
 };
 
+export const updateTicketDetails = params => {
+  return fetch(`${process.env.REACT_APP_API_URL}/v1/ticket/${params.ticketId}`, {
+    headers,
+    method: 'PATCH',
+    body: JSON.stringify(params),
+  }).then(checkStatus).then(parseJSON);
+};
+
 export const createTicket = params => {
   return fetch(`${process.env.REACT_APP_API_URL}/v1/ticket`, {
     headers,

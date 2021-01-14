@@ -13,6 +13,7 @@ import { compose } from 'redux';
 import { customField } from '../../config/columns';
 import { multiInfix } from '../../helpers/utils';
 import Summary from "../shared/Summary";
+import EditTicketForm from '../Tickets/EditTicketForm'
 
 function paginate({ page, perPage }) {
   return (rows = []) => {
@@ -297,7 +298,6 @@ TicketsTable.defaultProps = {
             return (
               <div>
                 <TicketLink ticketNumber={value} />
-                <DetailsModal ticketNumber={value} />
               </div>
             );
           }
@@ -308,30 +308,6 @@ TicketsTable.defaultProps = {
           width: 115,
         },
       },
-    },
-    {
-      // Using a random property because it's easier than adding a new one
-      // to all the rows
-      property: 'mobileGuid',
-      header: {
-        label: 'Toggl',
-      },
-      cell: {
-        resolve: value => `(${value})`,
-        formatters: [
-          (value, { rowData }) => {
-            return (
-              <StartTimer ticket={rowData} />
-            );
-          }
-        ]
-      },
-      props: {
-        style: {
-          width: 60,
-        },
-      },
-      filterType: 'none',
     },
     {
       property: 'phase.path',
@@ -466,6 +442,31 @@ TicketsTable.defaultProps = {
       header: {
         label: 'Assigned',
       },
+    },
+    {
+      property: 'mobileGuid',
+      header: {
+        label: 'Actions',
+      },
+      cell: {
+        formatters: [
+          (value, { rowData }) => {
+            return (
+              <div className="column-actions">
+                <StartTimer ticket={rowData} />
+                <DetailsModal ticketNumber={rowData.id} />
+                <EditTicketForm ticketNumber={rowData.id} />
+              </div>
+            );
+          }
+        ]
+      },
+      props: {
+        style: {
+          width: 120,
+        },
+      },
+      filterType: 'none',
     },
   ],
 };

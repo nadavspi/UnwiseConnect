@@ -138,6 +138,7 @@ body {
 
 .panel-body.projects__wrapper {
   min-height: 200px;
+  position: relative;
 }
 
 .projects {
@@ -248,6 +249,10 @@ body {
 
 .dropdown-menu {
   top: calc(100% + 20px);
+
+  &.toggl-description {
+    left: -275px;
+  }
 
   hr {
     border-color: transparent;
@@ -492,6 +497,10 @@ td.col--budget:not(:empty)::after {
     background-color: #0E1117;
   }
 
+  .ticket-link a {
+    color: $dark__link-color;
+  }
+
   .btn-settings {
     background-color: $c-dark-gray;
     border: none;
@@ -589,7 +598,7 @@ td.col--budget:not(:empty)::after {
   }
 
   .dropdown-menu {
-    top: calc(100% + 20px);
+    top: 100%;
 
     hr {
       border-color: transparent;
@@ -1067,5 +1076,56 @@ button.dark.btn.btn-dark-mode {
         }
       }
     }
+  }
+}
+
+.edit-ticket-form {
+  input {
+    width: 100px;
+  }
+
+  button {
+    margin-left: 5px;
+  }
+
+  .edit-ticket-input {
+    display: flex;
+  }
+
+  &-actions label {
+    margin-bottom: 10px;
+  }
+
+  p.edit-ticket-warning {
+    background-color: #f6c44d;
+    color: #0E1117;
+    padding: 10px;
+    border-radius: 5px;
+    margin-top: 10px;
+  }
+}
+
+.dark .column-actions button svg {
+  fill: $dark__text-color;
+}
+
+.column-actions {
+  display: flex;
+
+  div > button,
+  .btn-group > button {
+    width: 31px;
+    height: 30px;
+    padding: 0;
+  }
+
+  div:nth-of-type(2) {
+    transform: translateY(-1px);
+  }
+
+  svg {
+    width: 16px;
+    height: 16px;
+    transform: translate(1px, 1px);
   }
 }
