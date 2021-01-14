@@ -12,6 +12,7 @@ class EditTicketForm extends PureComponent {
     description: '',
     expanded: false,
     fullName: '',
+    hasChangedPhase: false,
     hasCompletedTicket: false,
     notes: '',
     phases: [],
@@ -52,9 +53,8 @@ class EditTicketForm extends PureComponent {
       ticketId: this.props.ticketNumber,
       budget: this.state.budget,
       initialDescription: this.state.description,
-      phaseValue: this.state.phaseValue,
+      phase: this.state.hasChangedPhase ? this.state.selectedPhase : this.state.phases.filter(phase => phase.id === this.state.ticketDetails.phase.id),
       summary: this.state.summary,
-      phaseId: this.state.phases.filter(phase => phase.path === this.state.phaseValue && phase.id)
     }).then(() => {
       this.setState({
         updatingTicket: false,
@@ -92,6 +92,7 @@ class EditTicketForm extends PureComponent {
 
   setPhaseValue = phaseValue => {
     this.setState({
+      hasChangedPhase: true,
       phaseValue,
       selectedPhase: this.state.phases.filter(phase => phase.path === phaseValue),
     })

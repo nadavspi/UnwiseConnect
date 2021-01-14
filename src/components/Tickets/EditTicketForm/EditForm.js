@@ -26,7 +26,7 @@ const EditForm = (props) => {
           getItemValue={item => item.path}
           shouldItemRender={(item, value) => item.path && item.path.toLowerCase().indexOf(value.toLowerCase()) > -1}
           renderItem={item => (
-            <div key={`${item.phaseId}-${item.ticketId}`}>
+            <div key={`${item.id}-${item.path}`}>
               {item.path}
             </div>
           )}
