@@ -1124,7 +1124,8 @@ button.dark.btn.btn-dark-mode {
   }
 
   svg {
-    width: 18px;
-    height: 18px;
+    width: 16px;
+    height: 16px;
+    transform: translate(1px, 1px);
   }
 }
