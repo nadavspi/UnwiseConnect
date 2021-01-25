@@ -1,4 +1,3 @@
-import * as Table from 'reactabular-table';
 import * as resolve from 'table-resolver';
 import * as search from 'searchtabular';
 import DetailsModal from './DetailsModal';
@@ -258,14 +257,14 @@ TicketsTable.defaultProps = {
       width: 190,
     },
     {
-      property: 'customFields',
+      property: 'sprint',
       header: {
         label: 'Sprint',
       },
       cell: {
         ...customField('Sprint'),
       },
-      width: 60,
+      width: 80,
     },
     {
       // Using a random property because it's easier than adding a new one
@@ -285,7 +284,7 @@ TicketsTable.defaultProps = {
         label: 'Budget Hours',
       },
       className: 'col--budget',
-      width: 60,
+      width: 75,
       textAlign: 'right',
       showTotals: true,
     },
@@ -295,7 +294,7 @@ TicketsTable.defaultProps = {
         label: 'Actual Hours',
       },
       className: 'col--budget',
-      width: 60,
+      width: 75,
       textAlign: 'right',
       showTotals: true,
     },
@@ -305,7 +304,7 @@ TicketsTable.defaultProps = {
         label: 'Status',
       },
       allowSort: false,
-      width: 120,
+      width: 140,
       filterType: 'dropdown',
       extraOptions: [
         TicketsTable.makeAllOpenOption,
