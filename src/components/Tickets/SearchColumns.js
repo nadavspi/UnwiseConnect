@@ -2,6 +2,8 @@ import PropTypes from 'prop-types';
 import React from 'react';
 import Select from 'react-select';
 import BootstrapTable from 'react-bootstrap-table-next';
+import paginationFactory from 'react-bootstrap-table2-paginator';
+import filterFactory, { textFilter } from 'react-bootstrap-table2-filter';
 
 class SearchColumns extends React.Component {
   state = {
@@ -27,6 +29,7 @@ class SearchColumns extends React.Component {
           else if (order === 'desc') return (<span className="sorting-arrow down-arrow">Down</span>);
           return null;
         },
+        filter: textFilter(),
       })
     });
 
@@ -59,7 +62,9 @@ class SearchColumns extends React.Component {
 
   render() {
     return (
-      <BootstrapTable data={this.compileColumns()} columns={this.compileColumns()} />
+      this.state.columns.length > 0 && (
+        <BootstrapTable pagination={paginationFactory()} filter={filterFactory()} classes="table table-striped table-bordered" keyField='id' data={ this.state.rows } columns={ this.state.columns } />
+      )
     )
   }
 }
