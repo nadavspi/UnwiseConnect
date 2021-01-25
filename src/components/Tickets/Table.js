@@ -213,12 +213,14 @@ TicketsTable.defaultProps = {
       header: {
         label: 'Company',
       },
+      width: 95,
     },
     {
       property: 'project.name',
       header: {
         label: 'Project',
       },
+      width: 95,
     },
     {
       property: 'id',
@@ -226,13 +228,14 @@ TicketsTable.defaultProps = {
         label: 'ID',
       },
       formatter: (cell, row) => <TicketLink ticketNumber={row.id} />,
-      width: 115,
+      width: 75,
     },
     {
       property: 'phase.path',
       header: {
         label: 'Phase',
       },
+      width: 100,
       cell: {
         resolve: value => `(${value})`,
         formatters: [
@@ -252,7 +255,7 @@ TicketsTable.defaultProps = {
       header: {
         label: 'Name',
       },
-      width: 300,
+      width: 180,
     },
     {
       property: 'customFields',
@@ -262,7 +265,7 @@ TicketsTable.defaultProps = {
       cell: {
         ...customField('Sprint'),
       },
-      width: 100,
+      width: 60,
     },
     {
       // Using a random property because it's easier than adding a new one
@@ -274,7 +277,7 @@ TicketsTable.defaultProps = {
       cell: {
         ...customField('Fixer'),
       },
-      width: 100,
+      width: 80,
     },
     {
       property: 'budgetHours',
@@ -282,7 +285,7 @@ TicketsTable.defaultProps = {
         label: 'Budget Hours',
       },
       className: 'col--budget',
-      width: 85,
+      width: 60,
       textAlign: 'right',
       showTotals: true,
     },
@@ -292,7 +295,7 @@ TicketsTable.defaultProps = {
         label: 'Actual Hours',
       },
       className: 'col--budget',
-      width: 85,
+      width: 60,
       textAlign: 'right',
       showTotals: true,
     },
@@ -302,7 +305,7 @@ TicketsTable.defaultProps = {
         label: 'Status',
       },
       allowSort: false,
-      width: 180,
+      width: 120,
       filterType: 'dropdown',
       extraOptions: [
         TicketsTable.makeAllOpenOption,
@@ -321,16 +324,19 @@ TicketsTable.defaultProps = {
       header: {
         label: 'Billable',
       },
+      width: 80,
     },
     {
       property: 'resources',
       header: {
         label: 'Assigned',
       },
+      width: 90,
     },
     {
       property: 'mobileGuid',
       allowSort: false,
+      width: 90,
       header: {
         label: 'Actions',
       },
