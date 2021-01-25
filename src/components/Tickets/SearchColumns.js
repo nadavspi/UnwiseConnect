@@ -4,7 +4,6 @@ import Select from 'react-select';
 import BootstrapTable from 'react-bootstrap-table-next';
 import paginationFactory, { PaginationProvider, PaginationListStandalone } from 'react-bootstrap-table2-paginator';
 import filterFactory, { textFilter, selectFilter } from 'react-bootstrap-table2-filter';
-import { Type } from 'react-bootstrap-table2-editor';
 
 class SearchColumns extends React.Component {
   state = {
@@ -64,10 +63,6 @@ class SearchColumns extends React.Component {
             options: { ...options },
             placeholder: '',
           }),
-          editor: {
-            type: Type.SELECT,
-            options: [...dropdownOptions],
-          }
         })
       } else if (column.filterType == 'none') {
         columns.push({

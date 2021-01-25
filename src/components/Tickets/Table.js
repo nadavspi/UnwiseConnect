@@ -235,7 +235,7 @@ TicketsTable.defaultProps = {
       header: {
         label: 'Phase',
       },
-      width: 100,
+      width: 140,
       cell: {
         resolve: value => `(${value})`,
         formatters: [
@@ -255,7 +255,7 @@ TicketsTable.defaultProps = {
       header: {
         label: 'Name',
       },
-      width: 180,
+      width: 190,
     },
     {
       property: 'customFields',
