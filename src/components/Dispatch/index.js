@@ -221,19 +221,6 @@ class Dispatch extends Component {
         },
         visible: true,
         width: 125,
-        cell: {
-          resolve: value => `(${value})`,
-          formatters: [
-            (value, { rowData }) => {
-              const { name, path } = rowData.phase;
-              return (
-                <span title={path}>
-                  {name}
-                </span>
-              );
-            }
-          ]
-        },
       },
       {
         property: 'sprint',
