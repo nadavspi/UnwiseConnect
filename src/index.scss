@@ -1153,6 +1153,12 @@ button.dark.btn.btn-dark-mode {
   right: 15px;
 }
 
-.dark .table-bordered, .dark .table-bordered tr, .dark .table-bordered td {
-  width: 100vw;
+.table-bordered,
+.table-bordered tr,
+.table-bordered td {
+  width: 100%;
+}
+
+.sortable {
+  outline: none;
 }
