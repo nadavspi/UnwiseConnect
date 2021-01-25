@@ -171,21 +171,15 @@ class Dispatch extends Component {
           label: 'Action',
         },
         visible: true,
-        cell: {
-          resolve: value => value,
-          formatters: [
-            (value, { rowData }) => {
-              return (
-                <button
-                  type="button"
-                  onClick={e => onChange(rowData.id)}
-                >
-                  { this.isTicketSelected(rowData.id) ? 'Remove' : 'Add' }
-                </button>
-              );
-            },
-          ]
-        },
+        formatter: (cell, row) => (
+          <button
+            type="button"
+            onClick={e => onChange(row.id)}
+          >
+            { this.isTicketSelected(row.id) ? 'Remove' : 'Add' }
+          </button>
+        ),
+        width: 45,
         filterType: 'custom',
         customFilter: (
           <button
@@ -202,6 +196,7 @@ class Dispatch extends Component {
           label: 'Company',
         },
         visible: true,
+        width: 75,
       },
       {
         property: 'project.name',
@@ -209,6 +204,7 @@ class Dispatch extends Component {
           label: 'Project',
         },
         visible: true,
+        width: 70,
       },
       {
         property: 'id',
@@ -216,6 +212,7 @@ class Dispatch extends Component {
           label: 'ID',
         },
         visible: true,
+        width: 50,
       },
       {
         property: 'phase.path',
@@ -223,6 +220,7 @@ class Dispatch extends Component {
           label: 'Phase',
         },
         visible: true,
+        width: 125,
         cell: {
           resolve: value => `(${value})`,
           formatters: [
@@ -245,6 +243,7 @@ class Dispatch extends Component {
         cell: {
           ...customField('Sprint'),
         },
+        width: 80,
       },
       {
         property: 'impact',
@@ -254,25 +253,22 @@ class Dispatch extends Component {
         cell: {
           ...customField('Fixer'),
         },
+        width: 80,
       },
       {
         property: 'summary',
         header: {
           label: 'Name',
         },
-        cell: {
-          resolve: value => value,
-          formatters: [
-            (value, { rowData }) => (<Summary company={rowData.company} summary={rowData.summary} value={value}/>)
-          ]
-        },
         visible: true,
+        width: 150,
       },
       {
         property: 'status.name',
         header: {
           label: 'Status',
         },
+        width: 100,
         visible: true,
         filterType: 'dropdown',
         extraOptions: [
