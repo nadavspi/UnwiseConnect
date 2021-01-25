@@ -181,7 +181,7 @@ class Dispatch extends Component {
         ),
         width: 45,
         filterType: 'custom',
-        customFilter: (
+        headerFormatter: (cell, row) => (
           <button
             type="button"
             onClick={this.addFiltered}

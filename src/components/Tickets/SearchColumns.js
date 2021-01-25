@@ -40,6 +40,7 @@ class SearchColumns extends React.Component {
         editable: false,
         footer: () => column.showTotals ? this.props.footerSum(this.props.paginatedAll, column.property) : null,
         formatter: column.formatter,
+        headerFormatter: column.headerFormatter || null,
         headerStyle: () => {
           return { width: `${column.width}px` || 'auto'};
         },
