@@ -88,6 +88,26 @@ class SearchColumns extends React.Component {
     });
   }
 
+  rowClasses = (row, rowIndex) => {
+    const actualHours = row.actualHours;
+    const budgetHours = row.budgetHours;
+    let rowClass = null;
+
+    if (typeof budgetHours === 'undefined' || typeof actualHours === 'undefined') {
+      return;
+    }
+
+    if (actualHours > budgetHours) {
+      // over 100% of the budget is already used
+      rowClass = 'ticket--overbudget';
+    } else if (actualHours / budgetHours >= .9) {
+      // over 90% of the budget is already used
+      rowClass = 'ticket--nearbudget';
+    }
+
+    return rowClass;
+  };
+
   render() {
     const paginationOption = {
       custom: true,
@@ -107,6 +127,7 @@ class SearchColumns extends React.Component {
                 keyField='id'
                 pagination={paginationFactory()}
                 {...paginationTableProps}
+                rowClasses= {this.rowClasses}
               />
             )}
           </PaginationProvider>
