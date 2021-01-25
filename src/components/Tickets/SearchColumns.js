@@ -89,11 +89,30 @@ class SearchColumns extends React.Component {
   }
 
   render() {
+    const paginationOption = {
+      custom: true,
+      sizePerPage: this.props.ticketCount,
+    };
+
     return (
-      this.state.columns.length > 0 && (
-        <BootstrapTable pagination={paginationFactory()} filter={filterFactory()} classes="table table-striped table-bordered" keyField='id' data={ this.state.rows } columns={ this.state.columns } />
-      )
-    )
+      <React.Fragment>
+        {this.state.columns.length > 0 && (
+          <PaginationProvider pagination={paginationFactory(paginationOption)} >
+            {({ paginationProps, paginationTableProps }) => (
+              <BootstrapTable
+                classes="table table-striped table-bordered"
+                columns={this.state.columns}
+                data={this.state.rows}
+                filter={filterFactory()}
+                keyField='id'
+                pagination={paginationFactory()}
+                {...paginationTableProps}
+              />
+            )}
+          </PaginationProvider>
+        )}
+      </React.Fragment>
+    );
   }
 }
 
