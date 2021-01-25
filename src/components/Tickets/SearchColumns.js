@@ -4,6 +4,11 @@ import Select from 'react-select';
 import BootstrapTable from 'react-bootstrap-table-next';
 
 class SearchColumns extends React.Component {
+  state = {
+    columns: [],
+    rows: []
+  }
+
   componentDidUpdate = (prevProps) => {
     if (prevProps.columns !== this.props.columns) {
       this.compileColumns();
@@ -24,7 +29,32 @@ class SearchColumns extends React.Component {
         },
       })
     });
+
+    this.setState({
+      columns
+    });
+    this.compileRows();
+
     return columns;
+  }
+
+  compileRows = () => {
+    const rows = this.props.rows.map(row => {
+      return {
+        'mobileGuid': row.mobileGuid,
+        'phase.path': row.phase.path,
+        'company.name': row['company.name'],
+        'id': row.id,
+        'summary': row.summary,
+        'impact': row.impact,
+        'budgetHours': row.budgetHours || '',
+        'status.name': row['status.name'],
+      }
+    })
+    const uniqueRowValues = [ ...new Set(rows) ];
+    this.setState({
+      rows: uniqueRowValues
+    });
   }
 
   render() {
