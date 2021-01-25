@@ -30,19 +30,40 @@ class SearchColumns extends React.Component {
 
     this.props.columns.map(column => {
       const extraOptions = (column.extraOptions || []).map(this.evaluateExtraOption.bind(this, column, this.props.rows));
-      const assignedOptions = extraOptions.filter(option => option.label == 'All Complete');
-      const options = (assignedOptions[0] && assignedOptions[0].value) || [];
+      const statusOptions = extraOptions.filter(option => option.label == 'All Complete');
+      const options = (statusOptions[0] && statusOptions[0].value) || [];
+      let dropdownOptions = [];
 
       const defaultColumnData = {
+        classes: column.className,
         dataField: column.property,
+        editable: false,
+        formatter: column.formatter,
+        headerStyle: (colum, colIndex) => {
+          return { width: `${column.width}px` || 'auto'};
+        },
+        sort: column.allowSort == false ? false : true,
         text: column.header.label,
-        sort: true,        
       }
 
-      if (column.filterType == 'dropdown') {
+      options.map(option => {
+        dropdownOptions.push({
+          value: option,
+          label: option,
+        })
+      })
+
+      if (column.filterType === 'dropdown') {
         columns.push({
           ...defaultColumnData,
-          filter: selectFilter({ options: { ...options } }),
+          filter: selectFilter({
+            options: { ...options },
+            placeholder: '',
+          }),
+          editor: {
+            type: Type.SELECT,
+            options: [...dropdownOptions],
+          }
         })
       } else if (column.filterType == 'none') {
         columns.push({
@@ -52,14 +73,18 @@ class SearchColumns extends React.Component {
       } else {
         columns.push({
           ...defaultColumnData,
-          filter: textFilter()
-        })        
+          filter: textFilter({
+            placeholder: ' ',
+          })
+        });
       }
     });
-    this.setState({
-      columns
-    });
+
     this.compileRows();
+    this.setState({
+      columns,
+    });
+
     return columns;
   }
 
