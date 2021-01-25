@@ -59,6 +59,7 @@ class SearchColumns extends React.Component {
         columns.push({
           ...defaultColumnData,
           filter: selectFilter({
+            delay: 0,
             options: { ...options },
             placeholder: '',
           }),
@@ -76,6 +77,7 @@ class SearchColumns extends React.Component {
         columns.push({
           ...defaultColumnData,
           filter: textFilter({
+            delay: 0,
             placeholder: ' ',
           })
         });
