@@ -270,6 +270,11 @@ body {
 .react-bootstrap-table table {
   table-layout: fixed;
   width: 100%;
+
+  .filter-label {
+    display: block;
+    margin-top: 5px;
+  }
 }
 
 .column-filter-input {
