@@ -15,22 +15,6 @@ import { multiInfix } from '../../helpers/utils';
 import Summary from "../shared/Summary";
 import EditTicketForm from '../Tickets/EditTicketForm'
 
-function paginate({ page, perPage }) {
-  return (rows = []) => {
-    // adapt to zero indexed logic
-    const p = page - 1 || 0;
-
-    const amountOfPages = Math.ceil(rows.length / perPage);
-    const startPage = p < amountOfPages ? p : 0;
-
-    return {
-      amount: amountOfPages,
-      rows: rows.slice(startPage * perPage, startPage * perPage + perPage),
-      page: startPage,
-    };
-  };
-}
-
 function difference(arr1, arr2) {
   return arr1.filter(val => !arr2.includes(val));
 }
@@ -124,28 +108,6 @@ export default class TicketsTable extends React.Component {
     this.props.toggleColumn({ columnName });
   }
 
-  onBodyRow = (row) => {
-    const actualHours = row.actualHours;
-    const budgetHours = row.budgetHours;
-    let rowClass = null;
-
-    if (typeof budgetHours === 'undefined' || typeof actualHours === 'undefined') {
-      return;
-    }
-
-    if (actualHours > budgetHours) {
-      // over 100% of the budget is already used
-      rowClass = 'ticket--overbudget';
-    } else if (actualHours / budgetHours >= .9) {
-      // over 90% of the budget is already used
-      rowClass = 'ticket--nearbudget';
-    }
-
-    return {
-      className: rowClass
-    };
-  }
-
   footerSum = (rows, property) => {
     let sum = 0;
 
@@ -174,22 +136,7 @@ export default class TicketsTable extends React.Component {
     const { columns, pagination, rows } = this.state;
     const searchExecutor = search.multipleColumns({ columns, query, strategy: multiInfix });
     const paginatedAll = compose(searchExecutor)(rows);
-    const paginated = compose(
-      paginate(pagination),
-      searchExecutor
-    )(rows);
     const visibleColumns = columns.filter(column => this.props.userColumns.includes(column.property));
-    const TableFooter = ({ columns, rows }) => {
-      return (
-        <tfoot className="table-bordered__foot">
-          <tr>
-            {columns.map((column, i) =>
-              <td key={`footer-${i}`} className="col--budget">{column.showTotals ? this.footerSum(paginatedAll, column.property) : null}</td>
-            )}
-          </tr>
-        </tfoot>
-      );
-    };
 
     return (
       <div id={this.getHtmlId()}>
@@ -206,9 +153,12 @@ export default class TicketsTable extends React.Component {
         )}
         <SearchColumns
           columns={visibleColumns}
+          footerSum={this.footerSum}
           onChange={this.search}
+          paginatedAll={paginatedAll}
           query={query}
           rows={rows}
+          ticketCount={this.props.tickets.length}
         />
       </div>
     );
