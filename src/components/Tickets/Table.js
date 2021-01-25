@@ -225,22 +225,8 @@ TicketsTable.defaultProps = {
       header: {
         label: 'ID',
       },
-      cell: {
-        formatters: [
-          (value) => {
-            return (
-              <div>
-                <TicketLink ticketNumber={value} />
-              </div>
-            );
-          }
-        ]
-      },
-      props: {
-        style: {
-          width: 115,
-        },
-      },
+      formatter: (cell, row) => <TicketLink ticketNumber={row.id} />,
+      width: 115,
     },
     {
       property: 'phase.path',
@@ -266,16 +252,7 @@ TicketsTable.defaultProps = {
       header: {
         label: 'Name',
       },
-      cell: {
-        formatters: [
-          (value, { rowData }) => (<Summary summary={rowData.summary} company={rowData.company} value={value}/>)
-        ],
-      },
-      props: {
-        style: {
-          width: 300,
-        },
-      },
+      width: 300,
     },
     {
       property: 'customFields',
@@ -285,11 +262,7 @@ TicketsTable.defaultProps = {
       cell: {
         ...customField('Sprint'),
       },
-      props: {
-        style: {
-          width: 100,
-        },
-      },
+      width: 100,
     },
     {
       // Using a random property because it's easier than adding a new one
@@ -301,24 +274,16 @@ TicketsTable.defaultProps = {
       cell: {
         ...customField('Fixer'),
       },
-      props: {
-        style: {
-          width: 100,
-        },
-      },
+      width: 100,
     },
     {
       property: 'budgetHours',
       header: {
         label: 'Budget Hours',
       },
-      props: {
-        className: 'col--budget',
-        style: {
-          width: 75,
-          textAlign: 'right',
-        },
-      },
+      className: 'col--budget',
+      width: 85,
+      textAlign: 'right',
       showTotals: true,
     },
     {
@@ -326,13 +291,9 @@ TicketsTable.defaultProps = {
       header: {
         label: 'Actual Hours',
       },
-      props: {
-        className: 'col--budget',
-        style: {
-          width: 75,
-          textAlign: 'right',
-        },
-      },
+      className: 'col--budget',
+      width: 85,
+      textAlign: 'right',
       showTotals: true,
     },
     {
@@ -340,29 +301,20 @@ TicketsTable.defaultProps = {
       header: {
         label: 'Status',
       },
-      props: {
-        style: {
-          width: 200,
-        },
-      },
+      allowSort: false,
+      width: 180,
       filterType: 'dropdown',
       extraOptions: [
         TicketsTable.makeAllOpenOption,
         TicketsTable.makeAllCompleteOption,
       ],
-      cell: {
-        formatters: [
-          (value, { rowData }) => {
-            return (
-              <UpdateStatus 
-                projectId={rowData.project.id}
-                ticket={rowData.id} 
-                value={value}
-              />
-            );
-          }
-        ],
-      },
+      formatter: (cell, row) => (
+        <UpdateStatus 
+          projectId={row.projectId}
+          ticket={row.id} 
+          value={row['status.name']}
+        />
+      ),
     },
     {
       property: 'billTime',
@@ -378,28 +330,18 @@ TicketsTable.defaultProps = {
     },
     {
       property: 'mobileGuid',
+      allowSort: false,
       header: {
         label: 'Actions',
       },
-      cell: {
-        formatters: [
-          (value, { rowData }) => {
-            return (
-              <div className="column-actions">
-                <StartTimer ticket={rowData} />
-                <DetailsModal ticketNumber={rowData.id} />
-                <EditTicketForm ticketNumber={rowData.id} />
-              </div>
-            );
-          }
-        ]
-      },
-      props: {
-        style: {
-          width: 120,
-        },
-      },
-      filterType: 'none',
+      formatter: (cell, row) => (
+        <div className="column-actions">
+          <StartTimer ticket={row.id} summary={row.summary} />
+          <DetailsModal ticketNumber={row.id} />
+          <EditTicketForm ticketNumber={row.id} />
+        </div>
+      ),
+      width: 120,
     },
   ],
 };

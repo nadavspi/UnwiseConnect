@@ -44,6 +44,7 @@ class SearchColumns extends React.Component {
           return { width: `${column.width}px` || 'auto'};
         },
         sort: column.allowSort == false ? false : true,
+        style: {'width': `${column.width}px`, textAlign: column.textAlign || 'left'},
         text: column.header.label,
       }
 
