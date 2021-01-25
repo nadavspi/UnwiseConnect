@@ -2,7 +2,7 @@ import PropTypes from 'prop-types';
 import React from 'react';
 import Select from 'react-select';
 import BootstrapTable from 'react-bootstrap-table-next';
-import paginationFactory from 'react-bootstrap-table2-paginator';
+import paginationFactory, { PaginationProvider } from 'react-bootstrap-table2-paginator';
 import filterFactory, { textFilter, selectFilter } from 'react-bootstrap-table2-filter';
 
 class SearchColumns extends React.Component {
@@ -27,29 +27,39 @@ class SearchColumns extends React.Component {
 
   compileColumns = () => {
     let columns = [];
+
     this.props.columns.map(column => {
       const extraOptions = (column.extraOptions || []).map(this.evaluateExtraOption.bind(this, column, this.props.rows));
-      const options = extraOptions.filter(option => option.label == 'All Complete');
+      const assignedOptions = extraOptions.filter(option => option.label == 'All Complete');
+      const options = (assignedOptions[0] && assignedOptions[0].value) || [];
 
-      columns.push({
+      const defaultColumnData = {
         dataField: column.property,
         text: column.header.label,
-        sort: true,
-        sortCaret: (order, column) => {
-          if (!order || order === 'asc') return (<span className="sorting-arrow">Up</span>);
-          else if (order === 'desc') return (<span className="sorting-arrow down-arrow">Down</span>);
-          return null;
-        },
-        filter: selectFilter({ options }),
-        formatter: cell => options[cell],
-      })
-    });
+        sort: true,        
+      }
 
+      if (column.filterType == 'dropdown') {
+        columns.push({
+          ...defaultColumnData,
+          filter: selectFilter({ options: { ...options } }),
+        })
+      } else if (column.filterType == 'none') {
+        columns.push({
+          dataField: column.property,
+          text: column.header.label,
+        })
+      } else {
+        columns.push({
+          ...defaultColumnData,
+          filter: textFilter()
+        })        
+      }
+    });
     this.setState({
       columns
     });
     this.compileRows();
-
     return columns;
   }
 
@@ -59,13 +69,19 @@ class SearchColumns extends React.Component {
         'mobileGuid': row.mobileGuid,
         'phase.path': row.phase.path,
         'company.name': row['company.name'],
+        'project.name': row['project.name'],
+        'actualHours': row.actualHours,
+        'billTime': row.billTime,
+        'resources': row.resources,
         'id': row.id,
         'summary': row.summary,
         'impact': row.impact,
+        'actualHours': row.actualHours || '',
         'budgetHours': row.budgetHours || '',
-        'status.name': row['status.name'],
+        'status.name': row.status.name,
+        'customFields': row.customFields
       }
-    })
+    });
     const uniqueRowValues = [ ...new Set(rows) ];
     this.setState({
       rows: uniqueRowValues
