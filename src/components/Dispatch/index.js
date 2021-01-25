@@ -238,7 +238,7 @@ class Dispatch extends Component {
         },
       },
       {
-        property: 'customFields',
+        property: 'sprint',
         header: {
           label: 'Sprint',
         },
