@@ -227,7 +227,7 @@ TicketsTable.defaultProps = {
         label: 'ID',
       },
       formatter: (cell, row) => <TicketLink ticketNumber={row.id} />,
-      width: 75,
+      width: 85,
     },
     {
       property: 'phase.path',
