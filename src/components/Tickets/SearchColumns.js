@@ -98,16 +98,19 @@ class SearchColumns extends React.Component {
         'actualHours': row.actualHours,
         'billTime': row.billTime,
         'resources': row.resources,
+        'projectId': row.project.id,
         'id': row.id,
         'summary': row.summary,
         'impact': row.impact,
-        'actualHours': row.actualHours || '',
         'budgetHours': row.budgetHours || '',
-        'status.name': row.status.name,
-        'customFields': row.customFields
+        'actualHours': row.actualHours || '',
+        'status.name': row['status.name'],
+        'customFields': row.customFields,
       }
     });
+
     const uniqueRowValues = [ ...new Set(rows) ];
+
     this.setState({
       rows: uniqueRowValues
     });
