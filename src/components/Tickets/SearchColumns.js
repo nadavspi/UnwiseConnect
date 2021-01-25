@@ -2,7 +2,7 @@ import PropTypes from 'prop-types';
 import React from 'react';
 import Select from 'react-select';
 import BootstrapTable from 'react-bootstrap-table-next';
-import paginationFactory, { PaginationProvider } from 'react-bootstrap-table2-paginator';
+import paginationFactory, { PaginationProvider, PaginationListStandalone } from 'react-bootstrap-table2-paginator';
 import filterFactory, { textFilter, selectFilter } from 'react-bootstrap-table2-filter';
 import { Type } from 'react-bootstrap-table2-editor';
 
@@ -41,7 +41,7 @@ class SearchColumns extends React.Component {
         editable: false,
         footer: () => column.showTotals ? this.props.footerSum(this.props.paginatedAll, column.property) : null,
         formatter: column.formatter,
-        headerStyle: (colum, colIndex) => {
+        headerStyle: () => {
           return { width: `${column.width}px` || 'auto'};
         },
         sort: column.allowSort == false ? false : true,
@@ -144,24 +144,29 @@ class SearchColumns extends React.Component {
   render() {
     const paginationOption = {
       custom: true,
-      sizePerPage: this.props.ticketCount,
+      sizePerPage: 25,
     };
 
     return (
       <React.Fragment>
         {this.state.columns.length > 0 && (
-          <PaginationProvider pagination={paginationFactory(paginationOption)} >
+          <PaginationProvider pagination={paginationFactory(paginationOption)}>
             {({ paginationProps, paginationTableProps }) => (
-              <BootstrapTable
-                classes="table table-striped table-bordered"
-                columns={this.state.columns}
-                data={this.state.rows}
-                filter={filterFactory()}
-                keyField='id'
-                pagination={paginationFactory()}
-                {...paginationTableProps}
-                rowClasses= {this.rowClasses}
-              />
+              <>
+                <BootstrapTable
+                  classes="table table-striped table-bordered"
+                  columns={this.state.columns}
+                  data={this.state.rows}
+                  filter={filterFactory()}
+                  keyField='id'
+                  pagination={paginationFactory()}
+                  {...paginationTableProps}
+                  rowClasses= {this.rowClasses}
+                />
+                <PaginationListStandalone
+                  { ...paginationProps }
+                />
+              </>
             )}
           </PaginationProvider>
         )}
