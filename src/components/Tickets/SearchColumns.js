@@ -3,7 +3,7 @@ import React from 'react';
 import Select from 'react-select';
 import BootstrapTable from 'react-bootstrap-table-next';
 import paginationFactory from 'react-bootstrap-table2-paginator';
-import filterFactory, { textFilter } from 'react-bootstrap-table2-filter';
+import filterFactory, { textFilter, selectFilter } from 'react-bootstrap-table2-filter';
 
 class SearchColumns extends React.Component {
   state = {
@@ -17,9 +17,20 @@ class SearchColumns extends React.Component {
     }
   }
 
+  evaluateExtraOption(column, uniqueRowValues, option) {
+    if (typeof option === 'function') {
+      const currentValue = this.props.query[column.property] || [];
+      return option(column, uniqueRowValues, currentValue);
+    }
+    return option;
+  }
+
   compileColumns = () => {
     let columns = [];
     this.props.columns.map(column => {
+      const extraOptions = (column.extraOptions || []).map(this.evaluateExtraOption.bind(this, column, this.props.rows));
+      const options = extraOptions.filter(option => option.label == 'All Complete');
+
       columns.push({
         dataField: column.property,
         text: column.header.label,
@@ -29,7 +40,8 @@ class SearchColumns extends React.Component {
           else if (order === 'desc') return (<span className="sorting-arrow down-arrow">Down</span>);
           return null;
         },
-        filter: textFilter(),
+        filter: selectFilter({ options }),
+        formatter: cell => options[cell],
       })
     });
 
