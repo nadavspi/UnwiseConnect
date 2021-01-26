@@ -42,10 +42,10 @@ class SearchColumns extends React.Component {
         formatter: column.formatter,
         headerFormatter: column.headerFormatter || null,
         headerStyle: () => {
-          return { width: `${column.width}px` || 'auto'};
+          return { width: `${column.width}px` || 'auto' };
         },
         sort: column.allowSort == false ? false : true,
-        style: {'width': `${column.width}px`, textAlign: column.textAlign || 'left'},
+        style: { 'width': `${column.width}px`, textAlign: column.textAlign || 'left' },
         text: column.header.label,
       }
 
@@ -88,6 +88,10 @@ class SearchColumns extends React.Component {
               delay: 0,
               placeholder: ' ',
             })
+          });
+        } else if (column.property == 'mobileGuid') {
+          columns.push({
+            ...defaultColumnData,
           });
         } else {
           columns.push({

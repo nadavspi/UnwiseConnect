@@ -269,12 +269,17 @@ body {
 
 .react-bootstrap-table table {
   table-layout: fixed;
-  width: 100%;
+  width: 98%;
+  margin: 0 auto;
 
   .filter-label {
     display: block;
     margin-top: 5px;
   }
+}
+
+.pagination.react-bootstrap-table-page-btns-ul {
+  padding-left: 15px;
 }
 
 .column-filter-input {

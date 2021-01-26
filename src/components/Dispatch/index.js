@@ -179,7 +179,7 @@ class Dispatch extends Component {
             { this.isTicketSelected(row.id) ? 'Remove' : 'Add' }
           </button>
         ),
-        width: 45,
+        width: 70,
         filterType: 'custom',
         headerFormatter: (cell, row) => (
           <button
