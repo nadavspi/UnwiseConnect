@@ -61,7 +61,7 @@ class SearchColumns extends React.Component {
           ...defaultColumnData,
           filter: selectFilter({
             delay: 0,
-            options: { ...options },
+            options: dropdownOptions,
             placeholder: '',
           }),
         })
