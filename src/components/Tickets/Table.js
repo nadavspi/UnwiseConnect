@@ -213,14 +213,14 @@ TicketsTable.defaultProps = {
       header: {
         label: 'Company',
       },
-      width: 95,
+      width: 105,
     },
     {
       property: 'project.name',
       header: {
         label: 'Project',
       },
-      width: 95,
+      width: 105,
     },
     {
       property: 'id',
