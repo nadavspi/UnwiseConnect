@@ -158,8 +158,8 @@ class SearchColumns extends React.Component {
       rowClass = 'ticket--nearbudget';
     }
 
-    if (this.props.selectedTicketIds.includes(row.id)) {
-      rowClass += ' ticket--added'
+    if (this.props.selectedTicketIds && this.props.selectedTicketIds.includes(row.id)) {
+      rowClass += ' ticket--added';
     }
 
     return rowClass;
@@ -172,29 +172,25 @@ class SearchColumns extends React.Component {
     };
 
     return (
-      <React.Fragment>
-        {this.state.columns.length > 0 && (
-          <PaginationProvider pagination={paginationFactory(paginationOption)}>
-            {({ paginationProps, paginationTableProps }) => (
-              <>
-                <BootstrapTable
-                  classes="table table-striped table-bordered"
-                  columns={this.state.columns}
-                  data={this.state.rows}
-                  filter={filterFactory()}
-                  keyField='id'
-                  pagination={paginationFactory()}
-                  {...paginationTableProps}
-                  rowClasses= {this.rowClasses}
-                />
-                <PaginationListStandalone
-                  { ...paginationProps }
-                />
-              </>
-            )}
-          </PaginationProvider>
-        )}
-      </React.Fragment>
+      this.state.columns.length > 0 && (
+        <PaginationProvider pagination={paginationFactory(paginationOption)}>
+          {({ paginationProps, paginationTableProps }) => (
+            <>
+              <BootstrapTable
+                classes="table table-striped table-bordered"
+                columns={this.state.columns}
+                data={this.state.rows}
+                filter={filterFactory()}
+                keyField='id'
+                pagination={paginationFactory()}
+                {...paginationTableProps}
+                rowClasses= {this.rowClasses}
+              />
+              <PaginationListStandalone { ...paginationProps } />
+            </>
+          )}
+        </PaginationProvider>
+      )
     );
   }
 }
