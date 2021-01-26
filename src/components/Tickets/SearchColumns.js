@@ -71,13 +71,33 @@ class SearchColumns extends React.Component {
           text: column.header.label,
         })
       } else {
-        columns.push({
-          ...defaultColumnData,
-          filter: textFilter({
-            delay: 0,
-            placeholder: ' ',
-          })
-        });
+        if (column.property == 'company.name') {
+          columns.push({
+            ...defaultColumnData,
+            filter: textFilter({
+              defaultValue: this.props.query['company.name'] || '',
+              delay: 0,
+              placeholder: ' ',
+            })
+          });
+        } else if (column.property == 'project.name') {
+          columns.push({
+            ...defaultColumnData,
+            filter: textFilter({
+              defaultValue: this.props.query['project.name'] || '',
+              delay: 0,
+              placeholder: ' ',
+            })
+          });
+        } else {
+          columns.push({
+            ...defaultColumnData,
+            filter: textFilter({
+              delay: 0,
+              placeholder: ' ',
+            })
+          });
+        }
       }
     });
 
