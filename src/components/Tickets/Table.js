@@ -227,7 +227,7 @@ TicketsTable.defaultProps = {
         label: 'ID',
       },
       formatter: (cell, row) => <TicketLink ticketNumber={row.id} />,
-      width: 90,
+      width: 80,
     },
     {
       property: 'phase.path',
@@ -271,7 +271,7 @@ TicketsTable.defaultProps = {
         label: 'Budget Hours',
       },
       className: 'col--budget',
-      width: 75,
+      width: 60,
       textAlign: 'right',
       showTotals: true,
     },
@@ -281,7 +281,7 @@ TicketsTable.defaultProps = {
         label: 'Actual Hours',
       },
       className: 'col--budget',
-      width: 75,
+      width: 60,
       textAlign: 'right',
       showTotals: true,
     },
@@ -291,7 +291,7 @@ TicketsTable.defaultProps = {
         label: 'Status',
       },
       allowSort: false,
-      width: 80,
+      width: 120,
       filterType: 'dropdown',
       extraOptions: [
         TicketsTable.makeAllOpenOption,
@@ -322,7 +322,7 @@ TicketsTable.defaultProps = {
     {
       property: 'mobileGuid',
       allowSort: false,
-      width: 90,
+      width: 80,
       header: {
         label: 'Actions',
       },
