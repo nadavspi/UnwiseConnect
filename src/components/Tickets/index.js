@@ -103,7 +103,7 @@ class Tickets extends Component {
             <div className="panel-uc__manage">
               <span className={addClassnames}>
                 <button
-                  className="btn btn-link dropdown-toggle"
+                  className="btn btn-link dropdown-toggle add-id"
                   type="button"
                   onClick={this.expand.bind(this, 'addProject')}
                 >

@@ -245,6 +245,13 @@ body {
   font-size: 14px;
   margin: 0 5px;
   border-radius: $element__border-radius;
+
+  &.add-id {
+    border: none;
+    background-color: transparent;
+    margin-right: 20px;
+    height: 30px;
+  }
 }
 
 .dropdown-menu {
