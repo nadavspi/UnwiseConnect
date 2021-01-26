@@ -128,6 +128,7 @@ class Tickets extends Component {
                   'company.name': company,
                   'project.name': project,
                 }, true)}
+                selectedProject={this.state.selectedProject}
               />
             </div>
             <CreateTicketForm
