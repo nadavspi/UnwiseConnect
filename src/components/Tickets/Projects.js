@@ -1,5 +1,6 @@
 import React from 'react';
 import classnames from 'classnames';
+import CreateTicketForm from '../Tickets/CreateTicketForm';
 
 const Projects = props => {
   return (
@@ -20,6 +21,13 @@ const Projects = props => {
             })}
           >
             <strong>{ticket.company.name}</strong> &mdash; {ticket.project.name}
+            <CreateTicketForm
+              addNewTicketToColumns={props.addNewTicketToColumns}
+              projects={props.projects}
+              selectedProject={props.selectedProject}
+              tickets={props.tickets}
+              useIcon={true}
+            />
           </button>
         );
       })}

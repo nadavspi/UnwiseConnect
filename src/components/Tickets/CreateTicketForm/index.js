@@ -176,13 +176,22 @@ class CreateTicketForm extends PureComponent {
   render() {
     return (
       <div className="create-ticket-form">
-        {this.props.selectedProject['company.name'] && (
+        {!this.props.useIcon && this.props.selectedProject['company.name'] && (
           <button
             className="btn btn-default btn-md btn-expand"
             type="button"
             onClick={() => this.toggleTicketModal()}
           >
             {this.state.expanded ? '—' : '＋'} Create Ticket
+          </button>
+        )}
+        {this.props.useIcon && (
+          <button
+            className="btn-add"
+            type="button"
+            onClick={() => this.toggleTicketModal()}
+          >
+            ＋
           </button>
         )}
         <TicketModal

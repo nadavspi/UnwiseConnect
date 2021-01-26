@@ -123,12 +123,14 @@ class Tickets extends Component {
             <div className="panel-body projects__wrapper">
               <h2>Active Projects ({this.projects().length})</h2>
               <Projects
+                addNewTicketToColumns={this.addNewTicketToColumns}
                 projects={this.projects()}
                 searchProject={({ company, project }) => this.search({
                   'company.name': company,
                   'project.name': project,
                 }, true)}
                 selectedProject={this.state.selectedProject}
+                tickets={this.props.tickets.flattened}
               />
             </div>
             <CreateTicketForm

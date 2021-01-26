@@ -152,6 +152,24 @@ body {
   @include hover {
     border-bottom: 0;
   }
+
+  .list-group-item {
+    outline: 0;
+  }
+}
+
+.btn-add {
+  position: absolute;
+  top: 50%;
+  right: 10px;
+  transform: translateY(-50%);
+  border: none;
+  background-color: transparent;
+  opacity: .5;
+
+  @include allPseudoClasses {
+    background-color: transparent;
+  }
 }
 
 .visibility-container {
@@ -567,11 +585,11 @@ td.col--budget:not(:empty)::after {
       border-color: transparent;
     }
 
-    button {
+    .list-group-item {
       border-color: $dark__border-color;
       border-radius: 0;
       color: #777;
-      outline: 0;
+      position: relative;
 
       @include allPseudoClasses {
         background-color: $dark__hover__background-color;
@@ -579,7 +597,11 @@ td.col--budget:not(:empty)::after {
       }
 
       &.active {
-        background-color: darken($dark__hover__background-color, 1.5);
+        background-color: $dark__hover__background-color;
+      }
+
+      .btn-add {
+        border: none;
       }
     }
   }
@@ -905,8 +927,6 @@ button.dark.btn.btn-dark-mode {
       transition: max-height 0.2s $ease-out-circ;
       overflow: auto;
       box-shadow: none;
-      border: solid 1px #bbbbbb;
-      margin: 0;
 
       &::after {
         content: none;
