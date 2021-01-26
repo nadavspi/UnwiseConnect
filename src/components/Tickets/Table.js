@@ -157,6 +157,7 @@ export default class TicketsTable extends React.Component {
           paginatedAll={paginatedAll}
           query={query}
           rows={rows}
+          selectedTicketIds={this.props.selectedTicketIds}
           ticketCount={this.props.tickets.length}
         />
       </div>

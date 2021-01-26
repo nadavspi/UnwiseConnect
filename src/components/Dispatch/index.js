@@ -172,12 +172,14 @@ class Dispatch extends Component {
         },
         visible: true,
         formatter: (cell, row) => (
-          <button
-            type="button"
-            onClick={e => onChange(row.id)}
-          >
-            { this.isTicketSelected(row.id) ? 'Remove' : 'Add' }
-          </button>
+          <>
+            <button type="button" onClick={e => onChange(row.id)} className="dispatch-btn-add">
+              Add
+            </button>
+            <button type="button" onClick={e => onChange(row.id)} className="dispatch-btn-remove">
+              Remove
+            </button>
+          </>
         ),
         width: 70,
         filterType: 'custom',

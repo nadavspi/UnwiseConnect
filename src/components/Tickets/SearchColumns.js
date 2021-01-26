@@ -158,6 +158,10 @@ class SearchColumns extends React.Component {
       rowClass = 'ticket--nearbudget';
     }
 
+    if (this.props.selectedTicketIds.includes(row.id)) {
+      rowClass += ' ticket--added'
+    }
+
     return rowClass;
   };
 

@@ -1158,6 +1158,20 @@ button.dark.btn.btn-dark-mode {
   right: 15px;
 }
 
+.dispatch-btn-remove {
+  display: none;
+}
+
+.ticket--added {
+  .dispatch-btn-add {
+    display: none;
+  }
+
+  .dispatch-btn-remove {
+    display: block;
+  }
+}
+
 .table-bordered,
 .table-bordered tr,
 .table-bordered td {
