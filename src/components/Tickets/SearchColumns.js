@@ -3,13 +3,15 @@ import React from 'react';
 import Select from 'react-select';
 import BootstrapTable from 'react-bootstrap-table-next';
 import paginationFactory, { PaginationProvider, PaginationListStandalone } from 'react-bootstrap-table2-paginator';
-import filterFactory, { textFilter, selectFilter } from 'react-bootstrap-table2-filter';
+import filterFactory, { textFilter, selectFilter, afterFilter } from 'react-bootstrap-table2-filter';
 
 class SearchColumns extends React.Component {
   state = {
     columns: [],
     rows: []
   }
+
+  filteredRows = [];
 
   componentDidUpdate = (prevProps) => {
     if (prevProps.columns !== this.props.columns) {
@@ -25,6 +27,11 @@ class SearchColumns extends React.Component {
     return option;
   }
 
+
+  afterFilter = (filteredRows) => {
+    this.filteredRows = filteredRows;
+  }
+
   compileColumns = () => {
     let columns = [];
 
@@ -38,7 +45,7 @@ class SearchColumns extends React.Component {
         classes: column.className,
         dataField: column.property,
         editable: false,
-        footer: () => column.showTotals ? this.props.footerSum(this.props.paginatedAll, column.property) : null,
+        footer: () => column.showTotals ? this.props.footerSum(this.filteredRows, column.property) + `${this.filteredRows.length !== 1 ? ' hrs' : ' hr'}` : null,
         formatter: column.formatter,
         headerFormatter: column.headerFormatter || null,
         headerStyle: () => {
@@ -180,7 +187,7 @@ class SearchColumns extends React.Component {
                 classes="table table-striped table-bordered"
                 columns={this.state.columns}
                 data={this.state.rows}
-                filter={filterFactory()}
+                filter={filterFactory({ afterFilter: this.afterFilter })}
                 keyField='id'
                 pagination={paginationFactory()}
                 {...paginationTableProps}
