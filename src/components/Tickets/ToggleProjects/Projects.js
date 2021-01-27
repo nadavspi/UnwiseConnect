@@ -1,6 +1,5 @@
 import React from 'react';
 import { formatRelative } from 'date-fns';
-import './Projects.css';
 
 const Projects = ({ projects, toggle, update }) => {
   return (

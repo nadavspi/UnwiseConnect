@@ -1,4 +1,4 @@
-import './index.scss';
+import './styles.scss';
 import * as storage from 'redux-storage'
 import App from './components';
 import React from 'react';

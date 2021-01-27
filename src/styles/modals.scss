@@ -1,0 +1,132 @@
+.modal-navbar-settings {
+  display: flex;
+  padding: 10px;
+  border: solid 1px #f5f5f5;
+}
+
+.btn-modal-nav {
+  margin-right: 5px;
+  border: solid 1px #f3f3f3;
+  color: #337ab7;
+}
+
+.modal-overlay {
+  position: absolute;
+  z-index: 10;
+  box-sizing: border-box;
+  top: 10px;
+  left: 0;
+  right: 0;
+  bottom: 0;
+}
+
+.ticket-modal {
+  max-width: 700px;
+  width: 100%;
+  left: 50%;
+  height: 750px;
+  transform: translate(-50%, -30px);
+
+  input,
+  select {
+    height: 40px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+  }
+
+  input {
+    width: 100%;
+
+    &[type="number"] {
+      max-width: 80px;
+    }
+  }
+
+  label,
+  .btn-submit {
+    margin-top: 15px;
+  }
+
+  .btn-submit {
+    margin-bottom: 20px;
+  }
+
+  .btn-create-ticket {
+    margin-top: 20px;
+  }
+
+  .ReactModal__Content {
+    box-shadow: 0 6px 12px rgba(0, 0, 0, .175);
+  }
+}
+
+.ticket-modal {
+  .close-btn {
+    background-color: transparent;
+    position: absolute;
+    margin-bottom: 40px;
+    right: 10px;
+    top: 0;
+    font-size: 20px;
+
+    @include allPseudoClasses {
+      background-color: transparent;
+      box-shadow: none;
+    }
+  }
+
+  .new-ticket-message p {
+    display: flex;
+    font-size: 16px;
+    margin-top: 15px;
+    font-weight: bold;
+
+    .ticket-link {
+      margin-left: 10px;
+      text-decoration: underline;
+      transform: translateY(-1px);
+
+      a {
+        color: $dark__link-color;
+      }
+    }
+  }
+
+  .autocomplete-field {
+    div,
+    input {
+      width: 100%;
+    }
+
+    div {
+      input {
+        padding-left: 15px;
+        padding-right: 10px;
+        overflow: hidden;
+        white-space: nowrap;
+        text-overflow: ellipsis;
+      }
+    }
+
+    input[aria-expanded="true"] + div {
+      left: 50% !important; // override react-autocomplete
+      transform: translate(-50%, 20px) !important; // override react-autocomplete
+      max-width: 500px;
+      background-color: white !important; // override react-autocomplete
+      z-index: 2;
+
+      div {
+        min-height: 35px;
+        line-height: 30px;
+        padding: 0 20px;
+        cursor: pointer;
+        font-size: 14px !important; // override react-autocomplete
+        border-bottom: 1px solid #ccc;
+
+        @include hover {
+          background-color: #f5f5f5;
+        }
+      }
+    }
+  }
+}

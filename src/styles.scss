@@ -1,0 +1,31 @@
+$ease-out-circ: cubic-bezier(0.075, 0.820, 0.165, 1.000);
+$dark__text-color: #C8D1D9;
+$dark__primary-color: #090E13;
+$dark__hover__background-color: #151A23;
+$dark__border-color: #30363C;
+$dark__secondary-color: #161B22;
+$dark__link-color: #57A6FF;
+$button__hover__text-decoration: none;
+$element__border-radius: 5px;
+$c-dark-gray: #333333;
+
+@mixin hover {
+  &:hover,
+  &:focus {
+    @content;
+  }
+}
+
+@mixin allPseudoClasses {
+  &:hover,
+  &:focus,
+  &:active {
+    @content;
+  }
+}
+
+@import './styles/index.scss';
+@import './styles/dispatch.scss';
+@import './styles/projects.scss';
+@import './styles/modals.scss';
+@import './styles/dark-mode.scss';

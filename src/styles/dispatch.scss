@@ -29,3 +29,17 @@
 .json-boolean {
   color: #AC81Fe;
 }
+
+#table-dispatch-tickets table button {
+  white-space: nowrap;
+  height: 35px;
+  padding: 0 15px;
+  border-radius: $element__border-radius;
+  border: 1px solid #ccc;
+  background-color: transparent;
+}
+
+.dispatch-ticket-update {
+  position: absolute;
+  right: 15px;
+}

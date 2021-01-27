@@ -1,0 +1,531 @@
+.page.dark {
+  background-color: #07090F;
+  min-height: 100vh;
+
+  * {
+    transition: background-color .4s;
+  }
+
+  a,
+  p,
+  span,
+  strong,
+  h1,
+  h2,
+  h3,
+  h4,
+  h5 {
+    color: $dark__text-color;
+  }
+
+  button,
+  select,
+  input {
+    background-color: $dark__primary-color;
+    color: $dark__text-color;
+    border: 1px solid $dark__border-color;
+    border-radius: $element__border-radius;
+  }
+
+  select,
+  input {
+    padding-left: 10px;
+  }
+
+  button {
+    @include allPseudoClasses {
+      background-color: $dark__hover__background-color;
+      color: $dark__text-color;
+      border-color: $dark__border-color;
+      text-decoration: none;
+    }
+  }
+
+  .column-filter-input,
+  .dispatch-fields .form-group:not(:first-of-type) input,
+  .dispatch-fields .form-group:not(:first-of-type) select {
+    height: 38px;
+  }
+
+  .column-actions button svg {
+    fill: $dark__text-color;
+  }
+
+  .dispatch-fields .form-group:first-of-type div *,
+  .column-filter .column-filter-dropdown div * {
+    background-color: $dark__primary-color;
+  }
+
+  .navbar-brand {
+    @include hover {
+      color: $dark__link-color;
+    }
+  }
+
+  .json-string {
+    color: #FD971F;
+  }
+
+  .json-key {
+    color: #F92672;
+  }
+
+  .json-boolean {
+    color: #AC81FE;
+  }
+
+  .json-pretty {
+    background-color: #0E1117;
+  }
+
+  .ticket-link a {
+    color: $dark__link-color;
+  }
+
+  .btn-settings {
+    background-color: $c-dark-gray;
+    border: none;
+    margin-right: 5px;
+
+    span {
+      color: $dark__text-color;
+    }
+  }
+
+  .btn.btn-expand {
+    &:focus {
+      box-shadow: inset 0 1px 1px rgba(0, 0, 0, .075), 0 0 8px rgba(102, 175, 233, .6);
+    }
+  }
+
+  .alert-warning {
+    color: #0E1117;
+    background-color: #f6c44d;
+    border: $dark__border-color;
+  }
+
+  .panel-default > .panel-heading {
+    border: none;
+    box-shadow: none;
+
+    h4 small {
+      margin-left: 10px;
+    }
+  }
+
+  .row.panel-body {
+    border-radius: $element__border-radius;
+  }
+
+  .navbar {
+    background-color: $dark__secondary-color;
+    border-color: $dark__border-color;
+    box-shadow: none;
+  }
+
+  .panel-body {
+    background-color: $dark__secondary-color;
+    border-color: $dark__border-color;
+    box-shadow: none;
+    border: none;
+  }
+
+  .panel-uc__heading.panel-heading {
+    background-color: #0E1117;
+  }
+
+  .panel-uc.panel.panel-default {
+    border: none;
+  }
+
+  .projects.list-group {
+    background-color: transparent;
+    border-color: $dark__border-color;
+    border-radius: $element__border-radius;
+
+    @include hover {
+      border-color: transparent;
+    }
+
+    .list-group-item {
+      border-color: $dark__border-color;
+      border-radius: 0;
+      color: #777;
+      position: relative;
+
+      @include allPseudoClasses {
+        background-color: $dark__hover__background-color;
+        transition: .3s;
+      }
+
+      &.active {
+        background-color: $dark__hover__background-color;
+      }
+
+      .btn-add {
+        border: none;
+      }
+    }
+  }
+
+  .open > .btn.dropdown-toggle,
+  .btn.dropdown-toggle:active,
+  .btn.dropdown-toggle:hover,
+  .btn.dropdown-toggle:focus {
+    background-color: $dark__hover__background-color !important;
+    color: $dark__text-color !important;
+    text-decoration: $button__hover__text-decoration;
+    border-color: $dark__border-color;
+    transition: .3s;
+  }
+
+  .open > .toggl-description {
+    background-color: $dark__primary-color;
+    border: 1px solid $dark__border-color;
+
+    .form-control {
+      background-color: $dark__secondary-color;
+      color: $dark__text-color;
+    }
+
+    button {
+      margin-right: 5px;
+    }
+  }
+
+  .dropdown-menu {
+    top: 100%;
+
+    hr {
+      border-color: transparent;
+      margin-bottom: 30px;
+    }
+  }
+
+  .column-filter,
+  .table-bordered {
+    border-color: $dark__border-color !important;
+  }
+
+  .table-bordered {
+    th,
+    tr,
+    td {
+      border-color: $dark__border-color !important;
+    }
+  }
+
+  #table-dispatch-tickets table button {
+    border-color: $dark__border-color;
+  }
+
+  .table-striped {
+    color: $dark__text-color;
+
+    > tbody > tr {
+      &:nth-of-type(even) {
+        background-color: #0E1117;
+      }
+
+      &:nth-of-type(odd) {
+        background-color: $dark__hover__background-color;
+      }
+    }
+  }
+
+  .dispatch-fields {
+    .form-group {
+      * {
+        color: $dark__text-color;
+      }
+
+      div {
+        background-color: $dark__hover__background-color;
+        border-color: $dark__border-color;
+        z-index: 2;
+      }
+
+      label {
+        display: flex;
+        align-items: center;
+      }
+
+      [class$="menu"] {
+        margin-top: 1px;
+        border: 1px solid $dark__border-color;
+      }
+
+      [class$="singleValue"] {
+        margin-left: 5px;
+      }
+
+      [id^=react-select] {
+        background-color: $dark__primary-color;
+
+        @include hover {
+          background-color: $dark__hover__background-color;
+          cursor: pointer;
+        }
+      }
+    }
+  }
+
+  .ticket-copy span {
+    color: $dark__text-color;
+  }
+
+  .pagination {
+    .active a {
+      color: $dark__text-color;
+    }
+
+    > li {
+      > a,
+      > span {
+        background-color: $dark__hover__background-color;
+        border-color: $dark__border-color;
+        z-index: 2;
+
+        @include hover {
+          background-color: #0E1117;
+          border-color: $dark__border-color;
+        }
+      }
+    }
+  }
+
+  label[for="toggl-api"] {
+    color: $dark__text-color;
+  }
+
+  .column-filter-dropdown div {
+    font-size: 14px;
+    background-color: $dark__hover__background-color;
+    color: $dark__text-color;
+    border-color: $dark__border-color;
+
+    @include hover {
+      border-color: $dark__border-color;
+      cursor: pointer;
+    }
+  }
+
+  .dropdown-menu.dropdown-menu-right {
+    border-color: $dark__border-color !important;
+    background-color: #0E1117;
+  }
+
+  .form-group.project-search {
+    background-color: $dark__hover__background-color;
+    border-color: $dark__border-color;
+  }
+
+  .ToggleProjects__project {
+    border-bottom: 1px solid $dark__border-color !important;
+    background-color: #0E1117;
+
+    @include hover {
+      background-color: $dark__hover__background-color;
+    }
+  }
+
+  .ToggleProjects__label {
+    a {
+      @include hover {
+        color: $dark__link-color;
+      }
+    }
+
+    .btn-link {
+      @include hover {
+        color: $dark__link-color;
+        border: 1px solid $dark__border-color;
+      }
+    }
+  }
+
+  button.ticket-copy {
+    border: none;
+    background-color: transparent;
+    margin-left: 5px;
+  }
+
+  .ticket-link a {
+    @include hover {
+      color: $dark__link-color;
+    }
+  }
+
+  .ticket--overbudget .col--budget {
+    background-color: #551e32;
+  }
+
+  .ticket--nearbudget .col--budget {
+    color: #0E1117;
+    background-color: #f6c44d;
+  }
+
+  .visibility-label {
+    display: flex;
+    align-items: center;
+  }
+
+  .queue-list {
+    * {
+      color: $dark__text-color;
+    }
+
+    li {
+      color: $dark__text-color !important; // override inline
+
+      div {
+        margin-bottom: 10px;
+      }
+    }
+
+    .btn-link {
+      margin-left: 5px;
+      margin-top: -3px;
+      border-radius: 4px;
+      height: 33px;
+    }
+
+    input {
+      height: 33px;
+    }
+  }
+
+  .nav > li > a {
+    margin-right: 5px;
+
+    @include hover {
+      background-color: $dark__border-color;
+      border-radius: $element__border-radius;
+      color: $dark__link-color;
+    }
+  }
+
+  .glyphicon-info-sign {
+    @include allPseudoClasses {
+      background-color: $dark__hover__background-color;
+      color: $dark__text-color;
+      border-color: $dark__border-color;
+    }
+  }
+}
+
+button.dark.btn.btn-dark-mode {
+  background-color: $c-dark-gray;
+  margin-left: 0;
+
+  @include allPseudoClasses {
+    background-color: $c-dark-gray;
+  }
+
+  svg {
+    fill: $dark__text-color;
+  }
+}
+
+.dark-modal {
+  .ReactModal__Content {
+    background-color: $dark__secondary-color !important;
+    border-color: $dark__border-color !important;
+
+    * {
+      color: $dark__text-color;
+    }
+
+    .form-control {
+      background-color: $dark__primary-color;
+      border-color: $dark__border-color;
+      color: $dark__text-color;
+    }
+  }
+
+  .modal-navbar-settings {
+    border: none;
+  }
+
+  .btn-modal-nav {
+    background-color: transparent;
+    color: $dark__link-color !important;
+    border: none;
+  }
+
+  .table-striped > tbody > tr:nth-of-type(odd) {
+    background-color: #0E1117;
+  }
+
+  .ticket-notes {
+    background-color: transparent;
+    border: none;
+  }
+}
+
+.dark-modal.ticket-modal {
+  input,
+  textarea,
+  .btn-create-ticket {
+    border-radius: 5px;
+  }
+
+  .btn-create-ticket {
+    background-color: $dark__primary-color;
+    border-color: $dark__border-color;
+    color: $dark__text-color;
+    height: 38px;
+
+    @include allPseudoClasses {
+      background-color: $dark__hover__background-color;
+      color: $dark__text-color;
+    }
+  }
+
+  .new-ticket {
+    color: $dark__link-color;
+  }
+
+  .autocomplete-field {
+    input[aria-expanded="true"] + div {
+      background-color: $dark__primary-color !important; // override react-autocomplete
+      color: $dark__text-color !important; // override react-autocomplete
+      border-color: $dark__border-color !important; // override react-autocomplete
+
+      div {
+        color: $dark__text-color !important; // override react-autocomplete
+        border-color: $dark__border-color !important; // override react-autocomplete
+
+        @include hover {
+          background-color: $dark__hover__background-color !important; // override react-autocomplete
+        }
+      }
+    }
+  }
+}
+
+.nav-settings {
+  position: absolute;
+  right: 20px;
+  bottom: -1px;
+  display: flex;
+}
+
+button.btn.btn-dark-mode {
+  width: 50px;
+  height: 41px;
+  border-bottom-left-radius: 0;
+  border-bottom-right-radius: 0;
+  margin-left: 5px;
+
+  @include allPseudoClasses {
+    outline: none;
+  }
+
+  svg {
+    width: 18px;
+    height: 21px;
+    background-color: transparent;
+    fill: $c-dark-gray;
+  }
+}
