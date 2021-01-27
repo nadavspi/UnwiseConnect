@@ -522,14 +522,12 @@ class Dispatch extends Component {
                   {inProgress ? 'Submitting…' : 'Submit'}
                 </button>
               </form>
-              {response != null && (
-                <JSONPretty 
-                  className="dispatch-response"
-                  id="dispatch-response" 
-                  json={response} 
-                  style={{ marginTop: '20px' }}
-                />
-              )}
+              <JSONPretty
+                className="dispatch-response"
+                id="dispatch-response"
+                json={response != null ? response : 'Tickets have not been dispatched yet.'}
+                style={{ marginTop: '20px' }}
+              />
             </header>
             <Queue 
               moveTicket={this.moveTicket}
