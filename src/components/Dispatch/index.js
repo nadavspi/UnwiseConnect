@@ -510,7 +510,7 @@ class Dispatch extends Component {
               <JSONPretty
                 className="dispatch-response"
                 id="dispatch-response"
-                json={response != null ? response : 'Tickets have not been dispatched yet.'}
+                json={response != null ? response : JSON.stringify('Tickets have not been dispatched yet.')}
                 style={{ marginTop: '20px' }}
               />
             </header>
