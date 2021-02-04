@@ -36,7 +36,7 @@ const EditForm = (props) => {
         />
       </div>
       <div>
-        <label htmlFor="summary">Summary</label>
+        <label htmlFor="summary">Ticket Name</label>
         <input
           autoComplete="off"
           className="form-control"

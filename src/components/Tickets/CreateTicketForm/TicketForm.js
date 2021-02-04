@@ -41,7 +41,7 @@ const TicketForm = (props) => {
         />
       </div>
       <div>
-        <label htmlFor="summary">Summary</label>
+        <label htmlFor="summary">Ticket Name</label>
         <input
           className="form-control"
           type="text"
