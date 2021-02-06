@@ -1,0 +1,8 @@
+/* Two classes to win precedence over default styles. */
+.ToggleProjects__menu.dropdown-menu {
+	width: 700px;
+	height: auto;
+	max-height: 60vh;
+	overflow-y: auto;
+	padding-top: 0;
+}
