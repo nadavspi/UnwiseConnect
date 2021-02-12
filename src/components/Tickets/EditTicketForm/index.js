@@ -2,7 +2,7 @@ import { connect } from 'react-redux';
 import React, { PureComponent } from 'react';
 import { fetchTicketById, updateTicketDetails, fetchTicketNotes } from '../../../helpers/cw';
 import { getPhases } from '../helpers';
-import { editIcon } from '../../../helpers/svgs';
+import { editIcon, spinnerIcon } from '../../../helpers/svgs';
 import EditForm from './EditForm';
 import EditModal from './EditModal';
 
@@ -14,6 +14,7 @@ class EditTicketForm extends PureComponent {
     fullName: '',
     hasChangedPhase: false,
     hasCompletedTicket: false,
+    loading: false,
     notes: '',
     phases: [],
     phaseValue: '',
@@ -23,6 +24,10 @@ class EditTicketForm extends PureComponent {
   }
 
   getTicketDetails = () => {
+    this.setState({
+      loading: true
+    });
+
     fetchTicketById(this.props.ticketNumber).then(res => {
       const phases = getPhases(res, this.props.tickets)
 
@@ -31,6 +36,7 @@ class EditTicketForm extends PureComponent {
         description: this.state.description,
         expanded: true,
         fullName: res.company.name + ' - ' + res.project.name,
+        loading: false,
         phaseValue: res.phase.name,
         summary: res.summary,
         ticketDetails: res,
@@ -39,6 +45,9 @@ class EditTicketForm extends PureComponent {
 
       this.getDescription()
     }).catch((e) => {
+      this.setState({
+        loading: false,
+      });
       console.log(e)
     });
   }
@@ -121,7 +130,9 @@ class EditTicketForm extends PureComponent {
     return (
       <div className="edit-ticket-form">
         <div className="edit-ticket-form-actions">
-          <button type="button" className="btn btn-default" onClick={this.getTicketDetails}>{editIcon}</button>
+          <button type="button" className="btn btn-default" onClick={this.getTicketDetails}>
+            {this.state.loading ? spinnerIcon : editIcon}
+          </button>
         </div>
         <EditModal
           contentLabel="Edit Ticket Modal"
