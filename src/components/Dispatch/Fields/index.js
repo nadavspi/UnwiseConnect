@@ -73,7 +73,7 @@ const Field = ({ field, onChange, tickets }) => {
                 value={option}
                 key={option}
               >
-                {option}
+                {option.replace('_', ' ')}
               </option>
             ))}
           </select>
