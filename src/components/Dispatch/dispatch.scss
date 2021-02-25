@@ -56,3 +56,7 @@
 .json-boolean {
   color: #AC81Fe;
 }
+
+.dark ::-webkit-calendar-picker-indicator {
+  filter: invert(1);
+}
