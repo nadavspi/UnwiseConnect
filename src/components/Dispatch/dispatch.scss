@@ -26,6 +26,33 @@
   color: #FD971F;
 }
 
+.not-dispatched .json-string {
+  position: relative;
+  color: #66d9ef;
+
+  &::before,
+  &::after {
+    content: ' ';
+    width: 7px;
+    background-color: #272822;
+    position: absolute;
+  }
+
+  &::after {
+    width: 10px;
+    transform: translateX(-10px);
+  }
+}
+
+.dark .not-dispatched .json-string {
+  color: #66d9ef;
+
+  &::before,
+  &::after {
+    background-color: #0E1117;
+  }
+}
+
 .json-boolean {
   color: #AC81Fe;
 }

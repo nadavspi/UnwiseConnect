@@ -523,7 +523,7 @@ class Dispatch extends Component {
                 </button>
               </form>
               <JSONPretty
-                className="dispatch-response"
+                className={`dispatch-response ${response == null && 'not-dispatched'}`}
                 id="dispatch-response"
                 json={response != null ? response : JSON.stringify('Tickets have not been dispatched yet.')}
                 style={{ marginTop: '20px' }}
