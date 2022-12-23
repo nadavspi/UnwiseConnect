@@ -68,6 +68,7 @@ class CreateTicketForm extends PureComponent {
           ticketId: ticket.id
         });
       }
+      return null;
     });
 
     const deduplicatedPhases = phases.reduce((uniquePhases, currentPhase) => {
@@ -93,6 +94,7 @@ class CreateTicketForm extends PureComponent {
         id: project.project.id,
         companyId: project.company.id
       });
+      return null;
     });
 
     this.setState({

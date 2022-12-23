@@ -12,6 +12,7 @@ export const getPhases = (ticketDetails, tickets) => {
         id: ticket.phase.id,
       });
     }
+    return null;
   });
 
   const deduplicatedPhases = phases.reduce((uniquePhases, currentPhase) => {

@@ -44,7 +44,7 @@ class App extends Component {
   }
 
   toggleTheme = () => {
-    const theme = this.props.theme == 'dark' ? 'light' : 'dark';
+    const theme = this.props.theme === 'dark' ? 'light' : 'dark';
     this.props.dispatch(setTheme(theme));
 
     try {

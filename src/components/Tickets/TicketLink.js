@@ -25,7 +25,7 @@ class TicketLink extends Component {
 
     return (
       <div className="ticket-link">
-        <a href={process.env.REACT_APP_CONNECTWISE_SERVER_URL + "/services/system_io/Service/fv_sr100_request.rails?service_recid=" + value} target="_blank" rel="noopener">#{value}</a>
+        <a href={process.env.REACT_APP_CONNECTWISE_SERVER_URL + "/services/system_io/Service/fv_sr100_request.rails?service_recid=" + value} target="_blank" rel="noopener noreferrer">#{value}</a>
         <button onClick={this.copyToClipboard} className="ticket-copy">
           {this.state.copySuccess ? success : copy}
           <span className="sr-only">Copy Ticket Number</span>

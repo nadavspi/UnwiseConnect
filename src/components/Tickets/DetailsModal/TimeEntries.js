@@ -20,7 +20,7 @@ const TimeEntries = ({ticketNumber}) => {
 
   React.useEffect(() => {
     displayEntries();
-  }, []);
+  }, [displayEntries]);
 
   const entryCard = (entry) => {
     const date = (new Date(entry.timeStart)).toLocaleDateString() + ' ' + (new Date(entry.timeStart)).toLocaleTimeString();

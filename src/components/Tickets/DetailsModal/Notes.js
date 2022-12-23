@@ -22,7 +22,7 @@ const Notes = ({ ticketNumber }) => {
 
   React.useEffect(() => {
     displayNotes();
-  }, []);
+  }, [displayNotes]);
 
   return (
     <div>

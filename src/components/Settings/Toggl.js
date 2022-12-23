@@ -47,7 +47,7 @@ export default class Toggl extends Component {
         <p>
           <a
             href="https://toggl.com/app/profile"
-            target="_blank">
+            target="_blank" rel="noopener noreferrer">
               Find your API key
           </a>
         </p>

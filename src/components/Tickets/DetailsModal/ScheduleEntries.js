@@ -19,7 +19,7 @@ const ScheduleEntries = ({ ticketNumber }) =>  {
 
   React.useEffect(() => {
     displayEntries();
-  }, []);
+  }, [displayEntries]);
 
   const entryCard = entry => {
     let startDate = entry.dateStart;
